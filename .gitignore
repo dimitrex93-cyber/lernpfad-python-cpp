@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# C++ (kompilierte Binaries)
+build/
+*.o
+*.out
+a.out
+
+# Editoren / OS
+.vscode/
+.idea/
+.DS_Store
