@@ -1,37 +1,41 @@
 # Lernfeld 5 – Komplexe Systeme und Netzwerke
 
-> **Status:** 🚧 in Arbeit · Struktur steht, Inhalte folgen.
-> Du kannst gerne als Erster Inhalte beisteuern – siehe [CONTRIBUTING.md](../CONTRIBUTING.md).
+> **Status:** ✅ Aufgaben + Test fertig · Musterlösungen offen (Community-Beiträge willkommen)
 
 ## Themen dieses Moduls
 
-- **Netzwerk-Grundlagen**: IP, Ports, TCP vs. UDP
-- **Sockets**: Client/Server-Kommunikation (Python: `socket`, C++: BSD-Sockets)
-- Ein eigener **einfacher Webserver**
-- **Nebenläufigkeit**: Threads & Prozesse, Race Conditions, Synchronisation
-- Protokolle verstehen und selbst umsetzen (z. B. einfaches Chat-Protokoll)
-- Sicherheit im Netzwerk (Grundlagen: Verschlüsselung, Authentifizierung)
+- **Netzwerk-Grundlagen**: IP, Ports, TCP vs. UDP, Client/Server-Modell
+- **Sockets** (Python: `socket`-Modul; C++: POSIX-Sockets unter Linux/macOS)
+- **Nebenläufigkeit**: Threads (Python: `threading`; C++: `std::thread`)
+- **HTTP-Grundlagen**: eigener Mini-Webserver
+- **Sicherheit**: einfache Verschlüsselung von Nachrichten
+  (Themenbezug: offizielles Lernfeld „Schutzbedarfsanalyse")
 
-## Geplante Aufgaben (Auswahl)
+## Aufgaben (erst Python, dann C++)
 
-1. Echo-Server: Client schickt Text, Server schickt ihn zurück
-2. Chat-Anwendung zwischen zwei Programmen (lokal)
-3. Eigener Mini-Webserver, der HTML ausliefert
-4. UDP: einfacher Zeit-Server
-5. Mehrere Clients gleichzeitig bedienen (Threads)
-6. Nebenläufigkeits-Fallstricke: Race Condition nachstellen
+| # | Aufgabe | Schwierigkeit |
+|---|---|---|
+| 1 | [Echo-Server & Client](python/aufgaben/aufgabe_01.md) | ⭐⭐ |
+| 2 | [Chat mit mehreren Clients](python/aufgaben/aufgabe_02.md) | ⭐⭐⭐ |
+| 3 | [Mini-Webserver](python/aufgaben/aufgabe_03.md) | ⭐⭐⭐ |
+| 4 | [UDP-Zeitserver](python/aufgaben/aufgabe_04.md) | ⭐⭐⭐ |
+| 5 | [Verschlüsselte Nachrichten](python/aufgaben/aufgabe_05.md) | ⭐⭐⭐⭐ |
+
+## Bewerteter Test
+
+- **Wissenstest** (interaktiv): `python3 ../../tools/quiz.py 5`
+- **Schriftliche Klausur**: [test/test.md](test/test.md) · Lösungsbogen: [test/loesungen.md](test/loesungen.md)
 
 ## Geplantes Mini-Projekt
 
-**Chat-Anwendung** – ein Server, viele Clients, Nachrichten mit Nutzernamen,
-Verlauf im Terminal.
+**Chat-Anwendung (Vollversion)** – ein Server, viele Clients, Nachrichten mit
+Nutzernamen, optional verschlüsselt, Verlauf im Terminal.
 
-## Fortschritt
+## Noch offen
 
-- [ ] Theorie Python (`python/theorie/README.md`)
-- [ ] Theorie C++ (`cpp/theorie/README.md`)
-- [ ] Aufgaben (5–10)
-- [ ] Musterlösungen
+- [ ] Musterlösungen (Aufgaben 1–5, Python & C++)
 - [ ] `checklist.md`
 - [ ] `vergleich.md`
-- [ ] Mini-Projekt
+- [ ] Mini-Projekt-Aufgabe (Spezifikation)
+
+→ Mitmachen? [CONTRIBUTING.md](../CONTRIBUTING.md)

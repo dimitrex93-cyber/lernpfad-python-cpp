@@ -55,10 +55,27 @@ g++ -std=c++17 -Wall -Wextra loesungen/aufgabe_XX.cpp -o /tmp/aufgabe_XX
 | Python-Aufgabe | `lernfeld_XX/python/aufgaben/aufgabe_YY.md` |
 | Python-Lösung | `lernfeld_XX/python/loesungen/aufgabe_YY.py` |
 | C++ analog | `lernfeld_XX/cpp/…` |
+| Quiz-Fragenbank | `lernfeld_XX/test/fragen.json` |
+| Schriftliche Klausur | `lernfeld_XX/test/test.md` + Lösungsbogen `test/loesungen.md` |
 | Modul-Checkliste | `lernfeld_XX/checklist.md` |
 | Sprachvergleich | `lernfeld_XX/vergleich.md` |
 
-## Der PR-Ablauf (Kurzfassung)
+### 5. Regeln für Test-Dateien (fragen.json)
+
+- **Schema:** exakt wie in `lernfeld_01_grundlagen/test/fragen.json`
+  (12 `mc`-Fragen mit 4 Optionen + 3 `open`-Fragen mit `stichworte` und
+  Musterantwort als `erklaerung`; `antwort` ist der Index 0–3; IDs eindeutig
+  wie `lf2_07`; Gesamtpunkte ~27–30).
+- **Gültigkeit:** Vor dem PR zwingend prüfen:
+  `python3 -c "import json; json.load(open('lernfeld_XX/test/fragen.json'))"`
+- **Qualität:** Fragen müssen mit dem Tool laufen
+  (`python3 tools/quiz.py XX`), Code-Snippets fachlich korrekt sein, und jede
+  `mc`-Frage braucht genau **eine** eindeutig richtige Antwort plus Erklärung.
+- **Klausur:** `test.md` nutzt den einheitlichen Notenschlüssel
+  (≥ 92 % → 1, ≥ 81 % → 2, ≥ 67 % → 3, ≥ 50 % → 4, ≥ 30 % → 5, sonst 6),
+  `loesungen.md` enthält Musterantworten mit Punktverteilung.
+
+### 6. Der PR-Ablauf (Kurzfassung)
 
 1. Repository forken.
 2. Feature-Branch anlegen: `git checkout -b fix/aufgabe-02-tippfehler`
@@ -72,6 +89,7 @@ g++ -std=c++17 -Wall -Wextra loesungen/aufgabe_XX.cpp -o /tmp/aufgabe_XX
 - [ ] Datei liegt im richtigen Ordner (siehe Tabelle oben)
 - [ ] Python-Lösung läuft mit `python3`
 - [ ] C++-Lösung kompiliert mit `-std=c++17 -Wall -Wextra` ohne Warnungen
+- [ ] `fragen.json` ist gültig (`python3 -m json.tool`) und läuft im Quiz-Tool
 - [ ] Randfälle getestet (leere Eingabe, falsche Eingabe, Extremwerte)
 - [ ] Keine GUI, keine externen Pakete ohne Not
 - [ ] Deutsch, verständlich, didaktisch sinnvoll

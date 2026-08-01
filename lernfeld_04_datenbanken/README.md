@@ -1,37 +1,39 @@
 # Lernfeld 4 – Datenbanken und Schnittstellen
 
-> **Status:** 🚧 in Arbeit · Struktur steht, Inhalte folgen.
-> Du kannst gerne als Erster Inhalte beisteuern – siehe [CONTRIBUTING.md](../CONTRIBUTING.md).
+> **Status:** ✅ Aufgaben + Test fertig · Musterlösungen offen (Community-Beiträge willkommen)
 
 ## Themen dieses Moduls
 
-- **SQL-Grundlagen**: SELECT, INSERT, UPDATE, DELETE
-- **SQLite** als eingebettete Datenbank (Python: `sqlite3`, C++: sqlite3-API oder Wrapper)
-- Datenmodellierung: Tabellen, Primär- und Fremdschlüssel
-- **JSON**: lesen, schreiben, verarbeiten
-- **Schnittstellen**: HTTP-Grundlagen, REST-APIs aufrufen und auswerten
-- CRUD-Anwendungen (Create, Read, Update, Delete)
+- **SQLite** als eingebettete Datenbank (Python: `sqlite3`, C++: sqlite3-C-API mit `-lsqlite3`)
+- **SQL**: SELECT, INSERT, UPDATE, DELETE, WHERE, LIKE, ORDER BY
+- **CRUD**: Daten anlegen, lesen, aktualisieren, löschen
+- **Datenaustausch**: CSV-Export/Import, JSON (Python: `json`-Modul)
 
-## Geplante Aufgaben (Auswahl)
+## Aufgaben (erst Python, dann C++)
 
-1. SQLite-Datenbank anlegen und mit Daten füllen
-2. CRUD-Programm: Notizen in einer DB verwalten
-3. Suchen und Filtern mit SQL (`WHERE`, `ORDER BY`, `LIKE`)
-4. JSON-Datei einlesen und auswerten (z. B. Wetterdaten)
-5. Eigene kleine REST-API abfragen (z. B. öffentliche APIs)
-6. Daten aus einer API in die Datenbank übernehmen
+| # | Aufgabe | Schwierigkeit |
+|---|---|---|
+| 1 | [Datenbank anlegen und befüllen](python/aufgaben/aufgabe_01.md) | ⭐⭐ |
+| 2 | [CRUD: Notizen verwalten](python/aufgaben/aufgabe_02.md) | ⭐⭐⭐ |
+| 3 | [Suchen & Sortieren mit SQL](python/aufgaben/aufgabe_03.md) | ⭐⭐⭐ |
+| 4 | [Daten als CSV exportieren](python/aufgaben/aufgabe_04.md) | ⭐⭐⭐ |
+| 5 | [CSV-Import in die Datenbank](python/aufgaben/aufgabe_05.md) | ⭐⭐⭐⭐ |
+
+## Bewerteter Test
+
+- **Wissenstest** (interaktiv): `python3 ../../tools/quiz.py 4`
+- **Schriftliche Klausur**: [test/test.md](test/test.md) · Lösungsbogen: [test/loesungen.md](test/loesungen.md)
 
 ## Geplantes Mini-Projekt
 
 **Notizverwaltung mit SQLite** – Notizen anlegen, kategorisieren, durchsuchen,
-als JSON exportieren.
+als CSV/JSON exportieren.
 
-## Fortschritt
+## Noch offen
 
-- [ ] Theorie Python (`python/theorie/README.md`)
-- [ ] Theorie C++ (`cpp/theorie/README.md`)
-- [ ] Aufgaben (5–10)
-- [ ] Musterlösungen
+- [ ] Musterlösungen (Aufgaben 1–5, Python & C++)
 - [ ] `checklist.md`
 - [ ] `vergleich.md`
-- [ ] Mini-Projekt
+- [ ] Mini-Projekt-Aufgabe (Spezifikation)
+
+→ Mitmachen? [CONTRIBUTING.md](../CONTRIBUTING.md)

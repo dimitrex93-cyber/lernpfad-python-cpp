@@ -1,0 +1,198 @@
+{
+  "lernfeld": 1,
+  "titel": "Grundlagen der IT und erste Programme",
+  "fragen": [
+    {
+      "id": "lf1_01",
+      "typ": "mc",
+      "frage": "Was bedeutet es, dass Python eine 'interpretierte' Sprache ist?",
+      "optionen": [
+        "Der Code wird einmal komplett in Maschinensprache übersetzt, bevor er läuft.",
+        "Ein Interpreter führt den Code Zeile für Zeile zur Laufzeit aus.",
+        "Python-Programme brauchen keinen Interpreter, sie laufen direkt auf der CPU.",
+        "Der Code wird in Java-Bytecode übersetzt und in einer VM ausgeführt."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Python wird zur Laufzeit Zeile für Zeile vom Interpreter ausgeführt. C++ dagegen wird vorab komplett kompiliert."
+    },
+    {
+      "id": "lf1_02",
+      "typ": "mc",
+      "frage": "Welches Ergebnis liefert dieser C++-Code?  int a = 10; int b = 3; std::cout << a / b;",
+      "optionen": [
+        "3.333...",
+        "3",
+        "3.0",
+        "Es gibt einen Compilerfehler, weil man int nicht dividieren kann."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Bei int / int führt C++ eine Ganzzahl-Division durch und schneidet den Rest ab: 10 / 3 == 3. Für 3.333... braucht es mindestens einen double-Wert."
+    },
+    {
+      "id": "lf1_03",
+      "typ": "mc",
+      "frage": "Welche Aussage zur Typisierung ist korrekt?",
+      "optionen": [
+        "Python ist statisch typisiert, C++ dynamisch.",
+        "In C++ muss der Typ jeder Variable angesagt werden, in Python wird er zur Laufzeit bestimmt.",
+        "Beide Sprachen sind dynamisch typisiert.",
+        "In Python kann eine int-Variable nie einen String enthalten."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "C++ ist statisch typisiert (int x = 5;), Python dynamisch (x = 5; x = 'fünf' ist erlaubt). Der Compiler findet Typfehler in C++ schon beim Übersetzen."
+    },
+    {
+      "id": "lf1_04",
+      "typ": "mc",
+      "frage": "Was liefert input() in Python zurück – egal was der Benutzer eintippt?",
+      "optionen": [
+        "immer eine Ganzzahl (int)",
+        "immer einen String (str)",
+        "immer eine Kommazahl (float)",
+        "den Datentyp, den der Benutzer eingibt"
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "input() gibt immer einen String zurück. Zum Rechnen muss man mit int() oder float() umwandeln, sonst gibt es einen TypeError."
+    },
+    {
+      "id": "lf1_05",
+      "typ": "mc",
+      "frage": "Welches Element braucht jedes C++-Programm als Einstiegspunkt?",
+      "optionen": [
+        "eine main()-Funktion",
+        "ein #include <python>",
+        "eine Klasse namens Programm",
+        "ein print()-Statement"
+      ],
+      "antwort": 0,
+      "punkte": 1,
+      "erklaerung": "Die Ausführung beginnt immer in int main(). Ohne main() verweigert der Linker die Arbeit."
+    },
+    {
+      "id": "lf1_06",
+      "typ": "mc",
+      "frage": "Wie definiert man in Python eine Funktion, die einen Wert zurückgibt?",
+      "optionen": [
+        "function addiere(a, b) { return a + b; }",
+        "def addiere(a, b): return a + b",
+        "def addiere(a, b) => a + b",
+        "fun addiere(a, b) = a + b"
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "Python nutzt 'def name(parameter):' für Funktionsdefinitionen und 'return' für die Rückgabe."
+    },
+    {
+      "id": "lf1_07",
+      "typ": "mc",
+      "frage": "Wozu dient '#include <iostream>' in C++?",
+      "optionen": [
+        "Es startet das Programm.",
+        "Es bindet die Ein-/Ausgabe-Funktionen (std::cout, std::cin) ein.",
+        "Es kompiliert das Programm.",
+        "Es deklariert die main()-Funktion."
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "#include fügt den Inhalt einer Header-Datei ein. <iostream> stellt die Ein-/Ausgabeströme bereit – ohne Include kennt der Compiler std::cout nicht."
+    },
+    {
+      "id": "lf1_08",
+      "typ": "mc",
+      "frage": "Welchen Index hat das ERSTE Element einer Liste bzw. eines std::vector?",
+      "optionen": [
+        "0",
+        "1",
+        "-1",
+        "Das ist je nach Sprache unterschiedlich."
+      ],
+      "antwort": 0,
+      "punkte": 1,
+      "erklaerung": "In Python UND C++ starten Indizes bei 0: noten[0] bzw. noten[0] ist das erste Element."
+    },
+    {
+      "id": "lf1_09",
+      "typ": "mc",
+      "frage": "Was gilt für 'std::vector<int> noten' in C++?",
+      "optionen": [
+        "Die Liste kann gemischte Typen enthalten, z. B. int und string.",
+        "Die Liste kann nur int-Werte enthalten – der Typ steht in den spitzen Klammern.",
+        "Die Liste ist unveränderlich (const).",
+        "Die Liste muss vorher mit new angelegt werden."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "std::vector<T> ist typisiert: vector<int> enthält nur ints. Python-Listen können dagegen gemischte Typen enthalten."
+    },
+    {
+      "id": "lf1_10",
+      "typ": "mc",
+      "frage": "Wozu dient 'try' / 'except' in Python?",
+      "optionen": [
+        "Es beschleunigt das Programm.",
+        "Es fängt Laufzeitfehler ab, z. B. wenn aus einer Eingabe keine Zahl wird.",
+        "Es deklariert neue Variablen.",
+        "Es ist für Schleifen zuständig."
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "try/except fängt Ausnahmen (Exceptions) ab. In C++ übernimmt die Prüfung von std::cin.fail() eine ähnliche Rolle bei Eingabefehlern."
+    },
+    {
+      "id": "lf1_11",
+      "typ": "mc",
+      "frage": "Warum findet ein C++-Programm viele Fehler oft schon vor dem ersten Start?",
+      "optionen": [
+        "Weil C++ keine Laufzeitfehler kennt.",
+        "Weil der Compiler den kompletten Code vorab übersetzt und dabei Typ- und Syntaxfehler meldet.",
+        "Weil der Interpreter jede Zeile doppelt prüft.",
+        "Weil C++-Programme nicht gestartet werden können."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Der Compiler analysiert das gesamte Programm beim Übersetzen: falsche Typen, fehlende Semikolons, unbekannte Namen – alles fällt vor dem Lauf auf. Python entdeckt solche Fehler erst zur Laufzeit."
+    },
+    {
+      "id": "lf1_12",
+      "typ": "mc",
+      "frage": "Welche Python-Schleife ist gleichbedeutend mit  for (int i = 0; i < 5; i++)  in C++?",
+      "optionen": [
+        "for i in range(5):",
+        "for i in 5:",
+        "while i < 5:  (ohne Initialisierung)",
+        "repeat(5):"
+      ],
+      "antwort": 0,
+      "punkte": 1,
+      "erklaerung": "range(5) erzeugt die Zahlen 0 bis 4 – genau das, was die C++-Zählschleife durchläuft."
+    },
+    {
+      "id": "lf1_13",
+      "typ": "open",
+      "frage": "Erkläre in 2–3 Sätzen den Unterschied zwischen interpretierten und kompilierten Sprachen.",
+      "stichworte": ["Interpreter", "Compiler", "Zeile für Zeile", "vorab", "Maschinensprache"],
+      "punkte": 4,
+      "erklaerung": "Interpretierte Sprachen (Python) werden zur Laufzeit Zeile für Zeile von einem Interpreter ausgeführt. Kompilierte Sprachen (C++) werden vorab komplett vom Compiler in Maschinensprache übersetzt; erst dann läuft die erzeugte Binärdatei. Dadurch ist C++ schneller und findet Fehler früher, Python aber schneller auszuprobieren."
+    },
+    {
+      "id": "lf1_14",
+      "typ": "open",
+      "frage": "Nenne und erkläre kurz drei verschiedene Datentypen in C++.",
+      "stichworte": ["int", "double", "bool", "char", "std::string", "ganze Zahl", "Kommazahl"],
+      "punkte": 3,
+      "erklaerung": "Z. B.: int = ganze Zahl (42), double = Kommazahl (3.14), bool = Wahrheitswert (true/false), char = einzelnes Zeichen ('A'), std::string = Text ('Hallo'). Wichtig: In C++ muss der Typ bei der Deklaration angesagt werden."
+    },
+    {
+      "id": "lf1_15",
+      "typ": "open",
+      "frage": "Warum liefert '10 / 3' in Python 3.333..., in C++ aber 3?",
+      "stichworte": ["Ganzzahl-Division", "int", "float", "double", "abschneiden", "//"],
+      "punkte": 3,
+      "erklaerung": "In Python ergibt '/' immer eine Kommazahl (float); nur '//' schneidet ab. In C++ führt int / int eine Ganzzahl-Division durch und schneidet den Rest einfach ab – für eine Kommazahl muss mindestens ein Operand double sein (10.0 / 3)."
+    }
+  ]
+}

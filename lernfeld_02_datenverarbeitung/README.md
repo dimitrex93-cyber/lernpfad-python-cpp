@@ -1,37 +1,39 @@
 # Lernfeld 2 – Einfache Datenverarbeitung und Algorithmen
 
-> **Status:** 🚧 in Arbeit · Struktur steht, Inhalte folgen.
-> Du kannst gerne als Erster Inhalte beisteuern – siehe [CONTRIBUTING.md](../CONTRIBUTING.md).
+> **Status:** ✅ Aufgaben + Test fertig · Musterlösungen offen (Community-Beiträge willkommen)
 
 ## Themen dieses Moduls
 
-- Vertiefung: Listen/Vektoren, Strings, mehrdimensionale Daten
-- **Datei-I/O**: Texte lesen und schreiben
-- **Algorithmen**: Sortieren (Bubble, Selection, Insertion), Lineare & Binäre Suche
-- **Komplexität**: O-Notation – warum ist ein Algorithmus schneller als ein anderer?
-- Rekursion (Grundlagen)
-- Erster spürbarer Python-vs-C++-Performance-Unterschied
+- **Datei-I/O**: Texte und Zahlen aus Dateien lesen
+- **Algorithmen**: Bubble Sort, Binäre Suche
+- **Komplexität**: O-Notation und der erste echte Python-vs-C++-Performance-Unterschied
+- **Datenanalyse**: Statistiken, Wortfrequenzen (`dict` / `std::map`)
 
-## Geplante Aufgaben (Auswahl)
+## Aufgaben (erst Python, dann C++)
 
-1. Zahlen aus einer Datei einlesen und Statistiken berechnen
-2. Eigener Sortieralgorithmus (z. B. Bubble Sort) in Python & C++
-3. Binäre Suche in einer sortierten Liste
-4. Wort-für-Wort-Datei-Umwandler (z. B. Groß/Klein, CSV)
-5. Größter gemeinsamer Teiler (rekursiv, Euklid)
-6. Laufzeit-Messung: gleicher Algorithmus in Python vs. C++
+| # | Aufgabe | Schwierigkeit |
+|---|---|---|
+| 1 | [Zahlenstatistik aus einer Datei](python/aufgaben/aufgabe_01.md) | ⭐⭐ |
+| 2 | [Bubble Sort selbst gebaut](python/aufgaben/aufgabe_02.md) | ⭐⭐ |
+| 3 | [Binäre Suche](python/aufgaben/aufgabe_03.md) | ⭐⭐⭐ |
+| 4 | [Wortfrequenz-Analyse](python/aufgaben/aufgabe_04.md) | ⭐⭐⭐ |
+| 5 | [Laufzeit-Vergleich Python vs. C++](python/aufgaben/aufgabe_05.md) | ⭐⭐⭐⭐ |
+
+## Bewerteter Test
+
+- **Wissenstest** (interaktiv): `python3 ../../tools/quiz.py 2`
+- **Schriftliche Klausur**: [test/test.md](test/test.md) · Lösungsbogen: [test/loesungen.md](test/loesungen.md)
 
 ## Geplantes Mini-Projekt
 
 **Notenverwaltung mit Dateispeicherung** – Noten eingeben, in einer Datei
 speichern, laden und auswerten (Weiterentwicklung von Lernfeld 1, Aufgabe 4).
 
-## Fortschritt
+## Noch offen
 
-- [ ] Theorie Python (`python/theorie/README.md`)
-- [ ] Theorie C++ (`cpp/theorie/README.md`)
-- [ ] Aufgaben (5–10)
-- [ ] Musterlösungen
+- [ ] Musterlösungen (Aufgaben 1–5, Python & C++)
 - [ ] `checklist.md`
 - [ ] `vergleich.md`
-- [ ] Mini-Projekt
+- [ ] Mini-Projekt-Aufgabe (Spezifikation)
+
+→ Mitmachen? [CONTRIBUTING.md](../CONTRIBUTING.md)

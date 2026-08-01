@@ -96,6 +96,24 @@ sind Richtwerte für ein realistisches Lernpensum von ca. **4–6 Stunden pro Wo
 4. **1× vergleich.md** des abgeschlossenen Moduls lesen
 5. Optional: eigene Mini-Projekte bauen und im eigenen GitHub-Profil zeigen
 
+## Tests & Bewertung – die Lern-App-Ebene
+
+Jedes Lernfeld schließt mit einem **bewerteten Test** ab (einheitlicher
+Notenschlüssel, bestanden ab Note 4 / 50 %):
+
+| Prüfungsform | Was | Wie |
+|---|---|---|
+| Wissenstest | 15 Fragen, Punkte, Sofort-Feedback | `python3 tools/quiz.py <Nr>` |
+| Schriftliche Klausur | 30 Punkte, 60 Minuten, Lösungsbogen | `test/test.md` + `test/loesungen.md` |
+
+**Modul-Freischaltung:** Erst wenn der Test bestanden ist, gilt das Lernfeld
+als abgeschlossen – dann geht es zum nächsten. Das hält den Lernpfad ehrlich:
+Verstehen statt Durchblättern. Der Fortschritt liegt in `~/.lernpfad/fortschritt.json`,
+die Übersicht zeigt `python3 tools/quiz.py --status`.
+
+> 🏆 **Abschluss:** Wer alle 6 Lernfelder besteht, hat den kompletten Pfad vom
+> Anfänger zum Senior-Niveau durchlaufen – dokumentiert durch Punkte und Noten.
+
 ## Dein Fortschritt gehört dir
 
 Forke dieses Repository und arbeite in deinem eigenen Fork – so wird dein
