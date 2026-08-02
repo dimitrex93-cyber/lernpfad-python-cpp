@@ -7,8 +7,8 @@ Hier liegen die Referenzlösungen zu den Aufgaben.
 | Aufgabe 1: Persönliche Begrüßung | [aufgabe_01.py](aufgabe_01.py) | ✅ |
 | Aufgabe 2: Temperaturumrechner | [aufgabe_02.py](aufgabe_02.py) | ✅ |
 | Aufgabe 3: Zahlenraten | [aufgabe_03.py](aufgabe_03.py) | ✅ |
-| Aufgabe 4: Notenverwaltung | – | 🚧 folgt |
-| Aufgabe 5: Textanalyse | – | 🚧 folgt |
+| Aufgabe 4: Notenverwaltung | [aufgabe_04.py](aufgabe_04.py) | ✅ |
+| Aufgabe 5: Textanalyse | [aufgabe_05.py](aufgabe_05.py) | ✅ |
 
 ## Wichtige Regeln für dich als Lernende\*r
 
@@ -16,9 +16,10 @@ Hier liegen die Referenzlösungen zu den Aufgaben.
    Abschreiben. Du lernst am meisten, wenn du vorher selbst gescheitert bist.
 2. **Es gibt keinen „richtigen" Code.** Diese Lösungen sind *ein* sauberer Weg –
    deine Lösung darf (und soll!) anders aussehen.
-3. **Aufgaben 4 und 5** haben bewusst noch keine Lösung: Löse sie eigenständig
-   und reiche deine Lösung gern als Pull Request ein (siehe
-   [CONTRIBUTING.md](../../../CONTRIBUTING.md)) – so hilfst du der Community!
+3. Das **Mini-Projekt** dieses Lernfelds (Taschenrechner mit Verlauf) hat
+   bewusst noch keine Lösung: Löse es eigenständig und reiche deine Lösung gern
+   als Pull Request ein (siehe [CONTRIBUTING.md](../../../CONTRIBUTING.md)) –
+   so hilfst du der Community!
 
 ## Ausführen
 
@@ -26,6 +27,6 @@ Hier liegen die Referenzlösungen zu den Aufgaben.
 python3 aufgabe_01.py
 python3 aufgabe_02.py
 python3 aufgabe_03.py
+python3 aufgabe_04.py
+python3 aufgabe_05.py
 ```
-
-Die Lösungen nutzen nur die Python-Standardbibliothek.

@@ -7,8 +7,8 @@ Hier liegen die Referenzlösungen zu den Aufgaben.
 | Aufgabe 1: Persönliche Begrüßung | [aufgabe_01.cpp](aufgabe_01.cpp) | ✅ |
 | Aufgabe 2: Temperaturumrechner | [aufgabe_02.cpp](aufgabe_02.cpp) | ✅ |
 | Aufgabe 3: Zahlenraten | [aufgabe_03.cpp](aufgabe_03.cpp) | ✅ |
-| Aufgabe 4: Notenverwaltung | – | 🚧 folgt |
-| Aufgabe 5: Textanalyse | – | 🚧 folgt |
+| Aufgabe 4: Notenverwaltung | [aufgabe_04.cpp](aufgabe_04.cpp) | ✅ |
+| Aufgabe 5: Textanalyse | [aufgabe_05.cpp](aufgabe_05.cpp) | ✅ |
 
 ## Wichtige Regeln für dich als Lernende\*r
 
@@ -16,18 +16,17 @@ Hier liegen die Referenzlösungen zu den Aufgaben.
    Abschreiben. Du lernst am meisten, wenn du vorher selbst gescheitert bist.
 2. **Es gibt keinen „richtigen" Code.** Diese Lösungen sind *ein* sauberer Weg –
    deine Lösung darf (und soll!) anders aussehen.
-3. **Aufgaben 4 und 5** haben bewusst noch keine Lösung: Löse sie eigenständig
-   und reiche deine Lösung gern als Pull Request ein (siehe
-   [CONTRIBUTING.md](../../../CONTRIBUTING.md)).
+3. Das **Mini-Projekt** dieses Lernfelds (Taschenrechner mit Verlauf) hat
+   bewusst noch keine Lösung: Löse es eigenständig und reiche deine Lösung gern
+   als Pull Request ein (siehe [CONTRIBUTING.md](../../../CONTRIBUTING.md)) –
+   so hilfst du der Community!
 
-## Kompilieren und ausführen
+## Kompilieren & Ausführen
 
 ```bash
 g++ -std=c++17 -Wall -Wextra aufgabe_01.cpp -o aufgabe_01 && ./aufgabe_01
 g++ -std=c++17 -Wall -Wextra aufgabe_02.cpp -o aufgabe_02 && ./aufgabe_02
 g++ -std=c++17 -Wall -Wextra aufgabe_03.cpp -o aufgabe_03 && ./aufgabe_03
+g++ -std=c++17 -Wall -Wextra aufgabe_04.cpp -o aufgabe_04 && ./aufgabe_04
+g++ -std=c++17 -Wall -Wextra aufgabe_05.cpp -o aufgabe_05 && ./aufgabe_05
 ```
-
-Alle Lösungen kompilieren mit **null Warnungen** bei `-Wall -Wextra`
-(Stand: C++17, g++ 15.x). Die kompilierten Binaries gehören nicht ins
-Repository – sie landen automatisch im `.gitignore`.
