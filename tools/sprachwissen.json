@@ -1,0 +1,162 @@
+{
+  "titel": "Sprachen-Wissen: Python & C++ erklärt",
+  "beschreibung": "Kurze Erklärungen zu den wichtigsten Konzepten – immer im direkten Vergleich der beiden Sprachen. Ideal zum Nachschlagen vor dem Quiz oder den Aufgaben.",
+  "themen": [
+    {
+      "id": "einstiegspunkt",
+      "titel": "Einstiegspunkt: Wo startet das Programm?",
+      "python": {
+        "text": "Ein Python-Programm braucht keinen besonderen Einstiegspunkt: Der Interpreter liest die Datei von oben nach unten und führt jede Zeile direkt aus. Ein if __name__ == \"__main__\":-Block ist nur eine Konvention – er stellt sicher, dass Code nur beim direkten Start ausgeführt wird und nicht, wenn die Datei als Modul importiert wird.",
+        "code": "print(\"Hallo Welt\")\n\nif __name__ == \"__main__\":\n    main()   # nur beim direkten Start"
+      },
+      "cpp": {
+        "text": "Jedes C++-Programm braucht genau eine Funktion namens main – sie ist der Pflicht-Einstiegspunkt. Ohne main meldet der Linker einen Fehler. Der Rückgabetyp ist immer int; der Rückgabewert geht an das Betriebssystem (0 = Erfolg).",
+        "code": "#include <iostream>\n\nint main() {\n    std::cout << \"Hallo Welt\" << std::endl;\n    return 0;\n}"
+      },
+      "vergleich": "Python startet einfach beim ersten Code – C++ erzwingt einen definierten Startpunkt. Wer ein C++-Programm liest, findet den Einstieg also immer sofort."
+    },
+    {
+      "id": "string",
+      "titel": "Was ist ein String?",
+      "python": {
+        "text": "Ein String (Typ str) ist eine unveränderliche Folge von Zeichen: Du kannst ihn nach der Erstellung nicht ändern, sondern erzeugst beim Bearbeiten immer einen neuen. Strings stehen in einfachen ('...') oder doppelten (\"...\") Anführungszeichen. Unicode ist eingebaut – Umlaute und Emojis funktionieren direkt.",
+        "code": "name = \"Lena\"\nprint(name.upper())   # LENA\nprint(name[1:3])      # en\nprint(len(name))      # 4"
+      },
+      "cpp": {
+        "text": "In C++ gibt es zwei Arten: den modernen std::string (aus der Header-Datei <string>) und die alten C-Strings (char-Arrays, deren Ende ein Nullzeichen markiert). std::string ist veränderlich und kann wachsen; C-Strings sind starr und fehleranfällig. Im Kurs nutzen wir std::string.",
+        "code": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string name = \"Lena\";\n    std::cout << name.size() << std::endl;   // 4\n    std::cout << name.substr(1, 2);          // en\n    return 0;\n}"
+      },
+      "vergleich": "Python hat genau einen String-Typ (str), C++ unterscheidet std::string und C-Strings. In C++ musst du außerdem die passende Header-Datei einbinden."
+    },
+    {
+      "id": "variablen",
+      "titel": "Variablen & Datentypen",
+      "python": {
+        "text": "Python ist dynamisch typisiert: Beim Zuweisen legt der Interpreter den Typ automatisch fest – und eine Variable darf ihren Typ sogar wechseln. Du deklarierst nichts, die erste Zuweisung erzeugt die Variable. Mit type(x) siehst du den aktuellen Typ.",
+        "code": "zahl = 42        # int\nname = \"Hallo\"   # str\nzahl = \"eins\"    # erlaubt: Typwechsel\nprint(type(zahl))"
+      },
+      "cpp": {
+        "text": "C++ ist statisch typisiert: Jede Variable muss vor der Nutzung mit Typ deklariert werden, und dieser Typ ist fix. Anweisungen enden mit einem Semikolon. Der Compiler prüft die Typen schon beim Übersetzen – viele Fehler fallen so auf, bevor das Programm überhaupt startet.",
+        "code": "int zahl = 42;            // int ist fix\nstd::string name = \"Hallo\";\n// zahl = \"eins\";        // Compilerfehler!"
+      },
+      "vergleich": "Python entscheidet zur Laufzeit, C++ zur Compile-Zeit. Deshalb ist C++ strenger, dafür aber auch schneller: Der Compiler kennt jeden Typ exakt."
+    },
+    {
+      "id": "ein_ausgabe",
+      "titel": "Ein- und Ausgabe",
+      "python": {
+        "text": "print() schreibt Text auf die Konsole, input() liest eine Zeile von der Tastatur – und liefert IMMER einen String zurück. Zahlen musst du also erst umwandeln (int(...)).",
+        "code": "name = input(\"Wie heißt du? \")\nprint(\"Hallo\", name)\nalter = int(input(\"Alter: \"))   # String -> int"
+      },
+      "cpp": {
+        "text": "Für Ein-/Ausgabe brauchst du #include <iostream>. std::cout gibt aus (Operator <<), std::cin liest ein (Operator >>). Achtung: std::cin >> liest nur bis zum nächsten Leerzeichen – für ganze Zeilen nimmst du std::getline.",
+        "code": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string name;\n    std::cout << \"Wie heißt du? \";\n    std::getline(std::cin, name);\n    std::cout << \"Hallo \" << name << std::endl;\n    return 0;\n}"
+      },
+      "vergleich": "print()/input() sind in Python eingebaut, cout/cin müssen per Header eingebunden werden. Python wandelt Eingaben nie automatisch um, C++ erwartet beim Einlesen den passenden Typ."
+    },
+    {
+      "id": "bedingungen",
+      "titel": "Bedingungen (if / else)",
+      "python": {
+        "text": "if / elif / else – Blöcke werden durch Einrückung gebildet, Klammern sind nicht nötig. Die logischen Verknüpfungen heißen and, or, not.",
+        "code": "note = int(input(\"Note: \"))\nif note <= 2:\n    print(\"stark\")\nelif note <= 4:\n    print(\"okay\")\nelse:\n    print(\"üben!\")"
+      },
+      "cpp": {
+        "text": "if / else if / else – Blöcke stehen in geschweiften Klammern, die Bedingung in runden. Logische Operatoren sind &&, ||, !. In C++ ist 0 falsch, jeder andere Wert wahr.",
+        "code": "int note;\nstd::cin >> note;\nif (note <= 2) {\n    std::cout << \"stark\";\n} else if (note <= 4) {\n    std::cout << \"okay\";\n} else {\n    std::cout << \"üben!\";\n}"
+      },
+      "vergleich": "Gleiche Idee, andere Syntax: Einrückung statt geschweifte Klammern, and/or statt &&/||. Beide Sprachen kennen außerdem den Kurzschreibweise-Operator (?: in C++, ähnliche Muster in Python)."
+    },
+    {
+      "id": "schleifen",
+      "titel": "Schleifen (for / while)",
+      "python": {
+        "text": "for eignet sich zum Durchlaufen von Bereichen (range) und Sammlungen, while läuft, solange eine Bedingung gilt. Kein Zählindex nötig – Python zählt für dich.",
+        "code": "for i in range(3):          # 0, 1, 2\n    print(i)\n\nfor name in [\"Lena\", \"Tom\"]:\n    print(name)"
+      },
+      "cpp": {
+        "text": "Die klassische for-Schleife hat drei Teile: Startwert; Bedingung; Schritt. Seit C++11 gibt es zusätzlich die moderne Range-for-Schleife für Container.",
+        "code": "for (int i = 0; i < 3; i++) {\n    std::cout << i;          // 012\n}\n\n// moderner (C++11): Range-for\nfor (int x : {1, 2, 3}) {\n    std::cout << x;\n}"
+      },
+      "vergleich": "Pythons for über range() entspricht der Zählschleife in C++. In C++ musst du Start, Abbruchbedingung und Inkrement selbst angeben – Python macht das automatisch."
+    },
+    {
+      "id": "funktionen",
+      "titel": "Funktionen",
+      "python": {
+        "text": "def definiert eine Funktion. Rückgabetyp und Parametertypen werden nicht angegeben – Python prüft das zur Laufzeit. Ohne return liefert die Funktion None.",
+        "code": "def quadrat(x):\n    return x * x\n\nprint(quadrat(4))   # 16"
+      },
+      "cpp": {
+        "text": "Eine C++-Funktion braucht immer einen Rückgabetyp (void, wenn nichts zurückkommt) und Typen für alle Parameter. Du kannst Deklaration (Prototyp) und Definition trennen – z. B. für eigene Header-Dateien.",
+        "code": "int quadrat(int x) {     // Rückgabetyp int\n    return x * x;\n}\n\nint main() {\n    std::cout << quadrat(4);   // 16\n    return 0;\n}"
+      },
+      "vergleich": "Python: def + Einrückung. C++: Rückgabetyp, Parametertypen, geschweifte Klammern – und nach der Deklaration ein Semikolon."
+    },
+    {
+      "id": "listen",
+      "titel": "Listen & Vektoren",
+      "python": {
+        "text": "Listen (list) sind dynamisch: Sie wachsen und schrumpfen, dürfen gemischte Typen enthalten und lassen sich mit Methoden wie append(), sort() oder pop() bearbeiten. Slicing gibt Teilbereiche zurück.",
+        "code": "zahlen = [3, 1, 2]\nzahlen.append(4)\nzahlen.sort()\nprint(zahlen[0])    # 1\nprint(zahlen[-1])   # 4"
+      },
+      "cpp": {
+        "text": "Der dynamische Listen-Typ in C++ ist std::vector (aus <vector>). Er wächst bei Bedarf, der Zugriff läuft über [] oder .at(). Daneben gibt es starre C-Arrays (int arr[3];), deren Größe feststeht.",
+        "code": "#include <vector>\n#include <algorithm>\n\nstd::vector<int> zahlen = {3, 1, 2};\nzahlen.push_back(4);\nstd::sort(zahlen.begin(), zahlen.end());\nstd::cout << zahlen[0];    // 1"
+      },
+      "vergleich": "list ↔ std::vector. Python darf in einer Liste verschiedene Typen mischen, ein vector<int> enthält nur ints – statische Typisierung! Für std::sort brauchst du #include <algorithm>."
+    },
+    {
+      "id": "klassen",
+      "titel": "Klassen & Objekte (OOP)",
+      "python": {
+        "text": "Klassen werden mit class definiert. __init__ ist der Konstruktor, self ist der Verweis auf das eigene Objekt (immer erster Parameter). Alles ist standardmäßig öffentlich – Kapselung regelt man per Konvention (Unterstrich _name).",
+        "code": "class Hund:\n    def __init__(self, name):\n        self.name = name\n\n    def bellen(self):\n        print(self.name, \"sagt Wuff!\")\n\nh = Hund(\"Rex\")\nh.bellen()"
+      },
+      "cpp": {
+        "text": "In C++ hat eine Klasse explizite Sichtbarkeitsbereiche: private (Standard), protected und public. Der Konstruktor heißt wie die Klasse. Member-Variablen und -Methoden werden im Klassenrumpf deklariert.",
+        "code": "class Hund {\nprivate:\n    std::string name;\npublic:\n    Hund(std::string n) : name(n) {}\n\n    void bellen() const {\n        std::cout << name << \" sagt Wuff!\" << std::endl;\n    }\n};"
+      },
+      "vergleich": "Python: self + __init__, alles öffentlich. C++: Konstruktor heißt wie die Klasse, Sichtbarkeit (private/public) wird explizit deklariert."
+    },
+    {
+      "id": "fehlerbehandlung",
+      "titel": "Fehlerbehandlung (try / except / catch)",
+      "python": {
+        "text": "try/except fängt Laufzeitfehler (Exceptions). Du kannst gezielt bestimmte Typen abfangen, z. B. ValueError (falsche Zahl) oder FileNotFoundError (Datei fehlt). Ohne except bricht das Programm mit einem Traceback ab.",
+        "code": "try:\n    zahl = int(input(\"Zahl: \"))\nexcept ValueError:\n    print(\"Das war keine Zahl!\")"
+      },
+      "cpp": {
+        "text": "try/catch arbeitet mit Exceptions, die per throw geworfen werden. Gefangen wird mit catch (const std::exception& e). Wird nichts gefangen, beendet das Programm über std::terminate – in der Praxis ein Absturz.",
+        "code": "try {\n    int alter = std::stoi(\"abc\");   // wirft std::invalid_argument\n} catch (const std::exception& e) {\n    std::cout << \"Fehler: \" << e.what();\n}"
+      },
+      "vergleich": "Gleiches Prinzip: Code, der schiefgehen kann, kommt in try, die Behandlung in except bzw. catch. Python unterscheidet Fehlertypen wie ValueError, C++ solche wie std::invalid_argument."
+    },
+    {
+      "id": "kompilieren",
+      "titel": "Kompilieren & Ausführen",
+      "python": {
+        "text": "python3 datei.py startet das Programm direkt: Der Interpreter übersetzt und führt den Code Zeile für Zeile aus. Es gibt keinen separaten Build-Schritt – viele Fehler fallen erst beim Ausführen auf.",
+        "code": "python3 hallo.py"
+      },
+      "cpp": {
+        "text": "C++-Code wird in zwei Schritten übersetzt: Der Compiler (z. B. g++) erzeugt aus der .cpp-Datei Maschinencode, der Linker setzt alles zu einem ausführbaren Programm zusammen. Erst dann kann man es starten. Fehler → kein Programm.",
+        "code": "g++ hallo.cpp -o hallo && ./hallo"
+      },
+      "vergleich": "Python: schreiben → ausführen. C++: schreiben → kompilieren → linken → ausführen. Dafür läuft C++ schneller und findet Fehler früher."
+    },
+    {
+      "id": "speicher",
+      "titel": "Speicher & Pointer (C++-Spezialthema)",
+      "python": {
+        "text": "Python übernimmt die Speicherverwaltung komplett: Ein Garbage Collector räumt nicht mehr benötigte Objekte automatisch weg. Du musst Speicher weder reservieren noch freigeben und hast keine Pointer – Referenzen bleiben intern und sicher.",
+        "code": "zahlen = [1, 2, 3]   # Speicher verwaltet Python automatisch"
+      },
+      "cpp": {
+        "text": "C++ gibt dir direkte Kontrolle: Lokale Variablen liegen auf dem Stack (werden automatisch aufgeräumt), mit new reservierter Speicher liegt auf dem Heap – den musst du mit delete selbst freigeben (besser: smart pointer wie std::unique_ptr). Pointer (int* p = &x;) speichern Adressen; falscher Umgang führt zu Segmentation Faults.",
+        "code": "int x = 5;\nint* p = &x;        // p zeigt auf x\nstd::cout << *p;    // 5\n\nint* arr = new int[10];\n// ... nutzen ...\ndelete[] arr;       // selbst freigeben!"
+      },
+      "vergleich": "Python schützt dich vor Speicherfehlern, C++ gibt dir dafür volle Kontrolle und Performance – mit Verantwortung. Das ist der wichtigste konzeptionelle Unterschied zwischen den beiden Welten."
+    }
+  ]
+}

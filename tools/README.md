@@ -27,7 +27,37 @@ python3 tools/quiz.py --list
 
 # Fortschritt eines Lernfelds zurücksetzen
 python3 tools/quiz.py --reset 2
+
+# Sprachen-Wissen: Python & C++ erklärt (Menü)
+python3 tools/quiz.py --wissen
+
+# Ein bestimmtes Thema direkt anzeigen (ID oder Nummer)
+python3 tools/quiz.py --wissen string
+python3 tools/quiz.py --wissen 2
 ```
+
+### Sprachen-Wissen (Menüpunkt `w`)
+
+Zusätzlich zu den 6 Lernfeld-Tests gibt es den Menüpunkt **`w` – Sprachen-Wissen**:
+ein kompaktes Nachschlagewerk, das die wichtigsten Konzepte **immer im direkten
+Vergleich Python ↔ C++** erklärt – z. B. was ein String ist, welchen
+Einstiegspunkt C++ braucht (`int main()`), wie Schleifen, Klassen oder
+Fehlerbehandlung in beiden Sprachen funktionieren.
+
+Die Inhalte liegen in `tools/sprachwissen.json`. Jedes Thema hat diese Struktur:
+
+```json
+{
+  "id": "string",
+  "titel": "Was ist ein String?",
+  "python": { "text": "Erklärung …", "code": "print(\"Hallo\")" },
+  "cpp":    { "text": "Erklärung …", "code": "int main() { … }" },
+  "vergleich": "Kernunterschied in einem Satz"
+}
+```
+
+Neue Themen sind einfach als weiterer Eintrag in `themen[]` ergänzt – `code`
+ist optional.
 
 ### Ablauf
 

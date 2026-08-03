@@ -12,6 +12,8 @@ Verwendung:
     python3 tools/quiz.py --status        # Fortschritt aller Lernfelder
     python3 tools/quiz.py --reset 2       # Fortschritt von Lernfeld 2 löschen
     python3 tools/quiz.py --list          # Lernfelder auflisten
+    python3 tools/quiz.py --wissen        # Sprachen-Wissen: Python & C++ erklärt
+    python3 tools/quiz.py --wissen string # ein Wissensthema direkt anzeigen
 
 Punkte & Noten:
     - Bestanden ab 50 % (Note 4 oder besser), Notenschlüssel identisch
@@ -44,6 +46,8 @@ LERN_FELDER = [
 ]
 
 FORTSCHRITT_DATEI = os.path.expanduser("~/.lernpfad/fortschritt.json")
+
+WISSEN_DATEI = os.path.join(PROJEKT_ROOT, "tools", "sprachwissen.json")
 
 PASS_PERCENT = 50          # ab 50 % gilt der Test als bestanden (Note 4)
 BUCHSTABEN = "abcd"
@@ -290,6 +294,96 @@ def run_test(lf_nr, fortschritt):
 
 
 # ---------------------------------------------------------------------------
+# Sprachen-Wissen (Python & C++ erklärt)
+# ---------------------------------------------------------------------------
+
+def lade_wissen():
+    """Lädt die Wissensdatenbank (tools/sprachwissen.json)."""
+    if not os.path.isfile(WISSEN_DATEI):
+        sys.exit(c(f"Keine Wissensdatenbank gefunden: {WISSEN_DATEI}", "rot"))
+    with open(WISSEN_DATEI, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def zeige_wissen_thema(thema):
+    """Zeigt ein einzelnes Wissensthema (Python + C++ + Vergleich)."""
+    print(c("\n" + "═" * 62, "fett"))
+    print(c(f"  {thema['titel']}", "fett"))
+    print(c("═" * 62, "fett"))
+    for sprache, icon in (("python", "🐍 Python"), ("cpp", "⚙️  C++")):
+        block = thema.get(sprache)
+        if not block:
+            continue
+        print()
+        print(c(f"{icon}", "fett"))
+        print(block["text"])
+        if block.get("code"):
+            print(c("Code:", "dunkel"))
+            for zeile in block["code"].splitlines():
+                print(c("    " + zeile, "cyan"))
+    if thema.get("vergleich"):
+        print()
+        print(c("💡 Vergleich:", "gelb"))
+        print(thema["vergleich"])
+    print()
+
+
+def zeige_wissen(auswahl=None):
+    """Sprachen-Wissen-Menü: Themenliste, dann Thema auswählen.
+
+    auswahl: optional eine Thema-ID (z. B. 'string') oder Nummer,
+    um direkt ein Thema anzuzeigen.
+    """
+    daten = lade_wissen()
+    themen = daten["themen"]
+
+    def finde_thema(auswahl):
+        if auswahl is None:
+            return None
+        auswahl = str(auswahl).strip()
+        if auswahl.isdigit():
+            nr = int(auswahl)
+            if 1 <= nr <= len(themen):
+                return themen[nr - 1]
+            return None
+        wahl = auswahl.lower()
+        return next((t for t in themen if t["id"].lower() == wahl), None)
+
+    ziel = finde_thema(auswahl)
+    if ziel is not None:
+        zeige_wissen_thema(ziel)
+        return
+
+    # Explizite, aber unbekannte Auswahl → Hinweis statt Menü
+    if auswahl is not None:
+        ids = ", ".join(t["id"] for t in themen)
+        print(c(f"Unbekanntes Thema: '{auswahl}'.", "rot"))
+        print(c(f"Verfügbare Themen: {ids}", "dunkel"))
+        return
+
+    print(c(f"\n=== {daten['titel']} ===\n", "fett"))
+    print(c(daten.get("beschreibung", ""), "dunkel"))
+    print()
+    for i, thema in enumerate(themen, start=1):
+        print(f"  {i}: {thema['titel']}")
+    print()
+    while True:
+        eingabe = input(f"Thema wählen (1–{len(themen)}, q = zurück): ")
+        if eingabe.lower() in ("q", "quit", "exit"):
+            return
+        ziel = finde_thema(eingabe)
+        if ziel is not None:
+            zeige_wissen_thema(ziel)
+            input(c("Enter drücken für die Themenliste …", "dunkel"))
+            print(c(f"\n=== {daten['titel']} ===\n", "fett"))
+            for i, thema in enumerate(themen, start=1):
+                print(f"  {i}: {thema['titel']}")
+            print()
+            continue
+        print(c("Bitte eine Nummer, eine Thema-ID oder q eingeben.", "gelb"))
+
+
+# ---------------------------------------------------------------------------
 # Hauptprogramm
 # ---------------------------------------------------------------------------
 
@@ -304,6 +398,10 @@ def main():
                         help="Fortschritt eines Lernfelds löschen (z. B. --reset 2)")
     parser.add_argument("--list", action="store_true",
                         help="Verfügbare Lernfelder auflisten")
+    parser.add_argument("--wissen", nargs="?", const="", metavar="THEMA",
+                        help="Sprachen-Wissen anzeigen (Python & C++ erklärt); "
+                             "ohne THEMA: Themenmenü, mit THEMA: Thema direkt "
+                             "(ID oder Nummer, z. B. --wissen string)")
     args = parser.parse_args()
 
     fortschritt = lade_fortschritt()
@@ -327,7 +425,12 @@ def main():
         for nr, titel, _ in LERN_FELDER:
             status = "✓" if fortschritt.get(f"lf{nr}", {}).get("bestanden") else " "
             print(f"  [{status}] {nr}: {titel}")
+        print(c("  [ ] w: Sprachen-Wissen – Python & C++ erklärt", "cyan"))
         print()
+        return
+
+    if args.wissen is not None:
+        zeige_wissen(args.wissen or None)
         return
 
     if args.lernfeld is not None:
@@ -339,16 +442,27 @@ def main():
     for nr, titel, _ in LERN_FELDER:
         status = "✓" if fortschritt.get(f"lf{nr}", {}).get("bestanden") else " "
         print(f"  [{status}] {nr}: {titel}")
+    print(c("  [ ] w: Sprachen-Wissen – Python & C++ erklärt", "cyan"))
     print()
     while True:
-        eingabe = input("Welches Lernfeld möchtest du testen? (1–6, q = Ende): ")
+        eingabe = input("Auswahl (1–6, w = Wissen, q = Ende): ")
         if eingabe.lower() in ("q", "quit", "exit"):
             print("Bis bald!")
             return
+        if eingabe.lower() in ("w", "wissen"):
+            zeige_wissen()
+            # nach dem Sprachen-Wissen zurück zum Menü
+            print(c("\nLernpfad Python & C++ – Wissenstest\n", "fett"))
+            for nr, titel, _ in LERN_FELDER:
+                status = "✓" if fortschritt.get(f"lf{nr}", {}).get("bestanden") else " "
+                print(f"  [{status}] {nr}: {titel}")
+            print(c("  [ ] w: Sprachen-Wissen – Python & C++ erklärt", "cyan"))
+            print()
+            continue
         if eingabe.isdigit() and 1 <= int(eingabe) <= len(LERN_FELDER):
             run_test(int(eingabe), fortschritt)
             return
-        print(c("Bitte eine Zahl von 1 bis 6 eingeben.", "gelb"))
+        print(c("Bitte 1–6, w oder q eingeben.", "gelb"))
 
 
 if __name__ == "__main__":
