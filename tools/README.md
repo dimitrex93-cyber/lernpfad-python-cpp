@@ -70,6 +70,7 @@ Vergleich und Merksatz pro Abschnitt.
 | 13 | Netzwerke und Sockets | TCP/UDP, Server/Client, HTTP |
 | 14 | Testing und Debugging | Unit-Tests, TDD, pytest/doctest, gdb |
 | 15 | Git, Projektmanagement und CI | Commits, Branches, Scrum, GitHub Actions |
+| 16 | Dateien, Module und erste Projekte | Datei-I/O, Imports/Header, erstes eigenes Skript |
 
 ### Lesestatus
 

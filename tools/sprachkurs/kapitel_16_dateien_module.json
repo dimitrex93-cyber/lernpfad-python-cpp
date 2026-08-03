@@ -1,0 +1,59 @@
+{
+  "id": "dateien_module",
+  "titel": "Kapitel 16: Dateien, Module und erste eigene Projekte",
+  "einleitung": "Jetzt wird es praktisch: Echte Skripte lesen und schreiben Dateien, nutzen Module und wachsen zu kleinen Projekten. Dieses Kapitel schließt die Lücke zwischen den Grundlagen und deinem ersten eigenen Programm – das Wissen, das du brauchst, um sicher dein erstes Python- und C++-Skript zu bauen.",
+  "abschnitte": [
+    {
+      "titel": "Dateien lesen",
+      "python": {
+        "text": "Fast jedes echte Skript verarbeitet Dateien. In Python öffnest du eine Datei mit open() – am besten mit dem with-Block, der die Datei automatisch schließt. read() liest alles, readlines() alle Zeilen als Liste, readline() nur eine Zeile. Fehlt die Datei, wirft Python einen FileNotFoundError – fange ihn mit try/except ab. Achtung: Dateien enthalten Text; wenn du Zahlen willst, wandle um (int(), float()).",
+        "code": "# daten.txt einlesen\nwith open(\"daten.txt\", encoding=\"utf-8\") as datei:\n    inhalt = datei.read()          # komplett als String\n    zeilen = datei.readlines()     # als Liste (nach read leer!)\n\n# Zeile für Zeile (speicherschonend bei großen Dateien)\nwith open(\"daten.txt\", encoding=\"utf-8\") as datei:\n    for zeile in datei:\n        print(zeile.strip())       # strip() entfernt \\n\n\n# Fehler abfangen:\ntry:\n    with open(\"fehlt.txt\") as f:\n        print(f.read())\nexcept FileNotFoundError:\n    print(\"Datei existiert nicht!\")"
+      },
+      "cpp": {
+        "text": "In C++ nutzt du std::ifstream (input file stream) aus <fstream> zum Lesen. Wichtig: Nach dem Öffnen prüfen, ob es geklappt hat – ifstream verhält sich wie false, wenn die Datei fehlt. Zeilen liest du mit std::getline. Der Stream gibt bei Dateiende false zurück – perfekt für die while-Schleife. Zahlen werden automatisch mit >> eingelesen und umgewandelt.",
+        "code": "#include <fstream>\n#include <iostream>\n#include <string>\n\nstd::ifstream datei(\"daten.txt\");\nif (!datei) {                  // Öffnen fehlgeschlagen?\n    std::cerr << \"Datei fehlt!\" << std::endl;\n    return 1;\n}\n\nstd::string zeile;\nwhile (std::getline(datei, zeile)) {  // bis Dateiende\n    std::cout << zeile << std::endl;\n}\n\n// Zahlen lesen:\nint zahl;\nwhile (datei >> zahl) {\n    std::cout << zahl * 2 << std::endl;\n}\n// datei schließt sich selbst (RAII)!"
+      },
+      "vergleich": "Python: with open() + read/readlines, automatisches Schließen. C++: ifstream + getline, prüfe mit if (!datei), RAII schließt automatisch.",
+      "merk": "Immer prüfen: Python try/except FileNotFoundError, C++ if (!datei)."
+    },
+    {
+      "titel": "Dateien schreiben",
+      "python": {
+        "text": "Zum Schreiben öffnest du mit open(datei, \"w\") – w überschreibt, a hängt an (append). write() schreibt Text, und mit print(datei=...) kannst du direkt in die Datei drucken. Wichtig: Mit \"w\" ist der alte Inhalt SOFORT weg, sobald die Datei geöffnet wird – bei wichtigen Daten erst sichern! Vergiss nicht die Kodierung (encoding=\"utf-8\"), damit Umlaute korrekt gespeichert werden.",
+        "code": "# Schreiben (überschreibt!)\nwith open(\"ausgabe.txt\", \"w\", encoding=\"utf-8\") as datei:\n    datei.write(\"Zeile 1\\n\")\n    datei.write(f\"Summe: {3 + 4}\\n\")\n\n# Anhängen (append)\nwith open(\"log.txt\", \"a\", encoding=\"utf-8\") as log:\n    log.write(\"Neuer Eintrag\\n\")\n\n# Mehrere Zeilen aus einer Liste\nzeilen = [\"a\", \"b\", \"c\"]\nwith open(\"liste.txt\", \"w\", encoding=\"utf-8\") as datei:\n    for zeile in zeilen:\n        datei.write(zeile + \"\\n\")"
+      },
+      "cpp": {
+        "text": "Zum Schreiben nutzt du std::ofstream (output file stream): ofstream datei(\"ausgabe.txt\") überschreibt, ofstream datei(\"log.txt\", std::ios::app) hängt an. Der Operator << funktioniert wie bei std::cout – du kannst alles schreiben. Auch hier nach dem Öffnen prüfen (if (!datei)), denn z.B. ein nicht existierender Ordner führt zum Fehlschlag. Am Ende close() oder RAII machen lassen.",
+        "code": "#include <fstream>\n#include <iostream>\n\n// Schreiben (überschreibt!)\nstd::ofstream datei(\"ausgabe.txt\");\nif (!datei) {\n    std::cerr << \"Kann nicht schreiben!\" << std::endl;\n    return 1;\n}\ndatei << \"Zeile 1\" << std::endl;\ndatei << \"Summe: \" << (3 + 4) << std::endl;\ndatei.close();\n\n// Anhängen:\nstd::ofstream log(\"log.txt\", std::ios::app);\nlog << \"Neuer Eintrag\" << std::endl;\n// RAII: log schließt sich am Ende des Blocks"
+      },
+      "vergleich": "Python: \"w\" = überschreiben, \"a\" = anhängen. C++: ofstream überschreibt, ofstream(..., ios::app) hängt an. Beide: nach dem Öffnen prüfen!",
+      "merk": "\"w\"/ofstream überschreibt sofort – bei wichtigen Daten erst sichern!"
+    },
+    {
+      "titel": "Module und Imports – Code teilen",
+      "python": {
+        "text": "Python organisiert Code in Modulen: Jede .py-Datei ist ein Modul. import math lädt die Standard-Bibliothek, from datetime import datetime holt gezielt einen Namen. Eigene Module: Eine zweite Datei hilfsfunktionen.py wird mit import hilfsfunktionen eingebunden. Wichtig: Der Code auf oberster Ebene eines Moduls läuft beim Import – schütze ihn mit if __name__ == \"__main__\":, damit er nur beim direkten Start ausgeführt wird.",
+        "code": "# hilfsfunktionen.py\n\ndef verdopple(x):\n    return x * 2\n\n# Nur beim DIREKTEN Start ausführen, nicht beim Import:\nif __name__ == \"__main__\":\n    print(verdopple(21))   # 42\n\n# main.py\nimport hilfsfunktionen\nfrom math import sqrt\n\nprint(hilfsfunktionen.verdopple(5))   # 10\nprint(sqrt(16))                       # 4.0"
+      },
+      "cpp": {
+        "text": "In C++ teilst du Code über Header-Dateien: Eine .h-Datei enthält die Deklarationen (Prototypen), die .cpp-Datei die Definitionen. #include \"mein_modul.h\" bindet sie ein – mit Anführungszeichen für eigene Dateien, mit <...> für Standard-Bibliotheken. #pragma once (oder Include-Guards) verhindert, dass eine Header-Datei doppelt eingebunden wird. So wachsen Programme strukturiert statt in einer Monster-Datei.",
+        "code": "// mein_modul.h\n#pragma once            // nur einmal einbinden\nint verdopple(int x);   // Deklaration (Prototyp)\n\n// mein_modul.cpp\n#include \"mein_modul.h\"\nint verdopple(int x) {  // Definition\n    return x * 2;\n}\n\n// main.cpp\n#include <iostream>\n#include \"mein_modul.h\"\n\nint main() {\n    std::cout << verdopple(5);   // 10\n    return 0;\n}\n// Kompilieren: g++ main.cpp mein_modul.cpp -o programm"
+      },
+      "vergleich": "Python: import Modul / from Modul import name, if __name__ == \"__main__\". C++: #include + Header-Dateien mit #pragma once, Deklaration/Definition getrennt.",
+      "merk": "Python: __name__-Guard. C++: #pragma once + Prototypen im Header."
+    },
+    {
+      "titel": "Dein erstes eigenes Projekt – der Fahrplan",
+      "python": {
+        "text": "Jetzt hast du alles für dein erstes echtes Skript. Der Fahrplan: 1. Aufgabe verstehen – was soll das Programm tun? 2. Eingaben definieren (Tastatur, Datei, Argumente). 3. Logik in kleine Funktionen zerlegen. 4. Ausgabe gestalten. 5. Fehlerfälle bedenken (Datei fehlt, falsche Eingabe). Starte klein: Ein Skript, das eine Notiz-Datei liest, eine Zeile hinzufügt und speichert – damit hast du Lesen, Schreiben, Funktionen und Schleifen in einem echten Projekt vereint.",
+        "code": "# notiz.py – dein erstes kleines Projekt\nimport sys\n\ndef zeige_notizen():\n    try:\n        with open(\"notizen.txt\", encoding=\"utf-8\") as f:\n            print(f.read() or \"(leer)\")\n    except FileNotFoundError:\n        print(\"(noch keine Notizen)\")\n\ndef notiz_hinzufuegen(text):\n    with open(\"notizen.txt\", \"a\", encoding=\"utf-8\") as f:\n        f.write(text + \"\\n\")\n    print(\"Gespeichert!\")\n\nif __name__ == \"__main__\":\n    if len(sys.argv) > 1:\n        notiz_hinzufuegen(\" \".join(sys.argv[1:]))\n    else:\n        zeige_notizen()\n# Aufruf: python3 notiz.py \"Meine erste Notiz\""
+      },
+      "cpp": {
+        "text": "In C++ ist der Fahrplan derselbe – plus Build-Schritt: 1. Problem verstehen, 2. Struktur planen (main + Funktionen + Header), 3. implementieren, 4. mit -Wall -Wextra kompilieren (null Warnungen = fertig!), 5. testen. Ein gutes erstes Projekt: ein Notiz-Programm mit Datei-Anbindung, aufgeteilt in main.cpp + notizen.h + notizen.cpp. Damit hast du Header, Funktionen, Datei-I/O und den kompletten Build-Prozess in einem echten Projekt.",
+        "code": "// main.cpp – dein erstes kleines Projekt\n#include <iostream>\n#include <fstream>\n\nvoid zeige_notizen() {\n    std::ifstream datei(\"notizen.txt\");\n    if (!datei) { std::cout << \"(noch keine Notizen)\"; return; }\n    std::string zeile;\n    while (std::getline(datei, zeile))\n        std::cout << zeile << std::endl;\n}\n\nint main(int argc, char* argv[]) {\n    if (argc > 1) {\n        std::ofstream datei(\"notizen.txt\", std::ios::app);\n        datei << argv[1] << std::endl;\n        std::cout << \"Gespeichert!\" << std::endl;\n    } else {\n        zeige_notizen();\n    }\n    return 0;\n}\n// g++ -std=c++17 -Wall -Wextra main.cpp -o notiz && ./notiz"
+      },
+      "vergleich": "Der Fahrplan ist identisch: verstehen → planen → bauen → testen. Python: python3 notiz.py, C++: g++ -Wall -Wextra + ausführen.",
+      "merk": "Erstes Projekt: Notiz-App mit Datei-I/O – deckt Lesen, Schreiben, Funktionen, Fehlerbehandlung und Build ab."
+    }
+  ]
+}

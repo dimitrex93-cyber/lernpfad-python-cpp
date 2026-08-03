@@ -621,6 +621,8 @@ def lade_kapitel():
     for datei in sorted(os.listdir(SPRACHKURS_ORDNER)):
         if not datei.endswith(".json"):
             continue
+        if datei == "manifest.json":   # keine Kapiteldatei
+            continue
         with open(os.path.join(SPRACHKURS_ORDNER, datei),
                   encoding="utf-8") as f:
             kapitel.append(json.load(f))
