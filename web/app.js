@@ -155,7 +155,7 @@ async function starteQuiz(nr) {
       `LF${lf.nr}: ${lf.titel} · Stufe: ${stufe}`;
     zeigeFrage();
   } catch (e) {
-    alert("Fragen konnten nicht geladen werden: " + e.message);
+    zeigeToast("Fragen konnten nicht geladen werden: " + e.message, "fehler");
   }
 }
 
@@ -367,7 +367,7 @@ function kursNaechsterAbschnitt() {
     gelesen.add(k.id);
     fortschritt.sprachkurs_gelesen = [...gelesen].sort();
     speichereFortschritt(fortschritt);
-    alert("📖 Kapitel abgeschlossen – als gelesen markiert!");
+    zeigeToast("Kapitel abgeschlossen – als gelesen markiert! 📖", "erfolg");
     kursZurueck();
   }
 }
@@ -382,6 +382,25 @@ function escapeHtml(s) {
   return String(s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+// ------------------------------------------------------------------
+// Toast-Meldungen (statt Browser-alert)
+// ------------------------------------------------------------------
+function zeigeToast(text, typ = "erfolg", dauerMs = 3500) {
+  const container = document.getElementById("toast-container");
+  if (!container) return;
+  const toast = document.createElement("div");
+  toast.className = "toast " + typ;
+  const icon = typ === "fehler" ? "⚠️" : typ === "info" ? "💡" : "✅";
+  toast.innerHTML = `<span>${icon}</span><span>${escapeHtml(text)}</span>`;
+  container.appendChild(toast);
+
+  // Nach dauerMs automatisch ausblenden und entfernen
+  setTimeout(() => {
+    toast.classList.add("ausblenden");
+    setTimeout(() => toast.remove(), 350);
+  }, dauerMs);
 }
 
 // Start
