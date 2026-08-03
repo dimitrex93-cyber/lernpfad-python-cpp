@@ -13,8 +13,8 @@ Verwendung:
     python3 tools/quiz.py --status        # Fortschritt aller Lernfelder
     python3 tools/quiz.py --reset 2       # Fortschritt von Lernfeld 2 löschen
     python3 tools/quiz.py --list          # Lernfelder auflisten
-    python3 tools/quiz.py --wissen        # Sprachen-Wissen: Python & C++ erklärt
-    python3 tools/quiz.py --wissen string # ein Wissensthema direkt anzeigen
+    python3 tools/quiz.py --wissen        # Sprachkurs: Python & C++ erklärt
+    python3 tools/quiz.py --wissen strings # ein Kapitel direkt öffnen
 
 Punkte & Noten:
     - Vor jedem Test wählst du einen Schwierigkeitsgrad:
@@ -50,8 +50,6 @@ LERN_FELDER = [
 ]
 
 FORTSCHRITT_DATEI = os.path.expanduser("~/.lernpfad/fortschritt.json")
-
-WISSEN_DATEI = os.path.join(PROJEKT_ROOT, "tools", "sprachwissen.json")
 
 # Schwierigkeitsstufen: Reihenfolge = Schweregrad, Filterung ist kumulativ
 # (mittel enthält leichte + mittlere Fragen, schwer alle).
@@ -348,93 +346,137 @@ def run_test(lf_nr, fortschritt, stufe=None):
 
 
 # ---------------------------------------------------------------------------
-# Sprachen-Wissen (Python & C++ erklärt)
+# Sprachkurs (Python & C++ im ganzen erklärt)
 # ---------------------------------------------------------------------------
 
-def lade_wissen():
-    """Lädt die Wissensdatenbank (tools/sprachwissen.json)."""
-    if not os.path.isfile(WISSEN_DATEI):
-        sys.exit(c(f"Keine Wissensdatenbank gefunden: {WISSEN_DATEI}", "rot"))
-    with open(WISSEN_DATEI, encoding="utf-8") as f:
-        return json.load(f)
+SPRACHKURS_ORDNER = os.path.join(PROJEKT_ROOT, "tools", "sprachkurs")
 
 
-def zeige_wissen_thema(thema):
-    """Zeigt ein einzelnes Wissensthema (Python + C++ + Vergleich)."""
-    print(c("\n" + "═" * 62, "fett"))
-    print(c(f"  {thema['titel']}", "fett"))
-    print(c("═" * 62, "fett"))
-    for sprache, icon in (("python", "🐍 Python"), ("cpp", "⚙️  C++")):
-        block = thema.get(sprache)
-        if not block:
+def lade_kapitel():
+    """Lädt alle Kapitel aus tools/sprachkurs/ (sortiert nach Dateiname)."""
+    if not os.path.isdir(SPRACHKURS_ORDNER):
+        sys.exit(c(f"Kein Sprachkurs-Ordner gefunden: {SPRACHKURS_ORDNER}",
+                   "rot"))
+    kapitel = []
+    for datei in sorted(os.listdir(SPRACHKURS_ORDNER)):
+        if not datei.endswith(".json"):
             continue
-        print()
-        print(c(f"{icon}", "fett"))
-        print(block["text"])
-        if block.get("code"):
-            print(c("Code:", "dunkel"))
-            for zeile in block["code"].splitlines():
-                print(c("    " + zeile, "cyan"))
-    if thema.get("vergleich"):
+        with open(os.path.join(SPRACHKURS_ORDNER, datei),
+                  encoding="utf-8") as f:
+            kapitel.append(json.load(f))
+    if not kapitel:
+        sys.exit(c("Keine Kapitel im Sprachkurs-Ordner gefunden.", "rot"))
+    return kapitel
+
+
+def zeige_block(sprache, block):
+    """Zeigt den Erklärungsteil einer Sprache (Text + Code)."""
+    icon = "🐍 Python" if sprache == "python" else "⚙️  C++"
+    print()
+    print(c(icon, "fett"))
+    print(block["text"])
+    if block.get("code"):
+        print(c("Code:", "dunkel"))
+        for zeile in block["code"].splitlines():
+            print(c("    " + zeile, "cyan"))
+
+
+def zeige_abschnitt(abschnitt, index, anzahl):
+    """Zeigt einen Kursabschnitt mit Python-, C++-Teil, Vergleich und Merksatz."""
+    print(c("\n" + "─" * 62, "fett"))
+    print(c(f"  {index}/{anzahl}: {abschnitt['titel']}", "fett"))
+    print(c("─" * 62, "fett"))
+    for sprache in ("python", "cpp"):
+        block = abschnitt.get(sprache)
+        if block:
+            zeige_block(sprache, block)
+    if abschnitt.get("vergleich"):
         print()
         print(c("💡 Vergleich:", "gelb"))
-        print(thema["vergleich"])
+        print(abschnitt["vergleich"])
+    if abschnitt.get("merk"):
+        print()
+        print(c("📌 Merksatz:", "gelb"))
+        print(abschnitt["merk"])
     print()
 
 
+def zeige_kapitel(kapitel):
+    """Zeigt ein ganzes Kapitel: Einleitung, dann Abschnitte nacheinander."""
+    print(c("\n" + "═" * 62, "fett"))
+    print(c(f"  {kapitel['titel']}", "fett"))
+    print(c("═" * 62, "fett"))
+    if kapitel.get("einleitung"):
+        print(c(kapitel["einleitung"], "dunkel"))
+
+    abschnitte = kapitel["abschnitte"]
+    for i, abschnitt in enumerate(abschnitte, start=1):
+        zeige_abschnitt(abschnitt, i, len(abschnitte))
+        if i < len(abschnitte):
+            print(c("Enter = nächster Abschnitt, q = zurück …", "dunkel"))
+            if input().lower() in ("q", "quit", "exit"):
+                return
+    print(c("📖 Kapitel zu Ende – Enter für die Kapitelübersicht.", "dunkel"))
+    input()
+
+
 def zeige_wissen(auswahl=None):
-    """Sprachen-Wissen-Menü: Themenliste, dann Thema auswählen.
+    """Sprachkurs-Menü: Kapitelübersicht, dann Kapitel auswählen.
 
-    auswahl: optional eine Thema-ID (z. B. 'string') oder Nummer,
-    um direkt ein Thema anzuzeigen.
+    auswahl: optional eine Kapitel-ID (z. B. 'strings') oder Nummer,
+    um direkt ein Kapitel zu öffnen.
     """
-    daten = lade_wissen()
-    themen = daten["themen"]
+    kapitel = lade_kapitel()
 
-    def finde_thema(auswahl):
+    def finde_kapitel(auswahl):
         if auswahl is None:
             return None
         auswahl = str(auswahl).strip()
         if auswahl.isdigit():
             nr = int(auswahl)
-            if 1 <= nr <= len(themen):
-                return themen[nr - 1]
+            if 1 <= nr <= len(kapitel):
+                return kapitel[nr - 1]
             return None
         wahl = auswahl.lower()
-        return next((t for t in themen if t["id"].lower() == wahl), None)
+        return next((k for k in kapitel if k["id"].lower() == wahl), None)
 
-    ziel = finde_thema(auswahl)
+    ziel = finde_kapitel(auswahl)
     if ziel is not None:
-        zeige_wissen_thema(ziel)
+        zeige_kapitel(ziel)
         return
 
     # Explizite, aber unbekannte Auswahl → Hinweis statt Menü
     if auswahl is not None:
-        ids = ", ".join(t["id"] for t in themen)
-        print(c(f"Unbekanntes Thema: '{auswahl}'.", "rot"))
-        print(c(f"Verfügbare Themen: {ids}", "dunkel"))
+        ids = ", ".join(k["id"] for k in kapitel)
+        print(c(f"Unbekanntes Kapitel: '{auswahl}'.", "rot"))
+        print(c(f"Verfügbare Kapitel: {ids}", "dunkel"))
         return
 
-    print(c(f"\n=== {daten['titel']} ===\n", "fett"))
-    print(c(daten.get("beschreibung", ""), "dunkel"))
+    print(c("\n" + "═" * 62, "fett"))
+    print(c("  Sprachkurs: Python & C++ im ganzen erklärt", "fett"))
+    print(c("═" * 62, "fett"))
+    print(c("Von den Grundlagen bis zu Speicher und Werkzeugen –", "dunkel"))
+    print(c("jedes Konzept direkt im Vergleich beider Sprachen.", "dunkel"))
     print()
-    for i, thema in enumerate(themen, start=1):
-        print(f"  {i}: {thema['titel']}")
+    for i, k in enumerate(kapitel, start=1):
+        print(f"  {i}: {k['titel']}")
     print()
     while True:
-        eingabe = input(f"Thema wählen (1–{len(themen)}, q = zurück): ")
+        eingabe = input(f"Kapitel wählen (1–{len(kapitel)}, q = zurück): ")
         if eingabe.lower() in ("q", "quit", "exit"):
             return
-        ziel = finde_thema(eingabe)
+        ziel = finde_kapitel(eingabe)
         if ziel is not None:
-            zeige_wissen_thema(ziel)
-            input(c("Enter drücken für die Themenliste …", "dunkel"))
-            print(c(f"\n=== {daten['titel']} ===\n", "fett"))
-            for i, thema in enumerate(themen, start=1):
-                print(f"  {i}: {thema['titel']}")
+            zeige_kapitel(ziel)
+            print(c("\n" + "═" * 62, "fett"))
+            print(c("  Sprachkurs: Python & C++ im ganzen erklärt", "fett"))
+            print(c("═" * 62, "fett"))
+            print()
+            for j, k in enumerate(kapitel, start=1):
+                print(f"  {j}: {k['titel']}")
             print()
             continue
-        print(c("Bitte eine Nummer, eine Thema-ID oder q eingeben.", "gelb"))
+        print(c("Bitte eine Nummer, eine Kapitel-ID oder q eingeben.", "gelb"))
 
 
 # ---------------------------------------------------------------------------
@@ -450,7 +492,7 @@ def zeige_menue(fortschritt):
             eintrag = fortschritt.get(f"lf{nr}_{stufe}")
             status += "✓" if (eintrag and eintrag["bestanden"]) else "·"
         print(f"  [{status}] {nr}: {titel}")
-    print(c("  [···] w: Sprachen-Wissen – Python & C++ erklärt", "cyan"))
+    print(c("  [···] w: Sprachkurs – Python & C++ im ganzen erklärt", "cyan"))
     print(c("Status: ✓ = bestanden (leicht · mittel · schwer), · = offen",
             "dunkel"))
     print()
@@ -467,10 +509,10 @@ def main():
                         help="Fortschritt eines Lernfelds löschen (z. B. --reset 2)")
     parser.add_argument("--list", action="store_true",
                         help="Verfügbare Lernfelder auflisten (✓ je Stufe)")
-    parser.add_argument("--wissen", nargs="?", const="", metavar="THEMA",
-                        help="Sprachen-Wissen anzeigen (Python & C++ erklärt); "
-                             "ohne THEMA: Themenmenü, mit THEMA: Thema direkt "
-                             "(ID oder Nummer, z. B. --wissen string)")
+    parser.add_argument("--wissen", nargs="?", const="", metavar="KAPITEL",
+                        help="Sprachkurs anzeigen (Python & C++ erklärt); "
+                             "ohne KAPITEL: Kapitelübersicht, mit KAPITEL: "
+                             "Kapitel direkt (ID oder Nummer, z. B. --wissen strings)")
     parser.add_argument("--schwierigkeit", "-s", metavar="STUFE",
                         choices=["leicht", "mittel", "schwer"],
                         help="Schwierigkeitsgrad direkt wählen "
@@ -509,7 +551,7 @@ def main():
                 eintrag = fortschritt.get(f"lf{nr}_{stufe}")
                 status += "✓" if (eintrag and eintrag["bestanden"]) else "·"
             print(f"  [{status}] {nr}: {titel}")
-        print(c("  [···] w: Sprachen-Wissen – Python & C++ erklärt", "cyan"))
+        print(c("  [···] w: Sprachkurs – Python & C++ im ganzen erklärt", "cyan"))
         print()
         return
 
@@ -531,7 +573,7 @@ def main():
             return
         if eingabe.lower() in ("w", "wissen"):
             zeige_wissen()
-            # nach dem Sprachen-Wissen zurück zum Menü
+            # nach dem Sprachkurs zurück zum Menü
             zeige_menue(fortschritt)
             continue
         if eingabe.isdigit() and 1 <= int(eingabe) <= len(LERN_FELDER):

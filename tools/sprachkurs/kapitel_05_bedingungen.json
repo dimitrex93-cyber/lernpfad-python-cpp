@@ -1,0 +1,46 @@
+{
+  "id": "bedingungen",
+  "titel": "Kapitel 5: Bedingungen – Entscheidungen im Code",
+  "einleitung": "Programme treffen Entscheidungen: Wenn das, sonst jenes. Hier lernst du if/else in beiden Sprachen, verschachtelte Bedingungen und die Mehrfach-Auswahl – damit dein Programm auf verschiedene Eingaben reagieren kann.",
+  "abschnitte": [
+    {
+      "titel": "if / else – die Grundform",
+      "python": {
+        "text": "In Python entscheidet if über die Ausführung eines Blocks. Der Block wird durch EINRÜCKUNG gebildet – keine Klammern nötig, aber die Einrückung ist Pflicht und muss konsistent sein (meist 4 Leerzeichen). elif ist die Kurzform für else if. Der Doppelpunkt am Ende der Zeile gehört dazu.",
+        "code": "note = 2\nif note <= 2:\n    print(\"Sehr gut!\")\nelif note <= 4:\n    print(\"Bestanden.\")\nelse:\n    print(\"Leider nicht bestanden.\")\n# Einrückung = Block, Doppelpunkt = Beginn"
+      },
+      "cpp": {
+        "text": "In C++ steht die Bedingung in runden Klammern, der Block in geschweiften Klammern. else if prüft die nächste Bedingung. Ein Semikolon NACH der if-Bedingung ist ein klassischer Fehler – if (x); beendet die Bedingung sofort und der Block läuft immer.",
+        "code": "int note = 2;\nif (note <= 2) {\n    std::cout << \"Sehr gut!\";\n} else if (note <= 4) {\n    std::cout << \"Bestanden.\";\n} else {\n    std::cout << \"Leider nicht bestanden.\";\n}\n// Klammern = Block, Semikolon NUR am Ende jeder Anweisung"
+      },
+      "vergleich": "Python: Einrückung + Doppelpunkt. C++: runde Klammern für die Bedingung, geschweifte für den Block. Gleiche Logik, andere Syntax.",
+      "merk": "Python: Einrückung ist der Block. C++: geschweifte Klammern sind der Block."
+    },
+    {
+      "titel": "Verschachtelte Bedingungen",
+      "python": {
+        "text": "Bedingungen lassen sich verschachteln – eine if innerhalb einer if. Das ist manchmal nötig, aber oft unübersichtlich. Besser: die Bedingungen mit and/or kombinieren oder frühzeitig zurückkehren (early return). Zu tief verschachtelter Code ist schwer zu lesen – ein Zeichen, dass du umstrukturieren solltest.",
+        "code": "alter = 20\nif alter >= 18:\n    if hat_fuehrerschein():\n        print(\"Darf fahren\")\n    else:\n        print(\"Kein Führerschein\")\nelse:\n    print(\"Noch zu jung\")\n# Flacher wäre: if alter >= 18 and hat_fuehrerschein():"
+      },
+      "cpp": {
+        "text": "In C++ verschachtelst du Bedingungen mit weiteren if-Blöcken in den geschweiften Klammern. Auch hier gilt: Je tiefer die Verschachtelung, desto schwerer lesbar. Kombiniere Bedingungen mit && oder kehre früh zurück, um die Tiefe zu begrenzen.",
+        "code": "int alter = 20;\nif (alter >= 18) {\n    if (hat_fuehrerschein()) {\n        std::cout << \"Darf fahren\";\n    } else {\n        std::cout << \"Kein Führerschein\";\n    }\n} else {\n    std::cout << \"Noch zu jung\";\n}\n// Flacher: if (alter >= 18 && hat_fuehrerschein())"
+      },
+      "vergleich": "Verschachtelung funktioniert in beiden Sprachen gleich – und sollte in beiden möglichst flach gehalten werden.",
+      "merk": "Tiefe Verschachtelung = schlechtes Zeichen. Kombiniere Bedingungen oder nutze early return."
+    },
+    {
+      "titel": "Mehrfach-Auswahl: viele Fälle",
+      "python": {
+        "text": "Für viele feste Fälle ist eine if/elif-Kette in Python okay. Seit Python 3.10 gibt es zusätzlich das moderne match/case (Stichwort: strukturelles Pattern Matching). Für einfache Wertvergleiche reicht aber oft eine if/elif-Kette oder ein Wörterbuch.",
+        "code": "wochentag = 3\nif wochentag == 1:\n    print(\"Montag\")\nelif wochentag == 2:\n    print(\"Dienstag\")\nelse:\n    print(\"Unter der Woche\")\n\n# Moderner (Python 3.10+):\n# match wochentag:\n#     case 1: print(\"Montag\")\n#     case 2: print(\"Dienstag\")"
+      },
+      "cpp": {
+        "text": "C++ hat dafür switch: eine Variable wird einmal ausgewertet und mit mehreren case-Werten verglichen. Jeder case-Block endet mit break – vergisst du es, läuft der Code in den nächsten Fall hinein (fall-through). default fängt alle nicht gelisteten Werte. Wichtig: switch funktioniert nur mit ganzzahligen Typen und Enums, nicht mit Strings.",
+        "code": "int wochentag = 3;\nswitch (wochentag) {\n    case 1:\n        std::cout << \"Montag\";\n        break;\n    case 2:\n        std::cout << \"Dienstag\";\n        break;\n    default:\n        std::cout << \"Unter der Woche\";\n}\n// break vergessen = fall-through (läuft weiter!)"
+      },
+      "vergleich": "C++ switch ist schnell und kompakt, aber nur für Ganzzahlen. Python if/elif ist flexibler (auch Strings); match/case ist die moderne Alternative.",
+      "merk": "C++ switch: break nicht vergessen! Python: if/elif oder match/case."
+    }
+  ]
+}

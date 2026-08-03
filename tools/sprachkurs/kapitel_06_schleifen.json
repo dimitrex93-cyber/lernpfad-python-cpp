@@ -1,0 +1,46 @@
+{
+  "id": "schleifen",
+  "titel": "Kapitel 6: Schleifen – Wiederholung automatisiert",
+  "einleitung": "Schleifen führen Code mehrfach aus: für jedes Element einer Liste oder solange eine Bedingung gilt. Du lernst for und while in beiden Sprachen – inklusive range(), Zählschleifen und der modernen Range-for-Schleife.",
+  "abschnitte": [
+    {
+      "titel": "for-Schleife über eine Sammlung",
+      "python": {
+        "text": "Pythons for ist eine for-each-Schleife: Sie läuft über jedes Element einer Sammlung – Liste, String, Bereich. Du brauchst keinen Index, kein Zählen; Python liefert dir direkt das Element. Das ist die natürlichste Art, in Python zu iterieren.",
+        "code": "namen = [\"Anna\", \"Ben\", \"Clara\"]\nfor name in namen:\n    print(name)\n\nfor buchstabe in \"Hallo\":\n    print(buchstabe)   # H a l l o (je Zeile)"
+      },
+      "cpp": {
+        "text": "C++ hat seit C++11 die moderne Range-for-Schleife, die genauso über Container läuft: for (auto element : container). auto lässt den Compiler den Typ ableiten, const auto& vermeidet unnötiges Kopieren beim Lesen. Daneben gibt es die klassische Zählschleife (nächster Abschnitt).",
+        "code": "#include <iostream>\n#include <vector>\n#include <string>\n\nstd::vector<std::string> namen = {\"Anna\", \"Ben\", \"Clara\"};\nfor (const auto& name : namen) {\n    std::cout << name << std::endl;\n}\n\nfor (char buchstabe : std::string(\"Hallo\")) {\n    std::cout << buchstabe << std::endl;\n}"
+      },
+      "vergleich": "Python for x in sammlung und C++ Range-for sind dasselbe Konzept. In C++ überlegst du zusätzlich: Kopieren (auto) oder Referenz (const auto&)?",
+      "merk": "for x in ... (Python) = for (auto x : ...) (C++)."
+    },
+    {
+      "titel": "Zählschleifen: range() vs. klassisches for",
+      "python": {
+        "text": "Sollst du eine bestimmte Anzahl von Wiederholungen machen, hilft range(): range(5) liefert 0 bis 4, range(2, 5) 2 bis 4, range(0, 10, 2) die geraden Zahlen 0 bis 8. range(laenge) in Kombination mit len(liste) gibt dir auch Indizes, wenn du sie brauchst.",
+        "code": "for i in range(5):\n    print(i)          # 0 1 2 3 4\n\nfor i in range(2, 5):\n    print(i)          # 2 3 4\n\nfor i in range(0, 10, 2):\n    print(i)          # 0 2 4 6 8\n\nzahlen = [10, 20, 30]\nfor i in range(len(zahlen)):\n    print(i, zahlen[i])   # Index UND Wert"
+      },
+      "cpp": {
+        "text": "Die klassische C++-Zählschleife hat drei Teile in der Klammer: Startwert; Bedingung; Schritt. for (int i = 0; i < 5; i++) zählt i von 0 bis 4. i++ erhöht um 1, i += 2 um 2. Die Bedingung wird VOR jedem Durchlauf geprüft – bei i < 5 endet die Schleife also bei i = 4.",
+        "code": "for (int i = 0; i < 5; i++) {\n    std::cout << i;      // 0 1 2 3 4\n}\n\nfor (int i = 0; i < 10; i += 2) {\n    std::cout << i;      // 0 2 4 6 8\n}\n\nstd::vector<int> zahlen = {10, 20, 30};\nfor (int i = 0; i < (int)zahlen.size(); i++) {\n    std::cout << i << \": \" << zahlen[i];\n}"
+      },
+      "vergleich": "Python range(5) entspricht dem C++-Muster for (int i = 0; i < 5; i++). In C++ musst du Start, Bedingung und Schritt selbst angeben – Python macht es automatisch.",
+      "merk": "range(anfang, ende, schritt) = die drei Teile der C++-for-Schleife."
+    },
+    {
+      "titel": "while und die Schleifen-Steuerung",
+      "python": {
+        "text": "while läuft, solange eine Bedingung wahr ist – perfekt, wenn du die Anzahl der Durchläufe nicht kennst (z. B. bis zur richtigen Eingabe). break bricht die Schleife sofort ab, continue überspringt den Rest des Durchlaufs und springt zur nächsten Runde. Achtung: Vergisst du, die Bedingung zu verändern, wird es eine Endlosschleife.",
+        "code": "versuche = 0\nwhile True:\n    eingabe = input(\"Zahl? \")\n    versuche += 1\n    if eingabe == \"42\":\n        print(\"Richtig!\")\n        break            # Schleife beenden\n    if versuche >= 3:\n        print(\"Zu viele Versuche\")\n        break\n\nfor i in range(10):\n    if i % 2 == 0:\n        continue         # nächste Runde\n    print(i)             # nur ungerade Zahlen"
+      },
+      "cpp": {
+        "text": "while (bedingung) läuft, solange die Bedingung wahr ist – dieselbe Idee wie in Python. break beendet die Schleife, continue springt zur nächsten Runde. Ein klassischer C++-Fall: while (std::cin >> zahl) liest Zahlen, bis die Eingabe endet. Auch hier gilt: Bedingung irgendwann falsch machen, sonst Endlosschleife!",
+        "code": "int versuche = 0;\nint eingabe;\nwhile (true) {\n    std::cin >> eingabe;\n    versuche++;\n    if (eingabe == 42) {\n        std::cout << \"Richtig!\";\n        break;\n    }\n    if (versuche >= 3) break;\n}\n\nfor (int i = 0; i < 10; i++) {\n    if (i % 2 == 0) continue;   // nächste Runde\n    std::cout << i;             // ungerade Zahlen\n}"
+      },
+      "vergleich": "while, break, continue funktionieren in beiden Sprachen identisch. Die Gefahr der Endlosschleife ist ebenfalls gleich – die Bedingung muss sich irgendwann ändern.",
+      "merk": "break = raus aus der Schleife, continue = nächste Runde."
+    }
+  ]
+}

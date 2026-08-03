@@ -1,0 +1,46 @@
+{
+  "id": "strings",
+  "titel": "Kapitel 7: Strings – Arbeit mit Text",
+  "einleitung": "Text ist überall: Namen, Dateien, Benutzereingaben. Hier lernst du, wie Strings in beiden Sprachen funktionieren – was sie können, was sie nicht können, und wie du sie bearbeitest, durchsuchst und zusammenbaust.",
+  "abschnitte": [
+    {
+      "titel": "Was ist ein String?",
+      "python": {
+        "text": "Ein String (Typ str) ist eine Folge von Zeichen – in Python unveränderlich (immutable): Du kannst einen bestehenden String nicht ändern, jede Bearbeitung erzeugt einen neuen. Strings stehen in einfachen ('...') oder doppelten (\"...\") Anführungszeichen. Unicode ist eingebaut: Umlaute und Emojis funktionieren direkt.",
+        "code": "name = \"Lena\"\nprint(name.upper())   # LENA\nprint(name[1:3])      # en  (Slicing)\nprint(len(name))      # 4\n\ns = \"Hallo \" + \"Welt\"   # Verketten\nprint(s * 3)             # Hallo WeltHallo WeltHallo Welt"
+      },
+      "cpp": {
+        "text": "In C++ gibt es zwei Arten: den modernen std::string (aus <string>) und die alten C-Strings (char-Arrays, deren Ende ein Nullzeichen markiert). std::string ist VERÄNDERLICH und kann wachsen; C-Strings sind starr und fehleranfällig – im Kurs nutzen wir ausschließlich std::string.",
+        "code": "#include <iostream>\n#include <string>\n\nstd::string name = \"Lena\";\nstd::cout << name.size() << std::endl;    // 4\nstd::cout << name.substr(1, 2) << std::endl;  // en\n\nstd::string s = \"Hallo \" + std::string(\"Welt\");\nstd::cout << s << std::endl;   // Hallo Welt\n// \"A\" (string) ist nicht 'A' (char)!"
+      },
+      "vergleich": "Python: str ist unveränderlich, Unicode eingebaut. C++: std::string ist veränderlich, braucht #include <string> und unterscheidet sich strikt von char.",
+      "merk": "Python-Strings sind unveränderlich, C++-std::string ist veränderlich."
+    },
+    {
+      "titel": "Strings bearbeiten und durchsuchen",
+      "python": {
+        "text": "Python bietet viele String-Methoden: .upper()/.lower() für Groß-/Kleinschreibung, .strip() entfernt Leerzeichen an den Enden, .split() zerlegt in eine Liste, .replace(alt, neu) ersetzt Text, .find() oder in suchen nach Teilstrings. Da Strings unveränderlich sind, geben alle Methoden einen NEUEN String zurück – das Original bleibt unberührt.",
+        "code": "text = \"  Hallo Welt  \"\nprint(text.strip())          # \"Hallo Welt\"\nprint(text.split())          # ['Hallo', 'Welt']\nprint(text.replace(\"Welt\", \"Python\"))\nprint(\"Welt\" in text)        # True\nprint(text.find(\"Welt\"))     # 8 (Index)\nprint(text.lower())          # hallo welt"
+      },
+      "cpp": {
+        "text": "std::string hat ähnliche Werkzeuge: .size() für die Länge, .substr(pos, len) für Teilstrings, .find(...) für die Suche (gibt npos zurück, wenn nichts gefunden), .append() oder += zum Verketten, [] für den Zugriff auf einzelne Zeichen (das Ergebnis ist ein char!). .replace gibt es auch, ist aber fummeliger als in Python.",
+        "code": "std::string text = \"  Hallo Welt  \";\nstd::cout << text.size() << std::endl;        // 14\nstd::cout << text.substr(2, 5) << std::endl;  // Hallo\n\nsize_t pos = text.find(\"Welt\");\nif (pos != std::string::npos) {\n    std::cout << pos;   // 8\n}\ntext += \"!\";            // verändern ist erlaubt!\nchar c = text[2];       // 'H'  (ein char!)"
+      },
+      "vergleich": "Python: strip/split/replace direkt. C++: find gibt npos zurück (nicht -1), Einzelzeichen sind char, und += verändert den String direkt.",
+      "merk": "Suche nicht gefunden: Python in → False, C++ find → npos."
+    },
+    {
+      "titel": "Strings formatieren",
+      "python": {
+        "text": "Moderne Python-Formatierung nutzt f-Strings: Ein f vor dem String, Werte in geschweiften Klammern – einfach, lesbar, schnell. Du kannst sogar Ausdrücke einbauen: f\"{a} + {b} = {a + b}\". Für Zahlen gibt es Formatangaben wie :.2f für zwei Nachkommastellen.",
+        "code": "name = \"Anna\"\nalter = 25\nprint(f\"{name} ist {alter} Jahre alt\")\nprint(f\"{name} ist {alter * 12} Monate alt\")\n\npreis = 19.995\nprint(f\"{preis:.2f} €\")     # 20.00 €\nprint(f\"{alter:04d}\")       # 0025"
+      },
+      "cpp": {
+        "text": "In C++ baust du Strings mit += oder std::to_string() zusammen – funktioniert, wird aber schnell unübersichtlich. Die moderne Lösung (C++20) ist std::format: Platzhalter {} werden mit Werten gefüllt, Formatangaben wie {:.2f} wie in Python. Alternativ gibt es den klassischen std::cout << mit mehreren <<.",
+        "code": "#include <iostream>\n#include <string>\n\nstd::string name = \"Anna\";\nint alter = 25;\n\n// Klassisch:\nstd::cout << name << \" ist \" << alter << \" Jahre alt\" << std::endl;\n\n// Modern (C++20):\n// std::cout << std::format(\"{} ist {} Jahre alt\", name, alter);\n\n// Zahlen als Text:\nstd::string s = \"Preis: \" + std::to_string(19.995);"
+      },
+      "vergleich": "Python f-Strings sind der Goldstandard. C++: cout << Verkettung oder std::format (C++20). std::to_string ist das Pendant zu str().",
+      "merk": "Python: f\"{wert}\". C++: std::to_string() oder std::format."
+    }
+  ]
+}

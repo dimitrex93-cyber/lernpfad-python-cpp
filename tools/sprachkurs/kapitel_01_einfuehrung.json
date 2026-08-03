@@ -1,0 +1,46 @@
+{
+  "id": "einfuehrung",
+  "titel": "Kapitel 1: Wie Computer und Programme arbeiten",
+  "einleitung": "Bevor wir Code schreiben, verstehen wir die Grundlagen: Woraus ein Computer besteht, was ein Programm ist und warum es Python UND C++ gibt. Dieses Kapitel legt das Fundament für alles Weitere.",
+  "abschnitte": [
+    {
+      "titel": "Woraus besteht ein Computer?",
+      "python": {
+        "text": "Ein Computer besteht im Kern aus drei Teilen: Der CPU (Prozessor) führt Befehle aus – Rechnen, Vergleichen, Springen. Der RAM (Arbeitsspeicher) hält Daten und laufende Programme bereit, ist aber flüchtig: Alles ist weg, wenn der Strom ausfällt. Die Festplatte oder SSD speichert Daten dauerhaft. Ein Programm ist nichts anderes als eine lange Liste von Befehlen, die die CPU nacheinander abarbeitet. Die CPU versteht aber nur Maschinensprache – Binärzahlen aus Nullen und Einsen. Niemand schreibt heute noch direkt in Binärform; dafür gibt es Programmiersprachen, die Menschen lesen können.",
+        "code": "# Ein Programm ist eine Befehlsliste für die CPU.\n# Programmiersprachen machen diese Befehle lesbar:\nprint(\"Hallo\")   # ein Befehl, den du verstehst"
+      },
+      "cpp": {
+        "text": "Auch in C++ gilt: Der Quellcode ist für Menschen geschrieben, die CPU versteht nur Maschinensprache. Dazwischen arbeitet der Compiler, der deinen C++-Code in die Binärbefehle der CPU übersetzt. Deshalb ist C++ so schnell: Am Ende steht eine Datei, die die CPU direkt ausführen kann – ohne dass ein Dolmetscher dazwischenläuft.",
+        "code": "// Auch C++-Code ist nur eine lesbare Befehlsliste.\n// Der Compiler übersetzt sie in Maschinensprache:\n#include <iostream>\n\nint main() {\n    std::cout << \"Hallo\";\n    return 0;\n}"
+      },
+      "vergleich": "Beide Sprachen sind für Menschen geschrieben. Der Unterschied ist nur, WER den Code in Maschinensprache übersetzt: bei Python ein Interpreter zur Laufzeit, bei C++ ein Compiler vorab.",
+      "merk": "CPU rechnet, RAM ist flüchtig, SSD speichert dauerhaft – und Programmiersprachen übersetzen menschliche Gedanken in Maschinenbefehle."
+    },
+    {
+      "titel": "Interpretiert vs. kompiliert – der zentrale Unterschied",
+      "python": {
+        "text": "Python ist interpretiert: Das Programm python3 liest deinen Code zur Laufzeit Zeile für Zeile und führt jede Zeile sofort aus. Übersetzung und Ausführung passieren gleichzeitig. Vorteile: Du kannst sofort ausprobieren, es gibt keinen separaten Übersetzungsschritt. Nachteile: Python ist langsamer als kompiliertes C++, und ein Fehler in einer Zeile fällt erst auf, wenn diese Zeile erreicht wird.",
+        "code": "print(\"Zeile 1\")\nprint(1 / 0)      # Fehler fällt ERST HIER auf,\nprint(\"Zeile 3\")  # diese Zeile wird nie erreicht"
+      },
+      "cpp": {
+        "text": "C++ ist kompiliert: Der Compiler (z. B. g++) übersetzt deinen gesamten Code VOR dem Ausführen in Maschinensprache. Dabei findet er viele Fehler schon beim Übersetzen – ein undefinierter Name, ein Typkonflikt oder eine fehlende Klammer stoppen den Build. Erst wenn alles fehlerfrei übersetzt ist, entsteht eine ausführbare Datei. Vorteile: sehr schnell, Fehler früh gefunden. Nachteile: Übersetzungsschritt nötig, Compiler-Fehlermeldungen wirken anfangs abschreckend.",
+        "code": "int main() {\n    std::cout << 1 / 0;   // Compilerfehler? Nein!\n    // Aber: Division durch 0 ist zur Laufzeit undefiniert.\n    return 0;\n}\n// g++ datei.cpp -o datei   -> erst übersetzen, dann starten"
+      },
+      "vergleich": "Merksatz: Python übersetzt WÄHREND des Laufens, C++ übersetzt VORHER. Deshalb ist der Python-Start schneller, aber C++ am Ende schneller.",
+      "merk": "Python: Zeile für Zeile zur Laufzeit. C++: einmal komplett vorab per Compiler."
+    },
+    {
+      "titel": "Warum beide Sprachen lernen?",
+      "python": {
+        "text": "Python ist ideal für schnelle Erfolge: klare Syntax, keine Typdeklarationen, riesige Standardbibliothek. Es wird genutzt für Scripting, Datenanalyse, Web-Backends und KI. Du kannst in wenigen Minuten dein erstes Programm schreiben und dich ganz auf die Konzepte konzentrieren.",
+        "code": "# Python: Wenige Zeilen, sofortiges Ergebnis\nnamen = [\"Anna\", \"Ben\"]\nfor n in namen:\n    print(n.upper())"
+      },
+      "cpp": {
+        "text": "C++ zwingt dich, genauer zu denken: Typen, Speicher und Ressourcen sind deine Verantwortung. Das klingt anstrengend, ist aber lehrreich – du verstehst, was unter der Haube passiert. C++ steckt in Spielen, Betriebssystemen, Embedded-Systemen und Performance-kritischen Anwendungen.",
+        "code": "// C++: Mehr Details, dafür volle Kontrolle\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<std::string> namen = {\"Anna\", \"Ben\"};\n    for (const auto& n : namen)\n        std::cout << n << std::endl;\n    return 0;\n}"
+      },
+      "vergleich": "Wer beide Sprachen lernt, versteht, WARUM Programmiersprachen so sind, wie sie sind – und kann später für jede Aufgabe die richtige wählen.",
+      "merk": "Python für schnelle Ergebnisse, C++ für tiefes Verständnis und Performance."
+    }
+  ]
+}

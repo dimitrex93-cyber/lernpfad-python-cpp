@@ -31,12 +31,55 @@ python3 tools/quiz.py --list
 # Fortschritt eines Lernfelds zurücksetzen (alle Stufen)
 python3 tools/quiz.py --reset 2
 
-# Sprachen-Wissen: Python & C++ erklärt (Menü)
+# Sprachen-Wissen: Python & C++ erklärt (Kapitelübersicht)
 python3 tools/quiz.py --wissen
 
-# Ein bestimmtes Thema direkt anzeigen (ID oder Nummer)
-python3 tools/quiz.py --wissen string
-python3 tools/quiz.py --wissen 2
+# Ein bestimmtes Kapitel direkt öffnen (ID oder Nummer)
+python3 tools/quiz.py --wissen strings
+python3 tools/quiz.py --wissen 7
+```
+
+### Sprachkurs (Menüpunkt `w`)
+
+Der Menüpunkt **`w` – Sprachkurs** ist ein zusammenhängender Kurs, der die
+**Sprachen im ganzen erklärt** – nicht nur einzelne Stichpunkte. Von den
+Grundlagen bis zu Speicher und Werkzeugen wird jedes Konzept **immer im
+direkten Vergleich Python ↔ C++** behandelt: Erklärung, Codebeispiel,
+Vergleich und Merksatz pro Abschnitt.
+
+| # | Kapitel | Themen |
+|---|---|---|
+| 1 | Wie Computer und Programme arbeiten | CPU/RAM/SSD, interpretiert vs. kompiliert |
+| 2 | Dein erstes Programm | Hallo Welt, `main()`, Ein-/Ausgabe |
+| 3 | Variablen und Datentypen | Typisierung, Grundtypen, Casting |
+| 4 | Operatoren und Ausdrücke | Arithmetik, Vergleiche, Logik |
+| 5 | Bedingungen | if/else, Verschachtelung, switch |
+| 6 | Schleifen | for, range, while, break/continue |
+| 7 | Strings | Eigenschaften, Bearbeitung, Formatierung |
+| 8 | Listen, Vektoren und Maps | vector, dict, Grenzen, Zugriffe |
+| 9 | Funktionen | Definition, Parameter, Scopes |
+| 10 | Klassen und Objekte (OOP) | Konstruktoren, Kapselung, Vererbung |
+| 11 | Fehlerbehandlung | try/except/catch, gute Praxis |
+| 12 | Speicher und Pointer (C++) | Stack/Heap, Referenzen, Werkzeuge |
+
+Die Kapitel liegen in `tools/sprachkurs/kapitel_XX_name.json`. Jedes Kapitel
+hat diese Struktur – neue Kapitel sind einfach weitere Dateien im Ordner:
+
+```json
+{
+  "id": "strings",
+  "titel": "Kapitel 7: Strings – Arbeit mit Text",
+  "einleitung": "Text ist überall: …",
+  "abschnitte": [
+    {
+      "titel": "Was ist ein String?",
+      "python": { "text": "Erklärung …", "code": "name = \"Lena\"" },
+      "cpp":    { "text": "Erklärung …", "code": "std::string name;" },
+      "vergleich": "Kernunterschied in einem Satz",
+      "merk": "Merksatz, der hängen bleibt"
+    }
+  ]
+}
 ```
 
 ### Schwierigkeitsgrad
@@ -56,29 +99,6 @@ gespeichert (Schlüssel `lf2_leicht`, `lf2_mittel`, `lf2_schwer` in
 `~/.lernpfad/fortschritt.json`) – es zählt je Stufe der beste Versuch.
 Alte Fortschrittseinträge ohne Stufe werden beim Laden automatisch als
 Stufe `schwer` übernommen.
-
-### Sprachen-Wissen (Menüpunkt `w`)
-
-Zusätzlich zu den 6 Lernfeld-Tests gibt es den Menüpunkt **`w` – Sprachen-Wissen**:
-ein kompaktes Nachschlagewerk, das die wichtigsten Konzepte **immer im direkten
-Vergleich Python ↔ C++** erklärt – z. B. was ein String ist, welchen
-Einstiegspunkt C++ braucht (`int main()`), wie Schleifen, Klassen oder
-Fehlerbehandlung in beiden Sprachen funktionieren.
-
-Die Inhalte liegen in `tools/sprachwissen.json`. Jedes Thema hat diese Struktur:
-
-```json
-{
-  "id": "string",
-  "titel": "Was ist ein String?",
-  "python": { "text": "Erklärung …", "code": "print(\"Hallo\")" },
-  "cpp":    { "text": "Erklärung …", "code": "int main() { … }" },
-  "vergleich": "Kernunterschied in einem Satz"
-}
-```
-
-Neue Themen sind einfach als weiterer Eintrag in `themen[]` ergänzt – `code`
-ist optional.
 
 ### Ablauf
 

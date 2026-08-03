@@ -1,0 +1,33 @@
+{
+  "id": "fehlerbehandlung",
+  "titel": "Kapitel 11: Fehlerbehandlung",
+  "einleitung": "Programme laufen nicht immer glatt: Falsche Eingaben, fehlende Dateien, ungültige Umwandlungen. Hier lernst du, wie beide Sprachen Fehler melden und wie du sie kontrolliert abfängst, statt das Programm abstürzen zu lassen.",
+  "abschnitte": [
+    {
+      "titel": "Exceptions: Fehler als Objekte",
+      "python": {
+        "text": "Python meldet Laufzeitfehler als Exceptions. Wirft Code einen Fehler (z. B. int(\"abc\") → ValueError), bricht das Programm mit einem Traceback ab – es sei denn, du fängst ihn mit try/except ab. Du kannst gezielt bestimmte Typen fangen: ValueError, FileNotFoundError, TypeError. else läuft, wenn kein Fehler kam, finally immer.",
+        "code": "try:\n    zahl = int(input(\"Zahl: \"))\n    print(10 / zahl)\nexcept ValueError:\n    print(\"Das war keine Zahl!\")\nexcept ZeroDivisionError:\n    print(\"Division durch 0!\")\nfinally:\n    print(\"Wird immer ausgeführt.\")\n\n# Fehler bewusst werfen:\nif alter < 0:\n    raise ValueError(\"Alter darf nicht negativ sein\")"
+      },
+      "cpp": {
+        "text": "C++ arbeitet mit try/catch und Exceptions, die mit throw geworfen werden. catch (const std::exception& e) fängt alle Standard-Exceptions; e.what() liefert die Meldung. Wird nichts gefangen, beendet std::terminate das Programm – in der Praxis ein Absturz. Wichtig: Exceptions sind in C++ nicht der einzige Fehlerweg – viele Bibliotheken nutzen Rückgabewerte oder Fehlercodes.",
+        "code": "#include <iostream>\n#include <stdexcept>\n#include <string>\n\ntry {\n    int zahl = std::stoi(\"abc\");  // wirft invalid_argument\n} catch (const std::exception& e) {\n    std::cout << \"Fehler: \" << e.what();\n}\n\n// Selbst werfen:\nif (alter < 0) {\n    throw std::invalid_argument(\"Alter negativ\");\n}"
+      },
+      "vergleich": "Gleiches Prinzip: Gefährlicher Code in try, Behandlung in except/catch. Python unterscheidet ValueError etc., C++ std::invalid_argument etc. Beide: throw/raise.",
+      "merk": "try/except (Python) = try/catch (C++). throw = raise."
+    },
+    {
+      "titel": "Gute Fehlerbehandlung: Dos and Don'ts",
+      "python": {
+        "text": "Gute Praxis: Fange nur Fehler, die du wirklich behandeln kannst – ein nacktes except: (ohne Typ) verschluckt ALLES und macht Debugging unmöglich. Logge oder zeige die Meldung, statt still weiterzumachen. Prüfe, bevor du Fehler provozierst (EAFP vs. LBYL – in Python ist try/except oft idiomatischer als vorheriges Prüfen).",
+        "code": "import os\n\n# Besser: prüfen statt raten\nif not os.path.exists(\"daten.txt\"):\n    print(\"Datei fehlt\")\n\n# Noch pythonischer (EAFP):\ntry:\n    with open(\"daten.txt\") as f:\n        inhalt = f.read()\nexcept FileNotFoundError:\n    print(\"Datei fehlt\")\n\n# Schlecht: except:  (verschluckt alles!)"
+      },
+      "cpp": {
+        "text": "In C++ gilt dasselbe: Fange gezielt, nicht catch (...) ohne Not (das fängt wirklich alles). Prüfe Ressourcen vor der Nutzung – oder nutze RAII: Objekte wie std::ifstream geben Ressourcen in ihrem Destruktor automatisch frei, auch bei Exceptions. Für Dateien: prüfe, ob das Öffnen geklappt hat (ifstream ist im Fehlerfall false).",
+        "code": "#include <fstream>\n#include <iostream>\n\nstd::ifstream datei(\"daten.txt\");\nif (!datei) {                 // Öffnen fehlgeschlagen?\n    std::cout << \"Datei fehlt\";\n    return 1;\n}\n// RAII: datei schließt sich selbst, egal was passiert\n\n// Gezielt fangen statt catch (...):\ntry {\n    // ...\n} catch (const std::ifstream::failure& e) {\n    std::cout << e.what();\n}"
+      },
+      "vergleich": "Beide: gezielt fangen, Meldungen zeigen, stilles Verschlucken vermeiden. C++: RAII sorgt automatisch für Ressourcen-Freigabe.",
+      "merk": "Gezielt fangen, nie alles verschlucken. C++-RAII: Ressourcen räumen sich selbst auf."
+    }
+  ]
+}

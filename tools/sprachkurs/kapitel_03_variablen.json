@@ -1,0 +1,46 @@
+{
+  "id": "variablen",
+  "titel": "Kapitel 3: Variablen und Datentypen",
+  "einleitung": "Variablen sind die Bausteine jedes Programms: Namen für Werte im Speicher. Hier lernst du die wichtigsten Datentypen kennen – und den fundamentalen Unterschied zwischen dynamischer (Python) und statischer (C++) Typisierung.",
+  "abschnitte": [
+    {
+      "titel": "Was ist eine Variable?",
+      "python": {
+        "text": "Eine Variable ist ein Name für einen Wert, den du im Speicher ablegst. In Python erzeugt die erste Zuweisung die Variable automatisch – du deklarierst nichts. Python ist dynamisch typisiert: Der Typ wird automatisch erkannt, und eine Variable darf sogar ihren Typ wechseln. Prüfen kannst du den Typ mit type().",
+        "code": "name = \"Anna\"        # str (Zeichenkette)\nalter = 25           # int (ganze Zahl)\ngroesse = 1.72       # float (Kommazahl)\nist_student = True   # bool (Wahrheitswert)\n\nprint(type(alter))   # <class 'int'>\n\nalter = \"fünfundzwanzig\"  # erlaubt! Typwechsel\nprint(type(alter))        # <class 'str'>"
+      },
+      "cpp": {
+        "text": "In C++ musst du den Typ jeder Variable ANSAGEN, bevor du sie benutzt: int alter = 25;. C++ ist statisch typisiert – eine int-Variable bleibt für immer int. Der Compiler prüft die Typen schon beim Übersetzen und findet Fehler wie einen String in einer int-Variable, bevor das Programm überhaupt startet.",
+        "code": "std::string name = \"Anna\";   // Text (aus <string>)\nint alter = 25;              // ganze Zahl\n double groesse = 1.72;      // Kommazahl\nbool ist_student = true;     // Wahrheitswert\n\nint x = 5;\nx = \"fünf\";   // Fehler! Compiler lehnt das ab"
+      },
+      "vergleich": "Python entscheidet zur Laufzeit, C++ zur Compile-Zeit. Deshalb ist C++ strenger, dafür findet es Typfehler früher – und läuft schneller, weil der Compiler jeden Typ exakt kennt.",
+      "merk": "Python: Typ wird automatisch vergeben. C++: Typ wird deklariert und bleibt fix."
+    },
+    {
+      "titel": "Die wichtigsten Datentypen im Überblick",
+      "python": {
+        "text": "Python hat wenige Grundtypen, die aber sehr flexibel sind: int für ganze Zahlen (beliebig groß), float für Kommazahlen, str für Text, bool für Wahr/Falsch, list für Sammlungen und dict für Schlüssel-Wert-Paare. Es gibt keine char- und keine double-Trennung: Ein Zeichen ist ein str der Länge 1, eine Kommazahl ist float.",
+        "code": "ganze_zahl = 42        # int\nkommazahl = 3.14      # float\nzeichenkette = \"A\"    # str (auch einzelne Zeichen)\ntext = \"Hallo\"        # str\nliste = [1, 2, 3]     # list\nwoerterbuch = {\"a\": 1}  # dict"
+      },
+      "cpp": {
+        "text": "C++ unterscheidet strenger: int für ganze Zahlen, double für Kommazahlen (8 Byte), float für kleinere Kommazahlen, char für EIN Zeichen (einfache Anführungszeichen!), bool für Wahr/Falsch, std::string für Text (doppelte Anführungszeichen). char und std::string sind verschiedene Typen! Die Größen sind je nach System typisch 4/8/1/1 Byte.",
+        "code": "int ganze_zahl = 42;      // 4 Byte\n double kommazahl = 3.14;   // 8 Byte, doppelte Genauigkeit\nchar buchstabe = 'A';      // 1 Byte, EIN Zeichen\nbool wahr = true;          // 1 Byte\nstd::string text = \"Hallo\"; // Text, aus <string>\n// 'A' und \"A\" sind NICHT dasselbe!"
+      },
+      "vergleich": "Python: str deckt char mit ab, float deckt double ab – einfacher. C++: feinere Kontrolle über Größe und Genauigkeit, dafür musst du den passenden Typ wählen.",
+      "merk": "char = 'A' (ein Zeichen), string = \"Hallo\" (Text). In Python gibt es nur str."
+    },
+    {
+      "titel": "Typumwandlung (Cast)",
+      "python": {
+        "text": "In Python wandelst du Typen mit Funktionen um: int(\"42\") macht aus Text eine Zahl, str(42) aus einer Zahl Text, float(\"3.14\") eine Kommazahl. Schlägt die Umwandlung fehl (z. B. int(\"abc\")), wirft Python einen ValueError – den kannst du mit try/except abfangen.",
+        "code": "zahl_text = \"42\"\nzahl = int(zahl_text)     # 42 (int)\nprint(zahl + 8)           # 50\n\ntext = str(42)            # \"42\" (str)\nkomma = float(\"3.14\")     # 3.14 (float)\n\n# Fehlerfall:\n# int(\"abc\")  -> ValueError"
+      },
+      "cpp": {
+        "text": "In C++ gibt es mehrere Umwandlungsarten. Die sichere, moderne Variante ist static_cast<Typ>(wert). Für Zahlen-zu-Text nutzt du std::to_string(zahl), für Text-zu-Zahl std::stoi(text) (string to int). std::stoi wirft bei ungültigem Text eine std::invalid_argument-Exception – auch das lässt sich mit try/catch abfangen.",
+        "code": "#include <string>\n\nint zahl = std::stoi(\"42\");      // Text -> int\nstd::string text = std::to_string(42);  // int -> Text\ndouble komma = std::stod(\"3.14\");      // Text -> double\n\n// Moderne Umwandlung zwischen Zahlen:\ndouble d = 3.99;\nint n = static_cast<int>(d);   // 3 (Nachkommateil wird abgeschnitten)"
+      },
+      "vergleich": "Python: int(...)/str(...)/float(...) mit ValueError. C++: std::stoi/std::to_string/std::stod mit Exceptions, static_cast für Zahlen.",
+      "merk": "Text ↔ Zahl: Python int()/str(), C++ std::stoi()/std::to_string()."
+    }
+  ]
+}

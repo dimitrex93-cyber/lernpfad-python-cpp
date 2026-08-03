@@ -1,0 +1,46 @@
+{
+  "id": "operatoren",
+  "titel": "Kapitel 4: Operatoren und Ausdrücke",
+  "einleitung": "Operatoren verbinden Werte zu Ausdrücken: Rechnen, Vergleichen, Verknüpfen. Hier lernst du die wichtigsten Operatoren in beiden Sprachen – inklusive einer berühmten Falle bei der Division.",
+  "abschnitte": [
+    {
+      "titel": "Arithmetik: Rechnen mit Zahlen",
+      "python": {
+        "text": "Python kennt + - * / // % **. Wichtig: / liefert IMMER eine Kommazahl – 10 / 3 ergibt 3.333... Auch wenn beide Zahlen ganze Zahlen sind! // ist die Ganzzahldivision (10 // 3 = 3), % der Rest (10 % 3 = 1), ** die Potenz (2 ** 10 = 1024).",
+        "code": "print(10 / 3)    # 3.3333333333333335  (immer float!)\nprint(10 // 3)   # 3  (Ganzzahldivision)\nprint(10 % 3)    # 1  (Rest)\nprint(2 ** 10)   # 1024  (Potenz)\nprint(7 + 2 * 3) # 13  (Punkt vor Strich gilt)"
+      },
+      "cpp": {
+        "text": "C++ kennt + - * / % – aber kein ** (Potenz geht über std::pow). Die berühmte Falle: Bei zwei ganzen Zahlen ist / eine Ganzzahldivision! 10 / 3 ergibt 3, nicht 3.333. Erst wenn mindestens ein Operand eine Kommazahl ist, wird auch als Kommazahl dividiert. % (Modulo) gibt den Rest.",
+        "code": "#include <iostream>\n\nint main() {\n    std::cout << 10 / 3 << std::endl;    // 3  (int / int!)\n    std::cout << 10.0 / 3 << std::endl;  // 3.33333\n    std::cout << 10 % 3 << std::endl;    // 1\n    std::cout << 7 + 2 * 3 << std::endl; // 13\n    return 0;\n}"
+      },
+      "vergleich": "10 / 3: Python gibt 3.333..., C++ gibt 3 – weil int/int in C++ Ganzzahldivision ist. In Python musst du // explizit sagen, in C++ musst du explizit eine Kommazahl einsetzen.",
+      "merk": "Python: / = float, // = Ganzzahl. C++: int/int = Ganzzahl, sonst Kommazahl."
+    },
+    {
+      "titel": "Vergleichsoperatoren",
+      "python": {
+        "text": "Vergleiche liefern immer einen bool: == (gleich), != (ungleich), <, >, <=, >=. Achtung: == vergleicht Werte, = weist zu – das ist die häufigste Anfängerfalle in beiden Sprachen. Strings lassen sich in Python direkt lexikografisch vergleichen (\"apfel\" < \"banane\").",
+        "code": "alter = 18\nprint(alter == 18)   # True\nprint(alter != 21)   # True\nprint(alter >= 18)   # True\nprint(\"apfel\" < \"banane\")  # True (alphabetisch)"
+      },
+      "cpp": {
+        "text": "C++ kennt dieselben Vergleichsoperatoren: ==, !=, <, >, <=, >=. Das Ergebnis ist ein bool. Auch hier: == ist der Vergleich, = ist die Zuweisung. Ein häufiger C++-Fehler ist if (x = 5) – das weist zu (immer wahr) statt zu vergleichen. Gute Compiler warnen davor (-Wall).",
+        "code": "int alter = 18;\nbool a = (alter == 18);   // true\nbool b = (alter != 21);   // true\nbool c = (alter >= 18);   // true\n// if (alter = 18)  -> Zuweisung! Fehler (immer wahr)"
+      },
+      "vergleich": "Gleiche Operatoren, gleiche Falle: == vergleicht, = weist zu. In C++ kann eine Zuweisung in einer Bedingung sogar kompilieren – Python verbietet das.",
+      "merk": "== ist der Vergleich, = die Zuweisung. Immer doppelt prüfen!"
+    },
+    {
+      "titel": "Logische Operatoren: und / oder / nicht",
+      "python": {
+        "text": "Python schreibt die logischen Operatoren als Wörter: and, or, not. Sie verknüpfen Bedingungen zu einem Gesamtergebnis. not kehrt um: not True ist False. Bedingungen lassen sich beliebig kombinieren – Klammern helfen bei der Lesbarkeit.",
+        "code": "alter = 20\nhat_fuehrerschein = True\n\nif alter >= 18 and hat_fuehrerschein:\n    print(\"Darf Auto fahren\")\n\nif alter < 18 or alter > 65:\n    print(\"Sondertarif\")\n\nif not hat_fuehrerschein:\n    print(\"Kein Führerschein\")"
+      },
+      "cpp": {
+        "text": "C++ verwendet Symbole: && für und, || für oder, ! für nicht. In Bedingungen ist 0 falsch, alles andere wahr. Wichtig: && und || werten nur so viel aus wie nötig (Kurzschluss) – wenn der linke Teil von && schon falsch ist, wird der rechte nie ausgeführt.",
+        "code": "int alter = 20;\nbool hat_fuehrerschein = true;\n\nif (alter >= 18 && hat_fuehrerschein) {\n    std::cout << \"Darf Auto fahren\";\n}\nif (alter < 18 || alter > 65) {\n    std::cout << \"Sondertarif\";\n}\nif (!hat_fuehrerschein) {\n    std::cout << \"Kein Führerschein\";\n}"
+      },
+      "vergleich": "and/or/not (Python) vs. &&/||/! (C++) – gleiche Logik, andere Schreibweise. Beide nutzen Kurzschluss-Auswertung.",
+      "merk": "Python: and, or, not. C++: &&, ||, !."
+    }
+  ]
+}
