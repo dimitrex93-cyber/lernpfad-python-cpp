@@ -14,7 +14,8 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "Ein Unit-Test prüft eine einzelne Einheit (Unit) – z. B. eine Funktion – isoliert mit festen Eingaben und erwarteten Ausgaben. Tests des ganzen Programms heißen Integrationstests bzw. End-to-End-Tests."
+      "erklaerung": "Ein Unit-Test prüft eine einzelne Einheit (Unit) – z. B. eine Funktion – isoliert mit festen Eingaben und erwarteten Ausgaben. Tests des ganzen Programms heißen Integrationstests bzw. End-to-End-Tests.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf6_02",
@@ -28,7 +29,8 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "TDD heißt Red-Green-Refactor: Zuerst schreibt man einen Test, der fehlschlägt (RED). Dann implementiert man gerade so viel, dass er grün wird (GREEN). Zum Schluss verbessert man die Struktur, ohne das Verhalten zu ändern (REFACTOR)."
+      "erklaerung": "TDD heißt Red-Green-Refactor: Zuerst schreibt man einen Test, der fehlschlägt (RED). Dann implementiert man gerade so viel, dass er grün wird (GREEN). Zum Schluss verbessert man die Struktur, ohne das Verhalten zu ändern (REFACTOR).",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf6_03",
@@ -42,7 +44,8 @@
       ],
       "antwort": 2,
       "punkte": 1,
-      "erklaerung": "Refactoring verbessert die innere Qualität (Lesbarkeit, Wartbarkeit, DRY), während sich Ein- und Ausgabe nicht ändern. Neue Features gehören nicht ins Refactoring – sonst kann man Verhaltensänderungen nicht mehr von Strukturänderungen trennen."
+      "erklaerung": "Refactoring verbessert die innere Qualität (Lesbarkeit, Wartbarkeit, DRY), während sich Ein- und Ausgabe nicht ändern. Neue Features gehören nicht ins Refactoring – sonst kann man Verhaltensänderungen nicht mehr von Strukturänderungen trennen.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf6_04",
@@ -56,7 +59,8 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "pytest wird mit 'python3 -m pytest test_noten.py' gestartet. Ohne Dateiname sucht pytest automatisch nach Dateien, die mit test_ beginnen."
+      "erklaerung": "pytest wird mit 'python3 -m pytest test_noten.py' gestartet. Ohne Dateiname sucht pytest automatisch nach Dateien, die mit test_ beginnen.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf6_05",
@@ -70,7 +74,8 @@
       ],
       "antwort": 1,
       "punkte": 1,
-      "erklaerung": "Ein fehlgeschlagener Test wird als 'failed' gemeldet, die anderen laufen weiter. pytest zeigt genau die assert-Zeile und beide Seiten des Vergleichs – das ist der große Vorteil gegenüber bloßem print()-Debugging."
+      "erklaerung": "Ein fehlgeschlagener Test wird als 'failed' gemeldet, die anderen laufen weiter. pytest zeigt genau die assert-Zeile und beide Seiten des Vergleichs – das ist der große Vorteil gegenüber bloßem print()-Debugging.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf6_06",
@@ -84,7 +89,8 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "assert() prüft zur Laufzeit: Ist die Bedingung falsch, bricht das Programm mit 'Assertion ... failed' ab (Exit-Code ungleich 0). Mit -DNDEBUG werden alle assert-Zeilen beim Kompilieren entfernt – dann findet keine Prüfung mehr statt."
+      "erklaerung": "assert() prüft zur Laufzeit: Ist die Bedingung falsch, bricht das Programm mit 'Assertion ... failed' ab (Exit-Code ungleich 0). Mit -DNDEBUG werden alle assert-Zeilen beim Kompilieren entfernt – dann findet keine Prüfung mehr statt.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf6_07",
@@ -98,7 +104,8 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "Der Stacktrace zeigt, über welche Funktionsaufrufe die fehlerhafte Stelle erreicht wurde. Die unterste Zeile nennt den Fehlertyp (z. B. ZeroDivisionError) und die genaue Zeile – dort beginnt die Suche."
+      "erklaerung": "Der Stacktrace zeigt, über welche Funktionsaufrufe die fehlerhafte Stelle erreicht wurde. Die unterste Zeile nennt den Fehlertyp (z. B. ZeroDivisionError) und die genaue Zeile – dort beginnt die Suche.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf6_08",
@@ -112,7 +119,8 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "Die Testfunktion test_kelvin ruft celsius_nach_kelvin(0) auf und vergleicht das Ergebnis per assert mit 273.15. Liefert die Funktion etwas anderes, schlägt der Test fehl und pytest zeigt den Vergleich."
+      "erklaerung": "Die Testfunktion test_kelvin ruft celsius_nach_kelvin(0) auf und vergleicht das Ergebnis per assert mit 273.15. Liefert die Funktion etwas anderes, schlägt der Test fehl und pytest zeigt den Vergleich.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf6_09",
@@ -126,7 +134,8 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "'git checkout -b <name>' legt den Branch an UND wechselt hinein. 'git branch <name>' legt ihn nur an, ohne zu wechseln. Neuere Git-Versionen kennen auch 'git switch -c <name>'."
+      "erklaerung": "'git checkout -b <name>' legt den Branch an UND wechselt hinein. 'git branch <name>' legt ihn nur an, ohne zu wechseln. Neuere Git-Versionen kennen auch 'git switch -c <name>'.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf6_10",
@@ -140,7 +149,8 @@
       ],
       "antwort": 2,
       "punkte": 1,
-      "erklaerung": "Der Product Owner (PO) ist für den Backlog verantwortlich: Er formuliert und priorisiert die Anforderungen (Issues). Der Scrum Master sorgt für den Prozess, das Dev-Team schätzt und setzt um."
+      "erklaerung": "Der Product Owner (PO) ist für den Backlog verantwortlich: Er formuliert und priorisiert die Anforderungen (Issues). Der Scrum Master sorgt für den Prozess, das Dev-Team schätzt und setzt um.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf6_11",
@@ -154,7 +164,8 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "CI bedeutet: Änderungen werden häufig (bei jedem Push) automatisch integriert, kompiliert und getestet. So findet man kaputte Änderungen sofort, statt erst kurz vor dem Release."
+      "erklaerung": "CI bedeutet: Änderungen werden häufig (bei jedem Push) automatisch integriert, kompiliert und getestet. So findet man kaputte Änderungen sofort, statt erst kurz vor dem Release.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf6_12",
@@ -168,31 +179,59 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "Bei zwei int-Operanden führt C++ eine Ganzzahl-Division durch und schneidet den Rest ab: 7 / 2 == 3. Für 3.5 müsste mindestens ein Operand double sein (z. B. 7.0 / 2). Der Test schlägt also fehl – der Klassiker beim Testen! Generell sollte man double-Vergleiche mit einer Toleranz (Approx) prüfen."
+      "erklaerung": "Bei zwei int-Operanden führt C++ eine Ganzzahl-Division durch und schneidet den Rest ab: 7 / 2 == 3. Für 3.5 müsste mindestens ein Operand double sein (z. B. 7.0 / 2). Der Test schlägt also fehl – der Klassiker beim Testen! Generell sollte man double-Vergleiche mit einer Toleranz (Approx) prüfen.",
+      "schwierigkeit": "schwer"
     },
     {
       "id": "lf6_13",
       "typ": "open",
       "frage": "Erkläre den TDD-Zyklus (Red-Green-Refactor) in 3–4 Sätzen.",
-      "stichworte": ["Test zuerst", "fehlschlagen", "RED", "Implementierung", "GREEN", "Refactoring", "Verhalten unverändert"],
+      "stichworte": [
+        "Test zuerst",
+        "fehlschlagen",
+        "RED",
+        "Implementierung",
+        "GREEN",
+        "Refactoring",
+        "Verhalten unverändert"
+      ],
       "punkte": 4,
-      "erklaerung": "Bei TDD schreibt man ZUERST einen Test für das gewünschte Verhalten und führt ihn aus – er schlägt fehl, weil die Funktion noch nicht existiert oder falsch ist (RED). Dann implementiert man gerade so viel, dass der Test grün wird (GREEN). Zum Schluss verbessert man die Struktur des Codes (Refactoring), ohne das Verhalten zu ändern – die Tests bleiben grün und dienen als Sicherheitsnetz."
+      "erklaerung": "Bei TDD schreibt man ZUERST einen Test für das gewünschte Verhalten und führt ihn aus – er schlägt fehl, weil die Funktion noch nicht existiert oder falsch ist (RED). Dann implementiert man gerade so viel, dass der Test grün wird (GREEN). Zum Schluss verbessert man die Struktur des Codes (Refactoring), ohne das Verhalten zu ändern – die Tests bleiben grün und dienen als Sicherheitsnetz.",
+      "schwierigkeit": "schwer"
     },
     {
       "id": "lf6_14",
       "typ": "open",
       "frage": "Nenne die drei Scrum-Rollen und je eine Kernaufgabe.",
-      "stichworte": ["Product Owner", "Scrum Master", "Development Team", "Backlog", "Prioritäten", "Hindernisse", "umsetzen"],
+      "stichworte": [
+        "Product Owner",
+        "Scrum Master",
+        "Development Team",
+        "Backlog",
+        "Prioritäten",
+        "Hindernisse",
+        "umsetzen"
+      ],
       "punkte": 3,
-      "erklaerung": "Der Product Owner (PO) verwaltet und priorisiert den Product Backlog und vertritt die Kundeninteressen. Der Scrum Master sorgt dafür, dass der Scrum-Prozess eingehalten wird, und räumt Hindernisse (Impediments) des Teams aus dem Weg. Das Development Team setzt die Backlog-Einträge des Sprints um und schätzt den Aufwand."
+      "erklaerung": "Der Product Owner (PO) verwaltet und priorisiert den Product Backlog und vertritt die Kundeninteressen. Der Scrum Master sorgt dafür, dass der Scrum-Prozess eingehalten wird, und räumt Hindernisse (Impediments) des Teams aus dem Weg. Das Development Team setzt die Backlog-Einträge des Sprints um und schätzt den Aufwand.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf6_15",
       "typ": "open",
       "frage": "Warum sind automatisierte Tests (z. B. mit pytest) besser als manuelles Nachtippen? Nenne mindestens drei Gründe.",
-      "stichworte": ["wiederholbar", "schnell", "Regression", "Randfälle", "Dokumentation", "CI", "automatisch"],
+      "stichworte": [
+        "wiederholbar",
+        "schnell",
+        "Regression",
+        "Randfälle",
+        "Dokumentation",
+        "CI",
+        "automatisch"
+      ],
       "punkte": 3,
-      "erklaerung": "Automatisierte Tests sind (1) wiederholbar und laufen in Sekunden – man kann sie nach jeder Änderung ausführen, (2) finden sie Regressionen: Änderungen, die etwas kaputt gemacht haben, fallen sofort auf, (3) dokumentieren sie das erwartete Verhalten als ausführbare Spezifikation, und (4) decken sie Randfälle (leere Listen, Grenzwerte) systematisch ab, an die man beim manuellen Testen nicht denkt. Außerdem lassen sie sich in CI-Pipelines einbinden."
+      "erklaerung": "Automatisierte Tests sind (1) wiederholbar und laufen in Sekunden – man kann sie nach jeder Änderung ausführen, (2) finden sie Regressionen: Änderungen, die etwas kaputt gemacht haben, fallen sofort auf, (3) dokumentieren sie das erwartete Verhalten als ausführbare Spezifikation, und (4) decken sie Randfälle (leere Listen, Grenzwerte) systematisch ab, an die man beim manuellen Testen nicht denkt. Außerdem lassen sie sich in CI-Pipelines einbinden.",
+      "schwierigkeit": "schwer"
     }
   ]
 }

@@ -14,7 +14,8 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "Python wird zur Laufzeit Zeile für Zeile vom Interpreter ausgeführt. C++ dagegen wird vorab komplett kompiliert."
+      "erklaerung": "Python wird zur Laufzeit Zeile für Zeile vom Interpreter ausgeführt. C++ dagegen wird vorab komplett kompiliert.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf1_02",
@@ -28,7 +29,8 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "Bei int / int führt C++ eine Ganzzahl-Division durch und schneidet den Rest ab: 10 / 3 == 3. Für 3.333... braucht es mindestens einen double-Wert."
+      "erklaerung": "Bei int / int führt C++ eine Ganzzahl-Division durch und schneidet den Rest ab: 10 / 3 == 3. Für 3.333... braucht es mindestens einen double-Wert.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf1_03",
@@ -42,7 +44,8 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "C++ ist statisch typisiert (int x = 5;), Python dynamisch (x = 5; x = 'fünf' ist erlaubt). Der Compiler findet Typfehler in C++ schon beim Übersetzen."
+      "erklaerung": "C++ ist statisch typisiert (int x = 5;), Python dynamisch (x = 5; x = 'fünf' ist erlaubt). Der Compiler findet Typfehler in C++ schon beim Übersetzen.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf1_04",
@@ -56,7 +59,8 @@
       ],
       "antwort": 1,
       "punkte": 1,
-      "erklaerung": "input() gibt immer einen String zurück. Zum Rechnen muss man mit int() oder float() umwandeln, sonst gibt es einen TypeError."
+      "erklaerung": "input() gibt immer einen String zurück. Zum Rechnen muss man mit int() oder float() umwandeln, sonst gibt es einen TypeError.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf1_05",
@@ -70,7 +74,8 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "Die Ausführung beginnt immer in int main(). Ohne main() verweigert der Linker die Arbeit."
+      "erklaerung": "Die Ausführung beginnt immer in int main(). Ohne main() verweigert der Linker die Arbeit.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf1_06",
@@ -84,7 +89,8 @@
       ],
       "antwort": 1,
       "punkte": 1,
-      "erklaerung": "Python nutzt 'def name(parameter):' für Funktionsdefinitionen und 'return' für die Rückgabe."
+      "erklaerung": "Python nutzt 'def name(parameter):' für Funktionsdefinitionen und 'return' für die Rückgabe.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf1_07",
@@ -98,7 +104,8 @@
       ],
       "antwort": 1,
       "punkte": 1,
-      "erklaerung": "#include fügt den Inhalt einer Header-Datei ein. <iostream> stellt die Ein-/Ausgabeströme bereit – ohne Include kennt der Compiler std::cout nicht."
+      "erklaerung": "#include fügt den Inhalt einer Header-Datei ein. <iostream> stellt die Ein-/Ausgabeströme bereit – ohne Include kennt der Compiler std::cout nicht.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf1_08",
@@ -112,7 +119,8 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "In Python UND C++ starten Indizes bei 0: noten[0] bzw. noten[0] ist das erste Element."
+      "erklaerung": "In Python UND C++ starten Indizes bei 0: noten[0] bzw. noten[0] ist das erste Element.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf1_09",
@@ -126,7 +134,8 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "std::vector<T> ist typisiert: vector<int> enthält nur ints. Python-Listen können dagegen gemischte Typen enthalten."
+      "erklaerung": "std::vector<T> ist typisiert: vector<int> enthält nur ints. Python-Listen können dagegen gemischte Typen enthalten.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf1_10",
@@ -140,7 +149,8 @@
       ],
       "antwort": 1,
       "punkte": 1,
-      "erklaerung": "try/except fängt Ausnahmen (Exceptions) ab. In C++ übernimmt die Prüfung von std::cin.fail() eine ähnliche Rolle bei Eingabefehlern."
+      "erklaerung": "try/except fängt Ausnahmen (Exceptions) ab. In C++ übernimmt die Prüfung von std::cin.fail() eine ähnliche Rolle bei Eingabefehlern.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf1_11",
@@ -154,7 +164,8 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "Der Compiler analysiert das gesamte Programm beim Übersetzen: falsche Typen, fehlende Semikolons, unbekannte Namen – alles fällt vor dem Lauf auf. Python entdeckt solche Fehler erst zur Laufzeit."
+      "erklaerung": "Der Compiler analysiert das gesamte Programm beim Übersetzen: falsche Typen, fehlende Semikolons, unbekannte Namen – alles fällt vor dem Lauf auf. Python entdeckt solche Fehler erst zur Laufzeit.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf1_12",
@@ -168,31 +179,56 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "range(5) erzeugt die Zahlen 0 bis 4 – genau das, was die C++-Zählschleife durchläuft."
+      "erklaerung": "range(5) erzeugt die Zahlen 0 bis 4 – genau das, was die C++-Zählschleife durchläuft.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf1_13",
       "typ": "open",
       "frage": "Erkläre in 2–3 Sätzen den Unterschied zwischen interpretierten und kompilierten Sprachen.",
-      "stichworte": ["Interpreter", "Compiler", "Zeile für Zeile", "vorab", "Maschinensprache"],
+      "stichworte": [
+        "Interpreter",
+        "Compiler",
+        "Zeile für Zeile",
+        "vorab",
+        "Maschinensprache"
+      ],
       "punkte": 4,
-      "erklaerung": "Interpretierte Sprachen (Python) werden zur Laufzeit Zeile für Zeile von einem Interpreter ausgeführt. Kompilierte Sprachen (C++) werden vorab komplett vom Compiler in Maschinensprache übersetzt; erst dann läuft die erzeugte Binärdatei. Dadurch ist C++ schneller und findet Fehler früher, Python aber schneller auszuprobieren."
+      "erklaerung": "Interpretierte Sprachen (Python) werden zur Laufzeit Zeile für Zeile von einem Interpreter ausgeführt. Kompilierte Sprachen (C++) werden vorab komplett vom Compiler in Maschinensprache übersetzt; erst dann läuft die erzeugte Binärdatei. Dadurch ist C++ schneller und findet Fehler früher, Python aber schneller auszuprobieren.",
+      "schwierigkeit": "schwer"
     },
     {
       "id": "lf1_14",
       "typ": "open",
       "frage": "Nenne und erkläre kurz drei verschiedene Datentypen in C++.",
-      "stichworte": ["int", "double", "bool", "char", "std::string", "ganze Zahl", "Kommazahl"],
+      "stichworte": [
+        "int",
+        "double",
+        "bool",
+        "char",
+        "std::string",
+        "ganze Zahl",
+        "Kommazahl"
+      ],
       "punkte": 3,
-      "erklaerung": "Z. B.: int = ganze Zahl (42), double = Kommazahl (3.14), bool = Wahrheitswert (true/false), char = einzelnes Zeichen ('A'), std::string = Text ('Hallo'). Wichtig: In C++ muss der Typ bei der Deklaration angesagt werden."
+      "erklaerung": "Z. B.: int = ganze Zahl (42), double = Kommazahl (3.14), bool = Wahrheitswert (true/false), char = einzelnes Zeichen ('A'), std::string = Text ('Hallo'). Wichtig: In C++ muss der Typ bei der Deklaration angesagt werden.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf1_15",
       "typ": "open",
       "frage": "Warum liefert '10 / 3' in Python 3.333..., in C++ aber 3?",
-      "stichworte": ["Ganzzahl-Division", "int", "float", "double", "abschneiden", "//"],
+      "stichworte": [
+        "Ganzzahl-Division",
+        "int",
+        "float",
+        "double",
+        "abschneiden",
+        "//"
+      ],
       "punkte": 3,
-      "erklaerung": "In Python ergibt '/' immer eine Kommazahl (float); nur '//' schneidet ab. In C++ führt int / int eine Ganzzahl-Division durch und schneidet den Rest einfach ab – für eine Kommazahl muss mindestens ein Operand double sein (10.0 / 3)."
+      "erklaerung": "In Python ergibt '/' immer eine Kommazahl (float); nur '//' schneidet ab. In C++ führt int / int eine Ganzzahl-Division durch und schneidet den Rest einfach ab – für eine Kommazahl muss mindestens ein Operand double sein (10.0 / 3).",
+      "schwierigkeit": "schwer"
     }
   ]
 }

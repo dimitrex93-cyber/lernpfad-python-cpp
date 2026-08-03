@@ -14,7 +14,8 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "Eine Klasse beschreibt Attribute und Methoden – ein Bauplan. Erst wenn man daraus ein Objekt erzeugt (Python: konto = Bankkonto(); C++: Bankkonto konto;), entsteht eine konkrete Instanz im Speicher."
+      "erklaerung": "Eine Klasse beschreibt Attribute und Methoden – ein Bauplan. Erst wenn man daraus ein Objekt erzeugt (Python: konto = Bankkonto(); C++: Bankkonto konto;), entsteht eine konkrete Instanz im Speicher.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf3_02",
@@ -28,7 +29,8 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "__init__ läuft beim Erzeugen des Objekts und legt das Instanz-Attribut self.name an. print(bello.name) gibt dann den gespeicherten Wert aus: Bello."
+      "erklaerung": "__init__ läuft beim Erzeugen des Objekts und legt das Instanz-Attribut self.name an. print(bello.name) gibt dann den gespeicherten Wert aus: Bello.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf3_03",
@@ -42,7 +44,8 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "private kapselt Attribute: Nur Member-Funktionen der eigenen Klasse dürfen darauf zugreifen. Von außen (z. B. main()) gibt es einen Compilerfehler. In Python ist das nur eine Konvention (führender Unterstrich), in C++ erzwingt es der Compiler."
+      "erklaerung": "private kapselt Attribute: Nur Member-Funktionen der eigenen Klasse dürfen darauf zugreifen. Von außen (z. B. main()) gibt es einen Compilerfehler. In Python ist das nur eine Konvention (führender Unterstrich), in C++ erzwingt es der Compiler.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf3_04",
@@ -56,7 +59,8 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "__init__ ist der Konstruktor: Er wird automatisch ausgeführt, sobald ein Objekt der Klasse erzeugt wird, und initialisiert die Attribute. Das Pendant in C++ ist der Konstruktor mit dem Klassennamen."
+      "erklaerung": "__init__ ist der Konstruktor: Er wird automatisch ausgeführt, sobald ein Objekt der Klasse erzeugt wird, und initialisiert die Attribute. Das Pendant in C++ ist der Konstruktor mit dem Klassennamen.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf3_05",
@@ -70,7 +74,8 @@
       ],
       "antwort": 2,
       "punkte": 1,
-      "erklaerung": "Der Name in der Klammer ist die Basisklasse: Auto erbt von Fahrzeug. In C++ schreibt man 'class Auto : public Fahrzeug { ... };'."
+      "erklaerung": "Der Name in der Klammer ist die Basisklasse: Auto erbt von Fahrzeug. In C++ schreibt man 'class Auto : public Fahrzeug { ... };'.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf3_06",
@@ -84,7 +89,8 @@
       ],
       "antwort": 0,
       "punkte": 3,
-      "erklaerung": "Wegen 'virtual' entscheidet die dynamische Bindung zur Laufzeit: Der Zeiger ist vom Typ Fahrzeug*, das Objekt dahinter aber ein Auto – also läuft Auto::starten(). Ohne 'virtual' würde 'Fahrzeug startet' ausgegeben. (Hinweis: In echten Programmen gehört ein virtueller Destruktor dazu, damit delete sauber aufräumt.)"
+      "erklaerung": "Wegen 'virtual' entscheidet die dynamische Bindung zur Laufzeit: Der Zeiger ist vom Typ Fahrzeug*, das Objekt dahinter aber ein Auto – also läuft Auto::starten(). Ohne 'virtual' würde 'Fahrzeug startet' ausgegeben. (Hinweis: In echten Programmen gehört ein virtueller Destruktor dazu, damit delete sauber aufräumt.)",
+      "schwierigkeit": "schwer"
     },
     {
       "id": "lf3_07",
@@ -98,7 +104,8 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "self ist der erste Parameter jeder Instanzmethode und verweist auf das jeweilige Objekt. Über self.name erreicht man die Attribute dieses Objekts. (In C++ übernimmt 'this' diese Rolle – wird aber meist implizit genutzt.)"
+      "erklaerung": "self ist der erste Parameter jeder Instanzmethode und verweist auf das jeweilige Objekt. Über self.name erreicht man die Attribute dieses Objekts. (In C++ übernimmt 'this' diese Rolle – wird aber meist implizit genutzt.)",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf3_08",
@@ -112,7 +119,8 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "Der Konstruktor läuft bei der Erzeugung (erstellt), dann die main()-Ausgabe (im Scope), und wenn main() endet, verlässt k seinen Scope – der Destruktor wird automatisch aufgerufen (zerstoert). Objekte auf dem Stack räumen sich selbst auf (RAII)."
+      "erklaerung": "Der Konstruktor läuft bei der Erzeugung (erstellt), dann die main()-Ausgabe (im Scope), und wenn main() endet, verlässt k seinen Scope – der Destruktor wird automatisch aufgerufen (zerstoert). Objekte auf dem Stack räumen sich selbst auf (RAII).",
+      "schwierigkeit": "schwer"
     },
     {
       "id": "lf3_09",
@@ -126,7 +134,8 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "Dynamischer Dispatch: Python schaut bei jedem Aufruf zur Laufzeit, welche Klasse das Objekt wirklich hat. Das erste Element ist ein Tier (...), das zweite ein Hund (Wuff!)."
+      "erklaerung": "Dynamischer Dispatch: Python schaut bei jedem Aufruf zur Laufzeit, welche Klasse das Objekt wirklich hat. Das erste Element ist ein Tier (...), das zweite ein Hund (Wuff!).",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf3_10",
@@ -140,7 +149,8 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "override ist eine Absicherung: Passt die Signatur nicht zu einer virtuellen Methode der Basisklasse (z. B. wegen eines Tippfehlers), meldet der Compiler einen Fehler. Ohne override würde stillschweigend eine neue, eigene Methode entstehen – ein häufiger Fehler."
+      "erklaerung": "override ist eine Absicherung: Passt die Signatur nicht zu einer virtuellen Methode der Basisklasse (z. B. wegen eines Tippfehlers), meldet der Compiler einen Fehler. Ohne override würde stillschweigend eine neue, eigene Methode entstehen – ein häufiger Fehler.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf3_11",
@@ -154,7 +164,8 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "__str__ definiert die menschenlesbare Darstellung: print(obj) und str(obj) nutzen sie. Ohne eigene Implementierung zeigt Python eine wenig hilfreiche Standard-Darstellung an. Das C++-Pendant ist eine eigene print()-Methode (oder später ein operator<<)."
+      "erklaerung": "__str__ definiert die menschenlesbare Darstellung: print(obj) und str(obj) nutzen sie. Ohne eigene Implementierung zeigt Python eine wenig hilfreiche Standard-Darstellung an. Das C++-Pendant ist eine eigene print()-Methode (oder später ein operator<<).",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf3_12",
@@ -168,31 +179,57 @@
       ],
       "antwort": 2,
       "punkte": 2,
-      "erklaerung": "Lokale Objekte werden deterministisch beim Verlassen ihres Scopes zerstört – in umgekehrter Reihenfolge ihrer Erstellung. Das ist RAII und ein zentraler Unterschied zu Python, wo __del__ nicht garantiert sofort läuft."
+      "erklaerung": "Lokale Objekte werden deterministisch beim Verlassen ihres Scopes zerstört – in umgekehrter Reihenfolge ihrer Erstellung. Das ist RAII und ein zentraler Unterschied zu Python, wo __del__ nicht garantiert sofort läuft.",
+      "schwierigkeit": "schwer"
     },
     {
       "id": "lf3_13",
       "typ": "open",
       "frage": "Erkläre in 2–3 Sätzen den Unterschied zwischen einer Klasse und einem Objekt (Instanz).",
-      "stichworte": ["Klasse", "Bauplan", "Vorlage", "Objekt", "Instanz", "erzeugen"],
+      "stichworte": [
+        "Klasse",
+        "Bauplan",
+        "Vorlage",
+        "Objekt",
+        "Instanz",
+        "erzeugen"
+      ],
       "punkte": 4,
-      "erklaerung": "Die Klasse ist der Bauplan bzw. die Vorlage: Sie definiert, welche Attribute und Methoden die Objekte haben (z. B. Bankkonto mit kontostand und einzahlen()). Ein Objekt (Instanz) ist ein konkretes Exemplar, das nach diesem Bauplan im Speicher erzeugt wurde (z. B. mein Konto mit 100 €). Von einer Klasse kann man beliebig viele Objekte erzeugen, jedes mit eigenen Attributwerten."
+      "erklaerung": "Die Klasse ist der Bauplan bzw. die Vorlage: Sie definiert, welche Attribute und Methoden die Objekte haben (z. B. Bankkonto mit kontostand und einzahlen()). Ein Objekt (Instanz) ist ein konkretes Exemplar, das nach diesem Bauplan im Speicher erzeugt wurde (z. B. mein Konto mit 100 €). Von einer Klasse kann man beliebig viele Objekte erzeugen, jedes mit eigenen Attributwerten.",
+      "schwierigkeit": "schwer"
     },
     {
       "id": "lf3_14",
       "typ": "open",
       "frage": "Nenne drei Vorteile der Kapselung – also private Attribute, die nur über öffentliche Methoden erreichbar sind.",
-      "stichworte": ["private", "Zugriff kontrollieren", "Validierung", "Innereien schützen", "Schnittstelle", "unabhängig ändern"],
+      "stichworte": [
+        "private",
+        "Zugriff kontrollieren",
+        "Validierung",
+        "Innereien schützen",
+        "Schnittstelle",
+        "unabhängig ändern"
+      ],
       "punkte": 3,
-      "erklaerung": "Z. B.: 1) Zugriff kontrollieren – Methoden können Eingaben validieren (keine negativen Beträge, keine Überziehung). 2) Innereien schützen – Außenstehende können den Zustand nicht versehentlich kaputt machen. 3) Änderbarkeit – die interne Umsetzung (z. B. der Datentyp) kann geändert werden, ohne dass die Nutzer der Klasse etwas anpassen müssen. In C++ erzwingt private das; in Python ist es Konvention (Unterstrich)."
+      "erklaerung": "Z. B.: 1) Zugriff kontrollieren – Methoden können Eingaben validieren (keine negativen Beträge, keine Überziehung). 2) Innereien schützen – Außenstehende können den Zustand nicht versehentlich kaputt machen. 3) Änderbarkeit – die interne Umsetzung (z. B. der Datentyp) kann geändert werden, ohne dass die Nutzer der Klasse etwas anpassen müssen. In C++ erzwingt private das; in Python ist es Konvention (Unterstrich).",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf3_15",
       "typ": "open",
       "frage": "Worin unterscheiden sich Python und C++ bei der Lebenszeit von Objekten? (Stichwort: __del__ bzw. Destruktor)",
-      "stichworte": ["__del__", "Destruktor", "Garbage Collection", "Referenzzählung", "Scope-Ende", "deterministisch", "vorhersehbar"],
+      "stichworte": [
+        "__del__",
+        "Destruktor",
+        "Garbage Collection",
+        "Referenzzählung",
+        "Scope-Ende",
+        "deterministisch",
+        "vorhersehbar"
+      ],
       "punkte": 3,
-      "erklaerung": "In Python wird __del__ von der Speicherverwaltung (Referenzzählung bzw. Garbage Collection) aufgerufen, wenn die letzte Referenz auf ein Objekt verschwindet – der Zeitpunkt ist nicht garantiert. In C++ werden Objekte auf dem Stack deterministisch beim Verlassen ihres Scopes zerstört (RAII); der Destruktor läuft also vorhersehbar und sofort. Deshalb kann C++ Ressourcen wie Dateien oder Speicher zuverlässig automatisch freigeben."
+      "erklaerung": "In Python wird __del__ von der Speicherverwaltung (Referenzzählung bzw. Garbage Collection) aufgerufen, wenn die letzte Referenz auf ein Objekt verschwindet – der Zeitpunkt ist nicht garantiert. In C++ werden Objekte auf dem Stack deterministisch beim Verlassen ihres Scopes zerstört (RAII); der Destruktor läuft also vorhersehbar und sofort. Deshalb kann C++ Ressourcen wie Dateien oder Speicher zuverlässig automatisch freigeben.",
+      "schwierigkeit": "schwer"
     }
   ]
 }

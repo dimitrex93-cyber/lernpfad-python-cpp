@@ -16,16 +16,19 @@ vergibt Punkte, erklärt jede Antwort und speichert deinen Fortschritt.
 # Lernfeld wählen (Menü)
 python3 tools/quiz.py
 
-# Bestimmtes Lernfeld direkt testen
+# Bestimmtes Lernfeld direkt testen (Stufe wird abgefragt)
 python3 tools/quiz.py 2
+
+# Lernfeld direkt mit Schwierigkeitsgrad testen
+python3 tools/quiz.py 2 --schwierigkeit schwer
 
 # Fortschritt aller Lernfelder anzeigen
 python3 tools/quiz.py --status
 
-# Lernfelder auflisten (✓ = bestanden)
+# Lernfelder auflisten (✓ je Stufe: leicht · mittel · schwer)
 python3 tools/quiz.py --list
 
-# Fortschritt eines Lernfelds zurücksetzen
+# Fortschritt eines Lernfelds zurücksetzen (alle Stufen)
 python3 tools/quiz.py --reset 2
 
 # Sprachen-Wissen: Python & C++ erklärt (Menü)
@@ -35,6 +38,24 @@ python3 tools/quiz.py --wissen
 python3 tools/quiz.py --wissen string
 python3 tools/quiz.py --wissen 2
 ```
+
+### Schwierigkeitsgrad
+
+Vor jedem Test wählst du eine von **drei Stufen** – die Filterung ist kumulativ:
+
+| Stufe | Fragen | Beschreibung |
+|---|---|---|
+| leicht | nur `leicht` | Einstieg: Grundbegriffe & einfache Aufgaben |
+| mittel | `leicht` + `mittel` | Standard: Anwenden & Verstehen |
+| schwer | alle | Volle Fragenbank inkl. Transferfragen |
+
+Jede Frage in `lernfeld_XX/test/fragen.json` hat dafür ein Feld
+`"schwierigkeit": "leicht" | "mittel" | "schwer"`. Ohne das Feld zählt eine
+Frage als `mittel`. Dein Fortschritt wird **pro Lernfeld und Stufe**
+gespeichert (Schlüssel `lf2_leicht`, `lf2_mittel`, `lf2_schwer` in
+`~/.lernpfad/fortschritt.json`) – es zählt je Stufe der beste Versuch.
+Alte Fortschrittseinträge ohne Stufe werden beim Laden automatisch als
+Stufe `schwer` übernommen.
 
 ### Sprachen-Wissen (Menüpunkt `w`)
 

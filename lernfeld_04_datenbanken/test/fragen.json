@@ -14,7 +14,8 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "SELECT fragt Daten ab (Read in CRUD). INSERT legt Datensätze an, UPDATE ändert sie, DELETE löscht sie."
+      "erklaerung": "SELECT fragt Daten ab (Read in CRUD). INSERT legt Datensätze an, UPDATE ändert sie, DELETE löscht sie.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf4_02",
@@ -28,7 +29,8 @@
       ],
       "antwort": 1,
       "punkte": 1,
-      "erklaerung": "Das Modul heißt sqlite3 und ist Teil der Standardbibliothek: import sqlite3. In C++ wäre es dagegen #include <sqlite3.h>."
+      "erklaerung": "Das Modul heißt sqlite3 und ist Teil der Standardbibliothek: import sqlite3. In C++ wäre es dagegen #include <sqlite3.h>.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf4_03",
@@ -42,7 +44,8 @@
       ],
       "antwort": 1,
       "punkte": 1,
-      "erklaerung": "sqlite3 arbeitet transaktionsbasiert: Ohne commit() werden INSERT/UPDATE/DELETE nach Programmende verworfen. In C++ setzt man BEGIN; und COMMIT; selbst."
+      "erklaerung": "sqlite3 arbeitet transaktionsbasiert: Ohne commit() werden INSERT/UPDATE/DELETE nach Programmende verworfen. In C++ setzt man BEGIN; und COMMIT; selbst.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf4_04",
@@ -56,7 +59,8 @@
       ],
       "antwort": 2,
       "punkte": 2,
-      "erklaerung": "Der Primärschlüssel macht jeden Datensatz eindeutig identifizierbar – so kann man einzelne Zeilen gezielt ändern oder löschen. INTEGER PRIMARY KEY AUTOINCREMENT vergibt die Werte automatisch."
+      "erklaerung": "Der Primärschlüssel macht jeden Datensatz eindeutig identifizierbar – so kann man einzelne Zeilen gezielt ändern oder löschen. INTEGER PRIMARY KEY AUTOINCREMENT vergibt die Werte automatisch.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf4_05",
@@ -70,7 +74,8 @@
       ],
       "antwort": 2,
       "punkte": 1,
-      "erklaerung": "UPDATE ... SET ... WHERE ... ändert bestehende Zeilen. ALTER ändert dagegen die Tabellenstruktur (z. B. eine Spalte hinzufügen)."
+      "erklaerung": "UPDATE ... SET ... WHERE ... ändert bestehende Zeilen. ALTER ändert dagegen die Tabellenstruktur (z. B. eine Spalte hinzufügen).",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf4_06",
@@ -84,7 +89,8 @@
       ],
       "antwort": 3,
       "punkte": 3,
-      "erklaerung": "Direkt eingebaute Eingaben können den SQL-Befehl umschreiben (SQL-Injection, z. B. ' OR 1=1 --) und brechen bei Anführungszeichen. Platzhalter übergeben Werte getrennt vom Befehl – der Befehl bleibt fest."
+      "erklaerung": "Direkt eingebaute Eingaben können den SQL-Befehl umschreiben (SQL-Injection, z. B. ' OR 1=1 --) und brechen bei Anführungszeichen. Platzhalter übergeben Werte getrennt vom Befehl – der Befehl bleibt fest.",
+      "schwierigkeit": "schwer"
     },
     {
       "id": "lf4_07",
@@ -98,7 +104,8 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "LIKE arbeitet mit %-Wildcards: %python% bedeutet 'beliebiger Text davor und danach' – gefunden wird jeder Titel, der 'python' irgendwo enthält."
+      "erklaerung": "LIKE arbeitet mit %-Wildcards: %python% bedeutet 'beliebiger Text davor und danach' – gefunden wird jeder Titel, der 'python' irgendwo enthält.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf4_08",
@@ -112,7 +119,8 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "-lsqlite3 linkt die sqlite3-Bibliothek. Ohne sie meldet der Linker unbekannte sqlite3_*-Symbole. Vorher muss libsqlite3-dev installiert sein."
+      "erklaerung": "-lsqlite3 linkt die sqlite3-Bibliothek. Ohne sie meldet der Linker unbekannte sqlite3_*-Symbole. Vorher muss libsqlite3-dev installiert sein.",
+      "schwierigkeit": "schwer"
     },
     {
       "id": "lf4_09",
@@ -126,7 +134,8 @@
       ],
       "antwort": 2,
       "punkte": 1,
-      "erklaerung": "JSON (JavaScript Object Notation) ist ein textbasiertes Datenformat, das sich leicht lesen und schreiben lässt – der Standard für den Datenaustausch zwischen Web-Diensten und Programmen."
+      "erklaerung": "JSON (JavaScript Object Notation) ist ein textbasiertes Datenformat, das sich leicht lesen und schreiben lässt – der Standard für den Datenaustausch zwischen Web-Diensten und Programmen.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf4_10",
@@ -140,7 +149,8 @@
       ],
       "antwort": 3,
       "punkte": 2,
-      "erklaerung": "ORDER BY erstellt_am DESC sortiert absteigend (neueste zuerst), LIMIT 3 begrenzt das Ergebnis auf die ersten 3 Zeilen."
+      "erklaerung": "ORDER BY erstellt_am DESC sortiert absteigend (neueste zuerst), LIMIT 3 begrenzt das Ergebnis auf die ersten 3 Zeilen.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf4_11",
@@ -154,7 +164,8 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "CRUD ist das Grundmuster fast jeder Datenverwaltung: anlegen (INSERT), lesen (SELECT), ändern (UPDATE) und löschen (DELETE)."
+      "erklaerung": "CRUD ist das Grundmuster fast jeder Datenverwaltung: anlegen (INSERT), lesen (SELECT), ändern (UPDATE) und löschen (DELETE).",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf4_12",
@@ -168,31 +179,57 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "LIMIT 2 begrenzt auf die ersten beiden Zeilen. fetchall() liefert Tupel; zeile[0] ist das erste Element des Tupels, also der Titel – nicht das Tupel selbst. Ausgabe: Einkaufen, dann Sport."
+      "erklaerung": "LIMIT 2 begrenzt auf die ersten beiden Zeilen. fetchall() liefert Tupel; zeile[0] ist das erste Element des Tupels, also der Titel – nicht das Tupel selbst. Ausgabe: Einkaufen, dann Sport.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf4_13",
       "typ": "open",
       "frage": "Erkläre in 2–3 Sätzen den Unterschied zwischen SQLite und einem Server-basierten Datenbanksystem wie MySQL oder PostgreSQL.",
-      "stichworte": ["eingebettet", "Datei", "kein Server", "Client-Server", "Bibliothek", "lokal"],
+      "stichworte": [
+        "eingebettet",
+        "Datei",
+        "kein Server",
+        "Client-Server",
+        "Bibliothek",
+        "lokal"
+      ],
       "punkte": 3,
-      "erklaerung": "SQLite ist eine eingebettete Datenbank: Die komplette Datenbank liegt in einer einzigen Datei, es gibt keinen separaten Server-Prozess – das Programm spricht sie direkt über eine Bibliothek an. MySQL/PostgreSQL laufen dagegen als eigener Server-Prozess, mit dem Programme über das Netzwerk sprechen (Client-Server). SQLite ist einfacher und ideal für lokale Anwendungen, Server-DBMS sind für viele gleichzeitige Zugriffe und große Datenmengen gedacht."
+      "erklaerung": "SQLite ist eine eingebettete Datenbank: Die komplette Datenbank liegt in einer einzigen Datei, es gibt keinen separaten Server-Prozess – das Programm spricht sie direkt über eine Bibliothek an. MySQL/PostgreSQL laufen dagegen als eigener Server-Prozess, mit dem Programme über das Netzwerk sprechen (Client-Server). SQLite ist einfacher und ideal für lokale Anwendungen, Server-DBMS sind für viele gleichzeitige Zugriffe und große Datenmengen gedacht.",
+      "schwierigkeit": "schwer"
     },
     {
       "id": "lf4_14",
       "typ": "open",
       "frage": "Warum ist es gefährlich, Benutzereingaben per String-Zusammensetzung in SQL-Abfragen einzubauen? Erkläre das Problem mit einem Beispiel und nenne den sicheren Weg in Python und in C++.",
-      "stichworte": ["SQL-Injection", "Platzhalter", "?", "sqlite3_bind_text", "Parameter", "Anführungszeichen"],
+      "stichworte": [
+        "SQL-Injection",
+        "Platzhalter",
+        "?",
+        "sqlite3_bind_text",
+        "Parameter",
+        "Anführungszeichen"
+      ],
       "punkte": 4,
-      "erklaerung": "Wenn eine Eingabe direkt in den SQL-String gesetzt wird, kann sie den Befehl umschreiben – z. B. macht ' OR 1=1 -- aus einer Suche einen Befehl, der alle Datensätze liefert (SQL-Injection). Außerdem brechen Anführungszeichen den String. Der sichere Weg: Werte getrennt übergeben – in Python mit ?-Platzhaltern (cur.execute(sql, (wert,))), in C++ mit vorbereiteten Statements und sqlite3_bind_text()/sqlite3_bind_int(). So bleibt der SQL-Befehl fest und Eingaben sind immer nur Daten."
+      "erklaerung": "Wenn eine Eingabe direkt in den SQL-String gesetzt wird, kann sie den Befehl umschreiben – z. B. macht ' OR 1=1 -- aus einer Suche einen Befehl, der alle Datensätze liefert (SQL-Injection). Außerdem brechen Anführungszeichen den String. Der sichere Weg: Werte getrennt übergeben – in Python mit ?-Platzhaltern (cur.execute(sql, (wert,))), in C++ mit vorbereiteten Statements und sqlite3_bind_text()/sqlite3_bind_int(). So bleibt der SQL-Befehl fest und Eingaben sind immer nur Daten.",
+      "schwierigkeit": "schwer"
     },
     {
       "id": "lf4_15",
       "typ": "open",
       "frage": "Beschreibe in Stichpunkten den Ablauf, um in Python eine Semikolon-getrennte CSV-Datei mit Notizen in die SQLite-Tabelle 'notizen' zu importieren (Datei öffnen, Zeilen zerlegen, einfügen, speichern).",
-      "stichworte": ["open", "for zeile", "split(';')", "Kopfzeile", "INSERT", "execute", "commit"],
+      "stichworte": [
+        "open",
+        "for zeile",
+        "split(';')",
+        "Kopfzeile",
+        "INSERT",
+        "execute",
+        "commit"
+      ],
       "punkte": 4,
-      "erklaerung": "1) Datei öffnen: with open('notizen.csv', encoding='utf-8') as datei. 2) Zeilenweise lesen: for zeile in datei, Kopfzeile überspringen, zeile.strip() und mit zeile.split(';') in Felder zerlegen. 3) Gültigkeit prüfen (4 Felder, Titel nicht leer) – sonst Zeile überspringen. 4) Einfügen: cur.execute('INSERT INTO notizen (titel, inhalt, erstellt_am) VALUES (?, ?, ?)', (felder[1], felder[2], felder[3])). 5) Am Ende con.commit(), damit alles dauerhaft gespeichert wird."
+      "erklaerung": "1) Datei öffnen: with open('notizen.csv', encoding='utf-8') as datei. 2) Zeilenweise lesen: for zeile in datei, Kopfzeile überspringen, zeile.strip() und mit zeile.split(';') in Felder zerlegen. 3) Gültigkeit prüfen (4 Felder, Titel nicht leer) – sonst Zeile überspringen. 4) Einfügen: cur.execute('INSERT INTO notizen (titel, inhalt, erstellt_am) VALUES (?, ?, ?)', (felder[1], felder[2], felder[3])). 5) Am Ende con.commit(), damit alles dauerhaft gespeichert wird.",
+      "schwierigkeit": "mittel"
     }
   ]
 }

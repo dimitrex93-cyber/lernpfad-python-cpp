@@ -14,7 +14,8 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "min() liefert den kleinsten Wert (1), max() den größten (8) und sum() die Summe 5+2+8+1 = 16. Die Ausgabe ist also '1 8 16'."
+      "erklaerung": "min() liefert den kleinsten Wert (1), max() den größten (8) und sum() die Summe 5+2+8+1 = 16. Die Ausgabe ist also '1 8 16'.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf2_02",
@@ -28,7 +29,8 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "std::ifstream ist der Eingabe-Dateistrom; der Dateiname wird im Konstruktor übergeben. std::cin ist die Tastatur, std::ofstream schreibt Dateien, und open(...) mit \"r\" ist C-Stil und existiert in C++ so nicht."
+      "erklaerung": "std::ifstream ist der Eingabe-Dateistrom; der Dateiname wird im Konstruktor übergeben. std::cin ist die Tastatur, std::ofstream schreibt Dateien, und open(...) mit \"r\" ist C-Stil und existiert in C++ so nicht.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf2_03",
@@ -42,7 +44,8 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "readlines() liefert eine Liste aller Zeilen (jeweils inklusive \\n). read() liefert einen einzigen String, readline() nur die nächste Zeile, scan() existiert nicht."
+      "erklaerung": "readlines() liefert eine Liste aller Zeilen (jeweils inklusive \\n). read() liefert einen einzigen String, readline() nur die nächste Zeile, scan() existiert nicht.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf2_04",
@@ -56,7 +59,8 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "Bubble Sort hat zwei verschachtelte Schleifen: rund n Durchläufe mit je bis zu n Vergleichen – macht ~n² Vergleiche. Bei doppelter Datenmenge dauert es also etwa 4× so lange."
+      "erklaerung": "Bubble Sort hat zwei verschachtelte Schleifen: rund n Durchläufe mit je bis zu n Vergleichen – macht ~n² Vergleiche. Bei doppelter Datenmenge dauert es also etwa 4× so lange.",
+      "schwierigkeit": "schwer"
     },
     {
       "id": "lf2_05",
@@ -70,7 +74,8 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "Das ist Bubble Sort: Nach dem ersten Durchlauf steht die 3 am Ende, nach dem zweiten die 2 – übrig bleibt die aufsteigend sortierte Liste [1, 2, 3]."
+      "erklaerung": "Das ist Bubble Sort: Nach dem ersten Durchlauf steht die 3 am Ende, nach dem zweiten die 2 – übrig bleibt die aufsteigend sortierte Liste [1, 2, 3].",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf2_06",
@@ -84,7 +89,8 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "Die binäre Suche halbiert den Suchbereich und vergleicht mit dem mittleren Element – das funktioniert nur, wenn die Liste aufsteigend sortiert ist. Auf unsortierten Listen liefert sie falsche Ergebnisse."
+      "erklaerung": "Die binäre Suche halbiert den Suchbereich und vergleicht mit dem mittleren Element – das funktioniert nur, wenn die Liste aufsteigend sortiert ist. Auf unsortierten Listen liefert sie falsche Ergebnisse.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf2_07",
@@ -98,7 +104,8 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "Mitte von Index 0–4 ist 2 (Wert 5) – zu klein, also links = 3. Mitte von 3–4 ist 3 (Wert 7) – Treffer. Zurückgegeben wird der Index 3, nicht der Wert 7."
+      "erklaerung": "Mitte von Index 0–4 ist 2 (Wert 5) – zu klein, also links = 3. Mitte von 3–4 ist 3 (Wert 7) – Treffer. Zurückgegeben wird der Index 3, nicht der Wert 7.",
+      "schwierigkeit": "schwer"
     },
     {
       "id": "lf2_08",
@@ -112,7 +119,8 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "operator[] führt keine Bereichsprüfung durch – der Zugriff ist undefiniertes Verhalten (zur Laufzeit, der Compiler kann es nicht erkennen). at() wirft dagegen eine std::out_of_range-Exception. Python wirft bei Listen automatisch einen IndexError."
+      "erklaerung": "operator[] führt keine Bereichsprüfung durch – der Zugriff ist undefiniertes Verhalten (zur Laufzeit, der Compiler kann es nicht erkennen). at() wirft dagegen eine std::out_of_range-Exception. Python wirft bei Listen automatisch einen IndexError.",
+      "schwierigkeit": "schwer"
     },
     {
       "id": "lf2_09",
@@ -126,7 +134,8 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "get(wort, 0) liefert 0, wenn das Wort noch nicht im Dictionary steht – so wird der erste Treffer zu 1, statt einen KeyError zu werfen. Die Variante ohne get würde beim ersten neuen Wort abstürzen."
+      "erklaerung": "get(wort, 0) liefert 0, wenn das Wort noch nicht im Dictionary steht – so wird der erste Treffer zu 1, statt einen KeyError zu werfen. Die Variante ohne get würde beim ersten neuen Wort abstürzen.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf2_10",
@@ -140,7 +149,8 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "std::map bildet Schlüssel (Wort) auf Werte (Anzahl) ab – das Pendant zum Python-Dictionary. Ein vector kann nur eine Liste von Strings speichern, kein Schlüssel-Wert-Paar."
+      "erklaerung": "std::map bildet Schlüssel (Wort) auf Werte (Anzahl) ab – das Pendant zum Python-Dictionary. Ein vector kann nur eine Liste von Strings speichern, kein Schlüssel-Wert-Paar.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf2_11",
@@ -154,7 +164,8 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "perf_counter() liefert eine hochauflösende, monotone Uhr – ideal, um zwei Aufrufe zu subtrahieren und so Programmteile zu messen. In C++ übernimmt std::chrono diese Rolle."
+      "erklaerung": "perf_counter() liefert eine hochauflösende, monotone Uhr – ideal, um zwei Aufrufe zu subtrahieren und so Programmteile zu messen. In C++ übernimmt std::chrono diese Rolle.",
+      "schwierigkeit": "leicht"
     },
     {
       "id": "lf2_12",
@@ -168,7 +179,8 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "Der Interpreter muss jede Zeile zur Laufzeit parsen, typisieren und ausführen; kompiliertes C++ läuft als native Maschinenbefehle. In der Praxis sind selbst geschriebene C++-Schleifen oft 50–100× schneller."
+      "erklaerung": "Der Interpreter muss jede Zeile zur Laufzeit parsen, typisieren und ausführen; kompiliertes C++ läuft als native Maschinenbefehle. In der Praxis sind selbst geschriebene C++-Schleifen oft 50–100× schneller.",
+      "schwierigkeit": "schwer"
     },
     {
       "id": "lf2_13",
@@ -185,7 +197,8 @@
         "std::sort"
       ],
       "punkte": 4,
-      "erklaerung": "Bubble Sort nutzt zwei verschachtelte Schleifen: Die äußere läuft etwa n-mal, die innere im Mittel n/2-mal – zusammen rund n²/2 Vergleiche, also O(n²). Verdoppelt man die Datenmenge, vervierfacht sich die Laufzeit. Für große Datenmengen nimmt man deshalb schnellere Verfahren mit O(n · log n) – in Python sorted(), in C++ std::sort."
+      "erklaerung": "Bubble Sort nutzt zwei verschachtelte Schleifen: Die äußere läuft etwa n-mal, die innere im Mittel n/2-mal – zusammen rund n²/2 Vergleiche, also O(n²). Verdoppelt man die Datenmenge, vervierfacht sich die Laufzeit. Für große Datenmengen nimmt man deshalb schnellere Verfahren mit O(n · log n) – in Python sorted(), in C++ std::sort.",
+      "schwierigkeit": "schwer"
     },
     {
       "id": "lf2_14",
@@ -203,7 +216,8 @@
         "log n"
       ],
       "punkte": 3,
-      "erklaerung": "Man schaut auf das Element in der Mitte des Suchbereichs. Ist es der gesuchte Wert, ist man fertig. Ist der mittlere Wert kleiner als der gesuchte, sucht man nur in der rechten Hälfte weiter, sonst in der linken. So halbiert sich der Bereich pro Schritt – nach höchstens log₂(n) Schritten ist die Suche entschieden. Zurückgegeben wird der Index; nicht gefunden → -1."
+      "erklaerung": "Man schaut auf das Element in der Mitte des Suchbereichs. Ist es der gesuchte Wert, ist man fertig. Ist der mittlere Wert kleiner als der gesuchte, sucht man nur in der rechten Hälfte weiter, sonst in der linken. So halbiert sich der Bereich pro Schritt – nach höchstens log₂(n) Schritten ist die Suche entschieden. Zurückgegeben wird der Index; nicht gefunden → -1.",
+      "schwierigkeit": "mittel"
     },
     {
       "id": "lf2_15",
@@ -221,7 +235,8 @@
         "Ganzzahl-Division"
       ],
       "punkte": 3,
-      "erklaerung": "Z. B.: (1) Öffnen prüfen – if (!datei.is_open()) { ... }, sonst arbeitet das Programm bei fehlender Datei mit einem ungültigen Strom. (2) Richtige Leseschleife – while (datei >> wert) liest bis zum Dateiende, mit std::getline liest man ganze Zeilen. (3) Datentypen im Blick behalten – beim Durchschnitt aus int-Werten droht Ganzzahl-Division, also mit double rechnen. Optional: Datei am Ende schließen (macht der Destruktor automatisch)."
+      "erklaerung": "Z. B.: (1) Öffnen prüfen – if (!datei.is_open()) { ... }, sonst arbeitet das Programm bei fehlender Datei mit einem ungültigen Strom. (2) Richtige Leseschleife – while (datei >> wert) liest bis zum Dateiende, mit std::getline liest man ganze Zeilen. (3) Datentypen im Blick behalten – beim Durchschnitt aus int-Werten droht Ganzzahl-Division, also mit double rechnen. Optional: Datei am Ende schließen (macht der Destruktor automatisch).",
+      "schwierigkeit": "mittel"
     }
   ]
 }
