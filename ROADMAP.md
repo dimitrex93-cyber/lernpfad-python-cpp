@@ -114,6 +114,41 @@ die Übersicht zeigt `python3 tools/quiz.py --status`.
 > 🏆 **Abschluss:** Wer alle 6 Lernfelder besteht, hat den kompletten Pfad vom
 > Anfänger zum Senior-Niveau durchlaufen – dokumentiert durch Punkte und Noten.
 
+---
+
+## Phase 5 – Ausblick: Web-Frontend (die Lern-App im Browser)
+
+**Status:** geplant · **Hosting:** Cloudflare (eigene Domain vorhanden)
+
+Die Terminal-Lern-App ist das Herzstück – der nächste Schritt ist eine
+**solide HTML-Oberfläche**, damit der Lernpfad auch im Browser läuft.
+Die Daten dafür sind bereits perfekt vorbereitet: alle Fragenbanken
+(`fragen.json`) und der komplette Sprachkurs (`tools/sprachkurs/*.json`)
+sind reines JSON und damit direkt im Frontend nutzbar.
+
+### Architektur-Optionen (in Reihenfolge der Empfehlung)
+
+| Option | Aufwand | Beschreibung |
+|---|---|---|
+| **A: Statisches Frontend + Cloudflare Pages** | gering | HTML/CSS/JS lädt die JSON-Dateien direkt aus dem Repo. Quiz, Sprachkurs und Fortschritt (localStorage) laufen komplett im Browser. Kostenlos, kein Server nötig. |
+| **B: + Cloudflare Workers (Serverless-API)** | mittel | Ein Worker übernimmt Fortschritts-Speicherung und Auswertung zentral (statt localStorage) – nötig, wenn der Stand geräteübergreifend oder für mehrere Nutzer synchron sein soll. |
+| **C: Python-Backend (FastAPI) + HTML** | höher | Der eigene Server hostet API + Frontend. Volle Kontrolle, passt zu Lernfeld 04/05 (REST-APIs!), aber Betriebsaufwand. |
+
+### Empfohlene Umsetzung (Option A, erste Ausbaustufe)
+
+1. `web/`-Ordner im Repo mit `index.html`, `style.css`, `app.js`
+2. Quiz-Modus: Frage laden → Antwort wählen → sofortiges Feedback (wie `quiz.py`)
+3. Sprachkurs-Modus: Kapitelübersicht → Kapitel durchblättern (wie Menüpunkt `w`)
+4. Fortschritt im Browser (`localStorage`) + Schwierigkeitsgrade
+5. Cloudflare Pages: Repo verbinden → Build aus `web/` → eigene Domain
+
+### Notizen für die Umsetzung
+
+- Die JSON-Schemas (`fragen.json`, `sprachkurs`) bleiben die einzige Quelle –
+  das Frontend liest sie, damit Quiz und Web-App nie auseinanderlaufen.
+- Ein CORS-Problem entfällt, weil Pages die Dateien direkt ausliefert.
+- Erst wenn das Frontend stabil läuft, ist Option B (Workers-Sync) sinnvoll.
+
 ## Dein Fortschritt gehört dir
 
 Forke dieses Repository und arbeite in deinem eigenen Fork – so wird dein
