@@ -4,9 +4,14 @@ Das Abschlussprojekt des Moduls **Grundlagen**. Es kombiniert alles, was du in
 Lernfeld 1 gelernt hast: Ein-/Ausgabe, Variablen, Schleifen, Bedingungen,
 Funktionen, Listen – und saubere Eingabevalidierung.
 
-> 🚫 **Bewusst ohne Musterlösung.** Das Projekt ist dein eigenes – du bist jetzt
-> dran. Wenn du eine Lösung als Pull Request beisteuern willst, lies zuerst
-> [CONTRIBUTING.md](../../CONTRIBUTING.md).
+> 🚫 **Bewusst ohne Musterlösung im Aufgaben-Ordner.** Das Projekt ist dein
+> eigenes – du bist jetzt dran. Wenn du eine Lösung als Pull Request beisteuern
+> willst, lies zuerst [CONTRIBUTING.md](../../CONTRIBUTING.md).
+>
+> 💡 **Zum Vergleichen nach dem Selberbauen:** Im Ordner `referenz/` liegen
+> ausführbare Lösungen (`taschenrechner.py` und `taschenrechner.cpp`) plus das
+> Sprachkurs-Kapitel 17, das die Unterschiede der beiden Versionen erklärt
+> („Nice to know"). Erst selbst bauen, DANN vergleichen!
 
 ## Aufgabe
 

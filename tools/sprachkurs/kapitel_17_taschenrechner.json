@@ -1,0 +1,59 @@
+{
+  "id": "taschenrechner",
+  "titel": "Kapitel 17: Erstes Projekt – Taschenrechner in Python & C++",
+  "einleitung": "Jetzt kommt alles zusammen: Du baust dein erstes echtes Projekt – einen Taschenrechner mit Verlauf – in beiden Sprachen. Die Aufgabe steht im Mini-Projekt von Lernfeld 1 (bewusst ohne Lösung, damit du selbst baust). Dieses Kapitel zeigt dir die Referenzlösungen und erklärt danach als 'Nice to know' die Unterschiede zwischen der Python- und der C++-Version.",
+  "abschnitte": [
+    {
+      "titel": "Die Aufgabe: Taschenrechner mit Verlauf",
+      "python": {
+        "text": "Das Ziel: Ein Terminal-Programm mit Menü (+, -, *, /, %, Verlauf anzeigen, Verlauf löschen, Beenden). Nach jeder Rechnung zwei Zahlen einlesen, Ergebnis zeigen, jede Rechnung in einem Verlauf speichern (max. 20 Einträge). Das Programm darf NIE abstürzen – ungültige Menü-Wahl, 'abc' statt Zahl, Division durch 0: alles abfangen. Die komplette Aufgabenstellung mit Abnahme-Kriterien findest du in lernfeld_01_grundlagen/mini_projekt/README.md.",
+        "code": "# Dein Plan (gilt für beide Sprachen):\n# 1. main()-Schleife mit Menü\n# 2. eine Funktion pro Operation (addiere, subtrahiere, ...)\n# 3. Eingabevalidierung: Zahl einlesen, die nie abstürzt\n# 4. Verlauf als Liste, auf 20 Einträge begrenzt\n#\n# Erst selbst bauen! Die Referenzlösungen liegen in:\n# mini_projekt/referenz/taschenrechner.py  und  .cpp"
+      },
+      "cpp": {
+        "text": "Dieselbe Aufgabe in C++ – mit den Besonderheiten der Sprache: std::vector<std::string> für den Verlauf, std::cin.fail() zur Eingabevalidierung, Exceptions für die Division durch 0, und der Build-Prozess mit g++ -std=c++17 -Wall -Wextra (null Warnungen = fertig!). Die Abnahme-Kriterien sind identisch mit der Python-Version – das ist der Sinn: Gleiche Aufgabe, zwei Welten.",
+        "code": "# C++-Besonderheiten, die du beim Bauen brauchst:\n# - std::getline(std::cin, wahl) für die Menü-Wahl\n# - std::cin.fail() + clear() + ignore() für Zahleneingaben\n# - throw std::runtime_error(...) für Division durch 0\n# - std::vector<std::string> für den Verlauf\n#\n# Kompilieren (Pflicht, ohne Warnungen):\n# g++ -std=c++17 -Wall -Wextra taschenrechner.cpp -o taschenrechner"
+      },
+      "vergleich": "Gleiche Aufgabenstellung, gleiche Abnahme-Kriterien. Der Unterschied liegt im Werkzeugkasten: Python löst vieles mit eingebauten Funktionen, C++ verlangt explizite Typen und Include-Dateien.",
+      "merk": "Eine Aufgabe, zwei Sprachen – baue zuerst Python (schnell), dann C++ (mit Typen und Build)."
+    },
+    {
+      "titel": "Referenzlösung Python – die wichtigsten Entscheidungen",
+      "python": {
+        "text": "Die Python-Lösung nutzt ein Wörterbuch, das Menü-Zeichen auf Funktionen abbildet (OPERATIONEN = {'+': addiere, ...}) – das ist pythonisch, weil Funktionen in Python Werte wie alles andere sind. Die Eingabevalidierung läuft über try/except ValueError in einer Schleife. Division durch 0 wirft eine ValueError-Exception, die beim Erstellen des Verlaufseintrags gefangen wird. Formatierung mit :g entfernt unnötige Nachkommastellen (10 / 0, nicht 10.000000 / 0.000000).",
+        "code": "# Die drei Kern-Ideen der Python-Lösung:\n\n# 1. Funktionen als Wörterbuch-Werte:\nOPERATIONEN = {'+': addiere, '-': subtrahiere, '/': dividiere}\nergebnis = OPERATIONEN[wahl](a, b)   # Aufruf über den Schlüssel\n\n# 2. Sichere Zahleneingabe:\ndef zahl_einlesen(prompt):\n    while True:\n        try:\n            return float(input(prompt))\n        except ValueError:\n            print(\"Bitte eine gültige Zahl eingeben!\")\n\n# 3. Fehler in den Verlauf statt Absturz:\ntry:\n    ergebnis = OPERATIONEN[wahl](a, b)\n    eintrag = f\"{a:g} {wahl} {b:g} = {ergebnis:g}\"\nexcept ValueError as e:\n    eintrag = f\"{a:g} {wahl} {b:g} = Fehler: {e}\""
+      },
+      "cpp": {
+        "text": "Die C++-Lösung hat dieselbe Struktur, aber andere Werkzeuge: Statt eines Wörterbuchs eine if/else-Kette auf die Operations-Funktionen. std::cin.fail() prüft, ob die Zahleneingabe gültig war – bei Fehler clear() (Fehlerzustand löschen) und ignore() (Rest der Zeile verwerfen). Division durch 0 wirft std::runtime_error, gefangen mit try/catch. Der Verlauf ist ein std::vector<std::string>; bei mehr als 20 Einträgen wird der erste gelöscht (erase(begin())).",
+        "code": "// Die drei Kern-Ideen der C++-Lösung:\n\n// 1. if/else-Kette statt Wörterbuch:\nif (wahl == \"+\")      ergebnis = addiere(a, b);\nelse if (wahl == \"-\") ergebnis = subtrahiere(a, b);\n\n// 2. Sichere Zahleneingabe mit cin.fail():\ndouble zahl_einlesen(const std::string& prompt) {\n    double wert;\n    while (true) {\n        std::cout << prompt;\n        std::cin >> wert;\n        if (!std::cin.fail()) return wert;\n        std::cin.clear();               // Fehlerzustand löschen\n        std::cin.ignore(10000, '\\n');   // Rest verwerfen\n    }\n}\n\n// 3. Verlauf begrenzen:\nverlauf.push_back(eintrag);\nif (verlauf.size() > 20) verlauf.erase(verlauf.begin());"
+      },
+      "vergleich": "Gleiche Logik, andere Werkzeuge: Wörterbuch + try/except (Python) vs. if/else + cin.fail()/try-catch (C++). Python: Funktionen als Werte. C++: explizite Typen und Stream-Zustände.",
+      "merk": "Python: OPERATIONEN-Wörterbuch + ValueError. C++: if/else-Kette + cin.fail() + runtime_error."
+    },
+    {
+      "titel": "Nice to know: die Unterschiede im direkten Vergleich",
+      "python": {
+        "text": "Die fertigen Programme tun dasselbe – aber im Detail unterscheiden sie sich lehrreich. Ausgabe-Format: Python zeigt '10 / 0' (Format :g entfernt Nullen), C++ zeigt '10.000000 / 0.000000' (std::to_string gibt immer 6 Nachkommastellen) – für schöne Ausgabe bräuchte C++ std::setprecision. Fehlerbehandlung: Python ValueError ist eine normale Exception; C++ std::runtime_error ebenso – aber Python fängt mit except ValueError: gezielt einen Typ, C++ mit catch (const std::exception&) alle. Menü-Eingabe: Python input() liest immer eine ganze Zeile; C++ std::getline auch – aber std::cin >> wert (ohne getline) hätte beim Zahlen-Lesen ein Puffer-Problem mit dem Enter-Zeichen, das wir mit ignore() lösen.",
+        "code": "# Die 4 wichtigsten Unterschiede im Überblick:\n#\n# 1. Ausgabe:  Python f\"{x:g}\" -> 10      C++ to_string -> 10.000000\n#    C++-Fix:  std::cout << std::setprecision(2) << x;\n#\n# 2. Menü:     Python input()  = ganze Zeile\n#              C++  getline()  = ganze Zeile (cin >> wäre tricky)\n#\n# 3. Fehler:   Python except ValueError:   (ein Typ)\n#              C++  catch (const std::exception&)  (alle)\n#\n# 4. Funktionen als Werte:\n#    Python:   OPERATIONEN['+'](a, b)   – geht direkt\n#    C++:      if/else-Kette nötig (oder std::map mit std::function)"
+      },
+      "cpp": {
+        "text": "Aus C++-Sicht lehrreich: std::to_string(10.0) liefert '10.000000' – das ist genau, aber unschön; std::setprecision aus <iomanip> gibt dir Kontrolle. Der Verlauf als std::vector<std::string> ist ein Speicher-Container, der wächst – Python-Listen können gemischte Typen enthalten, ein vector<std::string> nur Strings (statische Typisierung!). Das Wörterbuch-Muster aus Python hat in C++ ein Pendant: std::map<std::string, std::function<double(double,double)>> – fortgeschritten, aber möglich. Und: std::fmod für Modulo mit Kommazahlen (Python % macht das automatisch) – ein weiteres Beispiel, wo C++ die passende Bibliotheksfunktion braucht (#include <cmath>).",
+        "code": "// C++-Details, die man beim Vergleichen lernt:\n//\n// 1. Schöne Ausgabe:\n#include <iomanip>\nstd::cout << std::setprecision(2) << 10.0 / 3;  // 3.3\n\n// 2. Modulo mit Kommazahlen:\n#include <cmath>\ndouble rest = std::fmod(10.5, 3.0);   // 1.5\n// (Python: 10.5 % 3.0  ->  1.5 automatisch)\n\n// 3. Python-Wörterbuch als C++:\n#include <map>\n#include <functional>\nstd::map<std::string, std::function<double(double, double)>> ops;\nops[\"+\"] = addiere;\n// ... fortgeschritten, aber das ist das gleiche Muster!"
+      },
+      "vergleich": "Python versteckt Details (Formatierung, Modulo, Funktionen-als-Werte), C++ macht sie explizit (setprecision, fmod, std::function). Genau dieser Kontrast ist der Lerneffekt des Projekts.",
+      "merk": "Python: bequem und automatisch. C++: explizit und kontrollierbar – beides richtig, nur anders."
+    },
+    {
+      "titel": "Selbsttest: Hast du es wirklich verstanden?",
+      "python": {
+        "text": "Beantworte diese Fragen ehrlich, bevor du weiterziehst – die Antworten findest du in den Referenzlösungen. 1. Warum kann Python eine Operation direkt über OPERATIONEN[wahl](a, b) aufrufen, C++ aber nicht einfach so? 2. Was passiert in C++, wenn du std::cin.ignore() weglässt? 3. Warum zeigt C++ '10.000000' statt '10' – und wie änderst du das? 4. Was ist der Unterschied zwischen except ValueError und catch (const std::exception&)? 5. Warum ist der Verlauf in C++ ein vector<string> und nicht ein vector<double>?",
+        "code": "# Bonus-Übung (macht den Unterschied greifbar):\n# Ändere die Python-Version so, dass sie wie C++ formatiert:\n# zeige immer 2 Nachkommastellen (f\"{x:.2f}\")\n# -> Siehst du, wie viel 'bequemer' :g war?\n#\n# Und umgekehrt in C++:\n# nutze std::setprecision(2), damit 10 / 0 als '10' erscheint\n# -> Jetzt verstehst du, was Python automatisch macht."
+      },
+      "cpp": {
+        "text": "Dieselben Fragen aus C++-Sicht: 1. Wo steht in der C++-Lösung die if/else-Kette – und wie würde std::map + std::function sie ersetzen? 2. Warum braucht die Zahleneingabe clear() UND ignore() – was passiert ohne jeden der beiden Schritte? 3. Welche Include-Dateien brauchst du für setprecision und fmod? 4. Warum fängt catch (const std::exception&) auch std::runtime_error – was ist std::exception? 5. Wie viele Einträge hat der Verlauf nach 25 Rechnungen – und warum?",
+        "code": "// Antwort-Hilfen (in den Referenzlösungen nachlesbar):\n//\n// clear()  -> löscht den Fehlerzustand von cin (failbit)\n// ignore() -> verwirft die Rest-Zeile im Eingabepuffer\n// Beides zusammen macht die Eingabe robust.\n//\n// std::exception ist die Basisklasse ALLER Standard-Exceptions.\n// catch (const std::exception&) fängt deshalb runtime_error,\n// invalid_argument, out_of_range ... – wie except Exception in Python.\n//\n// 25 Rechnungen, max 20 -> Verlauf hat 20 Einträge\n// (die ältesten 5 wurden mit erase(begin()) entfernt)."
+      },
+      "vergleich": "Wer beide Fragen-Kataloge beantworten kann, hat das Projekt wirklich verstanden – nicht nur nachgebaut. Das ist der Unterschied zwischen 'Code abtippen' und 'Programmieren lernen'.",
+      "merk": "Verstanden heißt: erklären können, WARUM etwas so ist – nicht nur WIE."
+    }
+  ]
+}
