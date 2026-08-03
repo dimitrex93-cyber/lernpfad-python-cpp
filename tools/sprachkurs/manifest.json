@@ -1,0 +1,17 @@
+[
+  "kapitel_01_einfuehrung.json",
+  "kapitel_02_einstieg.json",
+  "kapitel_03_variablen.json",
+  "kapitel_04_operatoren.json",
+  "kapitel_05_bedingungen.json",
+  "kapitel_06_schleifen.json",
+  "kapitel_07_strings.json",
+  "kapitel_08_listen.json",
+  "kapitel_09_funktionen.json",
+  "kapitel_10_oop.json",
+  "kapitel_11_fehlerbehandlung.json",
+  "kapitel_12_speicher.json",
+  "kapitel_13_netzwerke.json",
+  "kapitel_14_testing.json",
+  "kapitel_15_git.json"
+]

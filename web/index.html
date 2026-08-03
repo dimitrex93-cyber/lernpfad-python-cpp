@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lernpfad Python & C++ – Web-App</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>🐍⚙️ Lernpfad Python &amp; C++</h1>
+  <p class="subtitle">Vom Programmieranfänger zum Senior-Entwickler – im Browser</p>
+  <nav>
+    <button id="nav-start" class="nav-btn active" onclick="zeigeAnsicht('start')">Start</button>
+    <button id="nav-quiz" class="nav-btn" onclick="zeigeAnsicht('quiz')">Quiz</button>
+    <button id="nav-kurs" class="nav-btn" onclick="zeigeAnsicht('kurs')">Sprachkurs</button>
+  </nav>
+</header>
+
+<main>
+  <!-- ============ START ============ -->
+  <section id="ansicht-start" class="ansicht">
+    <div class="karte">
+      <h2>Willkommen beim Lernpfad!</h2>
+      <p>Dies ist die Web-Version der Terminal-Lern-App. Du kannst <strong>Quiz</strong>
+      (Wissenstests mit Noten und Schwierigkeitsgraden) und den kompletten
+      <strong>Sprachkurs</strong> (Python &amp; C++ im Vergleich) direkt im Browser nutzen.</p>
+      <div class="button-reihe">
+        <button class="primary" onclick="zeigeAnsicht('quiz')">📝 Zum Quiz</button>
+        <button class="primary" onclick="zeigeAnsicht('kurs')">📖 Zum Sprachkurs</button>
+      </div>
+    </div>
+    <div class="karte">
+      <h2>Dein Fortschritt</h2>
+      <div id="start-fortschritt">Lade Fortschritt …</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="ansicht-quiz" class="ansicht" hidden>
+    <div class="karte" id="quiz-auswahl">
+      <h2>Wissenstest – Lernfeld wählen</h2>
+      <div id="lernfeld-liste"></div>
+      <h3>Schwierigkeitsgrad</h3>
+      <div id="stufen-wahl" class="stufen">
+        <label><input type="radio" name="stufe" value="leicht"> leicht (nur leichte Fragen)</label>
+        <label><input type="radio" name="stufe" value="mittel" checked> mittel (leicht + mittel)</label>
+        <label><input type="radio" name="stufe" value="schwer"> schwer (alle Fragen)</label>
+      </div>
+    </div>
+
+    <div class="karte" id="quiz-laeuft" hidden>
+      <div class="quiz-kopf">
+        <span id="quiz-titel"></span>
+        <span id="quiz-fortschritt"></span>
+      </div>
+      <div id="frage-bereich"></div>
+      <div id="antwort-bereich"></div>
+      <div class="button-reihe">
+        <button id="quiz-weiter-btn" class="primary" onclick="naechsteFrage()" hidden>Weiter</button>
+      </div>
+    </div>
+
+    <div class="karte" id="quiz-ergebnis" hidden>
+      <h2>Ergebnis</h2>
+      <div id="ergebnis-details"></div>
+      <div class="button-reihe">
+        <button class="primary" onclick="zeigeAnsicht('quiz')">Neuer Test</button>
+        <button class="secondary" onclick="zeigeAnsicht('start')">Zur Übersicht</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SPRACHKURS ============ -->
+  <section id="ansicht-kurs" class="ansicht" hidden>
+    <div class="karte" id="kurs-uebersicht">
+      <h2>Sprachkurs: Python &amp; C++ im ganzen erklärt</h2>
+      <p class="subtitle">Von den Grundlagen bis zu Speicher, Netzwerken und Git – jedes Konzept im direkten Vergleich.</p>
+      <div id="kurs-liste"></div>
+    </div>
+
+    <div class="karte" id="kurs-kapitel" hidden>
+      <button class="secondary" onclick="kursZurueck()">← Zurück zur Übersicht</button>
+      <h2 id="kurs-kapitel-titel"></h2>
+      <p class="subtitle" id="kurs-kapitel-einleitung"></p>
+      <div id="kurs-abschnitte"></div>
+      <div class="button-reihe">
+        <button id="kurs-weiter-btn" class="primary" onclick="kursNaechsterAbschnitt()">Weiter →</button>
+        <button class="secondary" onclick="kursZurueck()">Kapitel schließen</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>Lernpfad Python &amp; C++ – Daten werden direkt aus dem Repository geladen · Fortschritt bleibt in deinem Browser (localStorage)</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
