@@ -96,6 +96,30 @@ button.secondary:hover { background: #262c3d; }
 
 .stufen label { display: block; margin: 0.3rem 0; cursor: pointer; }
 
+/* IHK-Notenschlüssel-Tabelle */
+.noten-details {
+  margin: 0.8rem 0;
+  background: var(--bg);
+  border: 1px solid var(--rand);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+}
+.noten-details summary { cursor: pointer; color: var(--akzent); font-weight: 600; }
+.noten-tabelle {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.6rem;
+  font-size: 0.92rem;
+}
+.noten-tabelle th, .noten-tabelle td {
+  border: 1px solid var(--rand);
+  padding: 0.35rem 0.7rem;
+  text-align: left;
+}
+.noten-tabelle th { background: var(--bg-hover); color: var(--text-dunkel); }
+.noten-tabelle .bestanden-zeile { background: rgba(102, 187, 106, 0.12); }
+.noten-tabelle .bestanden-zeile td { border-color: var(--gruen); }
+
 .quiz-kopf {
   display: flex;
   justify-content: space-between;

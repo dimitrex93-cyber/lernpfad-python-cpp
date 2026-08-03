@@ -83,10 +83,16 @@ def c(text, farbe):
 
 # ---------------------------------------------------------------------------
 # Notenschlüssel (identisch mit test/test.md jedes Lernfelds)
+#
+# Offizieller IHK-Notenschlüssel für die schriftliche Abschlussprüfung
+# zum Fachinformatiker (100-Punkte-Schlüssel):
+#   100–92 Punkte → Note 1 · 91–81 → Note 2 · 80–67 → Note 3
+#    66–50 Punkte → Note 4 · 49–30 → Note 5 · 29–0  → Note 6
+# Bestanden = mindestens Note 4 (ab 50 Punkten / 50 %).
 # ---------------------------------------------------------------------------
 
 def note_fuer(prozent):
-    """Prozent (0–100) → Note nach dem einheitlichen Notenschlüssel."""
+    """Prozent (0–100) → Note nach dem IHK-Notenschlüssel (s. o.)."""
     if prozent >= 92:
         return 1
     if prozent >= 81:

@@ -119,19 +119,27 @@ Stufe `schwer` übernommen.
 3. **Offene Fragen:** Erst selbst antworten, dann Musterantwort und
    Stichworte ansehen und **ehrlich selbst bewerten** (j/n) – genau wie beim
    Vokabeln lernen: Wer schummelt, betrügt nur sich selbst.
-4. Am Ende: Punkte, Prozent, Fortschrittsbalken, **Note nach deutschem
-   Notenschlüssel** und Bestanden-Status (ab 50 % / Note 4).
+4. Am Ende: Punkte, Prozent, Fortschrittsbalken, **Note nach dem offiziellen
+   IHK-Notenschlüssel** und Bestanden-Status (ab 50 % / Note 4).
 
-### Notenschlüssel (einheitlich im ganzen Kurs)
+### Notenschlüssel – offizieller IHK-100-Punkte-Schlüssel
 
-| Note | Prozent |
-|---|---|
-| 1 – sehr gut | ≥ 92 % |
-| 2 – gut | ≥ 81 % |
-| 3 – befriedigend | ≥ 67 % |
-| 4 – ausreichend | ≥ 50 % |
-| 5 – mangelhaft | ≥ 30 % |
-| 6 – ungenügend | < 30 % |
+Die Bewertung folgt dem **offiziellen IHK-Notenschlüssel der schriftlichen
+Abschlussprüfung zum Fachinformatiker** (100-Punkte-Schlüssel) – identisch
+mit der Klausur-Bewertung in `test/test.md` jedes Lernfelds:
+
+| Punkte | Note | Bedeutung |
+|---|---|---|
+| 100–92 | 1 | sehr gut |
+| 91–81 | 2 | gut |
+| 80–67 | 3 | befriedigend |
+| 66–50 | 4 | ausreichend – **bestanden** |
+| 49–30 | 5 | mangelhaft |
+| 29–0 | 6 | ungenügend |
+
+Bestanden ist ein Test ab **50 % (Note 4)** – genau wie in der echten
+IHK-Prüfung. Die erreichte Punktzahl wird pro Test auf 100 Punkte normiert
+(Prozent), damit der Schlüssel unabhängig von der Fragenanzahl gilt.
 
 ### Fortschritt
 

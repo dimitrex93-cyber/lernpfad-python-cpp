@@ -12,6 +12,9 @@ const STUFEN_BESCHREIBUNG = {
   mittel: "leichte + mittlere Fragen",
   schwer: "alle Fragen (voller Test)",
 };
+// Offizieller IHK-Notenschlüssel (schriftliche Abschlussprüfung
+// Fachinformatiker, 100-Punkte-Schlüssel): 92/81/67/50/30.
+// Bestanden = mindestens Note 4 (ab 50 %).
 const NOTEN = [
   { min: 92, note: 1, text: "sehr gut" },
   { min: 81, note: 2, text: "gut" },
@@ -113,6 +116,26 @@ async function zeigeQuizAuswahl() {
       </div>`;
   }
   liste.innerHTML = html;
+
+  // IHK-Notenschlüssel-Tabelle (aufklappbar)
+  const notenContainer = document.getElementById("ihk-noten");
+  if (notenContainer) {
+    notenContainer.innerHTML = `
+      <details class="noten-details">
+        <summary>ℹ️ Notenschlüssel (IHK-Prüfung Fachinformatiker)</summary>
+        <table class="noten-tabelle">
+          <tr><th>Punkte</th><th>Note</th><th>Bedeutung</th></tr>
+          <tr><td>100–92</td><td>1</td><td>sehr gut</td></tr>
+          <tr><td>91–81</td><td>2</td><td>gut</td></tr>
+          <tr><td>80–67</td><td>3</td><td>befriedigend</td></tr>
+          <tr class="bestanden-zeile"><td>66–50</td><td>4</td><td>ausreichend (bestanden)</td></tr>
+          <tr><td>49–30</td><td>5</td><td>mangelhaft</td></tr>
+          <tr><td>29–0</td><td>6</td><td>ungenügend</td></tr>
+        </table>
+        <p class="subtitle">Bewertung nach dem offiziellen IHK-100-Punkte-Schlüssel.
+        Bestanden ab 50 Punkten (Note 4).</p>
+      </details>`;
+  }
 }
 
 function gewaehlteStufe() {
