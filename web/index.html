@@ -48,6 +48,12 @@
         <label><input type="radio" name="stufe" value="mittel" checked> mittel (leicht + mittel)</label>
         <label><input type="radio" name="stufe" value="schwer"> schwer (alle Fragen)</label>
       </div>
+      <h3>IHK-Prüfungen</h3>
+      <p class="subtitle">Zufallsfragen aus dem gesamten Prüfungsbereich – wie die echte Abschlussprüfung.</p>
+      <div class="button-reihe">
+        <button class="primary" onclick="startePruefung('zwischenpruefung')">🎓 Zwischenprüfung (LF1–3, 40 %)</button>
+        <button class="primary" onclick="startePruefung('abschlusspruefung')">🎓 Abschlussprüfung (LF1–6, 60 %)</button>
+      </div>
     </div>
 
     <div class="karte" id="quiz-laeuft" hidden>

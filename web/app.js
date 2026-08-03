@@ -23,6 +23,26 @@ const NOTEN = [
   { min: 30, note: 5, text: "mangelhaft" },
   { min: 0,  note: 6, text: "ungenügend" },
 ];
+
+// IHK-Prüfungen: Teil 1 (LF1–3, 40 %), Teil 2 (LF1–6, 60 %)
+const PRUEFUNGEN = [
+  {
+    key: "zwischenpruefung",
+    titel: "Zwischenprüfung (Teil 1 der Abschlussprüfung)",
+    bereich: "LF1–3",
+    lfNrs: [1, 2, 3],
+    fragenProLf: 5,
+    gewicht: 0.4,
+  },
+  {
+    key: "abschlusspruefung",
+    titel: "Abschlussprüfung (Teil 2)",
+    bereich: "LF1–6",
+    lfNrs: [1, 2, 3, 4, 5, 6],
+    fragenProLf: 4,
+    gewicht: 0.6,
+  },
+];
 const PASS_PERCENT = 50;
 const LERN_FELDER = [
   { nr: 1, titel: "Grundlagen der IT und erste Programme", ordner: "lernfeld_01_grundlagen" },
@@ -90,9 +110,31 @@ function zeigeStart() {
   const kursInfo = gelesen.length
     ? `<p><strong>${gelesen.length} Kapitel gelesen</strong> – mach weiter! 📚</p>`
     : `<p>Noch kein Kapitel gelesen – der Sprachkurs wartet auf dich! 📖</p>`;
+
+  // IHK-Prüfungen
+  let pruefungsInfo = "";
+  for (const p of PRUEFUNGEN) {
+    const e = fortschritt[p.key];
+    const status = e
+      ? `<span class="lf-status">${e.bestanden ? "✓" : "✗"} Note ${e.note}</span>`
+      : `<span class="lf-status offen">offen</span>`;
+    pruefungsInfo += `<div class="lf-eintrag">
+        ${status}<span class="lf-titel">🎓 ${p.titel} (${p.bereich})</span>
+      </div>`;
+  }
+  const zp = fortschritt.zwischenpruefung;
+  const ap = fortschritt.abschlusspruefung;
+  if (zp && ap) {
+    const gesamt = zp.prozent * 0.4 + ap.prozent * 0.6;
+    const note = NOTEN.find(n => gesamt >= n.min);
+    pruefungsInfo += `<p><strong>GESAMTNOTE:</strong> ${gesamt.toFixed(1)} % →
+      Note ${note.note} (${note.text}) <span class="subtitle">[40 % + 60 %]</span></p>`;
+  }
+
   document.getElementById("start-fortschritt").innerHTML =
     `<h3>Quiz</h3>${html}
      <p><strong>${quizBestanden}/${quizGesamt}</strong> Lernfeld-Stufen bestanden</p>
+     <h3>IHK-Prüfungen</h3>${pruefungsInfo}
      <h3>Sprachkurs</h3>${kursInfo}`;
 }
 
@@ -170,6 +212,7 @@ async function starteQuiz(nr) {
       index: 0,
       erreicht: 0,
       max: fragen.reduce((s, q) => s + (q.punkte || 1), 0),
+      pruefung: null,
     };
     document.getElementById("quiz-auswahl").hidden = true;
     document.getElementById("quiz-ergebnis").hidden = true;
@@ -179,6 +222,50 @@ async function starteQuiz(nr) {
     zeigeFrage();
   } catch (e) {
     zeigeToast("Fragen konnten nicht geladen werden: " + e.message, "fehler");
+  }
+}
+
+// ------------------------------------------------------------------
+// IHK-Prüfungen (Zufallsfragen aus dem Prüfungsbereich)
+// ------------------------------------------------------------------
+async function startePruefung(key) {
+  const pruefung = PRUEFUNGEN.find(p => p.key === key);
+  if (!pruefung) return;
+  try {
+    // Zufällige Fragen aus jedem Lernfeld des Prüfungsbereichs laden
+    const fragen = [];
+    for (const nr of pruefung.lfNrs) {
+      const lf = LERN_FELDER.find(x => x.nr === nr);
+      const resp = await fetch(`${DATEN_PFAD}${lf.ordner}/test/fragen.json`);
+      if (!resp.ok) throw new Error("HTTP " + resp.status);
+      const daten = await resp.json();
+      const pool = daten.fragen || [];
+      const n = Math.min(pruefung.fragenProLf, pool.length);
+      // Zufällige Auswahl (Fisher-Yates Teilzug)
+      const gezogen = pool.slice().sort(() => Math.random() - 0.5).slice(0, n);
+      fragen.push(...gezogen);
+    }
+    // Gesamt mischen
+    fragen.sort(() => Math.random() - 0.5);
+    if (!fragen.length) throw new Error("Keine Fragen gefunden");
+
+    quizZustand = {
+      lf: { nr: 0, titel: pruefung.titel },
+      stufe: "pruefung",
+      fragen,
+      index: 0,
+      erreicht: 0,
+      max: fragen.reduce((s, q) => s + (q.punkte || 1), 0),
+      pruefung,
+    };
+    document.getElementById("quiz-auswahl").hidden = true;
+    document.getElementById("quiz-ergebnis").hidden = true;
+    document.getElementById("quiz-laeuft").hidden = false;
+    document.getElementById("quiz-titel").textContent =
+      `${pruefung.titel} · ${pruefung.bereich} (${Math.round(pruefung.gewicht * 100)} %)`;
+    zeigeFrage();
+  } catch (e) {
+    zeigeToast("Prüfungsfragen konnten nicht geladen werden: " + e.message, "fehler");
   }
 }
 
@@ -288,16 +375,31 @@ function zeigeErgebnis() {
   document.getElementById("quiz-ergebnis").hidden = false;
 
   const details = document.getElementById("ergebnis-details");
-  details.innerHTML = `
-    <p>LF${z.lf.nr}: ${z.lf.titel} · Stufe: ${z.stufe}</p>
-    <p>Punkte: <strong>${z.erreicht} / ${z.max}</strong> (${prozent.toFixed(1)} %)</p>
-    <div class="note-gross note-${note.note}">Note ${note.note} (${note.text})</div>
-    <p class="${bestanden ? "bestanden" : "nicht-bestanden"}">
-      ${bestanden ? "✓ BESTANDEN – Stufe abgeschlossen! 🎉" : "✗ NICHT BESTANDEN – ab 50 % (Note 4) geschafft."}</p>`;
+  const istPruefung = z.pruefung !== null && z.pruefung !== undefined;
 
-  // Fortschritt speichern (bester Versuch pro Stufe)
+  if (istPruefung) {
+    const p = z.pruefung;
+    const gewichtProzent = Math.round(p.gewicht * 100);
+    details.innerHTML = `
+      <p>🎓 ${p.titel}</p>
+      <p>Prüfungsbereich: ${p.bereich} (${gewichtProzent} % der Gesamtnote)</p>
+      <p>Punkte: <strong>${z.erreicht} / ${z.max}</strong> (${prozent.toFixed(1)} %)</p>
+      <div class="note-gross note-${note.note}">Note ${note.note} (${note.text})</div>
+      <p class="${bestanden ? "bestanden" : "nicht-bestanden"}">
+        ${bestanden ? "✓ BESTANDEN – Teil abgeschlossen! 🎉" : "✗ NICHT BESTANDEN – ab 50 % (Note 4) geschafft."}</p>
+      <div id="gesamtnote-box"></div>`;
+  } else {
+    details.innerHTML = `
+      <p>LF${z.lf.nr}: ${z.lf.titel} · Stufe: ${z.stufe}</p>
+      <p>Punkte: <strong>${z.erreicht} / ${z.max}</strong> (${prozent.toFixed(1)} %)</p>
+      <div class="note-gross note-${note.note}">Note ${note.note} (${note.text})</div>
+      <p class="${bestanden ? "bestanden" : "nicht-bestanden"}">
+        ${bestanden ? "✓ BESTANDEN – Stufe abgeschlossen! 🎉" : "✗ NICHT BESTANDEN – ab 50 % (Note 4) geschafft."}</p>`;
+  }
+
+  // Fortschritt speichern (bester Versuch pro Stufe / Prüfung)
   const fortschritt = ladeFortschritt();
-  const schluessel = lfSchluessel(z.lf.nr, z.stufe);
+  const schluessel = istPruefung ? z.pruefung.key : lfSchluessel(z.lf.nr, z.stufe);
   const alt = fortschritt[schluessel];
   if (!alt || z.erreicht > alt.punkte) {
     fortschritt[schluessel] = {
@@ -308,8 +410,34 @@ function zeigeErgebnis() {
     };
     speichereFortschritt(fortschritt);
   }
+
+  // Bei Prüfungen: Gesamtnote anzeigen, wenn beide Teile abgelegt
+  if (istPruefung) {
+    zeigeGesamtnote(fortschritt);
+  }
   quizZustand = null;
   document.getElementById("quiz-auswahl").hidden = false;
+}
+
+function zeigeGesamtnote(fortschritt) {
+  const box = document.getElementById("gesamtnote-box");
+  if (!box) return;
+  const zp = fortschritt.zwischenpruefung;
+  const ap = fortschritt.abschlusspruefung;
+  if (zp && ap) {
+    const gesamt = zp.prozent * 0.4 + ap.prozent * 0.6;
+    const note = NOTEN.find(n => gesamt >= n.min);
+    const bestanden = gesamt >= PASS_PERCENT;
+    box.innerHTML = `
+      <div class="feedback ${bestanden ? "richtig" : "falsch"}" style="margin-top:.8rem">
+        <strong>GESAMTNOTE (IHK-Modell):</strong> ${gesamt.toFixed(1)} % →
+        Note ${note.note} (${note.text})<br>
+        <span class="subtitle">40 % Teil 1 + 60 % Teil 2 · ${bestanden ? "bestanden" : "nicht bestanden"}</span>
+      </div>`;
+  } else {
+    box.innerHTML = `<p class="subtitle" style="margin-top:.6rem">
+      Die Gesamtnote erscheint, sobald beide Prüfungsteile abgelegt sind.</p>`;
+  }
 }
 
 // ------------------------------------------------------------------
