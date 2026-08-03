@@ -61,6 +61,17 @@ Vergleich und Merksatz pro Abschnitt.
 | 10 | Klassen und Objekte (OOP) | Konstruktoren, Kapselung, Vererbung |
 | 11 | Fehlerbehandlung | try/except/catch, gute Praxis |
 | 12 | Speicher und Pointer (C++) | Stack/Heap, Referenzen, Werkzeuge |
+| 13 | Netzwerke und Sockets | TCP/UDP, Server/Client, HTTP |
+| 14 | Testing und Debugging | Unit-Tests, TDD, pytest/doctest, gdb |
+| 15 | Git, Projektmanagement und CI | Commits, Branches, Scrum, GitHub Actions |
+
+### Lesestatus
+
+Wird ein Kapitel **komplett** durchgeblättert (bis zur Abschlussmeldung),
+speichert die App das als gelesen in `~/.lernpfad/fortschritt.json`
+(`sprachkurs_gelesen`). Brichst du mit `q` ab, wird nichts markiert.
+In der Kapitelübersicht und im `--status` siehst du deinen Stand
+(`✓` = gelesen) inklusive Zähler (`X/15 Kapitel gelesen`).
 
 Die Kapitel liegen in `tools/sprachkurs/kapitel_XX_name.json`. Jedes Kapitel
 hat diese Struktur – neue Kapitel sind einfach weitere Dateien im Ordner:

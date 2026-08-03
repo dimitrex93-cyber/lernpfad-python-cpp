@@ -1,0 +1,46 @@
+{
+  "id": "testing",
+  "titel": "Kapitel 14: Testing und Debugging",
+  "einleitung": "Guter Code ist getesteter Code. Du lernst, wie Unit-Tests in Python (pytest) und C++ (assert, Test-Frameworks) funktionieren, was TDD bedeutet und wie du Fehler systematisch jagst.",
+  "abschnitte": [
+    {
+      "titel": "Unit-Tests: Code automatisch prüfen",
+      "python": {
+        "text": "Ein Unit-Test prüft eine kleine Einheit (eine Funktion) mit festen Eingaben und erwarteten Ausgaben. In Python ist pytest der Standard: Testfunktionen heißen test_..., darin steht assert. Läuft pytest ohne Fehlermeldung, sind alle Tests grün. Fällt ein assert durch, zeigt pytest genau, welche Erwartung verletzt wurde.",
+        "code": "# test_noten.py\nfrom noten import celsius_zu_fahrenheit\n\ndef test_null_grad():\n    assert celsius_zu_fahrenheit(0) == 32\n\ndef test_hundert_grad():\n    assert celsius_zu_fahrenheit(100) == 212\n\n# Ausführen:  python3 -m pytest test_noten.py\n# Grün = alle Tests bestanden, Rot = mind. einer fehlgeschlagen"
+      },
+      "cpp": {
+        "text": "In C++ gibt es kein eingebautes Test-Framework, aber assert() aus <cassert> ist der erste Baustein: Schlägt die Bedingung fehl, bricht das Programm mit einer Meldung ab (im Debug-Build). Für echte Test-Suiten nutzt du Frameworks wie doctest, Catch2 oder GoogleTest – sie liefern strukturierte Ergebnisse statt Abstürzen.",
+        "code": "#include <cassert>\n\ndouble celsius_zu_fahrenheit(double c) {\n    return c * 9.0 / 5.0 + 32;\n}\n\nint main() {\n    assert(celsius_zu_fahrenheit(0) == 32);\n    assert(celsius_zu_fahrenheit(100) == 212);\n    // Fehlschlag -> Abbruch mit Datei/Zeile\n    return 0;\n}\n\n// Mit doctest: TEST_CASE(\"Celsius\") { CHECK(...); }"
+      },
+      "vergleich": "pytest (Python) ↔ assert/doctest (C++). Beide prüfen Erwartungen; Python meldet alle Fehler am Ende, C++-assert stoppt beim ersten Fehlschlag.",
+      "merk": "Test = Eingabe + erwartete Ausgabe + assert. pytest für Python, doctest/Catch2 für C++."
+    },
+    {
+      "titel": "TDD: Red-Green-Refactor",
+      "python": {
+        "text": "TDD (Test-Driven Development) dreht die Reihenfolge um: Erst den Test schreiben, dann den Code. Der Zyklus heißt Red-Green-Refactor: 1. RED – Test schreiben, er schlägt fehl (Code existiert noch nicht). 2. GREEN – gerade genug Code schreiben, damit der Test grün wird. 3. REFACTOR – Code verbessern, Tests bleiben grün. So entsteht Code, der von Anfang an getestet ist.",
+        "code": "# 1. RED: Test zuerst\n# def test_mwst():\n#     assert mwst(100) == 19\n# -> Fehler: mwst existiert nicht\n\n# 2. GREEN: minimale Implementierung\ndef mwst(betrag):\n    return betrag * 0.19\n\n# 3. REFACTOR: aufräumen, Tests laufen weiter grün"
+      },
+      "cpp": {
+        "text": "TDD funktioniert in C++ genauso – nur dass du zuerst eine Test-Datei mit einem Framework (z. B. doctest) schreibst, die rot ist, dann die Implementierung baust, bis sie grün ist. Der Vorteil in C++: Der Compiler findet zusätzlich Typfehler. Wichtig: Mit -Wall -Wextra kompilieren und alle Warnungen ernst nehmen.",
+        "code": "// 1. RED: test_mwst.cpp mit doctest\n// TEST_CASE(\"MwSt\") {\n//     CHECK(mwst(100) == 19);\n// }\n\n// 2. GREEN: Implementierung\ndouble mwst(double betrag) {\n    return betrag * 0.19;\n}\n\n// 3. REFACTOR + kompilieren mit:\n// g++ -std=c++17 -Wall -Wextra test_mwst.cpp -o test\n// ./test"
+      },
+      "vergleich": "Der Red-Green-Refactor-Zyklus ist sprachunabhängig. Python: pytest. C++: doctest + -Wall -Wextra.",
+      "merk": "Red (Test schlägt fehl) → Green (Code minimal) → Refactor (aufräumen)."
+    },
+    {
+      "titel": "Debuggen: Fehler systematisch finden",
+      "python": {
+        "text": "Ein Traceback zeigt dir, WO und in welcher Reihenfolge der Fehler passiert ist – die letzte Zeile ist die eigentliche Fehlerursache. Für Schritt-für-Schritt-Debugging nutzt du pdb: pdb.set_trace() setzt einen Haltepunkt, danach steuerst du mit n (next), s (step into), p (print) und c (continue).",
+        "code": "def berechne(a, b):\n    import pdb\n    pdb.set_trace()      # Haltepunkt\n    return a / b\n\nberechne(10, 0)          # ZeroDivisionError\n\n# pdb-Kommandos:\n# n = nächste Zeile, s = in Funktion springen\n# p a = Variable anzeigen, c = weiterlaufen, q = beenden"
+      },
+      "cpp": {
+        "text": "Der gdb-Debugger macht dasselbe: Kompiliere mit -g (Debug-Infos), starte gdb ./programm, setze breakpoints (break main), starte mit run und steuere mit next/step/print. Ein Stacktrace zeigt dir den Aufruf-Pfad bis zum Absturz. Alternativ: printf-Debugging mit std::cerr – schnell, aber aufräumen nicht vergessen!",
+        "code": "# Kompilieren mit Debug-Infos:\n# g++ -std=c++17 -g datei.cpp -o datei\n# gdb ./datei\n\n# (gdb) break main          Haltepunkt setzen\n# (gdb) run                 Programm starten\n# (gdb) next                nächste Zeile\n# (gdb) print a             Variable anzeigen\n# (gdb) bt                  Backtrace (Aufruf-Kette)\n# (gdb) quit                beenden"
+      },
+      "vergleich": "Traceback/Stacktrace zeigen die Fehlerkette. Python: pdb mit set_trace(). C++: gdb mit -g kompiliert, breakpoints und bt für den Backtrace.",
+      "merk": "Debuggen: Haltepunkt setzen, Schritt für Schritt, Variablen prüfen. Python: pdb. C++: gdb."
+    }
+  ]
+}

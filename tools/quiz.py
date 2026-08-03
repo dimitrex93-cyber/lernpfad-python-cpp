@@ -212,6 +212,25 @@ def zeige_status(fortschritt):
     else:
         print("Tipp: 'python3 tools/quiz.py <Nr>' startet den Test eines "
               "Lernfelds (Stufe wird abgefragt).")
+
+    # Sprachkurs-Fortschritt
+    kapitel = lade_kapitel_sicher()
+    if kapitel:
+        gelesen = set(fortschritt.get("sprachkurs_gelesen", []))
+        anzahl = len(kapitel)
+        print()
+        print(c("=== Sprachkurs: Python & C++ im ganzen erklärt ===", "fett"))
+        if gelesen:
+            for k in kapitel:
+                marker = c("✓", "gruen") if k["id"] in gelesen \
+                    else c("·", "dunkel")
+                print(f"  {marker} {k['titel']}")
+            print(c(f"{len(gelesen)}/{anzahl} Kapitel gelesen", "cyan"))
+            if len(gelesen) == anzahl:
+                print(c("📚 Kompletter Sprachkurs gelesen – stark!", "gruen"))
+        else:
+            print(c("Noch kein Kapitel gelesen – öffne den Sprachkurs mit "
+                    "'w'.", "dunkel"))
     print()
 
 
@@ -369,6 +388,14 @@ def lade_kapitel():
     return kapitel
 
 
+def lade_kapitel_sicher():
+    """Wie lade_kapitel(), aber gibt [] zurück statt abzubrechen."""
+    try:
+        return lade_kapitel()
+    except SystemExit:
+        return []
+
+
 def zeige_block(sprache, block):
     """Zeigt den Erklärungsteil einer Sprache (Text + Code)."""
     icon = "🐍 Python" if sprache == "python" else "⚙️  C++"
@@ -401,8 +428,12 @@ def zeige_abschnitt(abschnitt, index, anzahl):
     print()
 
 
-def zeige_kapitel(kapitel):
-    """Zeigt ein ganzes Kapitel: Einleitung, dann Abschnitte nacheinander."""
+def zeige_kapitel(kapitel, fortschritt=None):
+    """Zeigt ein ganzes Kapitel: Einleitung, dann Abschnitte nacheinander.
+
+    Wird das Kapitel komplett durchgeblättert (kein q), wird es im
+    Fortschritt als 'gelesen' markiert.
+    """
     print(c("\n" + "═" * 62, "fett"))
     print(c(f"  {kapitel['titel']}", "fett"))
     print(c("═" * 62, "fett"))
@@ -419,14 +450,27 @@ def zeige_kapitel(kapitel):
     print(c("📖 Kapitel zu Ende – Enter für die Kapitelübersicht.", "dunkel"))
     input()
 
+    # Kapitel als gelesen markieren
+    if fortschritt is not None:
+        gelesen = set(fortschritt.get("sprachkurs_gelesen", []))
+        if kapitel["id"] not in gelesen:
+            gelesen.add(kapitel["id"])
+            fortschritt["sprachkurs_gelesen"] = sorted(gelesen)
+            speichere_fortschritt(fortschritt)
+            print(c("✓ Kapitel als gelesen markiert.", "gruen"))
 
-def zeige_wissen(auswahl=None):
+
+def zeige_wissen(auswahl=None, fortschritt=None):
     """Sprachkurs-Menü: Kapitelübersicht, dann Kapitel auswählen.
 
     auswahl: optional eine Kapitel-ID (z. B. 'strings') oder Nummer,
     um direkt ein Kapitel zu öffnen.
     """
     kapitel = lade_kapitel()
+
+    def gelesene_ids():
+        return set(fortschritt.get("sprachkurs_gelesen", [])) \
+            if fortschritt else set()
 
     def finde_kapitel(auswahl):
         if auswahl is None:
@@ -442,7 +486,7 @@ def zeige_wissen(auswahl=None):
 
     ziel = finde_kapitel(auswahl)
     if ziel is not None:
-        zeige_kapitel(ziel)
+        zeige_kapitel(ziel, fortschritt)
         return
 
     # Explizite, aber unbekannte Auswahl → Hinweis statt Menü
@@ -452,6 +496,7 @@ def zeige_wissen(auswahl=None):
         print(c(f"Verfügbare Kapitel: {ids}", "dunkel"))
         return
 
+    gelesen = gelesene_ids()
     print(c("\n" + "═" * 62, "fett"))
     print(c("  Sprachkurs: Python & C++ im ganzen erklärt", "fett"))
     print(c("═" * 62, "fett"))
@@ -459,7 +504,9 @@ def zeige_wissen(auswahl=None):
     print(c("jedes Konzept direkt im Vergleich beider Sprachen.", "dunkel"))
     print()
     for i, k in enumerate(kapitel, start=1):
-        print(f"  {i}: {k['titel']}")
+        marker = c("✓", "gruen") if k["id"] in gelesen else c(" ", "dunkel")
+        print(f"  {marker} {i}: {k['titel']}")
+    print(c("  ✓ = Kapitel gelesen · Kapitelnummer oder ID wählen", "dunkel"))
     print()
     while True:
         eingabe = input(f"Kapitel wählen (1–{len(kapitel)}, q = zurück): ")
@@ -467,13 +514,18 @@ def zeige_wissen(auswahl=None):
             return
         ziel = finde_kapitel(eingabe)
         if ziel is not None:
-            zeige_kapitel(ziel)
+            zeige_kapitel(ziel, fortschritt)
+            gelesen = gelesene_ids()
             print(c("\n" + "═" * 62, "fett"))
             print(c("  Sprachkurs: Python & C++ im ganzen erklärt", "fett"))
             print(c("═" * 62, "fett"))
             print()
             for j, k in enumerate(kapitel, start=1):
-                print(f"  {j}: {k['titel']}")
+                marker = c("✓", "gruen") if k["id"] in gelesen \
+                    else c(" ", "dunkel")
+                print(f"  {marker} {j}: {k['titel']}")
+            print(c("  ✓ = Kapitel gelesen · Kapitelnummer oder ID wählen",
+                    "dunkel"))
             print()
             continue
         print(c("Bitte eine Nummer, eine Kapitel-ID oder q eingeben.", "gelb"))
@@ -556,7 +608,7 @@ def main():
         return
 
     if args.wissen is not None:
-        zeige_wissen(args.wissen or None)
+        zeige_wissen(args.wissen or None, fortschritt)
         return
 
     if args.lernfeld is not None:
@@ -572,7 +624,7 @@ def main():
             print("Bis bald!")
             return
         if eingabe.lower() in ("w", "wissen"):
-            zeige_wissen()
+            zeige_wissen(None, fortschritt)
             # nach dem Sprachkurs zurück zum Menü
             zeige_menue(fortschritt)
             continue
