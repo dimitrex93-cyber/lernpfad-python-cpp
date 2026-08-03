@@ -90,6 +90,10 @@ sind Richtwerte für ein realistisches Lernpensum von ca. **4–6 Stunden pro Wo
 
 ## Empfohlener Workflow pro Woche
 
+> 🚀 **Konkret und terminiert:** Der [**WOCHENPLAN für Lernfeld 1**](lernfeld_01_grundlagen/WOCHENPLAN.md)
+> übersetzt diese Schritte in 6–7 konkrete Wochen mit Zeitangaben – ideal
+> für den Start.
+
 1. **1× Theorie** lesen (Python- und C++-Kapitel, im Wechsel)
 2. **1–2 Aufgaben** lösen – erst Python, dann C++
 3. **Lösungen vergleichen** und `checklist.md` aktualisieren

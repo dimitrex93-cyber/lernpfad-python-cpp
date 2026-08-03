@@ -69,6 +69,10 @@ lernpfad-python-cpp/
 
 ## So arbeitest du mit dem Kurs
 
+> 🚀 **Kein Plan?** Der [**WOCHENPLAN für Lernfeld 1**](lernfeld_01_grundlagen/WOCHENPLAN.md)
+> zeigt dir Woche für Woche, was du wann liest, löst und baust – inkl.
+> Zeitangaben. Perfekt zum Loslegen!
+
 1. **Theorie lesen**: Beginne mit `python/theorie/README.md` (schneller Einstieg),
    dann `cpp/theorie/README.md` (vertieft das Verständnis durch den Kontrast).
 2. **Aufgabe lösen**: Bearbeite jede Aufgabe **zuerst in Python**, danach in C++.
