@@ -98,11 +98,11 @@ function zeigeZiel() {
   const container = document.getElementById("ziel-phasen");
   if (!container) return;
   const phasen = [
-    { name: "Phase 0 – Anfänger", lf: "Lernfeld 01", dauer: "4–8 Wochen", ziel: "Erste eigene Programme schreiben und verstehen", meilenstein: "Taschenrechner mit Verlauf" },
-    { name: "Phase 1 – Junior", lf: "Lernfeld 02", dauer: "6–10 Wochen", ziel: "Daten strukturieren und verarbeiten", meilenstein: "Notenverwaltung mit Dateispeicherung" },
-    { name: "Phase 2 – Junior → Mid-Level", lf: "Lernfeld 03 + 04", dauer: "10–16 Wochen", ziel: "Modulare, wiederverwendbare Systeme bauen", meilenstein: "Bibliothekssystem + Notizverwaltung mit SQLite" },
-    { name: "Phase 3 – Mid-Level", lf: "Lernfeld 05", dauer: "8–12 Wochen", ziel: "Vernetzte, nebenläufige Systeme verstehen", meilenstein: "Chat-Anwendung (Client + Server)" },
-    { name: "Phase 4 – Senior", lf: "Lernfeld 06", dauer: "8–12 Wochen", ziel: "Professionell entwickeln: Tests, CI, Scrum", meilenstein: "Abschlussprojekt mit Tests + CI + Doku" },
+    { name: "Phase 0 – Anfänger", lf: "Lernfeld 01", dauer: "3–9 Wochen", ziel: "Erste eigene Programme schreiben und verstehen", meilenstein: "Taschenrechner mit Verlauf" },
+    { name: "Phase 1 – Junior", lf: "Lernfeld 02", dauer: "5–11 Wochen", ziel: "Daten strukturieren und verarbeiten", meilenstein: "Notenverwaltung mit Dateispeicherung" },
+    { name: "Phase 2 – Junior → Mid-Level", lf: "Lernfeld 03 + 04", dauer: "9–18 Wochen", ziel: "Modulare, wiederverwendbare Systeme bauen", meilenstein: "Bibliothekssystem + Notizverwaltung mit SQLite" },
+    { name: "Phase 3 – Mid-Level", lf: "Lernfeld 05", dauer: "7–14 Wochen", ziel: "Vernetzte, nebenläufige Systeme verstehen", meilenstein: "Chat-Anwendung (Client + Server)" },
+    { name: "Phase 4 – Senior", lf: "Lernfeld 06", dauer: "7–14 Wochen", ziel: "Professionell entwickeln: Tests, CI, Scrum", meilenstein: "Abschlussprojekt mit Tests + CI + Doku" },
   ];
   container.innerHTML = phasen.map((p, i) => `
     <div class="phase-eintrag">
@@ -115,8 +115,8 @@ function zeigeZiel() {
       </div>
     </div>`).join("") + `
     <div class="phase-gesamt">
-      📅 <strong>Gesamt: ca. 9–14 Monate</strong> bei ca. 4–6 Stunden pro Woche
-      (Richtwerte aus der ROADMAP)
+      📅 <strong>Gesamt: ca. 7–15 Monate</strong> bei 30–60 Minuten pro Tag
+      (≈ 3,5–7 h/Woche · 45 Min/Tag = ca. 10 Monate · Richtwerte aus der ROADMAP)
     </div>`;
 
   // ROADMAP.md beim ersten Aufklappen laden

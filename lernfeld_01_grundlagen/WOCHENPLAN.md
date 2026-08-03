@@ -1,11 +1,11 @@
 # 📅 Wochenplan Lernfeld 1 – Grundlagen der IT und erste Programme
 
-**Ziel:** Nach 4–8 Wochen (je nach Tempo) hast du Lernfeld 1 abgeschlossen:
+**Ziel:** Nach 3–9 Wochen (je nach Tempo) hast du Lernfeld 1 abgeschlossen:
 Die Grundlagen von Python UND C++ verstanden, 5 Aufgaben gelöst, den
 **Taschenrechner** gebaut und den Test bestanden.
 
-**Pensum:** ca. **4–6 Stunden pro Woche** (Richtwert aus der ROADMAP) –
-aufteilbar in 2–3 Lern-Sessions à 1,5–2 Stunden.
+**Pensum:** ca. **30–60 Minuten pro Tag** (≈ 3,5–7 h/Woche, Richtwert aus der
+ROADMAP) – aufteilbar in tägliche Sessions oder 2–3 Lern-Blöcke à 1,5–2 Stunden.
 
 **So arbeitest du jede Woche:**
 1. 📖 Theorie lesen (Sprachkurs-Kapitel + Theorie-README, immer Python zuerst)

@@ -2,13 +2,25 @@
 
 Diese Roadmap zeigt den **kompletten Lernpfad** des Repositories: von null Vorkenntnissen
 bis zum Senior-Niveau. Die 6 Lernfelder sind in **4 Phasen** gruppiert. Die Zeitangaben
-sind Richtwerte für ein realistisches Lernpensum von ca. **4–6 Stunden pro Woche**.
+sind Richtwerte für ein realistisches Lernpensum von ca. **30–60 Minuten pro Tag**
+(≈ **3,5–7 Stunden pro Woche**, bei 7 Tagen Lernen pro Woche).
+
+| Pensum | Stunden/Woche | Gesamtdauer |
+|---|---|---|
+| 30 Min/Tag (locker) | ≈ 3,5 h | ca. 15 Monate |
+| 45 Min/Tag (typisch) | ≈ 5 h | ca. 10 Monate |
+| 60 Min/Tag (ehrgeizig) | ≈ 7 h | ca. 7 Monate |
+
+> 💡 Die Wochen-Angaben je Phase unten gelten für **30–60 Min/Tag**:
+> die untere Zahl ≈ fleißiges Tempo (60 Min/Tag), die obere ≈ lockeres Tempo
+> (30 Min/Tag). Wer nur an Wochentagen lernt (5 statt 7 Tage), rechnet
+> ca. 1,4× dazu.
 
 ---
 
 ## Phase 0 – Anfänger: Die Grundlagen (Lernfeld 01)
 
-**Dauer:** ca. 4–8 Wochen · **Ziel:** erste eigene Programme schreiben und verstehen
+**Dauer:** ca. 3–9 Wochen · **Ziel:** erste eigene Programme schreiben und verstehen
 
 | Bereich | Lernziele |
 |---|---|
@@ -21,7 +33,7 @@ sind Richtwerte für ein realistisches Lernpensum von ca. **4–6 Stunden pro Wo
 
 ## Phase 1 – Junior: Daten & Algorithmen (Lernfeld 02)
 
-**Dauer:** ca. 6–10 Wochen · **Ziel:** Daten strukturieren und verarbeiten
+**Dauer:** ca. 5–11 Wochen · **Ziel:** Daten strukturieren und verarbeiten
 
 | Bereich | Lernziele |
 |---|---|
@@ -34,7 +46,7 @@ sind Richtwerte für ein realistisches Lernpensum von ca. **4–6 Stunden pro Wo
 
 ## Phase 2 – Junior → Mid-Level: OOP & Datenbanken (Lernfeld 03 + 04)
 
-**Dauer:** ca. 10–16 Wochen · **Ziel:** modulare, wiederverwendbare Systeme bauen
+**Dauer:** ca. 9–18 Wochen · **Ziel:** modulare, wiederverwendbare Systeme bauen
 
 | Bereich | Lernziele |
 |---|---|
@@ -47,7 +59,7 @@ sind Richtwerte für ein realistisches Lernpensum von ca. **4–6 Stunden pro Wo
 
 ## Phase 3 – Mid-Level: Komplexe Systeme (Lernfeld 05)
 
-**Dauer:** ca. 8–12 Wochen · **Ziel:** vernetzte, nebenläufige Systeme verstehen
+**Dauer:** ca. 7–14 Wochen · **Ziel:** vernetzte, nebenläufige Systeme verstehen
 
 | Bereich | Lernziele |
 |---|---|
@@ -60,7 +72,7 @@ sind Richtwerte für ein realistisches Lernpensum von ca. **4–6 Stunden pro Wo
 
 ## Phase 4 – Senior: Qualität, Testing & Projektmanagement (Lernfeld 06)
 
-**Dauer:** ca. 8–12 Wochen · **Ziel:** professionell entwickeln, nicht nur programmieren
+**Dauer:** ca. 7–14 Wochen · **Ziel:** professionell entwickeln, nicht nur programmieren
 
 | Bereich | Lernziele |
 |---|---|
