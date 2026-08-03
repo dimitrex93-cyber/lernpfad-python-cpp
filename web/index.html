@@ -12,12 +12,64 @@
   <p class="subtitle">Vom Programmieranfänger zum Senior-Entwickler – im Browser</p>
   <nav>
     <button id="nav-start" class="nav-btn active" onclick="zeigeAnsicht('start')">Start</button>
+    <button id="nav-ziel" class="nav-btn" onclick="zeigeAnsicht('ziel')">🎯 Ziel &amp; Mission</button>
     <button id="nav-quiz" class="nav-btn" onclick="zeigeAnsicht('quiz')">Quiz</button>
     <button id="nav-kurs" class="nav-btn" onclick="zeigeAnsicht('kurs')">Sprachkurs</button>
   </nav>
 </header>
 
 <main>
+  <!-- ============ ZIEL & MISSION ============ -->
+  <section id="ansicht-ziel" class="ansicht" hidden>
+    <div class="karte ziel-hero">
+      <h2>🎯 Das Ziel: Vom Anfänger zum Senior-Entwickler</h2>
+      <p class="ziel-leitsatz">„Wer beide Sprachen lernt, versteht, <strong>warum</strong>
+      Programmiersprachen so sind, wie sie sind – und kann für jede Aufgabe die richtige wählen."</p>
+      <p>Dieser Lernpfad ist ein <strong>offener, strukturierter Selbstlernkurs</strong> für alle,
+      die Programmieren von Grund auf lernen wollen – oder ihre Kenntnisse systematisch bis auf
+      Senior-Niveau ausbauen möchten. Der Kurs orientiert sich am
+      <strong>Ausbildungsrahmenplan für Fachinformatiker (Anwendungsentwicklung)</strong> und
+      vermittelt jeden Lernstoff in <strong>zwei Sprachen parallel</strong>.</p>
+    </div>
+
+    <div class="karte">
+      <h2>Warum Python UND C++?</h2>
+      <p>Der Kern der Idee: Wer nur <em>eine</em> Sprache lernt, lernt eine Syntax.
+      Wer <strong>zwei gegensätzliche Welten</strong> lernt, versteht die <strong>Konzepte dahinter</strong>:</p>
+      <table class="vergleich-tabelle">
+        <tr><th></th><th>🐍 Python</th><th>⚙️ C++</th></tr>
+        <tr><td><strong>Paradigma</strong></td><td>interpretiert, dynamisch typisiert</td><td>kompiliert, statisch typisiert</td></tr>
+        <tr><td><strong>Einstieg</strong></td><td>sehr schnell erste Erfolge</td><td>mehr Grundlagenwissen nötig</td></tr>
+        <tr><td><strong>Einsatz</strong></td><td>Scripting, Daten, Web, KI</td><td>Systeme, Games, Embedded</td></tr>
+        <tr><td><strong>Lerneffekt</strong></td><td>schnelle Ergebnisse, klare Syntax</td><td>tiefes Verständnis für Speicher &amp; Hardware</td></tr>
+      </table>
+      <p class="subtitle">Jedes Konzept wird immer im direkten Vergleich behandelt – so sieht man
+      hautnah, wie sich dieselbe Idee in beiden Welten anfühlt.</p>
+    </div>
+
+    <div class="karte">
+      <h2>Der Weg: 4 Phasen · 6 Lernfelder</h2>
+      <div id="ziel-phasen"></div>
+      <p class="subtitle">Die komplette Lernreise inkl. Zeitplan und Meilensteinen steht in der
+      <strong>ROADMAP.md</strong> des Repositories.</p>
+    </div>
+
+    <div class="karte">
+      <h2>So arbeitest du mit dem Kurs</h2>
+      <ol class="ziel-schritte">
+        <li><strong>Theorie lesen:</strong> Sprachkurs-Kapitel (Python + C++ im Vergleich)</li>
+        <li><strong>Aufgabe lösen:</strong> erst in Python, dann in C++ – die Unterschiede spüren</li>
+        <li><strong>Vergleichen:</strong> erst danach die Musterlösung ansehen</li>
+        <li><strong>Testen:</strong> Quiz pro Lernfeld mit Schwierigkeitsgrad + IHK-Notenschlüssel</li>
+        <li><strong>Abschließen:</strong> Mini-Projekt bauen – und Zwischen-/Abschlusstest ablegen</li>
+      </ol>
+      <div class="button-reihe">
+        <button class="primary" onclick="zeigeAnsicht('kurs')">📖 Jetzt starten: Sprachkurs</button>
+        <button class="secondary" onclick="zeigeAnsicht('quiz')">📝 Oder direkt testen</button>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ START ============ -->
   <section id="ansicht-start" class="ansicht">
     <div class="karte">

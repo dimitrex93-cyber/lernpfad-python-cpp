@@ -120,6 +120,58 @@ button.secondary:hover { background: #262c3d; }
 .noten-tabelle .bestanden-zeile { background: rgba(102, 187, 106, 0.12); }
 .noten-tabelle .bestanden-zeile td { border-color: var(--gruen); }
 
+/* Ziel & Mission Seite */
+.ziel-hero { border-left: 4px solid var(--akzent); }
+.ziel-leitsatz {
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--text);
+  border-left: 3px solid var(--akzent-2);
+  padding: 0.4rem 0.9rem;
+  margin: 0.6rem 0;
+  background: rgba(255, 183, 77, 0.08);
+  border-radius: 0 6px 6px 0;
+}
+.vergleich-tabelle {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.8rem 0;
+  font-size: 0.95rem;
+}
+.vergleich-tabelle th, .vergleich-tabelle td {
+  border: 1px solid var(--rand);
+  padding: 0.5rem 0.8rem;
+  text-align: left;
+}
+.vergleich-tabelle th { background: var(--bg-hover); color: var(--akzent); }
+
+.phase-eintrag {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  margin: 0.7rem 0;
+  padding: 0.7rem 0.9rem;
+  background: var(--bg);
+  border: 1px solid var(--rand);
+  border-radius: 8px;
+}
+.phase-nr {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--akzent);
+  color: #0b0e14;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.phase-meilenstein { color: var(--akzent-2); font-size: 0.9rem; }
+
+.ziel-schritte { margin: 0.6rem 0 0.6rem 1.2rem; }
+.ziel-schritte li { margin: 0.45rem 0; }
+
 .quiz-kopf {
   display: flex;
   justify-content: space-between;

@@ -79,15 +79,40 @@ function lfSchluessel(nr, stufe) {
 // Ansichten wechseln
 // ------------------------------------------------------------------
 function zeigeAnsicht(name) {
-  for (const id of ["start", "quiz", "kurs"]) {
+  for (const id of ["start", "ziel", "quiz", "kurs"]) {
     document.getElementById("ansicht-" + id).hidden = id !== name;
   }
-  for (const id of ["start", "quiz", "kurs"]) {
+  for (const id of ["start", "ziel", "quiz", "kurs"]) {
     document.getElementById("nav-" + id).classList.toggle("active", id === name);
   }
   if (name === "start") zeigeStart();
+  if (name === "ziel") zeigeZiel();
   if (name === "quiz") zeigeQuizAuswahl();
   if (name === "kurs") zeigeKursUebersicht();
+}
+
+// ------------------------------------------------------------------
+// ZIEL & MISSION
+// ------------------------------------------------------------------
+function zeigeZiel() {
+  const container = document.getElementById("ziel-phasen");
+  if (!container) return;
+  const phasen = [
+    { name: "Phase 0 – Anfänger", lf: "Lernfeld 01", ziel: "Erste eigene Programme schreiben und verstehen", meilenstein: "Taschenrechner mit Verlauf" },
+    { name: "Phase 1 – Junior", lf: "Lernfeld 02", ziel: "Daten strukturieren und verarbeiten", meilenstein: "Notenverwaltung mit Dateispeicherung" },
+    { name: "Phase 2 – Junior → Mid-Level", lf: "Lernfeld 03 + 04", ziel: "Modulare, wiederverwendbare Systeme bauen", meilenstein: "Bibliothekssystem + Notizverwaltung mit SQLite" },
+    { name: "Phase 3 – Mid-Level", lf: "Lernfeld 05", ziel: "Vernetzte, nebenläufige Systeme verstehen", meilenstein: "Chat-Anwendung (Client + Server)" },
+    { name: "Phase 4 – Senior", lf: "Lernfeld 06", ziel: "Professionell entwickeln: Tests, CI, Scrum", meilenstein: "Abschlussprojekt mit Tests + CI + Doku" },
+  ];
+  container.innerHTML = phasen.map((p, i) => `
+    <div class="phase-eintrag">
+      <div class="phase-nr">${i + 1}</div>
+      <div class="phase-inhalt">
+        <strong>${p.name}</strong> <span class="subtitle">· ${p.lf}</span><br>
+        ${p.ziel}<br>
+        <span class="phase-meilenstein">🏁 ${p.meilenstein}</span>
+      </div>
+    </div>`).join("");
 }
 
 // ------------------------------------------------------------------
