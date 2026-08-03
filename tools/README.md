@@ -22,6 +22,12 @@ python3 tools/quiz.py 2
 # Lernfeld direkt mit Schwierigkeitsgrad testen
 python3 tools/quiz.py 2 --schwierigkeit schwer
 
+# IHK-Zwischenprüfung (Teil 1, LF1–3, 40 % der Gesamtnote)
+python3 tools/quiz.py --zwischenpruefung
+
+# IHK-Abschlussprüfung (Teil 2, LF1–6, 60 % der Gesamtnote)
+python3 tools/quiz.py --abschlusspruefung
+
 # Fortschritt aller Lernfelder anzeigen
 python3 tools/quiz.py --status
 
@@ -140,6 +146,22 @@ mit der Klausur-Bewertung in `test/test.md` jedes Lernfelds:
 Bestanden ist ein Test ab **50 % (Note 4)** – genau wie in der echten
 IHK-Prüfung. Die erreichte Punktzahl wird pro Test auf 100 Punkte normiert
 (Prozent), damit der Schlüssel unabhängig von der Fragenanzahl gilt.
+
+### IHK-Prüfungen (Zwischen- & Abschlussprüfung)
+
+Nach dem Vorbild der echten **Abschlussprüfung zum Fachinformatiker** gibt
+es zwei Prüfungen mit Zufallsfragen aus dem jeweiligen Prüfungsbereich:
+
+| Prüfung | Bereich | Fragen | Gewichtung |
+|---|---|---|---|
+| Zwischenprüfung (Teil 1) | LF1–3 | 15 zufällig (5 pro LF) | **40 %** |
+| Abschlussprüfung (Teil 2) | LF1–6 | 24 zufällig (4 pro LF) | **60 %** |
+
+Die **Gesamtnote** ergibt sich aus den gewichteten Punkten beider Teile
+(`0,4 × Teil 1 + 0,6 × Teil 2`) und wird nach dem IHK-Schlüssel bewertet –
+bestanden ab 50 % (Note 4). Die Prüfungen sind im Menü die Punkte **7** und
+**8**, per CLI `--zwischenpruefung` / `--abschlusspruefung`. Es zählt der
+beste Versuch; der Stand erscheint in `--status`.
 
 ### Fortschritt
 

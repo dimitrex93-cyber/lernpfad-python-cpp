@@ -10,6 +10,8 @@ Verwendung:
     python3 tools/quiz.py                 # Lernfeld-Auswahlmenü
     python3 tools/quiz.py 2               # Test für Lernfeld 2 starten
     python3 tools/quiz.py 2 --schwierigkeit schwer   # Stufe direkt wählen
+    python3 tools/quiz.py --zwischenpruefung    # IHK-Zwischenprüfung (LF1–3, 40 %)
+    python3 tools/quiz.py --abschlusspruefung   # IHK-Abschlussprüfung (LF1–6, 60 %)
     python3 tools/quiz.py --status        # Fortschritt aller Lernfelder
     python3 tools/quiz.py --reset 2       # Fortschritt von Lernfeld 2 löschen
     python3 tools/quiz.py --list          # Lernfelder auflisten
@@ -32,6 +34,7 @@ import argparse
 import datetime
 import json
 import os
+import random
 import sys
 
 # ---------------------------------------------------------------------------
@@ -63,6 +66,31 @@ STUFEN_BESCHREIBUNG = {
 
 PASS_PERCENT = 50          # ab 50 % gilt der Test als bestanden (Note 4)
 BUCHSTABEN = "abcd"
+
+# ---------------------------------------------------------------------------
+# IHK-Prüfungen (Modell der Abschlussprüfung Fachinformatiker):
+#   Teil 1 = Zwischenprüfung nach LF1–3, gewichtet 40 %
+#   Teil 2 = Abschlussprüfung nach LF1–6, gewichtet 60 %
+# Gesamtnote = gewichtete Punkte beider Teile, bewertet nach IHK-Schlüssel.
+# ---------------------------------------------------------------------------
+PRUEFUNGEN = [
+    {
+        "key": "zwischenpruefung",
+        "titel": "Zwischenprüfung (Teil 1 der Abschlussprüfung)",
+        "lf_bereiche": [1, 2, 3],
+        "fragen_pro_lf": 5,
+        "gewicht": 0.4,
+        "menue": "7",
+    },
+    {
+        "key": "abschlusspruefung",
+        "titel": "Abschlussprüfung (Teil 2)",
+        "lf_bereiche": [1, 2, 3, 4, 5, 6],
+        "fragen_pro_lf": 4,
+        "gewicht": 0.6,
+        "menue": "8",
+    },
+]
 
 # ANSI-Farben fürs Terminal (automatisch deaktiviert, wenn nicht unterstützt)
 if sys.stdout.isatty():
@@ -237,6 +265,30 @@ def zeige_status(fortschritt):
         else:
             print(c("Noch kein Kapitel gelesen – öffne den Sprachkurs mit "
                     "'w'.", "dunkel"))
+
+    # IHK-Prüfungen (Zwischen- & Abschlussprüfung)
+    print(c("=== IHK-Prüfungen (Modell der Abschlussprüfung) ===", "fett"))
+    for p in PRUEFUNGEN:
+        eintrag = fortschritt.get(p["key"])
+        gewicht_prozent = int(p["gewicht"] * 100)
+        bereich = f"LF{p['lf_bereiche'][0]}–{p['lf_bereiche'][-1]}"
+        if eintrag:
+            status = (c("✓", "gruen") if eintrag["bestanden"] else c("✗", "rot"))
+            print(f"  {status} {p['titel']} ({bereich}, {gewicht_prozent} %): "
+                  f"{eintrag['prozent']:.1f} % · Note {eintrag['note']}")
+        else:
+            print(f"  · {p['titel']} ({bereich}, {gewicht_prozent} %) – offen")
+    zp = fortschritt.get("zwischenpruefung")
+    ap = fortschritt.get("abschlusspruefung")
+    if zp and ap:
+        gesamt = zp["prozent"] * 0.4 + ap["prozent"] * 0.6
+        note = note_fuer(gesamt)
+        farbe = "gruen" if gesamt >= PASS_PERCENT else "rot"
+        print(c(f"  GESAMTNOTE: {gesamt:.1f} % → Note {note} "
+                f"({notentext(note)}) [40 % + 60 %]", farbe))
+    else:
+        print(c("  Gesamtnote erscheint, sobald beide Prüfungen abgelegt sind.",
+                "dunkel"))
     print()
 
 
@@ -362,6 +414,136 @@ def run_test(lf_nr, fortschritt, stufe=None):
     alt = fortschritt.get(schluessel)
     if alt is None or erreicht > alt["punkte"]:
         fortschritt[schluessel] = {
+            "punkte": erreicht,
+            "max": gesamt_max,
+            "prozent": round(prozent, 1),
+            "note": note,
+            "bestanden": bestanden,
+            "datum": datetime.date.today().isoformat(),
+        }
+        speichere_fortschritt(fortschritt)
+        print(c("Fortschritt gespeichert.", "dunkel"))
+    else:
+        print(c(f"Bester bisheriger Versuch: {alt['punkte']} P. bleibt stehen.",
+                "dunkel"))
+
+    print("=" * 52)
+
+
+# ---------------------------------------------------------------------------
+# IHK-Prüfungen (Zwischenprüfung & Abschlussprüfung)
+# ---------------------------------------------------------------------------
+
+def lade_pruefungsfragen(pruefung):
+    """Zieht zufällig Fragen aus den Lernfeldern der Prüfung.
+
+    Pro Lernfeld werden 'fragen_pro_lf' Fragen zufällig gewählt und
+    gemischt – wie in der echten IHK-Prüfung, die den ganzen Stoff
+    des Prüfungsbereichs abdeckt.
+    """
+    fragen = []
+    for lf_nr in pruefung["lf_bereiche"]:
+        eintrag = next(e for e in LERN_FELDER if e[0] == lf_nr)
+        pfad = os.path.join(PROJEKT_ROOT, eintrag[2], "test", "fragen.json")
+        if not os.path.isfile(pfad):
+            sys.exit(c(f"Keine Fragenbank gefunden: {pfad}", "rot"))
+        with open(pfad, encoding="utf-8") as f:
+            daten = json.load(f)
+        pool = daten["fragen"]
+        n = min(pruefung["fragen_pro_lf"], len(pool))
+        fragen.extend(random.sample(pool, n))
+    random.shuffle(fragen)
+    return fragen
+
+
+def zeige_pruefungsstatus(fortschritt):
+    """Zeigt den Stand der beiden IHK-Prüfungen und ggf. die Gesamtnote."""
+    print(c("\n=== IHK-Prüfungen (Abschlussprüfung-Modell) ===", "fett"))
+    for p in PRUEFUNGEN:
+        eintrag = fortschritt.get(p["key"])
+        gewicht_prozent = int(p["gewicht"] * 100)
+        bereich = f"LF{p['lf_bereiche'][0]}–{p['lf_bereiche'][-1]}"
+        if eintrag:
+            status = (c("✓", "gruen") if eintrag["bestanden"] else c("✗", "rot"))
+            print(f"  {status} {p['titel']} ({bereich}, {gewicht_prozent} %): "
+                  f"{eintrag['punkte']}/{eintrag['max']} P. · "
+                  f"{eintrag['prozent']:.1f} % · Note {eintrag['note']}")
+        else:
+            print(f"  · {p['titel']} ({bereich}, {gewicht_prozent} %) – noch offen")
+
+    # Gesamtnote (nur wenn beide Prüfungen abgelegt wurden)
+    zp = fortschritt.get("zwischenpruefung")
+    ap = fortschritt.get("abschlusspruefung")
+    if zp and ap:
+        gesamt = zp["prozent"] * 0.4 + ap["prozent"] * 0.6
+        note = note_fuer(gesamt)
+        bestanden = gesamt >= PASS_PERCENT
+        text = (c("✓ GESAMTNOTE", "gruen") if bestanden
+                else c("✗ GESAMTNOTE", "rot"))
+        print(f"  {text}: {gesamt:.1f} % → Note {note} ({notentext(note)}) "
+              f"[40 % Teil 1 + 60 % Teil 2]")
+        if not bestanden:
+            print(c("  Hinweis: Mindestens 50 % Gesamtpunkte nötig (Note 4).",
+                    "dunkel"))
+    else:
+        print(c("  Gesamtnote erscheint, sobald beide Prüfungen abgelegt sind.",
+                "dunkel"))
+    print()
+
+
+def run_pruefung(pruefung, fortschritt):
+    """Führt eine IHK-Prüfung durch (Zufallsfragen aus dem Prüfungsbereich)."""
+    key = pruefung["key"]
+    titel = pruefung["titel"]
+    gewicht_prozent = int(pruefung["gewicht"] * 100)
+    bereich = f"LF{pruefung['lf_bereiche'][0]}–{pruefung['lf_bereiche'][-1]}"
+
+    fragen = lade_pruefungsfragen(pruefung)
+    gesamt_max = sum(q["punkte"] for q in fragen)
+
+    print(c(f"\n=== {titel} ===", "fett"))
+    print(c(f"Prüfungsbereich: {bereich} · Gewichtung: {gewicht_prozent} % "
+            f"der Gesamtnote", "cyan"))
+    print(c(f"{len(fragen)} zufällige Fragen aus dem gesamten Bereich, "
+            f"{gesamt_max} Punkte, bestanden ab {PASS_PERCENT} % "
+            f"(Note 4).", "cyan"))
+    if fortschritt.get(key):
+        alt = fortschritt[key]
+        print(c(f"Bisheriger Versuch: {alt['punkte']}/{alt['max']} P. · "
+                f"Note {alt['note']}.", "dunkel"))
+    print(c("Viel Erfolg! Drücke Enter zum Starten.", "dunkel"))
+    input()
+
+    erreicht = 0
+    for i, frage in enumerate(fragen, start=1):
+        if frage["typ"] == "mc":
+            punkte, _ = frage_mc(frage, i, len(fragen))
+        else:
+            punkte, _ = frage_open(frage, i, len(fragen))
+        erreicht += punkte
+
+    prozent = erreicht / gesamt_max * 100
+    note = note_fuer(prozent)
+    bestanden = prozent >= PASS_PERCENT
+
+    print(c("\n" + "=" * 52, "fett"))
+    print(c("PRÜFUNGSERGEBNIS", "fett"))
+    print("=" * 52)
+    print(f"Prüfung:    {titel}")
+    print(f"Bereich:    {bereich} ({gewicht_prozent} % der Gesamtnote)")
+    print(f"Punkte:     {erreicht} / {gesamt_max}")
+    print(f"Prozent:    {prozent:.1f}%   {zeige_balken(prozent)}")
+    print(f"Note:       {note} ({notentext(note)})")
+    if bestanden:
+        print(c("✓ BESTANDEN – Teil abgeschlossen! 🎉", "gruen"))
+    else:
+        print(c("✗ NICHT BESTANDEN – ab 50 % (Note 4) geschafft. "
+                "Stoff wiederholen, erneut versuchen!", "rot"))
+
+    # Fortschritt speichern (bester Versuch zählt)
+    alt = fortschritt.get(key)
+    if alt is None or erreicht > alt["punkte"]:
+        fortschritt[key] = {
             "punkte": erreicht,
             "max": gesamt_max,
             "prozent": round(prozent, 1),
@@ -559,8 +741,14 @@ def zeige_menue(fortschritt):
             status += "✓" if (eintrag and eintrag["bestanden"]) else "·"
         print(f"  [{status}] {nr}: {titel}")
     print(c("  [···] w: Sprachkurs – Python & C++ im ganzen erklärt", "cyan"))
-    print(c("Status: ✓ = bestanden (leicht · mittel · schwer), · = offen",
-            "dunkel"))
+    for p in PRUEFUNGEN:
+        eintrag = fortschritt.get(p["key"])
+        marker = "✓" if (eintrag and eintrag["bestanden"]) else "·"
+        gewicht = int(p["gewicht"] * 100)
+        print(f"  [{marker}] {p['menue']}: {p['titel']} "
+              f"({gewicht} % der Gesamtnote)")
+    print(c("Status: ✓ = bestanden · IHK-Prüfungen: 7 = Zwischen-, "
+            "8 = Abschlussprüfung", "dunkel"))
     print()
 
 
@@ -583,9 +771,23 @@ def main():
                         choices=["leicht", "mittel", "schwer"],
                         help="Schwierigkeitsgrad direkt wählen "
                              "(statt interaktiver Abfrage)")
+    parser.add_argument("--zwischenpruefung", action="store_true",
+                        help="IHK-Zwischenprüfung starten (Teil 1, LF1–3, 40 %%)")
+    parser.add_argument("--abschlusspruefung", action="store_true",
+                        help="IHK-Abschlussprüfung starten (Teil 2, LF1–6, 60 %%)")
     args = parser.parse_args()
 
     fortschritt = lade_fortschritt()
+
+    if args.zwischenpruefung:
+        p = next(x for x in PRUEFUNGEN if x["key"] == "zwischenpruefung")
+        run_pruefung(p, fortschritt)
+        return
+
+    if args.abschlusspruefung:
+        p = next(x for x in PRUEFUNGEN if x["key"] == "abschlusspruefung")
+        run_pruefung(p, fortschritt)
+        return
 
     if args.status:
         zeige_status(fortschritt)
@@ -633,7 +835,7 @@ def main():
     # Kein Argument → Auswahlmenü
     zeige_menue(fortschritt)
     while True:
-        eingabe = input("Auswahl (1–6, w = Wissen, q = Ende): ")
+        eingabe = input("Auswahl (1–8, w = Wissen, q = Ende): ")
         if eingabe.lower() in ("q", "quit", "exit"):
             print("Bis bald!")
             return
@@ -642,11 +844,15 @@ def main():
             # nach dem Sprachkurs zurück zum Menü
             zeige_menue(fortschritt)
             continue
+        if eingabe in ("7", "8"):
+            p = next(x for x in PRUEFUNGEN if x["menue"] == eingabe)
+            run_pruefung(p, fortschritt)
+            return
         if eingabe.isdigit() and 1 <= int(eingabe) <= len(LERN_FELDER):
             stufe = args.schwierigkeit or waehle_stufe()
             run_test(int(eingabe), fortschritt, stufe)
             return
-        print(c("Bitte 1–6, w oder q eingeben.", "gelb"))
+        print(c("Bitte 1–8, w oder q eingeben.", "gelb"))
 
 
 if __name__ == "__main__":
