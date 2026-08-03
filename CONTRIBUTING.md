@@ -84,6 +84,22 @@ g++ -std=c++17 -Wall -Wextra loesungen/aufgabe_XX.cpp -o /tmp/aufgabe_XX
    und **wie** wurde getestet (Kommando + Ausgabe).
 5. Review abwarten – Feedback ist ein Geschenk, kein Angriff. 😊
 
+## KI-Unterstützung & Transparenz
+
+Dieses Projekt wurde **mit Unterstützung von KI-Tools (Hermes Agent) erstellt
+und gepflegt**. Das betrifft vor allem die Erst-Erstellung von Struktur,
+Aufgaben und Code sowie wiederkehrende Wartungsarbeiten. Drei Hinweise für
+Mitwirkende:
+
+- **KI-generierte Beiträge sind willkommen** – bitte im PR beschreiben, wenn
+  Inhalte mit KI-Unterstützung entstanden sind (ein Satz genügt).
+- **Menschliche Prüfung bleibt Pflicht:** Jeder Beitrag – egal ob von Mensch
+  oder KI – wird nach der Review-Checkliste unten geprüft. KI ist ein
+  Werkzeug, keine Garantie für Korrektheit.
+- **Die Lernziele und die fachliche Ausrichtung** entstehen in Zusammenarbeit
+  mit menschlichen Autoren und haben Vorrang vor automatisch generierten
+  Inhalten.
+
 ## Review-Checkliste (für Maintainer)
 
 - [ ] Datei liegt im richtigen Ordner (siehe Tabelle oben)

@@ -136,6 +136,16 @@ Dieses Projekt lebt von der Community: Fehler korrigieren, Aufgaben verbessern,
 Lösungen ergänzen, neue Module beisteuern. Wie das geht, steht in der
 [**CONTRIBUTING.md**](CONTRIBUTING.md).
 
+## Danksagung
+
+Dieses Projekt wurde **mit Unterstützung von KI-Tools (Hermes Agent) erstellt
+und gepflegt** – von der Struktur der Lernpfade über die Aufgabensammlung bis
+zur Terminal- und Web-App. Die fachliche Konzeption, die Lernziele und die
+Ausrichtung am Ausbildungsrahmenplan entstanden in enger Zusammenarbeit mit
+menschlichen Autoren. Alle Inhalte sind als Ausgangspunkt gedacht: Fehler
+korrigieren, Aufgaben verbessern und eigene Lösungen beisteuern ist ausdrücklich
+erwünscht.
+
 ## Lizenz
 
 [MIT](LICENSE) – frei nutzbar, veränderbar und weiterverteilbar.
