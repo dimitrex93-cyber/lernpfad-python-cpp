@@ -22,10 +22,10 @@ python3 tools/quiz.py 2
 # Lernfeld direkt mit Schwierigkeitsgrad testen
 python3 tools/quiz.py 2 --schwierigkeit schwer
 
-# IHK-Zwischenprüfung (Teil 1, LF1–3, 40 % der Gesamtnote)
+# Übungstest nach IHK-Standard (LF1–3, 40 % der Gesamtnote)
 python3 tools/quiz.py --zwischenpruefung
 
-# IHK-Abschlussprüfung (Teil 2, LF1–6, 60 % der Gesamtnote)
+# Übungstest nach IHK-Standard (LF1–6, 60 % der Gesamtnote)
 python3 tools/quiz.py --abschlusspruefung
 
 # Fortschritt aller Lernfelder anzeigen
@@ -147,26 +147,28 @@ Bestanden ist ein Test ab **50 % (Note 4)** – genau wie in der echten
 IHK-Prüfung. Die erreichte Punktzahl wird pro Test auf 100 Punkte normiert
 (Prozent), damit der Schlüssel unabhängig von der Fragenanzahl gilt.
 
-### IHK-Prüfungen (Zwischen- & Abschlussprüfung)
+### Übungstests nach IHK-Standard (Zwischen- & Abschlusstest)
 
-Nach dem Vorbild der echten **Abschlussprüfung zum Fachinformatiker** gibt
-es zwei Prüfungen mit Zufallsfragen aus dem jeweiligen Prüfungsbereich:
+> ⚠️ **Wichtig:** Das sind **keine echten IHK-Prüfungen**, sondern
+> **Übungstests**, die dem Aufbau und Notenschlüssel der echten
+> Abschlussprüfung zum Fachinformatiker nachempfunden sind – zum Üben
+> ohne Prüfungsdruck.
 
-| Prüfung | Bereich | Fragen | Gewichtung |
+| Test | Bereich | Fragen | Gewichtung |
 |---|---|---|---|
-| Zwischenprüfung (Teil 1) | LF1–3 | 15 zufällig (5 pro LF) | **40 %** |
-| Abschlussprüfung (Teil 2) | LF1–6 | 24 zufällig (4 pro LF) | **60 %** |
+| Zwischentest | LF1–3 | 15 zufällig (5 pro LF) | **40 %** |
+| Abschlusstest | LF1–6 | 24 zufällig (4 pro LF) | **60 %** |
 
-Die **Gesamtnote** ergibt sich aus den gewichteten Punkten beider Teile
-(`0,4 × Teil 1 + 0,6 × Teil 2`) und wird nach dem IHK-Schlüssel bewertet –
-bestanden ab 50 % (Note 4). Die Prüfungen sind im Menü die Punkte **7** und
+Die **Gesamtnote** ergibt sich aus den gewichteten Punkten beider Tests
+(`0,4 × Test 1 + 0,6 × Test 2`) und wird nach dem IHK-Schlüssel bewertet –
+bestanden ab 50 % (Note 4). Die Tests sind im Menü die Punkte **7** und
 **8**, per CLI `--zwischenpruefung` / `--abschlusspruefung`. Es zählt der
 beste Versuch; der Stand erscheint in `--status`.
 
-**Zulassung (wie in der echten Ausbildung):** Eine Prüfung ist gesperrt
-(🔒), bis alle Lernfelder ihres Bereichs bestanden sind – mindestens eine
-Stufe pro Lernfeld. Die Zwischenprüfung (LF1–3) wird also erst freigeschaltet,
-wenn LF1, LF2 und LF3 jeweils eine Stufe bestanden haben; die Abschlussprüfung
+**Freischaltung (wie in der Ausbildung üblich):** Ein Test ist gesperrt
+(🔒), bis alle Lernfelder seines Bereichs bestanden sind – mindestens eine
+Stufe pro Lernfeld. Der Zwischentest (LF1–3) wird also erst freigeschaltet,
+wenn LF1, LF2 und LF3 jeweils eine Stufe bestanden haben; der Abschlusstest
 erst, wenn alle 6 Lernfelder durchlaufen sind. In `--status` und im Menü
 siehst du, welche Lernfelder noch fehlen.
 

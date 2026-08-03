@@ -24,11 +24,12 @@ const NOTEN = [
   { min: 0,  note: 6, text: "ungenügend" },
 ];
 
-// IHK-Prüfungen: Teil 1 (LF1–3, 40 %), Teil 2 (LF1–6, 60 %)
+// Übungstests nach IHK-Standard (KEINE echten IHK-Prüfungen):
+// Test 1 (LF1–3, 40 %), Test 2 (LF1–6, 60 %)
 const PRUEFUNGEN = [
   {
     key: "zwischenpruefung",
-    titel: "Zwischenprüfung (Teil 1 der Abschlussprüfung)",
+    titel: "Zwischentest nach IHK-Standard",
     bereich: "LF1–3",
     lfNrs: [1, 2, 3],
     fragenProLf: 5,
@@ -36,7 +37,7 @@ const PRUEFUNGEN = [
   },
   {
     key: "abschlusspruefung",
-    titel: "Abschlussprüfung (Teil 2)",
+    titel: "Abschlusstest nach IHK-Standard",
     bereich: "LF1–6",
     lfNrs: [1, 2, 3, 4, 5, 6],
     fragenProLf: 4,
@@ -111,7 +112,7 @@ function zeigeStart() {
     ? `<p><strong>${gelesen.length} Kapitel gelesen</strong> – mach weiter! 📚</p>`
     : `<p>Noch kein Kapitel gelesen – der Sprachkurs wartet auf dich! 📖</p>`;
 
-  // IHK-Prüfungen
+  // Übungstests nach IHK-Standard
   let pruefungsInfo = "";
   for (const p of PRUEFUNGEN) {
     const e = fortschritt[p.key];
@@ -141,7 +142,7 @@ function zeigeStart() {
   document.getElementById("start-fortschritt").innerHTML =
     `<h3>Quiz</h3>${html}
      <p><strong>${quizBestanden}/${quizGesamt}</strong> Lernfeld-Stufen bestanden</p>
-     <h3>IHK-Prüfungen</h3>${pruefungsInfo}
+     <h3>Übungstests nach IHK-Standard</h3>${pruefungsInfo}
      <h3>Sprachkurs</h3>${kursInfo}`;
 }
 
@@ -171,7 +172,7 @@ async function zeigeQuizAuswahl() {
   if (notenContainer) {
     notenContainer.innerHTML = `
       <details class="noten-details">
-        <summary>ℹ️ Notenschlüssel (IHK-Prüfung Fachinformatiker)</summary>
+        <summary>ℹ️ Notenschlüssel (IHK-Prüfung Fachinformatiker – Übung)</summary>
         <table class="noten-tabelle">
           <tr><th>Punkte</th><th>Note</th><th>Bedeutung</th></tr>
           <tr><td>100–92</td><td>1</td><td>sehr gut</td></tr>
@@ -186,7 +187,7 @@ async function zeigeQuizAuswahl() {
       </details>`;
   }
 
-  // IHK-Prüfungs-Buttons (mit Sperr-Status)
+  // Übungstest-Buttons (mit Sperr-Status)
   const pruefungsButtons = document.getElementById("pruefungs-buttons");
   if (pruefungsButtons) {
     let ph = '<div class="button-reihe">';
@@ -256,12 +257,10 @@ async function starteQuiz(nr) {
   }
 }
 
-// ------------------------------------------------------------------
-// IHK-Prüfungen (Zufallsfragen aus dem Prüfungsbereich)
-// ------------------------------------------------------------------
+// Übungstests nach IHK-Standard (Zufallsfragen aus dem Prüfungsbereich)
 function pruefungZugelassen(fortschritt, pruefung) {
-  // Wie in der echten Ausbildung: Zulassung erst, wenn alle Lernfelder
-  // des Bereichs bestanden sind (mindestens eine Stufe pro Lernfeld).
+  // Freischaltung erst, wenn alle Lernfelder des Bereichs bestanden sind
+  // (mindestens eine Stufe pro Lernfeld) – wie in der Ausbildung üblich.
   const fehlende = [];
   for (const nr of pruefung.lfNrs) {
     const bestanden = STUFEN.some(stufe => {
@@ -283,7 +282,7 @@ async function startePruefung(key) {
   if (!zulassung.zugelassen) {
     const fehlTexte = zulassung.fehlende.map(nr => `LF${nr}`).join(", ");
     zeigeToast(
-      `🔒 Nicht zugelassen – erst ${fehlTexte} bestanden (je 1 Stufe).`,
+      `🔒 Noch nicht freigeschaltet – erst ${fehlTexte} bestanden (je 1 Stufe).`,
       "fehler", 5000
     );
     return;
@@ -323,7 +322,7 @@ async function startePruefung(key) {
       `${pruefung.titel} · ${pruefung.bereich} (${Math.round(pruefung.gewicht * 100)} %)`;
     zeigeFrage();
   } catch (e) {
-    zeigeToast("Prüfungsfragen konnten nicht geladen werden: " + e.message, "fehler");
+    zeigeToast("Testfragen konnten nicht geladen werden: " + e.message, "fehler");
   }
 }
 
@@ -444,7 +443,7 @@ function zeigeErgebnis() {
       <p>Punkte: <strong>${z.erreicht} / ${z.max}</strong> (${prozent.toFixed(1)} %)</p>
       <div class="note-gross note-${note.note}">Note ${note.note} (${note.text})</div>
       <p class="${bestanden ? "bestanden" : "nicht-bestanden"}">
-        ${bestanden ? "✓ BESTANDEN – Teil abgeschlossen! 🎉" : "✗ NICHT BESTANDEN – ab 50 % (Note 4) geschafft."}</p>
+        ${bestanden ? "✓ BESTANDEN – Übungstest abgeschlossen! 🎉" : "✗ NICHT BESTANDEN – ab 50 % (Note 4) geschafft."}</p>
       <div id="gesamtnote-box"></div>`;
   } else {
     details.innerHTML = `
@@ -469,7 +468,7 @@ function zeigeErgebnis() {
     speichereFortschritt(fortschritt);
   }
 
-  // Bei Prüfungen: Gesamtnote anzeigen, wenn beide Teile abgelegt
+  // Bei Übungstests: Gesamtnote anzeigen, wenn beide Tests abgelegt
   if (istPruefung) {
     zeigeGesamtnote(fortschritt);
   }
@@ -488,13 +487,13 @@ function zeigeGesamtnote(fortschritt) {
     const bestanden = gesamt >= PASS_PERCENT;
     box.innerHTML = `
       <div class="feedback ${bestanden ? "richtig" : "falsch"}" style="margin-top:.8rem">
-        <strong>GESAMTNOTE (IHK-Modell):</strong> ${gesamt.toFixed(1)} % →
+        <strong>GESAMTNOTE (IHK-Standard):</strong> ${gesamt.toFixed(1)} % →
         Note ${note.note} (${note.text})<br>
-        <span class="subtitle">40 % Teil 1 + 60 % Teil 2 · ${bestanden ? "bestanden" : "nicht bestanden"}</span>
+        <span class="subtitle">40 % Test 1 + 60 % Test 2 · ${bestanden ? "bestanden" : "nicht bestanden"}</span>
       </div>`;
   } else {
     box.innerHTML = `<p class="subtitle" style="margin-top:.6rem">
-      Die Gesamtnote erscheint, sobald beide Prüfungsteile abgelegt sind.</p>`;
+      Die Gesamtnote erscheint, sobald beide Übungstests abgelegt sind.</p>`;
   }
 }
 
