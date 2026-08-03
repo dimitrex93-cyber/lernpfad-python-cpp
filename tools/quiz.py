@@ -272,12 +272,18 @@ def zeige_status(fortschritt):
         eintrag = fortschritt.get(p["key"])
         gewicht_prozent = int(p["gewicht"] * 100)
         bereich = f"LF{p['lf_bereiche'][0]}–{p['lf_bereiche'][-1]}"
+        zugelassen, fehlende = pruefung_zugelassen(fortschritt, p)
         if eintrag:
             status = (c("✓", "gruen") if eintrag["bestanden"] else c("✗", "rot"))
             print(f"  {status} {p['titel']} ({bereich}, {gewicht_prozent} %): "
                   f"{eintrag['prozent']:.1f} % · Note {eintrag['note']}")
+        elif not zugelassen:
+            fehl_texte = ", ".join(f"LF{nr}" for nr in fehlende)
+            print(c(f"  🔒 {p['titel']} ({bereich}, {gewicht_prozent} %) – "
+                    f"gesperrt, fehlt: {fehl_texte}", "dunkel"))
         else:
-            print(f"  · {p['titel']} ({bereich}, {gewicht_prozent} %) – offen")
+            print(f"  · {p['titel']} ({bereich}, {gewicht_prozent} %) – "
+                  f"offen (zugelassen)")
     zp = fortschritt.get("zwischenpruefung")
     ap = fortschritt.get("abschlusspruefung")
     if zp and ap:
@@ -434,6 +440,25 @@ def run_test(lf_nr, fortschritt, stufe=None):
 # IHK-Prüfungen (Zwischenprüfung & Abschlussprüfung)
 # ---------------------------------------------------------------------------
 
+def pruefung_zugelassen(fortschritt, pruefung):
+    """Prüft, ob alle Lernfelder des Prüfungsbereichs bestanden sind.
+
+    Wie in der echten Ausbildung: Zur Prüfung wird nur zugelassen, wer
+    die Inhalte des Bereichs durchlaufen hat. Ein Lernfeld gilt als
+    bestanden, wenn mindestens eine Stufe bestanden wurde.
+    Gibt (zugelassen, fehlende_lf_liste) zurück.
+    """
+    fehlende = []
+    for lf_nr in pruefung["lf_bereiche"]:
+        bestanden = any(
+            fortschritt.get(f"lf{lf_nr}_{stufe}", {}).get("bestanden")
+            for stufe, _ in STUFEN
+        )
+        if not bestanden:
+            fehlende.append(lf_nr)
+    return (not fehlende), fehlende
+
+
 def lade_pruefungsfragen(pruefung):
     """Zieht zufällig Fragen aus den Lernfeldern der Prüfung.
 
@@ -497,6 +522,23 @@ def run_pruefung(pruefung, fortschritt):
     titel = pruefung["titel"]
     gewicht_prozent = int(pruefung["gewicht"] * 100)
     bereich = f"LF{pruefung['lf_bereiche'][0]}–{pruefung['lf_bereiche'][-1]}"
+
+    # Zulassung: erst wenn alle Lernfelder des Bereichs bestanden sind
+    zugelassen, fehlende = pruefung_zugelassen(fortschritt, pruefung)
+    if not zugelassen:
+        lf_texte = ", ".join(
+            f"LF{nr}" for nr in fehlende
+        )
+        print(c(f"\n=== {titel} ===", "fett"))
+        print(c("🔒 NICHT ZUGELASSEN – wie in der echten Ausbildung gilt:",
+                "rot"))
+        print(c(f"Zur Prüfung wird nur zugelassen, wer die Inhalte des "
+                f"Bereichs ({bereich}) bestanden hat.", "gelb"))
+        print(c(f"Noch offen: {lf_texte} (je mindestens eine Stufe "
+                f"bestanden).", "gelb"))
+        print(c("Tipp: 'python3 tools/quiz.py <Nr>' startet den Test eines "
+                f"Lernfelds.", "dunkel"))
+        return
 
     fragen = lade_pruefungsfragen(pruefung)
     gesamt_max = sum(q["punkte"] for q in fragen)
@@ -743,12 +785,20 @@ def zeige_menue(fortschritt):
     print(c("  [···] w: Sprachkurs – Python & C++ im ganzen erklärt", "cyan"))
     for p in PRUEFUNGEN:
         eintrag = fortschritt.get(p["key"])
-        marker = "✓" if (eintrag and eintrag["bestanden"]) else "·"
+        zugelassen, _ = pruefung_zugelassen(fortschritt, p)
+        if eintrag and eintrag["bestanden"]:
+            marker = "✓"
+        elif eintrag:
+            marker = "✗"
+        elif not zugelassen:
+            marker = "🔒"
+        else:
+            marker = "·"
         gewicht = int(p["gewicht"] * 100)
         print(f"  [{marker}] {p['menue']}: {p['titel']} "
               f"({gewicht} % der Gesamtnote)")
-    print(c("Status: ✓ = bestanden · IHK-Prüfungen: 7 = Zwischen-, "
-            "8 = Abschlussprüfung", "dunkel"))
+    print(c("Status: ✓ = bestanden · 🔒 = gesperrt (Lernfelder fehlen) · "
+            "IHK-Prüfungen: 7 = Zwischen-, 8 = Abschlussprüfung", "dunkel"))
     print()
 
 

@@ -115,9 +115,16 @@ function zeigeStart() {
   let pruefungsInfo = "";
   for (const p of PRUEFUNGEN) {
     const e = fortschritt[p.key];
-    const status = e
-      ? `<span class="lf-status">${e.bestanden ? "✓" : "✗"} Note ${e.note}</span>`
-      : `<span class="lf-status offen">offen</span>`;
+    const zulassung = pruefungZugelassen(fortschritt, p);
+    let status;
+    if (e) {
+      status = `<span class="lf-status">${e.bestanden ? "✓" : "✗"} Note ${e.note}</span>`;
+    } else if (!zulassung.zugelassen) {
+      const fehlTexte = zulassung.fehlende.map(nr => `LF${nr}`).join(", ");
+      status = `<span class="lf-status offen">🔒 fehlt: ${fehlTexte}</span>`;
+    } else {
+      status = `<span class="lf-status offen">offen</span>`;
+    }
     pruefungsInfo += `<div class="lf-eintrag">
         ${status}<span class="lf-titel">🎓 ${p.titel} (${p.bereich})</span>
       </div>`;
@@ -178,6 +185,30 @@ async function zeigeQuizAuswahl() {
         Bestanden ab 50 Punkten (Note 4).</p>
       </details>`;
   }
+
+  // IHK-Prüfungs-Buttons (mit Sperr-Status)
+  const pruefungsButtons = document.getElementById("pruefungs-buttons");
+  if (pruefungsButtons) {
+    let ph = '<div class="button-reihe">';
+    for (const p of PRUEFUNGEN) {
+      const zulassung = pruefungZugelassen(fortschritt, p);
+      const eintrag = fortschritt[p.key];
+      const gewicht = Math.round(p.gewicht * 100);
+      if (zulassung.zugelassen && !(eintrag && eintrag.bestanden)) {
+        ph += `<button class="primary" onclick="startePruefung('${p.key}')">
+          🎓 ${p.titel} (${p.bereich}, ${gewicht} %)</button>`;
+      } else if (eintrag && eintrag.bestanden) {
+        ph += `<button class="secondary" disabled title="Bereits bestanden">
+          ✅ ${p.titel} bestanden</button>`;
+      } else {
+        const fehlTexte = zulassung.fehlende.map(nr => `LF${nr}`).join(", ");
+        ph += `<button class="secondary" disabled title="Gesperrt: erst ${fehlTexte} bestanden">
+          🔒 ${p.titel} (fehlt: ${fehlTexte})</button>`;
+      }
+    }
+    ph += '</div>';
+    pruefungsButtons.innerHTML = ph;
+  }
 }
 
 function gewaehlteStufe() {
@@ -228,9 +259,36 @@ async function starteQuiz(nr) {
 // ------------------------------------------------------------------
 // IHK-Prüfungen (Zufallsfragen aus dem Prüfungsbereich)
 // ------------------------------------------------------------------
+function pruefungZugelassen(fortschritt, pruefung) {
+  // Wie in der echten Ausbildung: Zulassung erst, wenn alle Lernfelder
+  // des Bereichs bestanden sind (mindestens eine Stufe pro Lernfeld).
+  const fehlende = [];
+  for (const nr of pruefung.lfNrs) {
+    const bestanden = STUFEN.some(stufe => {
+      const e = fortschritt[lfSchluessel(nr, stufe)];
+      return e && e.bestanden;
+    });
+    if (!bestanden) fehlende.push(nr);
+  }
+  return { zugelassen: fehlende.length === 0, fehlende };
+}
+
 async function startePruefung(key) {
   const pruefung = PRUEFUNGEN.find(p => p.key === key);
   if (!pruefung) return;
+
+  // Zulassung prüfen
+  const fortschritt = ladeFortschritt();
+  const zulassung = pruefungZugelassen(fortschritt, pruefung);
+  if (!zulassung.zugelassen) {
+    const fehlTexte = zulassung.fehlende.map(nr => `LF${nr}`).join(", ");
+    zeigeToast(
+      `🔒 Nicht zugelassen – erst ${fehlTexte} bestanden (je 1 Stufe).`,
+      "fehler", 5000
+    );
+    return;
+  }
+
   try {
     // Zufällige Fragen aus jedem Lernfeld des Prüfungsbereichs laden
     const fragen = [];

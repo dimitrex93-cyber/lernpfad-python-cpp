@@ -163,6 +163,13 @@ bestanden ab 50 % (Note 4). Die Prüfungen sind im Menü die Punkte **7** und
 **8**, per CLI `--zwischenpruefung` / `--abschlusspruefung`. Es zählt der
 beste Versuch; der Stand erscheint in `--status`.
 
+**Zulassung (wie in der echten Ausbildung):** Eine Prüfung ist gesperrt
+(🔒), bis alle Lernfelder ihres Bereichs bestanden sind – mindestens eine
+Stufe pro Lernfeld. Die Zwischenprüfung (LF1–3) wird also erst freigeschaltet,
+wenn LF1, LF2 und LF3 jeweils eine Stufe bestanden haben; die Abschlussprüfung
+erst, wenn alle 6 Lernfelder durchlaufen sind. In `--status` und im Menü
+siehst du, welche Lernfelder noch fehlen.
+
 ### Fortschritt
 
 Dein Stand wird in `~/.lernpfad/fortschritt.json` gespeichert – **bewusst
