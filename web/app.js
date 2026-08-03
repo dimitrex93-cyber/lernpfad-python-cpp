@@ -98,21 +98,43 @@ function zeigeZiel() {
   const container = document.getElementById("ziel-phasen");
   if (!container) return;
   const phasen = [
-    { name: "Phase 0 – Anfänger", lf: "Lernfeld 01", ziel: "Erste eigene Programme schreiben und verstehen", meilenstein: "Taschenrechner mit Verlauf" },
-    { name: "Phase 1 – Junior", lf: "Lernfeld 02", ziel: "Daten strukturieren und verarbeiten", meilenstein: "Notenverwaltung mit Dateispeicherung" },
-    { name: "Phase 2 – Junior → Mid-Level", lf: "Lernfeld 03 + 04", ziel: "Modulare, wiederverwendbare Systeme bauen", meilenstein: "Bibliothekssystem + Notizverwaltung mit SQLite" },
-    { name: "Phase 3 – Mid-Level", lf: "Lernfeld 05", ziel: "Vernetzte, nebenläufige Systeme verstehen", meilenstein: "Chat-Anwendung (Client + Server)" },
-    { name: "Phase 4 – Senior", lf: "Lernfeld 06", ziel: "Professionell entwickeln: Tests, CI, Scrum", meilenstein: "Abschlussprojekt mit Tests + CI + Doku" },
+    { name: "Phase 0 – Anfänger", lf: "Lernfeld 01", dauer: "4–8 Wochen", ziel: "Erste eigene Programme schreiben und verstehen", meilenstein: "Taschenrechner mit Verlauf" },
+    { name: "Phase 1 – Junior", lf: "Lernfeld 02", dauer: "6–10 Wochen", ziel: "Daten strukturieren und verarbeiten", meilenstein: "Notenverwaltung mit Dateispeicherung" },
+    { name: "Phase 2 – Junior → Mid-Level", lf: "Lernfeld 03 + 04", dauer: "10–16 Wochen", ziel: "Modulare, wiederverwendbare Systeme bauen", meilenstein: "Bibliothekssystem + Notizverwaltung mit SQLite" },
+    { name: "Phase 3 – Mid-Level", lf: "Lernfeld 05", dauer: "8–12 Wochen", ziel: "Vernetzte, nebenläufige Systeme verstehen", meilenstein: "Chat-Anwendung (Client + Server)" },
+    { name: "Phase 4 – Senior", lf: "Lernfeld 06", dauer: "8–12 Wochen", ziel: "Professionell entwickeln: Tests, CI, Scrum", meilenstein: "Abschlussprojekt mit Tests + CI + Doku" },
   ];
   container.innerHTML = phasen.map((p, i) => `
     <div class="phase-eintrag">
       <div class="phase-nr">${i + 1}</div>
       <div class="phase-inhalt">
-        <strong>${p.name}</strong> <span class="subtitle">· ${p.lf}</span><br>
+        <strong>${p.name}</strong> <span class="subtitle">· ${p.lf}</span>
+        <span class="phase-dauer">⏱ ${p.dauer}</span><br>
         ${p.ziel}<br>
         <span class="phase-meilenstein">🏁 ${p.meilenstein}</span>
       </div>
-    </div>`).join("");
+    </div>`).join("") + `
+    <div class="phase-gesamt">
+      📅 <strong>Gesamt: ca. 9–14 Monate</strong> bei ca. 4–6 Stunden pro Woche
+      (Richtwerte aus der ROADMAP)
+    </div>`;
+
+  // ROADMAP.md beim ersten Aufklappen laden
+  const details = document.getElementById("roadmap-details");
+  if (details && !details.dataset.geladen) {
+    details.addEventListener("toggle", async () => {
+      if (!details.open || details.dataset.geladen) return;
+      details.dataset.geladen = "1";
+      const pre = document.getElementById("roadmap-inhalt");
+      try {
+        const resp = await fetch(`${DATEN_PFAD}ROADMAP.md`);
+        if (!resp.ok) throw new Error("HTTP " + resp.status);
+        pre.textContent = await resp.text();
+      } catch (e) {
+        pre.textContent = "ROADMAP.md konnte nicht geladen werden: " + e.message;
+      }
+    });
+  }
 }
 
 // ------------------------------------------------------------------
