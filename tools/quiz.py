@@ -277,9 +277,17 @@ def frage_open(frage, index, anzahl):
     """Offene Frage mit Selbstbewertung; gibt (punkte_erreicht, max) zurück."""
     print(c(f"\nFrage {index}/{anzahl}  ({frage['punkte']} P.)", "cyan"))
     print(frage["frage"])
-    print(c("(Deine Antwort wird nicht automatisch bewertet – "
-            "vergleiche mit der Musterantwort.)", "dunkel"))
-    input("Antwort: ").strip()
+    print(c("(Formuliere zuerst deine eigene Antwort – mindestens 20 Zeichen. "
+            "Erst danach wird die Musterantwort freigeschaltet.)", "dunkel"))
+
+    # Mindestlänge erzwingen, damit man sich keine Punkte ohne eigene
+    # Antwort geben kann.
+    while True:
+        antwort = input("Antwort: ").strip()
+        if len(antwort) >= 20:
+            break
+        print(c(f"Bitte eine eigene Antwort mit mindestens 20 Zeichen "
+                f"eingeben ({len(antwort)}/20).", "gelb"))
 
     print(c(f"\nMusterantwort: {frage['erklaerung']}", "blau"))
     if "stichworte" in frage:

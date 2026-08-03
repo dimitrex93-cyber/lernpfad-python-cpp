@@ -179,16 +179,31 @@ function zeigeFrage() {
       ab.appendChild(b);
     });
   } else {
-    // Offene Frage: Selbstbewertung nach Ansehen der Musterantwort
+    // Offene Frage: erst eigene Antwort eintippen (min. Länge),
+    // dann Musterantwort freischalten und selbst bewerten.
     fb.textContent = frage.frage;
-    ab.innerHTML = `<p class="subtitle">Schreibe deine Antwort auf Papier oder in Gedanken,
-      dann tippe sie hier (optional) und vergleiche mit der Musterantwort.</p>
-      <textarea id="open-eingabe" rows="3" style="width:100%;background:var(--bg);
+    ab.innerHTML = `<p class="subtitle">Formuliere zuerst deine eigene Antwort
+      (mindestens 20 Zeichen). Erst danach wird die Musterantwort freigeschaltet.</p>
+      <textarea id="open-eingabe" rows="4" style="width:100%;background:var(--bg);
         color:var(--text);border:1px solid var(--rand);border-radius:8px;padding:.6rem;
-        font-family:inherit"></textarea>
+        font-family:inherit" placeholder="Deine Antwort hier …"></textarea>
+      <p id="open-hinweis" class="subtitle" style="margin-top:.4rem;color:var(--gelb)">
+        ⏳ Noch mindestens 20 Zeichen nötig.</p>
       <div class="button-reihe">
-        <button class="primary" onclick="zeigeMusterantwort()">Musterantwort ansehen</button>
+        <button id="open-muster-btn" class="primary" onclick="zeigeMusterantwort()" disabled>
+          Musterantwort ansehen</button>
       </div>`;
+    const eingabe = document.getElementById("open-eingabe");
+    eingabe.addEventListener("input", () => {
+      const laenge = eingabe.value.trim().length;
+      const btn = document.getElementById("open-muster-btn");
+      const hinweis = document.getElementById("open-hinweis");
+      btn.disabled = laenge < 20;
+      hinweis.textContent = laenge < 20
+        ? `⏳ Noch mindestens 20 Zeichen nötig (${laenge}/20).`
+        : `✅ Antwort erfasst (${laenge} Zeichen) – Musterantwort freigeschaltet.`;
+      hinweis.style.color = laenge < 20 ? "var(--gelb)" : "var(--gruen)";
+    });
   }
 }
 
