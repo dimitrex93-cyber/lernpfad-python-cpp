@@ -449,3 +449,49 @@ footer {
 }
 
 .sync-code-input:focus { border-color: var(--akzent); }
+
+/* ===== KI-Assistent ===== */
+.ki-verlauf {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 0.8rem 0;
+  max-height: 55vh;
+  overflow-y: auto;
+  padding: 0.2rem;
+}
+.ki-msg {
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.6rem;
+  max-width: 88%;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+.ki-msg.user {
+  align-self: flex-end;
+  background: var(--akzent);
+  color: #0f1117;
+}
+.ki-msg.assistent {
+  align-self: flex-start;
+  background: var(--bg-hover);
+  border: 1px solid var(--rand);
+  color: var(--text);
+}
+.ki-msg.fehler {
+  align-self: flex-start;
+  background: rgba(239, 83, 80, 0.12);
+  border: 1px solid var(--rot);
+  color: var(--rot);
+}
+.ki-denken {
+  align-self: flex-start;
+  color: var(--text-dunkel);
+  font-style: italic;
+}
+.ki-eingabe {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.ki-eingabe input { flex: 1; margin-bottom: 0; }

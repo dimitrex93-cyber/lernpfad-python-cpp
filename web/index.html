@@ -16,7 +16,7 @@
     <button id="nav-quiz" class="nav-btn" onclick="zeigeAnsicht('quiz')">Quiz</button>
     <button id="nav-kurs" class="nav-btn" onclick="zeigeAnsicht('kurs')">Sprachkurs</button>
     <button id="nav-glossar" class="nav-btn" onclick="zeigeAnsicht('glossar')">📚 Glossar</button>
-    <button id="nav-ki" class="nav-btn" disabled title="Noch nicht freigeschaltet">🤖 KI-Assistent</button>
+    <button id="nav-ki" class="nav-btn" onclick="zeigeAnsicht('ki')" title="Nur mit persönlichem Freischalt-Key">🤖 KI-Assistent</button>
   </nav>
 </header>
 
@@ -183,6 +183,37 @@
       </div>
       <div id="glossar-liste">
         <p class="subtitle">Glossar wird geladen …</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ KI-ASSISTENT (nur mit persönlichem Freischalt-Key) ============ -->
+  <section id="ansicht-ki" class="ansicht" hidden>
+    <div class="karte" id="ki-sperre">
+      <h2>🤖 KI-Assistent – Freischaltung</h2>
+      <p class="subtitle">Der KI-Assistent läuft auf deinem eigenen Server (Ollama, qwen3.5:2b – lokal, keine Cloud) und ist nur mit deinem persönlichen Freischalt-Key nutzbar.</p>
+      <input type="password" id="ki-key-input" class="sync-code-input" placeholder="Freischalt-Key" autocomplete="off" onkeydown="if(event.key==='Enter')kiEntsperren()">
+      <div class="button-reihe">
+        <button class="primary" onclick="kiEntsperren()">🔓 Entsperren</button>
+      </div>
+      <p id="ki-sperre-status" class="subtitle"></p>
+    </div>
+
+    <div class="karte" id="ki-chat" hidden>
+      <div class="quiz-kopf">
+        <span><strong>🤖 KI-Assistent</strong></span>
+        <span class="subtitle">qwen3.5:2b · lokal auf dem Server</span>
+      </div>
+      <div id="ki-verlauf" class="ki-verlauf">
+        <p class="subtitle">Stell mir eine Frage zum Kurs – ich erkläre, fasse zusammen oder erstelle Karteikarten-Fragen. 💡</p>
+      </div>
+      <div class="ki-eingabe">
+        <input type="text" id="ki-nachricht" class="sync-code-input" placeholder="Frage eingeben …" autocomplete="off" onkeydown="if(event.key==='Enter')kiSenden()">
+        <button id="ki-senden-btn" class="primary" onclick="kiSenden()">Senden</button>
+      </div>
+      <p id="ki-status" class="subtitle"></p>
+      <div class="button-reihe">
+        <button class="secondary" onclick="kiSperren()">🔒 Sperren &amp; Key entfernen</button>
       </div>
     </div>
   </section>

@@ -27,13 +27,127 @@ const NOTEN = [
   { min: 0,  note: 6, text: "ungenügend" },
 ];
 
-// KI-Assistent (LLM) — VORBEREITET, aber noch NICHT freigeschaltet:
-// Der Navigations-Button ist ausgegraut und gesperrt (disabled), der
-// Zugang absichtlich nicht erreichbar. Die Anbindung an das lokale
-// LLM (Ollama, qwen3:4b) folgt in einer späteren Version. Diese
-// Funktion ist der spätere Einstiegspunkt.
-function kiAssistentStub() {
-  zeigeToast("Der KI-Assistent ist noch nicht freigeschaltet.", "info");
+// KI-Assistent (LLM) – nutzbar NUR mit persönlichem Freischalt-Key.
+// Der Chat läuft über den Server (/api/ki/*): Dort wird der Key geprüft
+// und die Anfrage an das lokale Ollama (qwen3:4b, Tailnet-only)
+// weitergeleitet. Ohne Key bleibt der Bereich gesperrt.
+const KI_KEY_STORAGE = "lernpfad_ki_key";
+
+function kiKeyGespeichert() {
+  return localStorage.getItem(KI_KEY_STORAGE) || "";
+}
+
+function kiBereichOeffnen() {
+  const sperre = document.getElementById("ki-sperre");
+  const chat = document.getElementById("ki-chat");
+  if (!sperre || !chat) return;
+  const key = kiKeyGespeichert();
+  if (!key) {
+    sperre.hidden = false;
+    chat.hidden = true;
+    return;
+  }
+  kiPruefeKey(key).then((gueltig) => {
+    sperre.hidden = gueltig;
+    chat.hidden = !gueltig;
+    if (!gueltig) localStorage.removeItem(KI_KEY_STORAGE);
+  });
+}
+
+async function kiPruefeKey(key) {
+  try {
+    const r = await fetch("/api/ki/check", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key }),
+    });
+    if (!r.ok) return false;
+    const d = await r.json();
+    return !!d.gueltig;
+  } catch (e) {
+    return false;
+  }
+}
+
+async function kiEntsperren() {
+  const eingabe = document.getElementById("ki-key-input");
+  const status = document.getElementById("ki-sperre-status");
+  if (!eingabe) return;
+  const key = (eingabe.value || "").trim().toLowerCase();
+  if (!key) {
+    zeigeToast("Bitte Freischalt-Key eingeben.", "info");
+    return;
+  }
+  status.textContent = "Prüfe Key …";
+  const gueltig = await kiPruefeKey(key);
+  if (!gueltig) {
+    status.textContent = "Dieser Key ist nicht gültig.";
+    zeigeToast("Freischalt-Key ungültig.", "fehler");
+    return;
+  }
+  localStorage.setItem(KI_KEY_STORAGE, key);
+  status.textContent = "";
+  eingabe.value = "";
+  kiBereichOeffnen();
+  zeigeToast("KI-Assistent freigeschaltet.", "erfolg");
+}
+
+function kiSperren() {
+  localStorage.removeItem(KI_KEY_STORAGE);
+  kiBereichOeffnen();
+  zeigeToast("KI-Assistent gesperrt – Key entfernt.", "info");
+}
+
+async function kiSenden() {
+  const eingabe = document.getElementById("ki-nachricht");
+  const verlauf = document.getElementById("ki-verlauf");
+  const status = document.getElementById("ki-status");
+  if (!eingabe || !verlauf) return;
+  const nachricht = (eingabe.value || "").trim();
+  if (!nachricht) return;
+  const key = kiKeyGespeichert();
+  if (!key) {
+    zeigeToast("Bitte zuerst entsperren.", "info");
+    return;
+  }
+
+  kiZeigeNachricht(nachricht, "user");
+  eingabe.value = "";
+  const denken = document.createElement("p");
+  denken.className = "ki-denken";
+  denken.textContent = "🤖 denkt nach … (kann 20–60 s dauern)";
+  verlauf.appendChild(denken);
+  verlauf.scrollTop = verlauf.scrollHeight;
+  if (status) status.textContent = "";
+
+  try {
+    const r = await fetch("/api/ki/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key, nachricht }),
+    });
+    const d = await r.json().catch(() => ({}));
+    denken.remove();
+    if (!r.ok) {
+      kiZeigeNachricht(d.detail || ("Fehler " + r.status), "fehler");
+      return;
+    }
+    kiZeigeNachricht(d.antwort, "assistent");
+  } catch (e) {
+    denken.remove();
+    kiZeigeNachricht("Verbindungsfehler zum Server.", "fehler");
+  }
+  verlauf.scrollTop = verlauf.scrollHeight;
+}
+
+function kiZeigeNachricht(text, typ) {
+  const verlauf = document.getElementById("ki-verlauf");
+  if (!verlauf) return;
+  const div = document.createElement("div");
+  div.className = "ki-msg " + typ;
+  div.textContent = text;
+  verlauf.appendChild(div);
+  verlauf.scrollTop = verlauf.scrollHeight;
 }
 
 // Übungstests nach IHK-Standard (KEINE echten IHK-Prüfungen):
@@ -92,10 +206,10 @@ function lfSchluessel(nr, stufe) {
 // Ansichten wechseln
 // ------------------------------------------------------------------
 function zeigeAnsicht(name) {
-  for (const id of ["start", "ziel", "quiz", "kurs", "glossar"]) {
+  for (const id of ["start", "ziel", "quiz", "kurs", "glossar", "ki"]) {
     document.getElementById("ansicht-" + id).hidden = id !== name;
   }
-  for (const id of ["start", "ziel", "quiz", "kurs", "glossar"]) {
+  for (const id of ["start", "ziel", "quiz", "kurs", "glossar", "ki"]) {
     document.getElementById("nav-" + id).classList.toggle("active", id === name);
   }
   if (name === "start") zeigeStart();
@@ -103,6 +217,7 @@ function zeigeAnsicht(name) {
   if (name === "quiz") zeigeQuizAuswahl();
   if (name === "kurs") zeigeKursUebersicht();
   if (name === "glossar") zeigeGlossar();
+  if (name === "ki") kiBereichOeffnen();
 }
 
 // ------------------------------------------------------------------
