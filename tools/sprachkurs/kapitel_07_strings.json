@@ -19,7 +19,7 @@
     {
       "titel": "Strings bearbeiten und durchsuchen",
       "python": {
-        "text": "Python bietet viele String-Methoden: .upper()/.lower() für Groß-/Kleinschreibung, .strip() entfernt Leerzeichen an den Enden, .split() zerlegt in eine Liste, .replace(alt, neu) ersetzt Text, .find() oder in suchen nach Teilstrings. Da Strings unveränderlich sind, geben alle Methoden einen NEUEN String zurück – das Original bleibt unberührt.",
+        "text": "Python bietet viele String-Methoden: .upper()/.lower() für Groß-/Kleinschreibung, .strip() entfernt Leerzeichen an den Enden, .split() zerlegt in eine Liste, .replace(alt, neu) ersetzt Text, mit .find() oder in suchst du nach Teilstrings. Da Strings unveränderlich sind, geben alle Methoden einen NEUEN String zurück – das Original bleibt unberührt.",
         "code": "text = \"  Hallo Welt  \"\nprint(text.strip())          # \"Hallo Welt\"\nprint(text.split())          # ['Hallo', 'Welt']\nprint(text.replace(\"Welt\", \"Python\"))\nprint(\"Welt\" in text)        # True\nprint(text.find(\"Welt\"))     # 8 (Index)\nprint(text.lower())          # hallo welt"
       },
       "cpp": {

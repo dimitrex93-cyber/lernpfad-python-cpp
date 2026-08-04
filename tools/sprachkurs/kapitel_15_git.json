@@ -11,7 +11,7 @@
       },
       "cpp": {
         "text": "Für C++-Projekte gelten dieselben Git-Befehle – aber zwei Besonderheiten: Erstens gehören kompilierte Dateien (die ausführbare .exe/Binary) und Build-Ordner NICHT ins Repository – sie landen in der .gitignore. Zweitens ist ein sauberer Commit-Stand besonders wertvoll, weil ein Build (Kompilieren + Linken) reproduzierbar sein sollte: gleicher Stand, gleiche Warnungen, gleiches Ergebnis.",
-        "code": "# .gitignore – kompilierte Artefakte ausschließen:\nbuild/\n*.o\n*.exe\nprojektname\n\n# Übliche C++-Arbeitsschleife:\ngit add main.cpp\nvergleich.md CMakeLists.txt\ngit commit -m \"feat: Funktion hinzugefügt\"\n# Erst bei sauberem Build committen!"
+        "code": "# .gitignore – kompilierte Artefakte ausschließen:\nbuild/\n*.o\n*.exe\nprojektname\n\n# Übliche C++-Arbeitsschleife:\ngit add main.cpp vergleich.md CMakeLists.txt\ngit commit -m \"feat: Funktion hinzugefügt\"\n# Erst bei sauberem Build committen!"
       },
       "vergleich": "Git-Befehle sind identisch. C++-Projekte ignorieren Build-Artefakte (.o, Binaries), Python-Projekte z. B. __pycache__/ und .venv/.",
       "merk": "add → commit → push. .gitignore hält Artefakte aus dem Repo."

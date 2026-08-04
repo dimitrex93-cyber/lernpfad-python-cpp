@@ -23,7 +23,7 @@
         "code": "ganze_zahl = 42        # int\nkommazahl = 3.14      # float\nzeichenkette = \"A\"    # str (auch einzelne Zeichen)\ntext = \"Hallo\"        # str\nliste = [1, 2, 3]     # list\nwoerterbuch = {\"a\": 1}  # dict"
       },
       "cpp": {
-        "text": "C++ unterscheidet strenger: int für ganze Zahlen, double für Kommazahlen (8 Byte), float für kleinere Kommazahlen, char für EIN Zeichen (einfache Anführungszeichen!), bool für Wahr/Falsch, std::string für Text (doppelte Anführungszeichen). char und std::string sind verschiedene Typen! Die Größen sind je nach System typisch 4/8/1/1 Byte.",
+        "text": "C++ unterscheidet strenger: int für ganze Zahlen, double für Kommazahlen (8 Byte), float für kleinere Kommazahlen, char für EIN Zeichen (einfache Anführungszeichen!), bool für Wahr/Falsch, std::string für Text (doppelte Anführungszeichen). char und std::string sind verschiedene Typen! Die Größen sind je nach System typisch 4/8/4/1 Byte (int/double/float/char).",
         "code": "int ganze_zahl = 42;      // 4 Byte\n double kommazahl = 3.14;   // 8 Byte, doppelte Genauigkeit\nchar buchstabe = 'A';      // 1 Byte, EIN Zeichen\nbool wahr = true;          // 1 Byte\nstd::string text = \"Hallo\"; // Text, aus <string>\n// 'A' und \"A\" sind NICHT dasselbe!"
       },
       "vergleich": "Python: str deckt char mit ab, float deckt double ab – einfacher. C++: feinere Kontrolle über Größe und Genauigkeit, dafür musst du den passenden Typ wählen.",

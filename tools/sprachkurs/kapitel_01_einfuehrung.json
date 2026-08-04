@@ -6,7 +6,7 @@
     {
       "titel": "Woraus besteht ein Computer?",
       "python": {
-        "text": "Ein Computer besteht im Kern aus drei Teilen: Der CPU (Prozessor) führt Befehle aus – Rechnen, Vergleichen, Springen. Der RAM (Arbeitsspeicher) hält Daten und laufende Programme bereit, ist aber flüchtig: Alles ist weg, wenn der Strom ausfällt. Die Festplatte oder SSD speichert Daten dauerhaft. Ein Programm ist nichts anderes als eine lange Liste von Befehlen, die die CPU nacheinander abarbeitet. Die CPU versteht aber nur Maschinensprache – Binärzahlen aus Nullen und Einsen. Niemand schreibt heute noch direkt in Binärform; dafür gibt es Programmiersprachen, die Menschen lesen können.",
+        "text": "Ein Computer besteht im Kern aus drei Teilen: Die CPU (Prozessor) führt Befehle aus – Rechnen, Vergleichen, Springen. Der RAM (Arbeitsspeicher) hält Daten und laufende Programme bereit, ist aber flüchtig: Alles ist weg, wenn der Strom ausfällt. Die Festplatte oder SSD speichert Daten dauerhaft. Ein Programm ist nichts anderes als eine lange Liste von Befehlen, die die CPU nacheinander abarbeitet. Die CPU versteht aber nur Maschinensprache – Binärzahlen aus Nullen und Einsen. Niemand schreibt heute noch direkt in Binärform; dafür gibt es Programmiersprachen, die Menschen lesen können.",
         "code": "# Ein Programm ist eine Befehlsliste für die CPU.\n# Programmiersprachen machen diese Befehle lesbar:\nprint(\"Hallo\")   # ein Befehl, den du verstehst"
       },
       "cpp": {

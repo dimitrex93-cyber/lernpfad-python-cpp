@@ -36,7 +36,7 @@
         "code": "name = input(\"Wie heißt du? \")\nprint(\"Hallo\", name, \"!\")   # Hallo Anna !\n\nalter_text = input(\"Wie alt bist du? \")\nalter = int(alter_text)      # String -> Zahl\nprint(\"Nächstes Jahr:\", alter + 1)"
       },
       "cpp": {
-        "text": "std::cout gibt aus (Operator <<), std::cin liest ein (Operator >>). Achtung Falle: std::cin >> liest nur bis zum nächsten Leerzeichen – bei Namen mit Leerzeichen bleibt der Rest im Puffer. Für ganze Zeilen nimmst du std::getline(std::cin, text).",
+        "text": "std::cout gibt aus (Operator <<), std::cin liest ein (Operator >>). Achtung, Falle: std::cin >> liest nur bis zum nächsten Leerzeichen – bei Namen mit Leerzeichen bleibt der Rest im Puffer. Für ganze Zeilen nimmst du std::getline(std::cin, text).",
         "code": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string name;\n    std::cout << \"Wie heißt du? \";\n    std::getline(std::cin, name);   // ganze Zeile lesen\n    std::cout << \"Hallo \" << name << \"!\" << std::endl;\n\n    int alter;\n    std::cout << \"Wie alt bist du? \";\n    std::cin >> alter;\n    std::cout << \"Nächstes Jahr: \" << alter + 1 << std::endl;\n    return 0;\n}"
       },
       "vergleich": "input() liefert immer Text (selbst umwandeln!), std::cin >> wandelt je nach Zieltyp automatisch – kann aber bei falscher Eingabe in einen Fehlerzustand geraten.",

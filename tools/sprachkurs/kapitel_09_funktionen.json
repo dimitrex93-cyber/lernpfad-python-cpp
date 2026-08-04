@@ -19,7 +19,7 @@
     {
       "titel": "Parameter und Argumente",
       "python": {
-        "text": "Python unterscheidet Positionsargumente (name(1, 2)) und Schlüsselwortargumente (name(x=1, y=2)). Default-Werte machen Parameter optional: def f(x, y=10) – y ist dann weglassen. Achtung Falle: Als Default niemals eine veränderliche Liste verwenden (def f(x=[]) ist ein Anti-Pattern, da die Liste zwischen Aufrufen erhalten bleibt).",
+        "text": "Python unterscheidet Positionsargumente (name(1, 2)) und Schlüsselwortargumente (name(x=1, y=2)). Default-Werte machen Parameter optional: def f(x, y=10) – y kannst du dann weglassen. Achtung, Falle: Als Default niemals eine veränderliche Liste verwenden (def f(x=[]) ist ein Anti-Pattern, da die Liste zwischen Aufrufen erhalten bleibt).",
         "code": "def beschreibe(name, alter, stadt=\"unbekannt\"):\n    print(f\"{name}, {alter}, aus {stadt}\")\n\nbeschreibe(\"Anna\", 25)                    # Positionsargumente\nbeschreibe(\"Ben\", stadt=\"Bonn\", alter=30) # Schlüsselwort\n\n# Anti-Pattern: def f(x=[]):  -> geteilte Liste!\ndef addiere(ziel, *werte):\n    return ziel + sum(werte)\nprint(addiere(1, 2, 3, 4))   # 10 (*werte sammelt)"
       },
       "cpp": {

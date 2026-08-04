@@ -23,7 +23,7 @@
         "code": "liste = [10, 20, 30]\nprint(liste[0])    # 10\nprint(liste[-1])   # 30 (letztes Element)\nprint(liste[2])    # 30\n# print(liste[3])  -> IndexError: list index out of range"
       },
       "cpp": {
-        "text": "In C++ ist der Zugriff mit [] NICHT geprüft: v[10] auf einen 5-elementigen Vector ist undefiniertes Verhalten – das Programm kann abstürzen oder Müll liefern. .at(10) wirft dagegen eine std::out_of_range-Exception, die du abfangen kannst. Faustregel: Wenn du nicht 100 % sicher bist, nutze .at() oder prüfe mit size().",
+        "text": "In C++ ist der Zugriff mit [] NICHT geprüft: v[10] auf einen 5-elementigen Vektor ist undefiniertes Verhalten – das Programm kann abstürzen oder Müll liefern. .at(10) wirft dagegen eine std::out_of_range-Exception, die du abfangen kannst. Faustregel: Wenn du nicht 100 % sicher bist, nutze .at() oder prüfe mit size().",
         "code": "std::vector<int> v = {1, 2, 3, 4, 5};\n// std::cout << v[10];   // UB! Absturz oder Müll\n// Besser:\ntry {\n    std::cout << v.at(10);\n} catch (const std::out_of_range&) {\n    std::cout << \"Index außerhalb!\";\n}\nif (10 < v.size()) std::cout << v[10];"
       },
       "vergleich": "Python wirft immer einen IndexError (sicher, aber Programm stoppt). C++ [] ist ungeprüft (schnell, aber gefährlich), .at() wirft eine Exception.",
@@ -36,7 +36,7 @@
         "code": "preise = {\"apfel\": 0.50, \"birne\": 0.70}\nprint(preise[\"apfel\"])         # 0.5\npreise[\"kirsche\"] = 1.20       # neu eintragen\nprint(preise.get(\"banane\", 0)) # 0 (kein Fehler)\n\nfor schluessel, wert in preise.items():\n    print(schluessel, wert)\nprint(\"apfel\" in preise)       # True"
       },
       "cpp": {
-        "text": "Der C++-Pendant ist std::map (aus <map>, sortiert, langsamer) oder std::unordered_map (aus <unordered_map>, Hashtabelle, schnell – meist die bessere Wahl). Zugriff mit []: preise[\"apfel\"] – Achtung: Wenn der Schlüssel nicht existiert, legt [] ihn mit Standardwert AN! Deshalb zum Nachschlagen .find() oder .at() verwenden.",
+        "text": "Das C++-Pendant ist std::map (aus <map>, sortiert, langsamer) oder std::unordered_map (aus <unordered_map>, Hashtabelle, schnell – meist die bessere Wahl). Zugriff mit []: preise[\"apfel\"] – Achtung: Wenn der Schlüssel nicht existiert, legt [] ihn mit Standardwert AN! Deshalb zum Nachschlagen .find() oder .at() verwenden.",
         "code": "#include <map>\n#include <string>\n\nstd::map<std::string, double> preise;\npreise[\"apfel\"] = 0.50;      // eintragen\npreise[\"kirsche\"] = 1.20;\n\n// Achtung: [] legt fehlende Schlüssel AN!\nauto it = preise.find(\"birne\");\nif (it != preise.end()) {\n    std::cout << it->second;\n}\n// Oder: preise.at(\"birne\") wirft out_of_range"
       },
       "vergleich": "dict (Python) ↔ std::unordered_map (C++). Python .get() ist elegant; C++ [] legt still Schlüssel an – die berühmte Falle, .find()/.at() sind sicherer.",

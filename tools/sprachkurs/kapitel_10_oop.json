@@ -26,7 +26,7 @@
         "text": "In C++ ist Kapselung Teil der Sprache: private-Attribute sind wirklich unzugänglich. Der Zugriff läuft über öffentliche Getter/Setter-Methoden – so kannst du Regeln erzwingen (z. B. kein negativer Kontostand). const-Methoden garantieren, dass sie das Objekt nicht verändern. Das ist ein zentraler C++-Stil.",
         "code": "class Konto {\nprivate:\n    int stand;\npublic:\n    Konto(int start) : stand(start) {}\n\n    void einzahlen(int betrag) {\n        if (betrag > 0) stand += betrag;\n    }\n\n    int getStand() const {   // const: ändert nichts\n        return stand;\n    }\n};\n\nKonto k(100);\nk.einzahlen(50);\nstd::cout << k.getStand();   // 150"
       },
-      "vergleich": "Python: Konvention mit Unterstich, @property für Getter. C++: echte private-Bereiche, Getter/Setter als Methoden, const für Nicht-Änderung.",
+      "vergleich": "Python: Konvention mit Unterstrich, @property für Getter. C++: echte private-Bereiche, Getter/Setter als Methoden, const für Nicht-Änderung.",
       "merk": "Kapselung = private Daten + öffentliche Methoden. C++ erzwingt, Python vertraut."
     },
     {
@@ -40,7 +40,7 @@
         "code": "class Tier {\npublic:\n    Tier(std::string n) : name(n) {}\n    virtual std::string gib_laut() { return \"...\"; }\nprotected:\n    std::string name;\n};\n\nclass Hund : public Tier {\npublic:\n    Hund(std::string n) : Tier(n) {}\n    std::string gib_laut() override { return \"Wuff\"; }\n};\n\nHund h(\"Rex\");\nstd::cout << h.gib_laut();   // Wuff"
       },
       "vergleich": "Vererbung funktioniert in beiden Sprachen gleich. C++ verlangt virtual + override explizit; Python überschreibt still. Python super() ↔ C++ : Basis(...) in der Initialisierungsliste.",
-      "merk": "C++: virtual in der Basis, override beim Überschreiben – sonst kein Polymorphie."
+      "merk": "C++: virtual in der Basis, override beim Überschreiben – sonst keine Polymorphie."
     }
   ]
 }

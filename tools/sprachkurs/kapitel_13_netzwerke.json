@@ -6,7 +6,7 @@
     {
       "titel": "TCP und UDP – die zwei Transportwege",
       "python": {
-        "text": "TCP (Transmission Control Protocol) ist der zuverlässige Weg: Daten kommen garantiert an, in der richtigen Reihenfolge, ohne Verlust. Dafür gibt es Overhead (Bestätigungen, Verbindungsaufbau). UDP (User Datagram Protocol) ist der schnelle Weg: Pakete werden feuern-und-vergessen verschickt – schnell, aber ohne Garantie. Python unterstützt beide über das socket-Modul.",
+        "text": "TCP (Transmission Control Protocol) ist der zuverlässige Weg: Daten kommen garantiert an, in der richtigen Reihenfolge, ohne Verlust. Dafür gibt es Overhead (Bestätigungen, Verbindungsaufbau). UDP (User Datagram Protocol) ist der schnelle Weg: Pakete werden nach dem Feuern-und-Vergessen-Prinzip verschickt – schnell, aber ohne Garantie. Python unterstützt beide über das socket-Modul.",
         "code": "import socket\n\n# UDP-Socket (schnell, unzuverlässig)\ns = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)\n\n# TCP-Socket (zuverlässig, verbindungsorientiert)\nt = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n\n# AF_INET = IPv4, SOCK_STREAM = TCP, SOCK_DGRAM = UDP"
       },
       "cpp": {
@@ -23,7 +23,7 @@
         "code": "# Server (echo_server.py)\nimport socket\n\nserver = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\nserver.bind((\"127.0.0.1\", 50000))\nserver.listen(1)\n\nverbindung, adresse = server.accept()  # auf Client warten\nwhile True:\n    daten = verbindung.recv(1024)\n    if not daten:\n        break\n    verbindung.send(daten)   # Echo zurück\nverbindung.close()\n\n# Client (echo_client.py)\nclient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\nclient.connect((\"127.0.0.1\", 50000))\nclient.send(b\"Hallo Server\")\nantwort = client.recv(1024)\nprint(antwort.decode())\nclient.close()"
       },
       "cpp": {
-        "text": "In C++ läuft der gleiche Ablauf, nur mit mehr Zeilen: socket() → bind() mit sockaddr_in (Adresse + Port) → listen() → accept(). send()/recv() übertragen Bytes; recv() liefert die Anzahl der empfangenen Bytes (0 = Verbindung zu). Bei jedem Schritt prüfst du den Rückgabewert – ein Fehler zeigt sich als negativer Wert oder -1.",
+        "text": "In C++ läuft der gleiche Ablauf, nur mit mehr Zeilen: socket() → bind() mit sockaddr_in (Adresse + Port) → listen() → accept(). send()/recv() übertragen Bytes; recv() liefert die Anzahl der empfangenen Bytes (0 = Verbindung zu Ende). Bei jedem Schritt prüfst du den Rückgabewert – ein Fehler zeigt sich als negativer Wert oder -1.",
         "code": "#include <sys/socket.h>\n#include <netinet/in.h>\n#include <unistd.h>\n#include <cstring>\n\nint server = socket(AF_INET, SOCK_STREAM, 0);\nsockaddr_in adresse{};\nadresse.sin_family = AF_INET;\nadresse.sin_port = htons(50000);\nadresse.sin_addr.s_addr = INADDR_ANY;\n\nbind(server, (sockaddr*)&adresse, sizeof(adresse));\nlisten(server, 1);\n\nint client = accept(server, nullptr, nullptr);\nchar puffer[1024];\nint n = recv(client, puffer, sizeof(puffer), 0);\nsend(client, puffer, n, 0);\nclose(client);\nclose(server);"
       },
       "vergleich": "Der Ablauf socket → bind → listen → accept ist in beiden Sprachen identisch. Python macht es in wenigen Zeilen, C++ verlangt mehr Details (sockaddr, htons, Rückgabewert-Prüfung).",
