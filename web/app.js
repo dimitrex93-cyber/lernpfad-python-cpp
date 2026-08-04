@@ -692,6 +692,24 @@ function speichereSyncCodeEingabe() {
   syncJetzt();
 }
 
+function erzeugeSyncCode() {
+  // Eigener Sync-Code (32 Hex-Zeichen) client-seitig erzeugen.
+  // crypto.getRandomValues funktioniert auch ohne HTTPS;
+  // Math.random nur als letzter Fallback.
+  let bytes;
+  if (window.crypto && crypto.getRandomValues) {
+    bytes = crypto.getRandomValues(new Uint8Array(16));
+  } else {
+    bytes = Array.from({ length: 16 }, () => Math.floor(Math.random() * 256));
+  }
+  const code = Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
+  const feld = document.getElementById("sync-code-input");
+  if (feld) feld.value = code;
+  localStorage.setItem(SYNC_CODE_KEY, code);
+  zeigeToast("Eigener Sync-Code erzeugt — dein Fortschritt ist jetzt nur deiner. 🔑", "erfolg");
+  syncJetzt();
+}
+
 function planeAutoSync() {
   // Automatischer Push 2 s nach der letzten Änderung (debounced)
   if (!ladeSyncCode()) return;
