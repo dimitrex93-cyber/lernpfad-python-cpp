@@ -155,7 +155,7 @@ function kiZeigeNachricht(text, typ) {
 // „Als Karteikarte speichern“.
 let kiLetzteNachricht = "";
 
-async function kiKarteErstellen() {
+function kiKarteErstellen() {
   // Thema = aktueller Eingabewert, sonst letzte gesendete Nachricht.
   const eingabe = document.getElementById("ki-nachricht");
   let thema = ((eingabe && eingabe.value) || "").trim();
@@ -170,34 +170,66 @@ async function kiKarteErstellen() {
     return;
   }
   const status = document.getElementById("ki-status");
-  if (status) status.textContent = "🃏 Erstelle Karteikarte … (dauert einige Sekunden)";
-  try {
-    const r = await fetch("/api/ki/karteikarte", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ key, code: kartenCode(), thema }),
-    });
-    const d = await r.json().catch(() => ({}));
-    if (status) status.textContent = "";
-    if (!r.ok) {
-      zeigeToast(d.detail || ("Fehler " + r.status), "fehler");
-      return;
+  if (status) status.textContent = "🃏 In Warteschlange …" + kartenErstellenWarteschlangeText();
+  kartenErstellenEinreihen(async () => {
+    if (status) status.textContent =
+      "🃏 Erstelle Karteikarte … (dauert einige Sekunden)" + kartenErstellenWarteschlangeText();
+    try {
+      const r = await fetch("/api/ki/karteikarte", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key, code: kartenCode(), thema }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (status) status.textContent = "";
+      if (!r.ok) {
+        zeigeToast(d.detail || ("Fehler " + r.status), "fehler");
+        return;
+      }
+      // Nur leeren, wenn der User nicht schon ein neues Thema eingetippt hat
+      if (eingabe && eingabe.value.trim() === thema) eingabe.value = "";
+      // Chat nach erfolgreichem Erstellen leeren – frischer Start
+      const verlauf = document.getElementById("ki-verlauf");
+      if (verlauf) {
+        verlauf.innerHTML =
+          '<p class="subtitle">Stell mir eine Frage zum Kurs – ich erkläre, fasse zusammen oder erstelle Karteikarten-Fragen. 💡</p>';
+      }
+      kiLetzteNachricht = "";
+      if (d.neu) {
+        // Gleiches Design wie „Kapitel abgeschlossen“ im Sprachkurs
+        zeigeToast("Karteikarte fertig: „" + thema + "“ 🃏", "erfolg");
+      } else {
+        zeigeToast("Diese Karteikarte existiert bereits – kein Duplikat angelegt.", "info");
+      }
+    } catch (e) {
+      if (status) status.textContent = "";
+      zeigeToast("Verbindungsfehler beim Erstellen.", "fehler");
     }
-    kiZeigeNachricht(
-      "🃏 Karteikarte " + (d.neu ? "gespeichert" : "existierte bereits – keine Dublette") +
-      ":\n\nFRAGE: " + d.karte.frage + "\n\nANTWORT: " + d.karte.antwort,
-      "assistent"
-    );
-    zeigeToast(d.neu ? "Karteikarte gespeichert. 🃏" : "Karteikarte existierte bereits.", d.neu ? "erfolg" : "info");
-  } catch (e) {
-    if (status) status.textContent = "";
-    zeigeToast("Verbindungsfehler beim Erstellen.", "fehler");
-  }
+  });
 }
 
 // ------------------------------------------------------------------
 // Karteikarten (Server-Speicherung, dedupliziert)
 // ------------------------------------------------------------------
+// Erstell-Queue: Werden mehrere Karteikarten schnell nacheinander
+// erstellt, laufen sie serialisiert ab – Ollama (NUM_PARALLEL=1)
+// verträgt keine parallelen generate-Requests.
+let kartenErstellenQueue = Promise.resolve();
+let kartenErstellenOffen = 0;
+
+function kartenErstellenEinreihen(fn) {
+  kartenErstellenOffen++;
+  const lauf = kartenErstellenQueue.then(() => fn());
+  kartenErstellenQueue = lauf.catch(() => {});
+  lauf.finally(() => { kartenErstellenOffen--; });
+  return lauf;
+}
+
+function kartenErstellenWarteschlangeText() {
+  const weitere = kartenErstellenOffen - 1;
+  return weitere > 0 ? ` (${weitere} weitere in der Warteschlange)` : "";
+}
+
 function kartenBereichOeffnen() {
   const sperre = document.getElementById("karten-sperre");
   const inhalt = document.getElementById("karten-inhalt");
@@ -220,7 +252,7 @@ function kartenCode() {
   return ladeSyncCode();
 }
 
-async function kartenLaden() {
+async function kartenLaden(highlightId) {
   const key = kiKeyGespeichert();
   if (!key) return;
   const container = document.getElementById("karten-liste");
@@ -247,7 +279,7 @@ async function kartenLaden() {
       return;
     }
     container.innerHTML = d.karten.map((k) => `
-      <div class="karten-eintrag">
+      <div class="karten-eintrag" data-id="${k.id}">
         <div class="karten-kopf">
           <span class="karten-thema">${escapeHtml(k.thema)}</span>
           <span class="karten-datum">${escapeHtml(new Date(k.erstellt).toLocaleDateString("de-DE"))}</span>
@@ -256,13 +288,22 @@ async function kartenLaden() {
         <div class="karten-antwort">${escapeHtml(k.antwort)}</div>
         <button class="karten-loeschen" onclick="kartenLoeschen('${k.id}')" title="Karteikarte löschen">🗑</button>
       </div>`).join("");
+    // Neu erstellte Karte kurz hervorheben ("fertig"-Feedback)
+    if (highlightId) {
+      const el = container.querySelector(`[data-id="${highlightId}"]`);
+      if (el) {
+        el.classList.add("neu");
+        el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        setTimeout(() => el.classList.remove("neu"), 4000);
+      }
+    }
   } catch (e) {
     container.innerHTML = "";
     zeigeToast("Verbindungsfehler beim Laden.", "fehler");
   }
 }
 
-async function kartenErstellen() {
+function kartenErstellen() {
   const eingabe = document.getElementById("karten-thema");
   const status = document.getElementById("karten-status");
   if (!eingabe) return;
@@ -276,30 +317,36 @@ async function kartenErstellen() {
     zeigeToast("Bitte zuerst entsperren.", "info");
     return;
   }
-  if (status) status.textContent = "🃏 KI erstellt die Karteikarte … (dauert einige Sekunden)";
-  try {
-    const r = await fetch("/api/ki/karteikarte", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ key, code: kartenCode(), thema }),
-    });
-    const d = await r.json().catch(() => ({}));
-    if (status) status.textContent = "";
-    if (!r.ok) {
-      zeigeToast(d.detail || ("Fehler " + r.status), "fehler");
-      return;
+  if (status) status.textContent = "🃏 In Warteschlange …" + kartenErstellenWarteschlangeText();
+  kartenErstellenEinreihen(async () => {
+    if (status) status.textContent =
+      "🃏 KI erstellt die Karteikarte …" + kartenErstellenWarteschlangeText();
+    try {
+      const r = await fetch("/api/ki/karteikarte", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key, code: kartenCode(), thema }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (status) status.textContent = "";
+      if (!r.ok) {
+        zeigeToast(d.detail || ("Fehler " + r.status), "fehler");
+        return;
+      }
+      // Nur leeren, wenn der User nicht schon ein neues Thema eingetippt hat
+      if (eingabe.value.trim() === thema) eingabe.value = "";
+      if (d.neu) {
+        // Gleiches Design wie „Kapitel abgeschlossen“ im Sprachkurs
+        zeigeToast("Karteikarte fertig: „" + thema + "“ 🃏", "erfolg");
+      } else {
+        zeigeToast("Diese Karteikarte existiert bereits – kein Duplikat angelegt.", "info");
+      }
+      kartenLaden(d.neu ? d.karte.id : null);
+    } catch (e) {
+      if (status) status.textContent = "";
+      zeigeToast("Verbindungsfehler beim Erstellen.", "fehler");
     }
-    eingabe.value = "";
-    if (d.neu) {
-      zeigeToast("Karteikarte erstellt und gespeichert. 🃏", "erfolg");
-    } else {
-      zeigeToast("Diese Karteikarte existiert bereits – kein Duplikat angelegt.", "info");
-    }
-    kartenLaden();
-  } catch (e) {
-    if (status) status.textContent = "";
-    zeigeToast("Verbindungsfehler beim Erstellen.", "fehler");
-  }
+  });
 }
 
 async function kartenLoeschen(id) {
@@ -1187,6 +1234,9 @@ async function syncJetzt(zeigeStatus = true) {
 
     if (!unveraendert) {
       await pusheRemoteProgress(code, merged);
+      // Hinweis auch beim Auto-Sync, wenn wirklich etwas hochgeladen wurde
+      // (gleiches Design wie „Kapitel abgeschlossen“ im Sprachkurs)
+      if (!zeigeStatus) zeigeToast("Webapp synchronisiert! ✅", "erfolg");
     }
     const stat = { zeit: new Date().toISOString(), konflikte };
     localStorage.setItem(SYNC_STAT_KEY, JSON.stringify(stat));
@@ -1195,7 +1245,7 @@ async function syncJetzt(zeigeStatus = true) {
         statusEl.textContent = `✅ Synchronisiert (${konflikte} Konflikte gelöst) · ` +
           new Date(stat.zeit).toLocaleString("de-DE");
       }
-      zeigeToast("Fortschritt synchronisiert.", "erfolg");
+      zeigeToast("Webapp synchronisiert! ✅", "erfolg");
     }
   } catch (e) {
     localStorage.setItem(SYNC_STAT_KEY,

@@ -526,6 +526,10 @@ footer {
   opacity: 0.6;
 }
 .karten-loeschen:hover { opacity: 1; }
+.karten-eintrag.neu {
+  box-shadow: 0 0 0 2px var(--akzent);
+  transition: box-shadow 0.8s ease;
+}
 
 /* KI-Bewertung offener Antworten */
 .ki-bewertung {
