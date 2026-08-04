@@ -49,6 +49,8 @@ nav { margin-top: 0.8rem; display: flex; gap: 0.5rem; justify-content: center; f
 }
 .nav-btn:hover { background: var(--bg-hover); }
 .nav-btn.active { background: var(--akzent); color: #0b0e14; font-weight: 600; border-color: var(--akzent); }
+/* KI-Assistent (LLM): noch nicht freigeschaltet → ausgegraut & gesperrt */
+.nav-btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
 main { flex: 1; max-width: 860px; width: 100%; margin: 1.5rem auto; padding: 0 1rem; }
 

@@ -8,7 +8,7 @@
 const DATEN_PFAD = "/daten/";
 // Versionsmarker: erscheint im Footer. LEER = Browser nutzt alte app.js
 // (Cache!) → Strg+F5 / Cache leeren.
-const APP_VERSION = "0.5";
+const APP_VERSION = "0.6";
 const STUFEN = ["leicht", "mittel", "schwer"];
 const STUFEN_BESCHREIBUNG = {
   leicht: "nur leichte Fragen",
@@ -26,6 +26,15 @@ const NOTEN = [
   { min: 30, note: 5, text: "mangelhaft" },
   { min: 0,  note: 6, text: "ungenügend" },
 ];
+
+// KI-Assistent (LLM) — VORBEREITET, aber noch NICHT freigeschaltet:
+// Der Navigations-Button ist ausgegraut und gesperrt (disabled), der
+// Zugang absichtlich nicht erreichbar. Die Anbindung an das lokale
+// LLM (Ollama, qwen3:4b) folgt in einer späteren Version. Diese
+// Funktion ist der spätere Einstiegspunkt.
+function kiAssistentStub() {
+  zeigeToast("Der KI-Assistent ist noch nicht freigeschaltet.", "info");
+}
 
 // Übungstests nach IHK-Standard (KEINE echten IHK-Prüfungen):
 // Test 1 (LF1–3, 40 %), Test 2 (LF1–6, 60 %)
