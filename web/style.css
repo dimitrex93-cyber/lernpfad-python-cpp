@@ -526,3 +526,14 @@ footer {
   opacity: 0.6;
 }
 .karten-loeschen:hover { opacity: 1; }
+
+/* KI-Bewertung offener Antworten */
+.ki-bewertung {
+  border: 1px solid var(--rand);
+  border-radius: 0.6rem;
+  padding: 0.8rem 1rem;
+  margin-top: 0.8rem;
+  background: var(--bg-karte);
+}
+.kw-gefunden { color: var(--gruen); margin: 0.2rem 0; }
+.kw-fehlt { color: var(--rot); margin: 0.2rem 0; }

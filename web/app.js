@@ -684,6 +684,7 @@ async function startePruefung(key) {
 function zeigeFrage() {
   const z = quizZustand;
   const frage = z.fragen[z.index];
+  z.bewertet = false;
   document.getElementById("quiz-fortschritt").textContent =
     `Frage ${z.index + 1}/${z.fragen.length} · ${z.erreicht}/${z.max} P.`;
   const fb = document.getElementById("frage-bereich");
@@ -753,17 +754,111 @@ function zeigeMusterantwort() {
   const z = quizZustand;
   const frage = z.fragen[z.index];
   const ab = document.getElementById("antwort-bereich");
+  // Eigene Antwort sichern – für die KI-Bewertung
+  const eingabe = document.getElementById("open-eingabe");
+  z.offeneAntwort = (eingabe && eingabe.value.trim()) || "";
   ab.innerHTML = `<div class="feedback richtig">
       <strong>Musterantwort:</strong><br>${frage.erklaerung || ""}</div>
+    <div id="ki-bewertung-box"></div>
     <div class="button-reihe">
       <button class="primary" onclick="selbstBewerten(true)">✓ Kernpunkte genannt (+${frage.punkte || 1} P.)</button>
       <button class="secondary" onclick="selbstBewerten(false)">✗ Nicht genannt (0 P.)</button>
+      <button class="secondary" id="ki-bewerten-btn" onclick="kiBewertungAnzeigen()">🤖 Mit KI bewerten lassen</button>
     </div>`;
+}
+
+// KI-Bewertung: prüft die eigene Antwort gegen die Musterantwort auf
+// Schlüsselwörter; die Punkte berechnet der Server anteilig.
+async function kiBewertungAnzeigen() {
+  const z = quizZustand;
+  const frage = z.fragen[z.index];
+  const box = document.getElementById("ki-bewertung-box");
+  const btn = document.getElementById("ki-bewerten-btn");
+  if (!box) return;
+  const eigene = (z.offeneAntwort || "").trim();
+  if (!eigene) {
+    zeigeToast("Keine eigene Antwort vorhanden.", "info");
+    return;
+  }
+  const key = kiKeyGespeichert();
+  if (!key) {
+    zeigeToast("KI-Bewertung braucht den Freischalt-Key (KI-Assistent).", "info");
+    return;
+  }
+  box.innerHTML = '<p class="subtitle">🤖 KI bewertet deine Antwort … (dauert einige Sekunden)</p>';
+  if (btn) btn.disabled = true;
+  try {
+    const r = await fetch("/api/ki/bewerten", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        key,
+        frage: frage.frage,
+        musterantwort: frage.erklaerung || "",
+        eigene_antwort: eigene,
+        stichworte: frage.stichworte || [],
+        max_punkte: frage.punkte || 1,
+      }),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      box.innerHTML = "";
+      zeigeToast(d.detail || ("Fehler " + r.status), "fehler");
+      return;
+    }
+    const gefunden = (d.gefunden || []).map(escapeHtml).join(", ") || "—";
+    const fehlt = (d.fehlt || []).map(escapeHtml).join(", ") || "—";
+    const feedback = escapeHtml(d.feedback || "");
+    box.innerHTML = `
+      <div class="ki-bewertung">
+        <p><strong>🤖 KI-Punktvorschlag: ${d.punkte} / ${d.max_punkte} P.</strong></p>
+        <p class="kw-gefunden">✅ Gefunden: ${gefunden}</p>
+        <p class="kw-fehlt">❌ Fehlend: ${fehlt}</p>
+        ${feedback ? `<p class="subtitle">💬 ${feedback}</p>` : ""}
+        <div class="button-reihe">
+          <button class="primary" onclick="selbstBewertenPunkte(${d.punkte})">✓ Punkte übernehmen (+${d.punkte} P.)</button>
+        </div>
+      </div>`;
+  } catch (e) {
+    box.innerHTML = "";
+    zeigeToast("Verbindungsfehler bei der KI-Bewertung.", "fehler");
+  } finally {
+    if (btn) btn.disabled = false;
+  }
 }
 
 function selbstBewerten(ok) {
   const z = quizZustand;
+  if (z.bewertet) {
+    zeigeToast("Diese Frage wurde bereits bewertet.", "info");
+    return;
+  }
+  z.bewertet = true;
   if (ok) z.erreicht += z.fragen[z.index].punkte || 1;
+  kiBewertungAbschliessen();
+}
+
+function selbstBewertenPunkte(punkte) {
+  const z = quizZustand;
+  if (z.bewertet) {
+    zeigeToast("Diese Frage wurde bereits bewertet.", "info");
+    return;
+  }
+  z.bewertet = true;
+  const max = z.fragen[z.index].punkte || 1;
+  const p = Math.max(0, Math.min(max, Number(punkte) || 0));
+  z.erreicht += p;
+  kiBewertungAbschliessen(`✓ ${p} Punkte übernommen (KI-Bewertung).`);
+}
+
+function kiBewertungAbschliessen(extraHtml) {
+  const box = document.getElementById("ki-bewertung-box");
+  if (box && extraHtml) {
+    box.innerHTML = `<div class="feedback richtig"><strong>${extraHtml}</strong></div>`;
+  }
+  // Übrige Bewertungs-Buttons deaktivieren – nur EINE Bewertung pro Frage
+  document.querySelectorAll("#antwort-bereich .button-reihe button")
+    .forEach((b) => { b.disabled = true; });
   document.getElementById("quiz-weiter-btn").hidden = false;
 }
 

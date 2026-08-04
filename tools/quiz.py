@@ -36,6 +36,8 @@ import json
 import os
 import random
 import sys
+import urllib.error
+import urllib.request
 
 # ---------------------------------------------------------------------------
 # Konfiguration
@@ -66,6 +68,16 @@ STUFEN_BESCHREIBUNG = {
 
 PASS_PERCENT = 50          # ab 50 % gilt der Test als bestanden (Note 4)
 BUCHSTABEN = "abcd"
+
+# KI-Bewertung offener Antworten (optional): prüft die eigene Antwort gegen
+# die Musterantwort auf Schlüsselwörter und schlägt Teilpunkte vor.
+# - KI_URL: Server-Endpunkt (Caddy → lernapp_sync), per Env übersteuerbar.
+#   Default ist die Tailscale-IP des Servers – funktioniert vom Server selbst
+#   und von allen Geräten im Tailnet.
+# - Key in ~/.lernpfad/ki_key (außerhalb des Repos, chmod 600). Fehlt die
+#   Datei, wird die KI-Bewertung im Terminal nicht angeboten.
+KI_URL = os.environ.get("LERNAPP_KI_URL", "http://100.80.76.27:8081")
+KI_KEY_DATEI = os.path.expanduser("~/.lernpfad/ki_key")
 
 # ---------------------------------------------------------------------------
 # Übungstests nach IHK-Standard (angelehnt an die Abschlussprüfung
@@ -338,8 +350,42 @@ def frage_mc(frage, index, anzahl):
     return (frage["punkte"] if richtig else 0, frage["punkte"])
 
 
+def _ki_bewerten(frage, musterantwort, eigene_antwort, stichworte, max_punkte):
+    """Offene Antwort per KI bewerten (Schlüsselwörter, Teilpunkte).
+
+    Gibt das API-Ergebnis (dict mit punkte/gefunden/fehlt/feedback) zurück
+    oder None, wenn die KI-Bewertung nicht verfügbar ist (kein Key,
+    Server nicht erreichbar, Fehler).
+    """
+    try:
+        with open(KI_KEY_DATEI, encoding="utf-8") as f:
+            key = f.read().strip()
+    except FileNotFoundError:
+        return None
+    if not key:
+        return None
+    body = {
+        "key": key,
+        "frage": frage,
+        "musterantwort": musterantwort,
+        "eigene_antwort": eigene_antwort,
+        "stichworte": stichworte or [],
+        "max_punkte": max_punkte,
+    }
+    req = urllib.request.Request(
+        KI_URL + "/api/ki/bewerten",
+        data=json.dumps(body).encode("utf-8"),
+        headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=120) as r:
+            return json.load(r)
+    except (urllib.error.URLError, TimeoutError, OSError, ValueError):
+        return None
+
+
 def frage_open(frage, index, anzahl):
-    """Offene Frage mit Selbstbewertung; gibt (punkte_erreicht, max) zurück."""
+    """Offene Frage mit Selbstbewertung (optional KI-Teilpunkte);
+    gibt (punkte_erreicht, max) zurück."""
     print(c(f"\nFrage {index}/{anzahl}  ({frage['punkte']} P.)", "cyan"))
     print(frage["frage"])
     print(c("(Formuliere zuerst deine eigene Antwort – mindestens 20 Zeichen. "
@@ -358,16 +404,47 @@ def frage_open(frage, index, anzahl):
     if "stichworte" in frage:
         print(c("Wichtige Stichworte: " + ", ".join(frage["stichworte"]), "dunkel"))
 
+    # (k) = KI-Bewertung: nur anbieten, wenn ein Freischalt-Key vorliegt
+    ki_verfuegbar = os.path.isfile(KI_KEY_DATEI)
+    optionen = ("(j) Kernpunkte genannt  (n) nicht genannt"
+                + ("  (k) KI-Bewertung" if ki_verfuegbar else ""))
+    print(c(optionen, "dunkel"))
+
     while True:
-        einschaetzung = input("Hast du die Kernpunkte genannt? (j/n): ").strip().lower()
+        einschaetzung = input("Bewertung: ").strip().lower()
         if einschaetzung in ("j", "ja"):
             print(c(f"✓ Sehr gut! +{frage['punkte']} Punkte", "gruen"))
             return frage["punkte"], frage["punkte"]
         if einschaetzung in ("n", "nein"):
-            print(c(f"0 Punkte. Nochmal in der Theorie nachlesen – das ist der Weg!",
+            print(c("0 Punkte. Nochmal in der Theorie nachlesen – das ist der Weg!",
                     "gelb"))
             return 0, frage["punkte"]
-        print(c("Bitte j oder n eingeben.", "gelb"))
+        if einschaetzung in ("k", "ki") and ki_verfuegbar:
+            print(c("🤖 KI bewertet deine Antwort … (dauert einige Sekunden)", "dunkel"))
+            ergebnis = _ki_bewerten(frage["frage"], frage["erklaerung"],
+                                    antwort, frage.get("stichworte", []),
+                                    frage["punkte"])
+            if ergebnis is None:
+                print(c("KI-Bewertung nicht verfügbar (Server/Key?). "
+                        "Bitte erneut wählen.", "gelb"))
+                continue
+            vorschlag = int(ergebnis.get("punkte", 0))
+            print(c("KI-Punktvorschlag: "
+                    f"{vorschlag}/{ergebnis.get('max_punkte', frage['punkte'])} P.",
+                    "fett"))
+            gefunden = ergebnis.get("gefunden", []) or ["–"]
+            print(c("Gefunden: " + ", ".join(gefunden), "gruen"))
+            fehlt = ergebnis.get("fehlt", []) or ["–"]
+            print(c("Fehlend:  " + ", ".join(fehlt), "rot"))
+            if ergebnis.get("feedback"):
+                print(c("💬 " + ergebnis["feedback"], "dunkel"))
+            uebernehmen = input(f"KI-Vorschlag übernehmen ({vorschlag} P.)? (j/n): ").strip().lower()
+            if uebernehmen in ("j", "ja"):
+                print(c(f"✓ {vorschlag} Punkte übernommen (KI-Bewertung)", "gruen"))
+                return vorschlag, frage["punkte"]
+            print(c("OK – weiter mit manueller Bewertung.", "dunkel"))
+            continue
+        print(c("Bitte j, n" + (" oder k" if ki_verfuegbar else "") + " eingeben.", "gelb"))
 
 
 # ---------------------------------------------------------------------------
