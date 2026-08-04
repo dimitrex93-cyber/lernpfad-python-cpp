@@ -69,6 +69,7 @@ function ladeFortschritt() {
 
 function speichereFortschritt(fortschritt) {
   localStorage.setItem(FORTSCHRITT_KEY, JSON.stringify(fortschritt));
+  planeAutoSync();
 }
 
 function lfSchluessel(nr, stufe) {
@@ -192,6 +193,11 @@ function zeigeStart() {
      <p><strong>${quizBestanden}/${quizGesamt}</strong> Lernfeld-Stufen bestanden</p>
      <h3>Übungstests nach IHK-Standard</h3>${pruefungsInfo}
      <h3>Sprachkurs</h3>${kursInfo}`;
+
+  // Sync-Status und gespeicherten Code anzeigen
+  const codeFeld = document.getElementById("sync-code-input");
+  if (codeFeld && !codeFeld.value) codeFeld.value = ladeSyncCode();
+  zeigeSyncInfo();
 }
 
 // ------------------------------------------------------------------
@@ -656,6 +662,191 @@ function escapeHtml(s) {
 }
 
 // ------------------------------------------------------------------
+// Fortschritt-Sync (Server-API + Merge + Export/Import)
+// ------------------------------------------------------------------
+const API_PFAD = "/api/";
+const SYNC_CODE_KEY = "lernpfad_sync_code";
+const SYNC_STAT_KEY = "lernpfad_sync_status";
+let syncLaeuft = false;
+let autoSyncTimer = null;
+
+function ladeSyncCode() {
+  return localStorage.getItem(SYNC_CODE_KEY) || "";
+}
+
+function speichereSyncCodeEingabe() {
+  const feld = document.getElementById("sync-code-input");
+  if (!feld) return;
+  const code = feld.value.trim().toLowerCase();
+  if (!/^[a-f0-9]{32,}$/.test(code)) {
+    zeigeToast("Ungültiger Sync-Code (32+ Hex-Zeichen erwartet).", "fehler");
+    return;
+  }
+  localStorage.setItem(SYNC_CODE_KEY, code);
+  zeigeToast("Sync-Code gespeichert. 🔄", "erfolg");
+  syncJetzt();
+}
+
+function planeAutoSync() {
+  // Automatischer Push 2 s nach der letzten Änderung (debounced)
+  if (!ladeSyncCode()) return;
+  if (syncLaeuft) return;
+  clearTimeout(autoSyncTimer);
+  autoSyncTimer = setTimeout(() => syncJetzt(false), 2000);
+}
+
+async function holeRemoteProgress(code) {
+  const resp = await fetch(`${API_PFAD}progress/${code}`);
+  if (resp.status === 404) return {};
+  if (!resp.ok) throw new Error("HTTP " + resp.status);
+  const daten = await resp.json();
+  return daten.fortschritt || {};
+}
+
+async function pusheRemoteProgress(code, fortschritt) {
+  const resp = await fetch(`${API_PFAD}progress/${code}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ fortschritt }),
+  });
+  if (!resp.ok) throw new Error("HTTP " + resp.status);
+  return resp.json();
+}
+
+// Merge-Regeln (identisch mit tools/sync.py):
+//  - Test-Einträge (lf…, zwischenpruefung, abschlusspruefung): neueres
+//    datum gewinnt, bei gleichem datum mehr punkte
+//  - sprachkurs_gelesen: Vereinigung (additiv, nie Verlust)
+//  - alles andere: lokal, falls vorhanden
+function mergeFortschritt(lokal, remote) {
+  const gemergt = {};
+  let konflikte = 0;
+  const schluessel = new Set([...Object.keys(lokal), ...Object.keys(remote)]);
+  for (const key of schluessel) {
+    const l = lokal[key];
+    const r = remote[key];
+    if (l === undefined) { gemergt[key] = r; continue; }
+    if (r === undefined) { gemergt[key] = l; continue; }
+    if (key === "sprachkurs_gelesen") {
+      gemergt[key] = [...new Set([...(l || []), ...(r || [])])].sort();
+      continue;
+    }
+    if (l && r && typeof l === "object" && typeof r === "object" &&
+        l.datum && r.datum) {
+      if (l.datum !== r.datum) {
+        gemergt[key] = l.datum > r.datum ? l : r;
+      } else {
+        gemergt[key] = (l.punkte || 0) >= (r.punkte || 0) ? l : r;
+      }
+      if (JSON.stringify(l) !== JSON.stringify(r)) konflikte++;
+      continue;
+    }
+    gemergt[key] = l; // Default: lokal gewinnt
+  }
+  return { fortschritt: gemergt, konflikte };
+}
+
+async function syncJetzt(zeigeStatus = true) {
+  if (syncLaeuft) return;
+  const code = ladeSyncCode();
+  const statusEl = document.getElementById("sync-status");
+  if (!code) {
+    if (zeigeStatus) {
+      if (statusEl) statusEl.textContent = "Kein Sync-Code eingetragen.";
+      zeigeToast("Bitte zuerst den Sync-Code eintragen.", "fehler");
+    }
+    return;
+  }
+  syncLaeuft = true;
+  setzeSyncButton(true);
+  try {
+    const lokal = ladeFortschritt();
+    const remote = await holeRemoteProgress(code);
+    const { fortschritt: merged, konflikte } = mergeFortschritt(lokal, remote);
+    const unveraendert = Object.keys(remote).length > 0 &&
+      JSON.stringify(merged) === JSON.stringify(remote);
+
+    // Lokal speichern (direkt, damit kein Auto-Sync-Loop entsteht)
+    localStorage.setItem(FORTSCHRITT_KEY, JSON.stringify(merged));
+
+    if (!unveraendert) {
+      await pusheRemoteProgress(code, merged);
+    }
+    const stat = { zeit: new Date().toISOString(), konflikte };
+    localStorage.setItem(SYNC_STAT_KEY, JSON.stringify(stat));
+    if (zeigeStatus) {
+      if (statusEl) {
+        statusEl.textContent = `✅ Synchronisiert (${konflikte} Konflikte gelöst) · ` +
+          new Date(stat.zeit).toLocaleString("de-DE");
+      }
+      zeigeToast("Fortschritt synchronisiert.", "erfolg");
+    }
+  } catch (e) {
+    localStorage.setItem(SYNC_STAT_KEY,
+      JSON.stringify({ fehler: true, meldung: String(e) }));
+    if (zeigeStatus) {
+      if (statusEl) statusEl.textContent = "⚠️ Offline — lokal gespeichert, Sync später erneut.";
+      zeigeToast("Offline: Fortschritt bleibt lokal, wird später gesynct.", "fehler");
+    }
+  } finally {
+    syncLaeuft = false;
+    setzeSyncButton(false);
+  }
+}
+
+function setzeSyncButton(aktiv) {
+  const btn = document.getElementById("sync-button");
+  if (!btn) return;
+  btn.disabled = aktiv;
+  btn.textContent = aktiv ? "⏳ Synchronisiere …" : "🔄 Sync jetzt";
+}
+
+function zeigeSyncInfo() {
+  const statusEl = document.getElementById("sync-status");
+  if (!statusEl) return;
+  const stat = JSON.parse(localStorage.getItem(SYNC_STAT_KEY) || "null");
+  if (stat && stat.zeit) {
+    let text = `Letzter Sync: ${new Date(stat.zeit).toLocaleString("de-DE")}`;
+    if (stat.konflikte) text += ` · ${stat.konflikte} Konflikte gelöst`;
+    statusEl.textContent = text;
+  } else {
+    statusEl.textContent = "Noch nicht synchronisiert.";
+  }
+}
+
+function exportiereFortschritt() {
+  const blob = new Blob([JSON.stringify(ladeFortschritt(), null, 2)],
+    { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "lernpfad_fortschritt.json";
+  a.click();
+  URL.revokeObjectURL(url);
+  zeigeToast("Fortschritt exportiert. ⬇", "erfolg");
+}
+
+function importiereFortschritt(event) {
+  const datei = event.target.files[0];
+  event.target.value = "";
+  if (!datei) return;
+  const leser = new FileReader();
+  leser.onload = () => {
+    try {
+      const stand = JSON.parse(leser.result);
+      if (typeof stand !== "object" || stand === null) throw new Error("kein Objekt");
+      localStorage.setItem(FORTSCHRITT_KEY, JSON.stringify(stand));
+      zeigeToast("Fortschritt importiert. ⬆", "erfolg");
+      if (!document.getElementById("ansicht-start").hidden) zeigeStart();
+      planeAutoSync();
+    } catch (e) {
+      zeigeToast("Import fehlgeschlagen: ungültige Datei.", "fehler");
+    }
+  };
+  leser.readAsText(datei);
+}
+
+// ------------------------------------------------------------------
 // Glossar (Grundbegriffe aller Kapitel)
 // ------------------------------------------------------------------
 let glossarZustand = { eintraege: [], sprache: "alle", suche: "" };
@@ -768,4 +959,8 @@ function zeigeToast(text, typ = "erfolg", dauerMs = 3500) {
 }
 
 // Start
-document.addEventListener("DOMContentLoaded", () => zeigeAnsicht("start"));
+document.addEventListener("DOMContentLoaded", () => {
+  zeigeAnsicht("start");
+  // Beim Laden einmal mit dem Server abgleichen (falls Code hinterlegt)
+  if (ladeSyncCode()) syncJetzt(false);
+});

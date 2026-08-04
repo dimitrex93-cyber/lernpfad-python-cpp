@@ -430,3 +430,20 @@ footer {
   margin-top: 0.8rem;
   text-align: right;
 }
+
+/* ===== Fortschritt-Sync ===== */
+.sync-code-input {
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  font-size: 1rem;
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--rand);
+  border-radius: 8px;
+  outline: none;
+  margin: 0.4rem 0 0.8rem;
+  box-sizing: border-box;
+}
+
+.sync-code-input:focus { border-color: var(--akzent); }

@@ -91,6 +91,18 @@
       <h2>Dein Fortschritt</h2>
       <div id="start-fortschritt">Lade Fortschritt …</div>
     </div>
+    <div class="karte">
+      <h2>💾 Fortschritt-Sync</h2>
+      <p class="subtitle">Gleiche deinen Fortschritt zwischen Geräten ab (Desktop, Handy/Tablet über Tailscale, Terminal). Der Sync-Code ist wie ein Passwort — einmal eintragen, dann läuft alles automatisch.</p>
+      <input type="text" id="sync-code-input" class="sync-code-input" placeholder="Sync-Code (steht in ~/.lernpfad/sync_code)" onchange="speichereSyncCodeEingabe()" autocomplete="off">
+      <div class="button-reihe">
+        <button id="sync-button" class="primary" onclick="syncJetzt()">🔄 Sync jetzt</button>
+        <button class="secondary" onclick="exportiereFortschritt()">⬇ Export</button>
+        <button class="secondary" onclick="document.getElementById('import-datei').click()">⬆ Import</button>
+        <input type="file" id="import-datei" accept="application/json,.json" hidden onchange="importiereFortschritt(event)">
+      </div>
+      <p id="sync-status" class="subtitle">Noch nicht synchronisiert.</p>
+    </div>
   </section>
 
   <!-- ============ QUIZ ============ -->
