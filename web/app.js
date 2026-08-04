@@ -6,6 +6,9 @@
 
 // Datenpfade: Caddy liefert /daten/ → Repo-Root, / → web/-Ordner
 const DATEN_PFAD = "/daten/";
+// Versionsmarker: erscheint im Footer. LEER = Browser nutzt alte app.js
+// (Cache!) → Strg+F5 / Cache leeren.
+const APP_VERSION = "2026-08-04-sync";
 const STUFEN = ["leicht", "mittel", "schwer"];
 const STUFEN_BESCHREIBUNG = {
   leicht: "nur leichte Fragen",
@@ -677,11 +680,13 @@ function ladeSyncCode() {
 function speichereSyncCodeEingabe() {
   const feld = document.getElementById("sync-code-input");
   if (!feld) return;
-  const code = feld.value.trim().toLowerCase();
+  // Tolerant: Bindestriche und Großbuchstaben entfernen/vereinheitlichen
+  const code = feld.value.trim().toLowerCase().replace(/-/g, "");
   if (!/^[a-f0-9]{32,}$/.test(code)) {
     zeigeToast("Ungültiger Sync-Code (32+ Hex-Zeichen erwartet).", "fehler");
     return;
   }
+  feld.value = code;
   localStorage.setItem(SYNC_CODE_KEY, code);
   zeigeToast("Sync-Code gespeichert. 🔄", "erfolg");
   syncJetzt();
@@ -960,6 +965,8 @@ function zeigeToast(text, typ = "erfolg", dauerMs = 3500) {
 
 // Start
 document.addEventListener("DOMContentLoaded", () => {
+  const versionEl = document.getElementById("app-version");
+  if (versionEl) versionEl.textContent = APP_VERSION;
   zeigeAnsicht("start");
   // Beim Laden einmal mit dem Server abgleichen (falls Code hinterlegt)
   if (ladeSyncCode()) syncJetzt(false);

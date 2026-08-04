@@ -51,7 +51,8 @@ def lade_code(explizit):
     if not code:
         sys.exit(c("Kein Sync-Code: --code UUID oder ~/.lernpfad/sync_code "
                    "anlegen.", "rot"))
-    code = code.lower()
+    # Tolerant: Bindestriche/Großbuchstaben vereinheitlichen
+    code = code.lower().replace("-", "")
     if not CODE_REGEX.match(code):
         sys.exit(c("Ungültiger Sync-Code (32+ Hex-Zeichen erwartet).", "rot"))
     return code
