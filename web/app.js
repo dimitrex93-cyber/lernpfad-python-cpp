@@ -111,6 +111,7 @@ async function kiSenden() {
     return;
   }
 
+  kiLetzteNachricht = nachricht;
   kiZeigeNachricht(nachricht, "user");
   eingabe.value = "";
   const denken = document.createElement("p");
@@ -148,6 +149,178 @@ function kiZeigeNachricht(text, typ) {
   div.textContent = text;
   verlauf.appendChild(div);
   verlauf.scrollTop = verlauf.scrollHeight;
+}
+
+// Letzte gesendete Nachricht merken – dient als Thema-Vorschlag für
+// „Als Karteikarte speichern“.
+let kiLetzteNachricht = "";
+
+async function kiKarteErstellen() {
+  // Thema = aktueller Eingabewert, sonst letzte gesendete Nachricht.
+  const eingabe = document.getElementById("ki-nachricht");
+  let thema = ((eingabe && eingabe.value) || "").trim();
+  if (!thema) thema = kiLetzteNachricht;
+  if (!thema) {
+    zeigeToast("Bitte zuerst ein Thema eingeben.", "info");
+    return;
+  }
+  const key = kiKeyGespeichert();
+  if (!key) {
+    zeigeToast("Bitte zuerst entsperren.", "info");
+    return;
+  }
+  const status = document.getElementById("ki-status");
+  if (status) status.textContent = "🃏 Erstelle Karteikarte … (dauert einige Sekunden)";
+  try {
+    const r = await fetch("/api/ki/karteikarte", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key, code: kartenCode(), thema }),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (status) status.textContent = "";
+    if (!r.ok) {
+      zeigeToast(d.detail || ("Fehler " + r.status), "fehler");
+      return;
+    }
+    kiZeigeNachricht(
+      "🃏 Karteikarte " + (d.neu ? "gespeichert" : "existierte bereits – keine Dublette") +
+      ":\n\nFRAGE: " + d.karte.frage + "\n\nANTWORT: " + d.karte.antwort,
+      "assistent"
+    );
+    zeigeToast(d.neu ? "Karteikarte gespeichert. 🃏" : "Karteikarte existierte bereits.", d.neu ? "erfolg" : "info");
+  } catch (e) {
+    if (status) status.textContent = "";
+    zeigeToast("Verbindungsfehler beim Erstellen.", "fehler");
+  }
+}
+
+// ------------------------------------------------------------------
+// Karteikarten (Server-Speicherung, dedupliziert)
+// ------------------------------------------------------------------
+function kartenBereichOeffnen() {
+  const sperre = document.getElementById("karten-sperre");
+  const inhalt = document.getElementById("karten-inhalt");
+  if (!sperre || !inhalt) return;
+  const key = kiKeyGespeichert();
+  sperre.hidden = !!key;
+  inhalt.hidden = !key;
+  if (key) kartenLaden();
+}
+
+function kartenSperren() {
+  localStorage.removeItem(KI_KEY_STORAGE);
+  kartenBereichOeffnen();
+  zeigeToast("Karteikarten gesperrt – Key entfernt.", "info");
+}
+
+function kartenCode() {
+  // Namespace: Sync-Code, falls vorhanden (sonst nutzt der Server den
+  // SHA-256-Hash des Freischalt-Keys als Namespace).
+  return ladeSyncCode();
+}
+
+async function kartenLaden() {
+  const key = kiKeyGespeichert();
+  if (!key) return;
+  const container = document.getElementById("karten-liste");
+  const anzahl = document.getElementById("karten-anzahl");
+  if (!container) return;
+  container.innerHTML = '<p class="subtitle">Lade Karteikarten …</p>';
+  try {
+    const r = await fetch("/api/ki/karteikarten", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key, code: kartenCode() }),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      container.innerHTML = "";
+      zeigeToast(d.detail || ("Fehler " + r.status), "fehler");
+      return;
+    }
+    if (anzahl) anzahl.textContent = d.anzahl + " gespeichert · dedupliziert auf dem Server";
+    if (!d.anzahl) {
+      container.innerHTML =
+        '<p class="subtitle">Noch keine Karteikarten. Erstelle die erste oben – ' +
+        "die KI generiert Frage + Antwort, Duplikate werden automatisch verhindert.</p>";
+      return;
+    }
+    container.innerHTML = d.karten.map((k) => `
+      <div class="karten-eintrag">
+        <div class="karten-kopf">
+          <span class="karten-thema">${escapeHtml(k.thema)}</span>
+          <span class="karten-datum">${escapeHtml(new Date(k.erstellt).toLocaleDateString("de-DE"))}</span>
+        </div>
+        <div class="karten-frage">${escapeHtml(k.frage)}</div>
+        <div class="karten-antwort">${escapeHtml(k.antwort)}</div>
+        <button class="karten-loeschen" onclick="kartenLoeschen('${k.id}')" title="Karteikarte löschen">🗑</button>
+      </div>`).join("");
+  } catch (e) {
+    container.innerHTML = "";
+    zeigeToast("Verbindungsfehler beim Laden.", "fehler");
+  }
+}
+
+async function kartenErstellen() {
+  const eingabe = document.getElementById("karten-thema");
+  const status = document.getElementById("karten-status");
+  if (!eingabe) return;
+  const thema = (eingabe.value || "").trim();
+  if (!thema) {
+    zeigeToast("Bitte ein Thema eingeben.", "info");
+    return;
+  }
+  const key = kiKeyGespeichert();
+  if (!key) {
+    zeigeToast("Bitte zuerst entsperren.", "info");
+    return;
+  }
+  if (status) status.textContent = "🃏 KI erstellt die Karteikarte … (dauert einige Sekunden)";
+  try {
+    const r = await fetch("/api/ki/karteikarte", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key, code: kartenCode(), thema }),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (status) status.textContent = "";
+    if (!r.ok) {
+      zeigeToast(d.detail || ("Fehler " + r.status), "fehler");
+      return;
+    }
+    eingabe.value = "";
+    if (d.neu) {
+      zeigeToast("Karteikarte erstellt und gespeichert. 🃏", "erfolg");
+    } else {
+      zeigeToast("Diese Karteikarte existiert bereits – kein Duplikat angelegt.", "info");
+    }
+    kartenLaden();
+  } catch (e) {
+    if (status) status.textContent = "";
+    zeigeToast("Verbindungsfehler beim Erstellen.", "fehler");
+  }
+}
+
+async function kartenLoeschen(id) {
+  const key = kiKeyGespeichert();
+  if (!key) return;
+  try {
+    const r = await fetch("/api/ki/karteikarte/loeschen", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key, code: kartenCode(), id }),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      zeigeToast(d.detail || ("Fehler " + r.status), "fehler");
+      return;
+    }
+    zeigeToast("Karteikarte gelöscht.", "erfolg");
+    kartenLaden();
+  } catch (e) {
+    zeigeToast("Verbindungsfehler beim Löschen.", "fehler");
+  }
 }
 
 // Übungstests nach IHK-Standard (KEINE echten IHK-Prüfungen):
@@ -206,10 +379,10 @@ function lfSchluessel(nr, stufe) {
 // Ansichten wechseln
 // ------------------------------------------------------------------
 function zeigeAnsicht(name) {
-  for (const id of ["start", "ziel", "quiz", "kurs", "glossar", "ki"]) {
+  for (const id of ["start", "ziel", "quiz", "kurs", "glossar", "ki", "karten"]) {
     document.getElementById("ansicht-" + id).hidden = id !== name;
   }
-  for (const id of ["start", "ziel", "quiz", "kurs", "glossar", "ki"]) {
+  for (const id of ["start", "ziel", "quiz", "kurs", "glossar", "ki", "karten"]) {
     document.getElementById("nav-" + id).classList.toggle("active", id === name);
   }
   if (name === "start") zeigeStart();
@@ -218,6 +391,7 @@ function zeigeAnsicht(name) {
   if (name === "kurs") zeigeKursUebersicht();
   if (name === "glossar") zeigeGlossar();
   if (name === "ki") kiBereichOeffnen();
+  if (name === "karten") kartenBereichOeffnen();
 }
 
 // ------------------------------------------------------------------
