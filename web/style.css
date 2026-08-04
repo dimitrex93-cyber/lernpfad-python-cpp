@@ -332,3 +332,101 @@ footer {
   header h1 { font-size: 1.2rem; }
   .quiz-kopf { flex-direction: column; gap: 0.3rem; }
 }
+
+/* ===== Glossar ===== */
+.glossar-suche {
+  margin: 0.8rem 0 0.6rem;
+}
+
+.glossar-suche input {
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  font-size: 1rem;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--rand);
+  border-radius: 8px;
+  outline: none;
+}
+
+.glossar-suche input:focus { border-color: var(--akzent); }
+
+.glossar-filter {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.filter-btn {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--rand);
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.filter-btn:hover { background: var(--bg-hover); }
+
+.filter-btn.active {
+  background: var(--akzent);
+  color: #0b0e14;
+  font-weight: 600;
+  border-color: var(--akzent);
+}
+
+.glossar-eintrag {
+  background: var(--bg);
+  border: 1px solid var(--rand);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.glossar-kopf {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.25rem;
+}
+
+.glossar-begriff {
+  font-size: 1.05rem;
+  color: var(--akzent);
+}
+
+.glossar-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--rand);
+}
+
+.badge-python { color: #ffd94a; border-color: #ffd94a55; background: #ffd94a12; }
+.badge-cpp { color: #659ad2; border-color: #659ad255; background: #659ad212; }
+.badge-beide { color: var(--gruen); border-color: var(--gruen); background: rgba(76, 175, 80, 0.1); }
+
+.glossar-erklaerung { margin: 0.3rem 0; }
+
+.glossar-beispiel {
+  margin: 0.4rem 0;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+.glossar-kapitel {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: var(--text-dunkel);
+  margin-top: 0.3rem;
+}
+
+.glossar-zaehler {
+  margin-top: 0.8rem;
+  text-align: right;
+}

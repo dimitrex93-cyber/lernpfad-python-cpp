@@ -1,0 +1,885 @@
+{
+  "titel": "Glossar der Grundbegriffe",
+  "beschreibung": "Alle wichtigen Begriffe des Sprachkurses auf einen Blick – nach Sprache filterbar (Python, C++ oder beide) und mit Suchfunktion. Erklärt kurz, wozu der Begriff dient und wo das passende Kapitel steht.",
+  "eintraege": [
+    {
+      "begriff": "Programm",
+      "sprache": "beide",
+      "erklaerung": "Eine Liste von Befehlen, die die CPU nacheinander abarbeitet. Geschrieben wird es als Quellcode, ausgeführt als Skript oder ausführbare Datei.",
+      "beispiel": "print(\"Hallo\") bzw. ein kompiliertes C++-Programm",
+      "kapitel": "einfuehrung"
+    },
+    {
+      "begriff": "Maschinensprache",
+      "sprache": "beide",
+      "erklaerung": "Die einzige Sprache, die die CPU direkt versteht: Binärzahlen aus Nullen und Einsen. Niemand schreibt heute noch direkt darin.",
+      "kapitel": "einfuehrung"
+    },
+    {
+      "begriff": "Quellcode",
+      "sprache": "beide",
+      "erklaerung": "Der für Menschen lesbare Text eines Programms – in Python oder C++ geschrieben, bevor er übersetzt bzw. ausgeführt wird.",
+      "beispiel": "print(\"Hallo\") / std::cout << \"Hallo\";",
+      "kapitel": "einfuehrung"
+    },
+    {
+      "begriff": "Compiler",
+      "sprache": "cpp",
+      "erklaerung": "Programm, das den GESAMTEN C++-Quellcode vor dem Ausführen in Maschinensprache übersetzt. Findet viele Fehler schon beim Übersetzen.",
+      "beispiel": "g++ datei.cpp -o datei",
+      "kapitel": "einfuehrung"
+    },
+    {
+      "begriff": "Interpreter",
+      "sprache": "python",
+      "erklaerung": "Programm, das Code zur Laufzeit Zeile für Zeile ausführt und übersetzt – Übersetzung und Ausführung passieren gleichzeitig.",
+      "beispiel": "python3 datei.py",
+      "kapitel": "einfuehrung"
+    },
+    {
+      "begriff": "CPU",
+      "sprache": "beide",
+      "erklaerung": "Prozessor – führt Befehle aus: Rechnen, Vergleichen, Springen.",
+      "kapitel": "einfuehrung"
+    },
+    {
+      "begriff": "RAM",
+      "sprache": "beide",
+      "erklaerung": "Arbeitsspeicher. Hält Daten und laufende Programme bereit, ist aber flüchtig: Alles ist weg, wenn der Strom ausfällt.",
+      "kapitel": "einfuehrung"
+    },
+    {
+      "begriff": "SSD / Festplatte",
+      "sprache": "beide",
+      "erklaerung": "Speichermedium, das Daten DAUERHAFT speichert – anders als der flüchtige RAM.",
+      "kapitel": "einfuehrung"
+    },
+    {
+      "begriff": "main()",
+      "sprache": "cpp",
+      "erklaerung": "Pflicht-Funktion in jedem C++-Programm. Das Betriebssystem ruft genau sie auf, wenn das Programm startet. Rückgabetyp immer int.",
+      "beispiel": "int main() { return 0; }",
+      "kapitel": "einstieg"
+    },
+    {
+      "begriff": "__name__-Guard",
+      "sprache": "python",
+      "erklaerung": "if __name__ == \"__main__\": sorgt dafür, dass Code nur beim direkten Start läuft – nicht, wenn die Datei als Modul importiert wird.",
+      "beispiel": "if __name__ == \"__main__\": main()",
+      "kapitel": "einstieg"
+    },
+    {
+      "begriff": "#include",
+      "sprache": "cpp",
+      "erklaerung": "Weist den Compiler an, eine Header-Datei in den Quellcode einzufügen – so werden Bibliotheksfunktionen wie std::cout bekannt.",
+      "beispiel": "#include <iostream>",
+      "kapitel": "einstieg"
+    },
+    {
+      "begriff": "import",
+      "sprache": "python",
+      "erklaerung": "Lädt ein Modul (eine .py-Datei oder die Standardbibliothek), damit du dessen Funktionen nutzen kannst.",
+      "beispiel": "import math",
+      "kapitel": "einstieg"
+    },
+    {
+      "begriff": "print()",
+      "sprache": "python",
+      "erklaerung": "Gibt Text auf der Konsole aus. Mehrere Werte werden mit Komma getrennt und automatisch mit Leerzeichen verbunden.",
+      "beispiel": "print(\"Hallo\", name)",
+      "kapitel": "einstieg"
+    },
+    {
+      "begriff": "std::cout",
+      "sprache": "cpp",
+      "erklaerung": "Ausgabestrom für die Konsole. Werte werden mit dem Operator << angehängt.",
+      "beispiel": "std::cout << \"Hallo\" << std::endl;",
+      "kapitel": "einstieg"
+    },
+    {
+      "begriff": "input()",
+      "sprache": "python",
+      "erklaerung": "Liest eine Zeile von der Tastatur und liefert IMMER einen String zurück. Für Zahlen: int(input(...)).",
+      "beispiel": "alter = int(input(\"Wie alt? \"))",
+      "kapitel": "einstieg"
+    },
+    {
+      "begriff": "std::cin",
+      "sprache": "cpp",
+      "erklaerung": "Eingabestrom von der Tastatur. std::cin >> wert liest bis zum nächsten Leerzeichen, std::getline(std::cin, text) eine ganze Zeile.",
+      "beispiel": "std::cin >> alter;",
+      "kapitel": "einstieg"
+    },
+    {
+      "begriff": "return 0",
+      "sprache": "cpp",
+      "erklaerung": "Gibt den Wert 0 an das Betriebssystem zurück: alles gut. Jeder andere Wert ist ein Fehlercode.",
+      "kapitel": "einstieg"
+    },
+    {
+      "begriff": "Variable",
+      "sprache": "beide",
+      "erklaerung": "Ein Name für einen Wert im Speicher. In Python wird sie durch Zuweisung erzeugt, in C++ muss der Typ deklariert werden.",
+      "beispiel": "alter = 25 / int alter = 25;",
+      "kapitel": "variablen"
+    },
+    {
+      "begriff": "int",
+      "sprache": "beide",
+      "erklaerung": "Datentyp für ganze Zahlen. Python: beliebig groß. C++: feste Größe (typisch 4 Byte, Bereich ca. −2 Mrd. bis +2 Mrd.).",
+      "beispiel": "alter = 25 / int alter = 25;",
+      "kapitel": "variablen"
+    },
+    {
+      "begriff": "float",
+      "sprache": "beide",
+      "erklaerung": "Datentyp für Kommazahlen. Python: automatisch (eine Kommazahl ist float). C++: 4 Byte, geringere Genauigkeit als double.",
+      "beispiel": "groesse = 1.72 / float groesse = 1.72;",
+      "kapitel": "variablen"
+    },
+    {
+      "begriff": "double",
+      "sprache": "cpp",
+      "erklaerung": "Datentyp für Kommazahlen mit doppelter Genauigkeit (8 Byte) – der Standard für Kommazahlen in C++.",
+      "beispiel": "double groesse = 1.72;",
+      "kapitel": "variablen"
+    },
+    {
+      "begriff": "char",
+      "sprache": "cpp",
+      "erklaerung": "Datentyp für EIN Zeichen, in einfachen Anführungszeichen geschrieben (1 Byte). 'A' ist ein char, \"A\" ein String!",
+      "beispiel": "char buchstabe = 'A';",
+      "kapitel": "variablen"
+    },
+    {
+      "begriff": "bool",
+      "sprache": "beide",
+      "erklaerung": "Datentyp für Wahrheitswerte: True/False (Python) bzw. true/false (C++).",
+      "beispiel": "ist_student = True / bool ist_student = true;",
+      "kapitel": "variablen"
+    },
+    {
+      "begriff": "String",
+      "sprache": "beide",
+      "erklaerung": "Datentyp für Text. Python: str, unveränderlich. C++: std::string (aus <string>), veränderlich.",
+      "beispiel": "name = \"Anna\" / std::string name = \"Anna\";",
+      "kapitel": "strings"
+    },
+    {
+      "begriff": "Typisierung (statisch/dynamisch)",
+      "sprache": "beide",
+      "erklaerung": "Dynamisch (Python): Der Typ wird automatisch erkannt und darf wechseln. Statisch (C++): Der Typ ist fix und wird deklariert – der Compiler prüft ihn.",
+      "kapitel": "variablen"
+    },
+    {
+      "begriff": "Typumwandlung (Cast)",
+      "sprache": "beide",
+      "erklaerung": "Einen Wert von einem Typ in einen anderen umwandeln: int(\"42\") bzw. std::stoi(\"42\"), str(42) bzw. std::to_string(42), static_cast<int>(x).",
+      "beispiel": "int(\"42\") / std::stoi(\"42\")",
+      "kapitel": "variablen"
+    },
+    {
+      "begriff": "Operator",
+      "sprache": "beide",
+      "erklaerung": "Symbol oder Wort, das Werte verknüpft: + - * / % == < && etc.",
+      "beispiel": "a + b, x == y, a && b",
+      "kapitel": "operatoren"
+    },
+    {
+      "begriff": "Ganzzahldivision",
+      "sprache": "beide",
+      "erklaerung": "Division, bei der der Rest verworfen wird. Python: // (10 // 3 = 3). C++: automatisch bei int/int (10 / 3 = 3).",
+      "beispiel": "10 // 3 == 3",
+      "kapitel": "operatoren"
+    },
+    {
+      "begriff": "Modulo (%)",
+      "sprache": "beide",
+      "erklaerung": "Liefert den Rest einer Division. In C++ für Kommazahlen: std::fmod.",
+      "beispiel": "10 % 3 == 1",
+      "kapitel": "operatoren"
+    },
+    {
+      "begriff": "Potenz",
+      "sprache": "beide",
+      "erklaerung": "Python: ** (2 ** 10 = 1024). C++: kein **, sondern std::pow.",
+      "beispiel": "2 ** 10 / std::pow(2, 10)",
+      "kapitel": "operatoren"
+    },
+    {
+      "begriff": "Zuweisung (=) vs. Vergleich (==)",
+      "sprache": "beide",
+      "erklaerung": "= weist zu (alter = 18), == vergleicht (alter == 18). Die häufigste Anfängerfalle – in C++ kompiliert eine Zuweisung in der Bedingung sogar (if (x = 5)).",
+      "kapitel": "operatoren"
+    },
+    {
+      "begriff": "Logische Operatoren",
+      "sprache": "beide",
+      "erklaerung": "und/oder/nicht: Python schreibt sie als Wörter (and, or, not), C++ als Symbole (&&, ||, !).",
+      "beispiel": "if alter >= 18 and hat_fuehrerschein:",
+      "kapitel": "operatoren"
+    },
+    {
+      "begriff": "Kurzschluss (Short-Circuit)",
+      "sprache": "beide",
+      "erklaerung": "&&/and und ||/or werten nur so viel aus wie nötig: Ist der linke Teil von && schon falsch, wird der rechte nie ausgeführt.",
+      "kapitel": "operatoren"
+    },
+    {
+      "begriff": "Bedingung",
+      "sprache": "beide",
+      "erklaerung": "Ausdruck, der wahr oder falsch ist und darüber entscheidet, welcher Code läuft (if/else).",
+      "kapitel": "bedingungen"
+    },
+    {
+      "begriff": "if / else",
+      "sprache": "beide",
+      "erklaerung": "Grundform der Entscheidung: Wenn die Bedingung wahr ist, führe den Block aus – sonst den else-Block.",
+      "beispiel": "if note <= 2: ... / if (note <= 2) { ... }",
+      "kapitel": "bedingungen"
+    },
+    {
+      "begriff": "elif / else if",
+      "sprache": "beide",
+      "erklaerung": "Ketten weiterer Bedingungen nach if – Python: elif, C++: else if.",
+      "kapitel": "bedingungen"
+    },
+    {
+      "begriff": "Einrückung",
+      "sprache": "python",
+      "erklaerung": "Bestimmt in Python den Blockumfang (meist 4 Leerzeichen). Sie ist Pflicht und Teil der Syntax – keine Klammern nötig.",
+      "kapitel": "bedingungen"
+    },
+    {
+      "begriff": "switch / case",
+      "sprache": "cpp",
+      "erklaerung": "Mehrfach-Auswahl für ganzzahlige Werte. Jeder Fall endet mit break – sonst läuft der Code weiter (fall-through).",
+      "beispiel": "switch (wochentag) { case 1: ... break; }",
+      "kapitel": "bedingungen"
+    },
+    {
+      "begriff": "match / case",
+      "sprache": "python",
+      "erklaerung": "Moderne Mehrfach-Auswahl seit Python 3.10 (strukturelles Pattern Matching).",
+      "beispiel": "match wochentag: case 1: ...",
+      "kapitel": "bedingungen"
+    },
+    {
+      "begriff": "Schleife",
+      "sprache": "beide",
+      "erklaerung": "Führt Code mehrfach aus – für jedes Element einer Sammlung (for) oder solange eine Bedingung gilt (while).",
+      "kapitel": "schleifen"
+    },
+    {
+      "begriff": "for",
+      "sprache": "beide",
+      "erklaerung": "Python: for x in liste (for-each). C++: Range-for for (auto x : vec) oder Zählschleife for (int i = 0; i < n; i++).",
+      "beispiel": "for name in namen: / for (const auto& n : namen)",
+      "kapitel": "schleifen"
+    },
+    {
+      "begriff": "while",
+      "sprache": "beide",
+      "erklaerung": "Schleife, die läuft, solange die Bedingung wahr ist – perfekt, wenn du die Anzahl der Durchläufe nicht kennst.",
+      "beispiel": "while True: / while (bedingung) { }",
+      "kapitel": "schleifen"
+    },
+    {
+      "begriff": "range()",
+      "sprache": "python",
+      "erklaerung": "Erzeugt Zahlenfolgen: range(5) → 0..4, range(2, 5) → 2..4, range(0, 10, 2) → gerade Zahlen.",
+      "beispiel": "for i in range(5):",
+      "kapitel": "schleifen"
+    },
+    {
+      "begriff": "break",
+      "sprache": "beide",
+      "erklaerung": "Bricht die Schleife sofort ab.",
+      "kapitel": "schleifen"
+    },
+    {
+      "begriff": "continue",
+      "sprache": "beide",
+      "erklaerung": "Überspringt den Rest des Durchlaufs und springt zur nächsten Runde.",
+      "kapitel": "schleifen"
+    },
+    {
+      "begriff": "Endlosschleife",
+      "sprache": "beide",
+      "erklaerung": "Schleife, deren Bedingung nie falsch wird – meist ein Fehler. Vergiss nicht, die Bedingung irgendwann zu verändern.",
+      "kapitel": "schleifen"
+    },
+    {
+      "begriff": "f-String",
+      "sprache": "python",
+      "erklaerung": "Moderne Formatierung: Ein f vor dem String, Werte in geschweiften Klammern. Auch Ausdrücke und Formatangaben möglich.",
+      "beispiel": "f\"{name} ist {alter} Jahre alt\"",
+      "kapitel": "strings"
+    },
+    {
+      "begriff": "std::format",
+      "sprache": "cpp",
+      "erklaerung": "C++20-Formatierung mit Platzhaltern {} – wie f-Strings. Alternativ: std::cout << mit mehreren <<.",
+      "beispiel": "std::format(\"{} + {} = {}\", a, b, a + b)",
+      "kapitel": "strings"
+    },
+    {
+      "begriff": "Slicing",
+      "sprache": "python",
+      "erklaerung": "Teilbereich einer Liste oder eines Strings: liste[1:3] liefert die Elemente ab Index 1 bis (ohne) 3.",
+      "beispiel": "name[1:3]",
+      "kapitel": "strings"
+    },
+    {
+      "begriff": "npos",
+      "sprache": "cpp",
+      "erklaerung": "std::string::npos – Rückgabe von find(), wenn nichts gefunden wurde. Prüfe: if (pos != std::string::npos).",
+      "kapitel": "strings"
+    },
+    {
+      "begriff": "Liste (list)",
+      "sprache": "python",
+      "erklaerung": "Dynamische Sammlung, die Typen mischen darf: [1, \"a\", 2.5]. Operationen: append(), insert(), pop(), sort(), len().",
+      "beispiel": "zahlen = [3, 1, 2]",
+      "kapitel": "listen"
+    },
+    {
+      "begriff": "std::vector",
+      "sprache": "cpp",
+      "erklaerung": "Dynamischer Container, der NUR einen Typ enthält (statische Typisierung). Operationen: push_back(), insert(), erase(), size().",
+      "beispiel": "std::vector<int> zahlen = {3, 1, 2};",
+      "kapitel": "listen"
+    },
+    {
+      "begriff": "Index",
+      "sprache": "beide",
+      "erklaerung": "Position in einer Sammlung – 0-basiert: liste[0] ist das erste Element. Python: negative Indizes zählen von hinten (liste[-1]).",
+      "kapitel": "listen"
+    },
+    {
+      "begriff": "append / push_back",
+      "sprache": "beide",
+      "erklaerung": "Element am Ende einer Sammlung hinzufügen – Python append(), C++ push_back().",
+      "beispiel": "zahlen.append(4) / zahlen.push_back(4);",
+      "kapitel": "listen"
+    },
+    {
+      "begriff": "dict",
+      "sprache": "python",
+      "erklaerung": "Schlüssel-Wert-Paare (Hashtabelle): {\"apfel\": 0.50}. Schneller Zugriff über Schlüssel, .get(key, default) ohne Fehler.",
+      "beispiel": "preise = {\"apfel\": 0.50}",
+      "kapitel": "listen"
+    },
+    {
+      "begriff": "std::map / std::unordered_map",
+      "sprache": "cpp",
+      "erklaerung": "Schlüssel-Wert-Paare in C++: map ist sortiert (langsamer), unordered_map eine Hashtabelle (schnell – meist besser).",
+      "beispiel": "std::unordered_map<std::string, double> preise;",
+      "kapitel": "listen"
+    },
+    {
+      "begriff": "Hashtabelle",
+      "sprache": "beide",
+      "erklaerung": "Datenstruktur mit extrem schnellem Zugriff über Schlüssel – Grundlage von dict (Python) und unordered_map (C++).",
+      "kapitel": "listen"
+    },
+    {
+      "begriff": ".at() vs. []",
+      "sprache": "cpp",
+      "erklaerung": "[] prüft NICHT (falscher Index = undefiniertes Verhalten), .at() wirft eine std::out_of_range-Exception. Unsicher? Nutze .at().",
+      "beispiel": "v.at(10) / v[10]",
+      "kapitel": "listen"
+    },
+    {
+      "begriff": "Funktion",
+      "sprache": "beide",
+      "erklaerung": "Benannter Code-Block, den du mehrfach aufrufen kannst. Python: def f(x):. C++: int f(int x) { }.",
+      "kapitel": "funktionen"
+    },
+    {
+      "begriff": "def",
+      "sprache": "python",
+      "erklaerung": "Schlüsselwort zum Definieren einer Funktion. Rückgabetyp und Parametertypen werden NICHT angegeben.",
+      "beispiel": "def quadrat(x): return x * x",
+      "kapitel": "funktionen"
+    },
+    {
+      "begriff": "Parameter / Argument",
+      "sprache": "beide",
+      "erklaerung": "Parameter = Platzhalter in der Definition, Argument = der Wert beim Aufruf. Python kennt zusätzlich Schlüsselwortargumente.",
+      "beispiel": "def f(x): ... → f(3)",
+      "kapitel": "funktionen"
+    },
+    {
+      "begriff": "Rückgabewert / return",
+      "sprache": "beide",
+      "erklaerung": "Das Ergebnis, das eine Funktion an den Aufrufer zurückgibt. Ohne return liefert Python None; C++-nicht-void-Funktionen ohne return sind undefiniert!",
+      "kapitel": "funktionen"
+    },
+    {
+      "begriff": "void",
+      "sprache": "cpp",
+      "erklaerung": "Rückgabetyp für Funktionen, die nichts zurückgeben.",
+      "beispiel": "void begruesse(std::string name) { ... }",
+      "kapitel": "funktionen"
+    },
+    {
+      "begriff": "Prototyp / Deklaration",
+      "sprache": "cpp",
+      "erklaerung": "Ankündigung einer Funktion ohne Rumpf – nützlich für eigene Header-Dateien. Definition folgt später.",
+      "beispiel": "int quadrat(int x);",
+      "kapitel": "funktionen"
+    },
+    {
+      "begriff": "Referenz (&)",
+      "sprache": "cpp",
+      "erklaerung": "Alias auf ein Objekt: void f(std::string& s) verändert das Original ohne Kopie. const std::string& liest ohne Kopie.",
+      "beispiel": "void aendern(std::string& s) { s += \"!\"; }",
+      "kapitel": "funktionen"
+    },
+    {
+      "begriff": "const",
+      "sprache": "cpp",
+      "erklaerung": "Verspricht, dass ein Wert nicht verändert wird. Faustregel: große Objekte als const& übergeben (lesen ohne Kopie).",
+      "beispiel": "void lesen(const std::string& s)",
+      "kapitel": "funktionen"
+    },
+    {
+      "begriff": "Default-Parameter",
+      "sprache": "beide",
+      "erklaerung": "Parameter mit Standardwert, der beim Aufruf weggelassen werden darf. Achtung in Python: niemals eine veränderliche Liste als Default!",
+      "beispiel": "def f(x, y=10): / int f(int x, int y = 10)",
+      "kapitel": "funktionen"
+    },
+    {
+      "begriff": "namespace",
+      "sprache": "cpp",
+      "erklaerung": "Namensraum gegen Namenskollisionen: std::cout bedeutet cout aus dem namespace std.",
+      "beispiel": "using namespace std;",
+      "kapitel": "funktionen"
+    },
+    {
+      "begriff": "lokale / globale Variable",
+      "sprache": "beide",
+      "erklaerung": "Lokal = nur im Block bzw. in der Funktion sichtbar. Global = überall. Lokale schlagen globale – globale Variablen sind ein Anti-Pattern.",
+      "kapitel": "funktionen"
+    },
+    {
+      "begriff": "Klasse",
+      "sprache": "beide",
+      "erklaerung": "Bauplan für Objekte: kombiniert Daten (Attribute) und Verhalten (Methoden).",
+      "beispiel": "class Hund: / class Hund { };",
+      "kapitel": "oop"
+    },
+    {
+      "begriff": "Objekt / Instanz",
+      "sprache": "beide",
+      "erklaerung": "Konkretes Exemplar einer Klasse, erzeugt durch Aufruf der Klasse.",
+      "beispiel": "h = Hund(\"Rex\") / Hund h(\"Rex\");",
+      "kapitel": "oop"
+    },
+    {
+      "begriff": "Konstruktor",
+      "sprache": "beide",
+      "erklaerung": "Wird beim Erzeugen eines Objekts aufgerufen. Python: __init__(self). C++: Methode mit Klassennamen, optional mit Initialisierungsliste.",
+      "beispiel": "def __init__(self, name): / Hund(std::string n) : name(n) {}",
+      "kapitel": "oop"
+    },
+    {
+      "begriff": "Methode",
+      "sprache": "beide",
+      "erklaerung": "Funktion, die zu einer Klasse gehört und auf dem Objekt arbeitet.",
+      "beispiel": "h.bellen()",
+      "kapitel": "oop"
+    },
+    {
+      "begriff": "self",
+      "sprache": "python",
+      "erklaerung": "Verweis auf das eigene Objekt – immer der erste Parameter jeder Methode.",
+      "beispiel": "def bellen(self):",
+      "kapitel": "oop"
+    },
+    {
+      "begriff": "public / private",
+      "sprache": "cpp",
+      "erklaerung": "Sichtbarkeitsbereiche in C++: private (Standard!) nur innerhalb der Klasse, public von überall erreichbar. Ohne public: kein Zugriff von außen.",
+      "beispiel": "private: int stand; public: ...",
+      "kapitel": "oop"
+    },
+    {
+      "begriff": "Kapselung",
+      "sprache": "beide",
+      "erklaerung": "Daten privat halten und nur über Methoden zugänglich machen. Python: _name-Konvention. C++: echte private-Bereiche – C++ erzwingt, Python vertraut.",
+      "kapitel": "oop"
+    },
+    {
+      "begriff": "Getter / Setter",
+      "sprache": "beide",
+      "erklaerung": "Methoden zum kontrollierten Lesen/Setzen privater Attribute. Python: @property. C++: getStand()/setStand().",
+      "kapitel": "oop"
+    },
+    {
+      "begriff": "Vererbung",
+      "sprache": "beide",
+      "erklaerung": "Eine Klasse übernimmt Attribute und Methoden einer anderen.",
+      "beispiel": "class Hund(Tier): / class Hund : public Tier",
+      "kapitel": "oop"
+    },
+    {
+      "begriff": "super()",
+      "sprache": "python",
+      "erklaerung": "Ruft den Konstruktor der Elternklasse auf.",
+      "beispiel": "super().__init__(name)",
+      "kapitel": "oop"
+    },
+    {
+      "begriff": "virtual / override",
+      "sprache": "cpp",
+      "erklaerung": "virtual in der Basisklasse erlaubt Überschreiben, override bestätigt es beim Überschreiben – sonst keine Polymorphie.",
+      "beispiel": "virtual std::string gib_laut() / ... gib_laut() override",
+      "kapitel": "oop"
+    },
+    {
+      "begriff": "Polymorphie",
+      "sprache": "beide",
+      "erklaerung": "Gleiche Methode, unterschiedliches Verhalten je nach Klasse – z. B. gib_laut(): Tier \"...\", Hund \"Wuff\".",
+      "kapitel": "oop"
+    },
+    {
+      "begriff": "Exception",
+      "sprache": "beide",
+      "erklaerung": "Fehler als Objekt, das den normalen Ablauf unterbricht – z. B. ValueError (Python), std::runtime_error (C++).",
+      "kapitel": "fehlerbehandlung"
+    },
+    {
+      "begriff": "try/except – try/catch",
+      "sprache": "beide",
+      "erklaerung": "Gefährlichen Code absichern und Fehler kontrolliert abfangen statt abstürzen zu lassen.",
+      "beispiel": "try: ... except ValueError: / try { } catch (const std::exception& e) { }",
+      "kapitel": "fehlerbehandlung"
+    },
+    {
+      "begriff": "throw / raise",
+      "sprache": "beide",
+      "erklaerung": "Einen Fehler bewusst auslösen: raise ValueError(...) bzw. throw std::runtime_error(...).",
+      "kapitel": "fehlerbehandlung"
+    },
+    {
+      "begriff": "Traceback",
+      "sprache": "python",
+      "erklaerung": "Fehlerausgabe mit der Aufruf-Kette. Die letzte Zeile ist die eigentliche Fehlerursache.",
+      "kapitel": "fehlerbehandlung"
+    },
+    {
+      "begriff": "finally",
+      "sprache": "python",
+      "erklaerung": "Block, der IMMER läuft – ob ein Fehler kam oder nicht (z. B. zum Aufräumen).",
+      "kapitel": "fehlerbehandlung"
+    },
+    {
+      "begriff": "RAII",
+      "sprache": "cpp",
+      "erklaerung": "Ressourcen (Dateien, Speicher) geben sich in ihrem Destruktor automatisch frei – auch bei Exceptions. Kein manuelles Aufräumen nötig.",
+      "beispiel": "std::ifstream datei(\"daten.txt\"); // schließt sich selbst",
+      "kapitel": "fehlerbehandlung"
+    },
+    {
+      "begriff": "Stack",
+      "sprache": "cpp",
+      "erklaerung": "Speicherbereich für lokale Variablen – wird beim Verlassen des Blocks automatisch aufgeräumt.",
+      "kapitel": "speicher"
+    },
+    {
+      "begriff": "Heap",
+      "sprache": "cpp",
+      "erklaerung": "Frei verwalteter Speicherbereich: new reserviert, delete gibt frei. Vergessen = Speicherleck.",
+      "beispiel": "int* arr = new int[10]; ... delete[] arr;",
+      "kapitel": "speicher"
+    },
+    {
+      "begriff": "Pointer",
+      "sprache": "cpp",
+      "erklaerung": "Variable, die eine Speicheradresse speichert: int* p = &x; – mächtig und gefährlich.",
+      "beispiel": "int x = 5; int* p = &x;",
+      "kapitel": "speicher"
+    },
+    {
+      "begriff": "Garbage Collector",
+      "sprache": "python",
+      "erklaerung": "Räumt nicht mehr benötigte Objekte automatisch weg – Python übernimmt die Speicherverwaltung komplett, keine Pointer, keine Lecks.",
+      "kapitel": "speicher"
+    },
+    {
+      "begriff": "Speicherleck",
+      "sprache": "cpp",
+      "erklaerung": "new ohne delete – der Speicher wird nie freigegeben. Besser: Smart Pointer.",
+      "kapitel": "speicher"
+    },
+    {
+      "begriff": "Segmentation Fault",
+      "sprache": "cpp",
+      "erklaerung": "Absturz bei ungültigem Speicherzugriff – z. B. Zugriff auf freigegebenen Speicher oder falschen Pointer.",
+      "kapitel": "speicher"
+    },
+    {
+      "begriff": "Smart Pointer",
+      "sprache": "cpp",
+      "erklaerung": "std::unique_ptr u. a. geben Speicher automatisch frei – kein delete nötig, das moderne new/delete.",
+      "beispiel": "auto ptr = std::make_unique<int>(5);",
+      "kapitel": "speicher"
+    },
+    {
+      "begriff": "Debugger",
+      "sprache": "beide",
+      "erklaerung": "Werkzeug für Schritt-für-Schritt-Debugging mit Haltepunkten: pdb (Python), gdb (C++).",
+      "beispiel": "pdb.set_trace() / gdb ./datei",
+      "kapitel": "speicher"
+    },
+    {
+      "begriff": "TCP",
+      "sprache": "beide",
+      "erklaerung": "Zuverlässiges Transportprotokoll: Daten kommen garantiert an, in der richtigen Reihenfolge, ohne Verlust.",
+      "kapitel": "netzwerke"
+    },
+    {
+      "begriff": "UDP",
+      "sprache": "beide",
+      "erklaerung": "Schnelles Transportprotokoll ohne Garantie – Pakete werden nach dem Feuern-und-Vergessen-Prinzip verschickt.",
+      "kapitel": "netzwerke"
+    },
+    {
+      "begriff": "Socket",
+      "sprache": "beide",
+      "erklaerung": "Endpunkt einer Netzwerkverbindung. Server: socket → bind → listen → accept. Client: socket → connect.",
+      "kapitel": "netzwerke"
+    },
+    {
+      "begriff": "Port",
+      "sprache": "beide",
+      "erklaerung": "Nummer, die den Dienst auf einem Rechner adressiert (z. B. 50000).",
+      "beispiel": "server.bind((\"127.0.0.1\", 50000))",
+      "kapitel": "netzwerke"
+    },
+    {
+      "begriff": "IP-Adresse",
+      "sprache": "beide",
+      "erklaerung": "Adresse eines Rechners im Netzwerk – 127.0.0.1 ist der eigene Rechner (localhost).",
+      "kapitel": "netzwerke"
+    },
+    {
+      "begriff": "HTTP",
+      "sprache": "beide",
+      "erklaerung": "Protokoll des Webs: Der Client schickt einen Request, der Server antwortet mit Statuszeile, Headern und Body.",
+      "beispiel": "HTTP/1.1 200 OK",
+      "kapitel": "netzwerke"
+    },
+    {
+      "begriff": "Server / Client",
+      "sprache": "beide",
+      "erklaerung": "Der Server wartet auf Verbindungen (listen/accept), der Client baut sie aktiv auf (connect).",
+      "kapitel": "netzwerke"
+    },
+    {
+      "begriff": "Unit-Test",
+      "sprache": "beide",
+      "erklaerung": "Testet eine kleine Einheit (eine Funktion) mit festen Eingaben und erwarteten Ausgaben.",
+      "beispiel": "assert celsius_zu_fahrenheit(0) == 32",
+      "kapitel": "testing"
+    },
+    {
+      "begriff": "pytest",
+      "sprache": "python",
+      "erklaerung": "Standard-Test-Framework in Python: Testfunktionen heißen test_..., darin steht assert.",
+      "beispiel": "python3 -m pytest",
+      "kapitel": "testing"
+    },
+    {
+      "begriff": "assert",
+      "sprache": "beide",
+      "erklaerung": "Prüft eine Bedingung. Schlägt sie fehl, bricht der Test bzw. das Programm ab (Python: AssertionError; C++: Abbruch im Debug-Build).",
+      "kapitel": "testing"
+    },
+    {
+      "begriff": "Test-Framework",
+      "sprache": "cpp",
+      "erklaerung": "doctest, Catch2 oder GoogleTest liefern strukturierte Test-Ergebnisse statt Abstürzen – C++ hat kein eingebautes Framework.",
+      "beispiel": "TEST_CASE(\"MwSt\") { CHECK(mwst(100) == 19); }",
+      "kapitel": "testing"
+    },
+    {
+      "begriff": "TDD",
+      "sprache": "beide",
+      "erklaerung": "Test-Driven Development: Erst den Test schreiben, dann den Code – der Zyklus heißt Red-Green-Refactor.",
+      "kapitel": "testing"
+    },
+    {
+      "begriff": "Red-Green-Refactor",
+      "sprache": "beide",
+      "erklaerung": "Der TDD-Zyklus: RED (Test schlägt fehl) → GREEN (gerade genug Code, damit der Test grün wird) → REFACTOR (aufräumen).",
+      "kapitel": "testing"
+    },
+    {
+      "begriff": "Haltepunkt (Breakpoint)",
+      "sprache": "beide",
+      "erklaerung": "Stelle im Debugger, an der das Programm anhält, damit du Variablen prüfen kannst.",
+      "beispiel": "pdb.set_trace() / (gdb) break main",
+      "kapitel": "testing"
+    },
+    {
+      "begriff": "Stacktrace",
+      "sprache": "cpp",
+      "erklaerung": "Aufruf-Kette bis zum Absturz – zeigt dir den Weg zum Fehler (gdb: bt). Python-Pendant: Traceback.",
+      "kapitel": "testing"
+    },
+    {
+      "begriff": "Git",
+      "sprache": "beide",
+      "erklaerung": "Standard-Werkzeug zur Versionsverwaltung – sprachunabhängig, identische Befehle für Python und C++.",
+      "kapitel": "git"
+    },
+    {
+      "begriff": "Repository",
+      "sprache": "beide",
+      "erklaerung": "Der Ordner, den Git überwacht (git init).",
+      "kapitel": "git"
+    },
+    {
+      "begriff": "commit",
+      "sprache": "beide",
+      "erklaerung": "Momentaufnahme des Stands mit Nachricht.",
+      "beispiel": "git commit -m \"feat: Funktion hinzugefügt\"",
+      "kapitel": "git"
+    },
+    {
+      "begriff": "push",
+      "sprache": "beide",
+      "erklaerung": "Lädt die Commits auf den Server (z. B. GitHub).",
+      "beispiel": "git push origin main",
+      "kapitel": "git"
+    },
+    {
+      "begriff": "Branch",
+      "sprache": "beide",
+      "erklaerung": "Parallele Arbeitslinie: Auf einem Feature-Branch darf der Build zwischendurch kaputt sein – auf main nicht!",
+      "beispiel": "git switch -c feature/noten",
+      "kapitel": "git"
+    },
+    {
+      "begriff": "merge",
+      "sprache": "beide",
+      "erklaerung": "Bringt die Änderungen eines Branches zurück in einen anderen.",
+      "beispiel": "git merge feature/noten",
+      "kapitel": "git"
+    },
+    {
+      "begriff": "Staging",
+      "sprache": "beide",
+      "erklaerung": "git add stellt Änderungen für den nächsten Commit bereit.",
+      "beispiel": "git add datei.py",
+      "kapitel": "git"
+    },
+    {
+      "begriff": ".gitignore",
+      "sprache": "beide",
+      "erklaerung": "Liste von Dateien, die Git ignoriert – Build-Artefakte (.o, .exe), __pycache__/, .venv/.",
+      "kapitel": "git"
+    },
+    {
+      "begriff": "Scrum",
+      "sprache": "beide",
+      "erklaerung": "Agiles Projektmanagement-Framework: feste Sprints, drei Rollen (Product Owner, Scrum Master, Development Team).",
+      "kapitel": "git"
+    },
+    {
+      "begriff": "CI (Continuous Integration)",
+      "sprache": "beide",
+      "erklaerung": "Bei jedem Push laufen Build und Tests automatisch – z. B. per GitHub Actions auf einem frischen System.",
+      "kapitel": "git"
+    },
+    {
+      "begriff": "Datei lesen/schreiben",
+      "sprache": "beide",
+      "erklaerung": "Python: open() + with-Block. C++: std::ifstream/std::ofstream. Nach dem Öffnen IMMER prüfen (try/except bzw. if (!datei)).",
+      "kapitel": "dateien_module"
+    },
+    {
+      "begriff": "with-Block",
+      "sprache": "python",
+      "erklaerung": "Kontextmanager, der die Datei automatisch schließt – auch bei Fehlern.",
+      "beispiel": "with open(\"daten.txt\", encoding=\"utf-8\") as datei:",
+      "kapitel": "dateien_module"
+    },
+    {
+      "begriff": "überschreiben vs. anhängen",
+      "sprache": "beide",
+      "erklaerung": "\"w\" bzw. std::ofstream überschreibt die Datei SOFORT, \"a\" bzw. std::ios::app hängt an. Bei wichtigen Daten erst sichern!",
+      "beispiel": "open(\"x.txt\", \"a\") / std::ofstream log(\"log.txt\", std::ios::app)",
+      "kapitel": "dateien_module"
+    },
+    {
+      "begriff": "Modul",
+      "sprache": "python",
+      "erklaerung": "Jede .py-Datei ist ein Modul. Code auf oberster Ebene läuft beim Import – deshalb der __name__-Guard.",
+      "beispiel": "import hilfsfunktionen",
+      "kapitel": "dateien_module"
+    },
+    {
+      "begriff": "Header-Datei",
+      "sprache": "cpp",
+      "erklaerung": ".h-Datei mit Deklarationen (Prototypen), die .cpp-Datei enthält die Definitionen. Eigene Header: #include \"mein_modul.h\".",
+      "kapitel": "dateien_module"
+    },
+    {
+      "begriff": "#pragma once",
+      "sprache": "cpp",
+      "erklaerung": "Verhindert, dass eine Header-Datei doppelt eingebunden wird (Alternative: Include-Guards).",
+      "kapitel": "dateien_module"
+    },
+    {
+      "begriff": "Eingabevalidierung",
+      "sprache": "beide",
+      "erklaerung": "Prüfen, ob eine Eingabe gültig ist, bevor man damit rechnet – Python: try/except ValueError, C++: std::cin.fail() + clear() + ignore().",
+      "kapitel": "taschenrechner"
+    },
+    {
+      "begriff": "std::cin.fail()",
+      "sprache": "cpp",
+      "erklaerung": "Meldet, ob die letzte Eingabe fehlschlug (z. B. \"abc\" statt Zahl). clear() löscht den Fehlerzustand, ignore() verwirft den Rest der Zeile.",
+      "kapitel": "taschenrechner"
+    },
+    {
+      "begriff": "std::runtime_error",
+      "sprache": "cpp",
+      "erklaerung": "Exception für Laufzeitfehler – z. B. Division durch 0 im Taschenrechner-Projekt.",
+      "beispiel": "throw std::runtime_error(\"Division durch 0\");",
+      "kapitel": "taschenrechner"
+    },
+    {
+      "begriff": "std::setprecision",
+      "sprache": "cpp",
+      "erklaerung": "Steuert die Nachkommastellen der Ausgabe (aus <iomanip>) – std::to_string gibt sonst immer 6 Nachkommastellen.",
+      "beispiel": "std::cout << std::setprecision(2) << x;",
+      "kapitel": "taschenrechner"
+    },
+    {
+      "begriff": "std::fmod",
+      "sprache": "cpp",
+      "erklaerung": "Modulo für Kommazahlen (aus <cmath>) – Python macht das automatisch mit %.",
+      "beispiel": "double rest = std::fmod(10.5, 3.0);",
+      "kapitel": "taschenrechner"
+    },
+    {
+      "begriff": "std::function",
+      "sprache": "cpp",
+      "erklaerung": "Kann Funktionen als Werte speichern – das C++-Pendant zum Python-Wörterbuch-Muster.",
+      "beispiel": "std::map<std::string, std::function<double(double,double)>> ops;",
+      "kapitel": "taschenrechner"
+    },
+    {
+      "begriff": "Referenzlösung",
+      "sprache": "beide",
+      "erklaerung": "Musterlösung im mini_projekt/referenz/ – bewusst getrennt von der Aufgabe: erst selbst bauen, dann vergleichen.",
+      "kapitel": "taschenrechner"
+    }
+  ]
+}

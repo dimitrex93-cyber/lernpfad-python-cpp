@@ -621,7 +621,7 @@ def lade_kapitel():
     for datei in sorted(os.listdir(SPRACHKURS_ORDNER)):
         if not datei.endswith(".json"):
             continue
-        if datei == "manifest.json":   # keine Kapiteldatei
+        if datei in ("manifest.json", "glossar.json"):  # keine Kapiteldatei
             continue
         with open(os.path.join(SPRACHKURS_ORDNER, datei),
                   encoding="utf-8") as f:
@@ -774,6 +774,67 @@ def zeige_wissen(auswahl=None, fortschritt=None):
         print(c("Bitte eine Nummer, eine Kapitel-ID oder q eingeben.", "gelb"))
 
 
+def lade_glossar():
+    """Lädt die Glossar-Einträge aus tools/sprachkurs/glossar.json."""
+    pfad = os.path.join(SPRACHKURS_ORDNER, "glossar.json")
+    if not os.path.isfile(pfad):
+        print(c("Kein Glossar gefunden.", "rot"))
+        return []
+    with open(pfad, encoding="utf-8") as f:
+        daten = json.load(f)
+    return daten.get("eintraege", [])
+
+
+def zeige_glossar(auswahl=None):
+    """Glossar der Grundbegriffe: Liste oder Suche nach Begriffen.
+
+    auswahl: optionaler Suchbegriff (z. B. 'int'); ohne Auswahl wird
+    interaktiv gefragt – Enter = komplette Liste, Text = Suche.
+    """
+    eintraege = lade_glossar()
+    if not eintraege:
+        return
+
+    sprach_label = {"python": "🐍 Python", "cpp": "⚙️  C++",
+                    "beide": "🤝 Beide"}
+
+    def passend(e, text):
+        if not text:
+            return True
+        heuhaufen = f"{e['begriff']} {e['erklaerung']} " \
+                    f"{e.get('beispiel', '')} {e.get('kapitel', '')}"
+        return text.lower() in heuhaufen.lower()
+
+    def drucke(gefunden):
+        if not gefunden:
+            print(c("Keine Begriffe gefunden.", "gelb"))
+            return
+        for e in sorted(gefunden, key=lambda x: x["begriff"].lower()):
+            label = sprach_label.get(e["sprache"], e["sprache"])
+            print(c(f"\n  {e['begriff']}", "fett") + c(f"  [{label}]", "cyan"))
+            print(f"    {e['erklaerung']}")
+            if e.get("beispiel"):
+                print(c(f"    z. B.: {e['beispiel']}", "dunkel"))
+            if e.get("kapitel"):
+                print(c(f"    → vertiefen: Kapitel {e['kapitel']}", "dunkel"))
+
+    if auswahl is not None:
+        drucke([e for e in eintraege if passend(e, auswahl)])
+        return
+
+    print(c("\n" + "═" * 62, "fett"))
+    print(c("  📚 Glossar: Grundbegriffe von A bis Z", "fett"))
+    print(c("═" * 62, "fett"))
+    print(c(f"{len(eintraege)} Begriffe aus allen Kapiteln.", "dunkel"))
+    print(c("Suche nach einem Begriff (z. B. 'int', 'main', 'include'). "
+            "Enter ohne Text = komplette Liste, q = zurück.", "dunkel"))
+    while True:
+        eingabe = input("Begriff: ").strip()
+        if eingabe.lower() in ("q", "quit", "exit"):
+            return
+        drucke([e for e in eintraege if passend(e, eingabe)])
+
+
 # ---------------------------------------------------------------------------
 # Hauptprogramm
 # ---------------------------------------------------------------------------
@@ -788,6 +849,7 @@ def zeige_menue(fortschritt):
             status += "✓" if (eintrag and eintrag["bestanden"]) else "·"
         print(f"  [{status}] {nr}: {titel}")
     print(c("  [···] w: Sprachkurs – Python & C++ im ganzen erklärt", "cyan"))
+    print(c("  [···] g: Glossar – Grundbegriffe von A bis Z", "cyan"))
     for p in PRUEFUNGEN:
         eintrag = fortschritt.get(p["key"])
         zugelassen, _ = pruefung_zugelassen(fortschritt, p)
@@ -823,6 +885,9 @@ def main():
                         help="Sprachkurs anzeigen (Python & C++ erklärt); "
                              "ohne KAPITEL: Kapitelübersicht, mit KAPITEL: "
                              "Kapitel direkt (ID oder Nummer, z. B. --wissen strings)")
+    parser.add_argument("--glossar", nargs="?", const="", metavar="BEGRIFF",
+                        help="Glossar der Grundbegriffe anzeigen; mit BEGRIFF: "
+                             "nur passende Einträge (z. B. --glossar int)")
     parser.add_argument("--schwierigkeit", "-s", metavar="STUFE",
                         choices=["leicht", "mittel", "schwer"],
                         help="Schwierigkeitsgrad direkt wählen "
@@ -876,11 +941,16 @@ def main():
                 status += "✓" if (eintrag and eintrag["bestanden"]) else "·"
             print(f"  [{status}] {nr}: {titel}")
         print(c("  [···] w: Sprachkurs – Python & C++ im ganzen erklärt", "cyan"))
+        print(c("  [···] g: Glossar – Grundbegriffe von A bis Z", "cyan"))
         print()
         return
 
     if args.wissen is not None:
         zeige_wissen(args.wissen or None, fortschritt)
+        return
+
+    if args.glossar is not None:
+        zeige_glossar(args.glossar or None)
         return
 
     if args.lernfeld is not None:
@@ -891,13 +961,17 @@ def main():
     # Kein Argument → Auswahlmenü
     zeige_menue(fortschritt)
     while True:
-        eingabe = input("Auswahl (1–8, w = Wissen, q = Ende): ")
+        eingabe = input("Auswahl (1–8, w = Wissen, g = Glossar, q = Ende): ")
         if eingabe.lower() in ("q", "quit", "exit"):
             print("Bis bald!")
             return
         if eingabe.lower() in ("w", "wissen"):
             zeige_wissen(None, fortschritt)
             # nach dem Sprachkurs zurück zum Menü
+            zeige_menue(fortschritt)
+            continue
+        if eingabe.lower() in ("g", "glossar"):
+            zeige_glossar()
             zeige_menue(fortschritt)
             continue
         if eingabe in ("7", "8"):
@@ -908,7 +982,7 @@ def main():
             stufe = args.schwierigkeit or waehle_stufe()
             run_test(int(eingabe), fortschritt, stufe)
             return
-        print(c("Bitte 1–8, w oder q eingeben.", "gelb"))
+        print(c("Bitte 1–8, w, g oder q eingeben.", "gelb"))
 
 
 if __name__ == "__main__":

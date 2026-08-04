@@ -15,6 +15,7 @@
     <button id="nav-ziel" class="nav-btn" onclick="zeigeAnsicht('ziel')">🎯 Ziel &amp; Mission</button>
     <button id="nav-quiz" class="nav-btn" onclick="zeigeAnsicht('quiz')">Quiz</button>
     <button id="nav-kurs" class="nav-btn" onclick="zeigeAnsicht('kurs')">Sprachkurs</button>
+    <button id="nav-glossar" class="nav-btn" onclick="zeigeAnsicht('glossar')">📚 Glossar</button>
   </nav>
 </header>
 
@@ -148,6 +149,26 @@
       <div class="button-reihe">
         <button id="kurs-weiter-btn" class="primary" onclick="kursNaechsterAbschnitt()">Weiter →</button>
         <button class="secondary" onclick="kursZurueck()">Kapitel schließen</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GLOSSAR ============ -->
+  <section id="ansicht-glossar" class="ansicht" hidden>
+    <div class="karte">
+      <h2>📚 Glossar: Grundbegriffe von A bis Z</h2>
+      <p class="subtitle">Alle wichtigen Begriffe des Kurses – nach Sprache filterbar, mit Suche. Jeder Eintrag nennt das passende Kapitel zum Vertiefen.</p>
+      <div class="glossar-suche">
+        <input type="text" id="glossar-suchfeld" placeholder="🔍 Begriff suchen … (z. B. int, main, include)" oninput="filterGlossar()">
+      </div>
+      <div class="glossar-filter" id="glossar-filter">
+        <button class="filter-btn active" data-sprache="alle" onclick="setGlossarSprache('alle')">Alle</button>
+        <button class="filter-btn" data-sprache="python" onclick="setGlossarSprache('python')">🐍 Python</button>
+        <button class="filter-btn" data-sprache="cpp" onclick="setGlossarSprache('cpp')">⚙️ C++</button>
+        <button class="filter-btn" data-sprache="beide" onclick="setGlossarSprache('beide')">🤝 Beide</button>
+      </div>
+      <div id="glossar-liste">
+        <p class="subtitle">Glossar wird geladen …</p>
       </div>
     </div>
   </section>

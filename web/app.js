@@ -79,16 +79,17 @@ function lfSchluessel(nr, stufe) {
 // Ansichten wechseln
 // ------------------------------------------------------------------
 function zeigeAnsicht(name) {
-  for (const id of ["start", "ziel", "quiz", "kurs"]) {
+  for (const id of ["start", "ziel", "quiz", "kurs", "glossar"]) {
     document.getElementById("ansicht-" + id).hidden = id !== name;
   }
-  for (const id of ["start", "ziel", "quiz", "kurs"]) {
+  for (const id of ["start", "ziel", "quiz", "kurs", "glossar"]) {
     document.getElementById("nav-" + id).classList.toggle("active", id === name);
   }
   if (name === "start") zeigeStart();
   if (name === "ziel") zeigeZiel();
   if (name === "quiz") zeigeQuizAuswahl();
   if (name === "kurs") zeigeKursUebersicht();
+  if (name === "glossar") zeigeGlossar();
 }
 
 // ------------------------------------------------------------------
@@ -652,6 +653,99 @@ function escapeHtml(s) {
   return String(s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+// ------------------------------------------------------------------
+// Glossar (Grundbegriffe aller Kapitel)
+// ------------------------------------------------------------------
+let glossarZustand = { eintraege: [], sprache: "alle", suche: "" };
+
+const GLOSSAR_SPRACHE_LABEL = {
+  python: "🐍 Python",
+  cpp: "⚙️ C++",
+  beide: "🤝 Beide",
+};
+const GLOSSAR_KAPITEL_TITEL = {
+  einfuehrung: "K1 Einführung",
+  einstieg: "K2 Einstieg",
+  variablen: "K3 Variablen",
+  operatoren: "K4 Operatoren",
+  bedingungen: "K5 Bedingungen",
+  schleifen: "K6 Schleifen",
+  strings: "K7 Strings",
+  listen: "K8 Listen",
+  funktionen: "K9 Funktionen",
+  oop: "K10 OOP",
+  fehlerbehandlung: "K11 Fehler",
+  speicher: "K12 Speicher",
+  netzwerke: "K13 Netzwerke",
+  testing: "K14 Testing",
+  git: "K15 Git",
+  dateien_module: "K16 Dateien",
+  taschenrechner: "K17 Projekt",
+  grundbegriffe: "K18 Grundbegriffe",
+};
+
+async function zeigeGlossar() {
+  const container = document.getElementById("glossar-liste");
+  if (!container) return;
+  if (!glossarZustand.eintraege.length) {
+    try {
+      const resp = await fetch(`${DATEN_PFAD}tools/sprachkurs/glossar.json`);
+      if (!resp.ok) throw new Error("Glossar nicht gefunden");
+      glossarZustand.eintraege = (await resp.json()).eintraege || [];
+    } catch (e) {
+      container.innerHTML =
+        `<p class="nicht-bestanden">Glossar konnte nicht geladen werden: ${escapeHtml(e.message)}</p>`;
+      return;
+    }
+  }
+  const feld = document.getElementById("glossar-suchfeld");
+  if (feld && !glossarZustand.suche) feld.value = "";
+  filterGlossar();
+}
+
+function setGlossarSprache(sprache) {
+  glossarZustand.sprache = sprache;
+  document.querySelectorAll("#glossar-filter .filter-btn").forEach((b) => {
+    b.classList.toggle("active", b.dataset.sprache === sprache);
+  });
+  filterGlossar();
+}
+
+function filterGlossar() {
+  const container = document.getElementById("glossar-liste");
+  if (!container) return;
+  const feld = document.getElementById("glossar-suchfeld");
+  glossarZustand.suche = (feld ? feld.value : "").trim().toLowerCase();
+
+  const eintraege = glossarZustand.eintraege.filter((e) => {
+    const sprachePasst = glossarZustand.sprache === "alle" ||
+      e.sprache === glossarZustand.sprache;
+    if (!sprachePasst) return false;
+    if (!glossarZustand.suche) return true;
+    const text = `${e.begriff} ${e.erklaerung} ${e.beispiel || ""} ${e.kapitel || ""}`.toLowerCase();
+    return text.includes(glossarZustand.suche);
+  });
+
+  if (!eintraege.length) {
+    container.innerHTML = `<p class="subtitle">Keine Begriffe gefunden – Suche oder Filter anpassen.</p>`;
+    return;
+  }
+
+  const sortiert = [...eintraege].sort((a, b) =>
+    a.begriff.localeCompare(b.begriff, "de"));
+  container.innerHTML = sortiert.map((e) => `
+    <div class="glossar-eintrag">
+      <div class="glossar-kopf">
+        <strong class="glossar-begriff">${escapeHtml(e.begriff)}</strong>
+        <span class="glossar-badge badge-${escapeHtml(e.sprache)}">${GLOSSAR_SPRACHE_LABEL[e.sprache] || escapeHtml(e.sprache)}</span>
+      </div>
+      <p class="glossar-erklaerung">${escapeHtml(e.erklaerung)}</p>
+      ${e.beispiel ? `<pre class="code glossar-beispiel">${escapeHtml(e.beispiel)}</pre>` : ""}
+      ${e.kapitel ? `<span class="glossar-kapitel">📖 ${GLOSSAR_KAPITEL_TITEL[e.kapitel] || escapeHtml(e.kapitel)}</span>` : ""}
+    </div>`).join("") +
+    `<p class="subtitle glossar-zaehler">${eintraege.length} von ${glossarZustand.eintraege.length} Begriffen</p>`;
 }
 
 // ------------------------------------------------------------------
