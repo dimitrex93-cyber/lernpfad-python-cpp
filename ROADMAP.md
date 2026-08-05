@@ -174,7 +174,7 @@ sind reines JSON und damit direkt im Frontend nutzbar.
 
 ## Phase 6 – „Einfach erklärt": alle Inhalte auf 10-Jährigen-Niveau
 
-**Status:** gestartet (05.08.2026) · **Standard:** STIL.md im Repo-Root
+**Status:** abgeschlossen (05.08.2026) · **Standard:** STIL.md im Repo-Root
 
 Alle Texte der Lern-App werden in einfache Sprache umgeschrieben: kurze
 Sätze, Alltags-Vergleiche (CPU = Chef, RAM = Schreibtisch, Server = Küche),
@@ -185,8 +185,8 @@ verfälscht; wo nötig, ersetzt man sie durch ein kürzeres, korrektes Beispiel.
 - [x] STIL.md (Stil-Guide) angelegt
 - [x] Kapitel 19 „So funktioniert diese App" (echter Python-Code der App, sicherheitsgekürzt)
 - [x] Muster: Kapitel 1 + Lernfeld-1-Fragen (15 Erklärungen)
-- [ ] Kapitel 2–18 umschreiben (nächste Sitzungen)
-- [ ] Fragen-Erklärungen Lernfeld 2–6 (75 Fragen)
+- [x] Kapitel 2–18 umschreiben (22 Dateien inkl. Fragenbanken, validiert: 0 Befunde)
+- [x] Fragen-Erklärungen Lernfeld 2–6 (75 Fragen)
 
 **Sicherheitsregel:** In Code-Schnipseln aus der echten App erscheinen nie
 echte Geheimnisse (Admin-Key, Tokens, sync_codes, Dateipfade, Server-IPs).

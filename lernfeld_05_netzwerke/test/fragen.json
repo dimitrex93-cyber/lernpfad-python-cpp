@@ -14,7 +14,7 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "TCP ist verbindungsorientiert: Vor dem Datenaustausch gibt es einen Verbindungsaufbau (Three-Way-Handshake), Pakete werden bestätigt und in Reihenfolge zugestellt. Verbindungslos und ohne Garantie ist UDP (z. B. für DNS).",
+      "erklaerung": "TCP arbeitet wie ein Telefonat. Erst wird die Verbindung aufgebaut, dann fließen die Daten. Diesen Aufbau nennt man Three-Way-Handshake (Drei-Schritte-Begrüßung). TCP bestätigt jedes Paket (Daten-Päckchen). Die Pakete kommen in der richtigen Reihenfolge an. UDP ist das Gegenteil: Es schickt ohne Verbindung und ohne Garantie los. DNS (das Adressbuch des Internets) nutzt UDP.",
       "schwierigkeit": "mittel"
     },
     {
@@ -29,7 +29,7 @@
       ],
       "antwort": 2,
       "punkte": 1,
-      "erklaerung": "Ein Port ist eine 16-Bit-Nummer (0–65535), über die der Zielrechner erkennt, welcher Dienst (z. B. Webserver auf 80/8080) die Daten empfangen soll. Der Server bindet sich an einen festen Port; der Client bekommt automatisch einen freien Quell-Port zugewiesen.",
+      "erklaerung": "Ein Port ist wie eine Türnummer am Haus. Er ist eine 16-Bit-Nummer zwischen 0 und 65535. Die Nummer sagt dem Zielrechner, welcher Dienst (Programm) die Daten bekommen soll. Ein Webserver lauscht zum Beispiel auf Port 80 oder 8080. Der Server nutzt immer denselben festen Port. Der Client (das anfragende Programm) bekommt automatisch einen freien Port.",
       "schwierigkeit": "leicht"
     },
     {
@@ -44,7 +44,7 @@
       ],
       "antwort": 1,
       "punkte": 1,
-      "erklaerung": "127.0.0.1 ist die Loopback-Adresse ('localhost') – der Rechner schickt die Daten an sich selbst. Deshalb eignen sich alle Aufgaben dieses Lernfelds für Tests ohne echtes Netzwerk.",
+      "erklaerung": "127.0.0.1 ist die Loopback-Adresse, auch localhost genannt. Das bedeutet 'eigener Rechner'. Der Rechner schickt die Daten an sich selbst, wie einen Brief an die eigene Haustür. Die Daten verlassen das Gerät nie. Deshalb kannst du damit alles testen, ohne ein echtes Netzwerk zu brauchen.",
       "schwierigkeit": "leicht"
     },
     {
@@ -59,7 +59,7 @@
       ],
       "antwort": 2,
       "punkte": 2,
-      "erklaerung": "listen() versetzt den Socket in den Lausch-Modus. Der Parameter ist die maximale Länge der Warteschlange für noch nicht akzeptierte Verbindungen – nicht die Anzahl erlaubter Clients und keine Zeitangabe.",
+      "erklaerung": "listen() schaltet den Socket (die Netzwerk-Verbindung) in den Lausch-Modus. Der Server wartet jetzt auf eingehende Verbindungen. Die Zahl 5 gibt die Länge der Warteschlange an. So viele wartende Verbindungen kann der Server zwischenspeichern. Es ist keine Obergrenze für Clients und keine Zeit in Sekunden.",
       "schwierigkeit": "mittel"
     },
     {
@@ -74,7 +74,7 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "Der Client sendet 'HALLO' und empfängt die Echo-Antwort als bytes-Objekt (b'HALLO'). decode('utf-8') wandelt es in den String 'HALLO' um, den print() ohne b'-Präfix ausgibt.",
+      "erklaerung": "Der Client schickt 'HALLO' an den Server. Der Echo-Server schickt es unverändert zurück. recv() liefert die Antwort als bytes (b'HALLO'). decode('utf-8') wandelt die bytes in Text um. So wird daraus der String 'HALLO'. print() zeigt ihn ohne das b' an.",
       "schwierigkeit": "schwer"
     },
     {
@@ -89,7 +89,7 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "Eine HTTP-Statuszeile hat das Format 'HTTP/<Version> <Statuscode> <Reason-Phrase>', z. B. 'HTTP/1.0 200 OK'. Der Statuscode 200 steht für 'OK', 404 für 'Not Found', 405 für 'Method Not Allowed'.",
+      "erklaerung": "Die HTTP-Statuszeile hat drei Teile. Zuerst kommt die Version, zum Beispiel HTTP/1.0. Dann kommt der Statuscode (die Nummer). Am Ende steht die Erklärung in Worten. So entsteht zum Beispiel 'HTTP/1.0 200 OK'. 200 heißt 'OK' (alles gut). 404 heißt 'Not Found' (Seite nicht gefunden). 405 heißt 'Method Not Allowed' (Methode nicht erlaubt).",
       "schwierigkeit": "mittel"
     },
     {
@@ -104,7 +104,7 @@
       ],
       "antwort": 2,
       "punkte": 2,
-      "erklaerung": "HTML-Seiten bekommen 'Content-Type: text/html; charset=utf-8'. Die charset-Angabe ist wichtig, damit der Browser Umlaute (ä, ö, ü) korrekt darstellt.",
+      "erklaerung": "HTML-Seiten bekommen den Content-Type (den Inhaltstyp) 'text/html; charset=utf-8'. 'text/html' sagt dem Browser: Das ist eine HTML-Seite. 'charset=utf-8' sagt ihm, wie er die Zeichen lesen soll. Ohne diese Angabe zeigt der Browser Umlaute wie ä, ö, ü falsch an.",
       "schwierigkeit": "mittel"
     },
     {
@@ -119,7 +119,7 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "SOCK_STREAM = TCP (verbindungsorientiert), SOCK_DGRAM = UDP (verbindungslos, datagrammbasiert). Das gilt in Python genauso wie in C++.",
+      "erklaerung": "Der Socket-Typ bestimmt das Protokoll. SOCK_STREAM steht für TCP: eine feste Verbindung wie ein Telefonat. SOCK_DGRAM steht für UDP: einzelne Pakete (Datagramme), ohne Verbindung. Diese Regel gilt in Python und in C++ genau gleich.",
       "schwierigkeit": "schwer"
     },
     {
@@ -134,7 +134,7 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "recv() blockiert, bis Daten ankommen. Würde der Server nacheinander auf jedem Client warten, könnte der zweite Client nie bedient werden. Ein Thread pro Client erlaubt echtes Nebeneinander (Python: threading, C++: std::thread).",
+      "erklaerung": "recv() wartet (blockiert), bis Daten ankommen. In dieser Zeit macht der Server nichts anderes. Ohne Threads würde er erst Client 1 bedienen und dann Client 2. Client 2 müsste lange warten, vielleicht für immer. Ein Thread (eine eigene Arbeitslinie) pro Client erlaubt echtes Nebeneinander. In Python heißt das Modul threading, in C++ std::thread.",
       "schwierigkeit": "mittel"
     },
     {
@@ -149,7 +149,7 @@
       ],
       "antwort": 2,
       "punkte": 2,
-      "erklaerung": "Ein sauber geschlossener TCP-Stream liefert bei recv() die leeren bytes b''. Das ist das Standard-Abbruchsignal, mit dem Server-Schleifen die Verbindung erkennen und beenden. (In C++ liefert recv() dann 0.)",
+      "erklaerung": "Schließt der Client die Verbindung sauber, liefert recv() die leeren bytes b'' zurück. Das ist das Standard-Abbruchsignal: 'Keine Daten mehr da'. Server-Schleifen erkennen daran das Ende und beenden die Verbindung. In C++ liefert recv() in dem Fall die Zahl 0.",
       "schwierigkeit": "schwer"
     },
     {
@@ -164,7 +164,7 @@
       ],
       "antwort": 2,
       "punkte": 2,
-      "erklaerung": "Die Caesar-Verschlüsselung verschiebt jeden Buchstaben um 3 Stellen: H→K, A→D, L→O, L→O, O→R. Das ergibt 'KDOOR'. (Der häufige Fehler 'KHOOR' entsteht, wenn man beide L's verwechselt.)",
+      "erklaerung": "Die Caesar-Verschlüsselung schiebt jeden Buchstaben um 3 Stellen im Alphabet nach vorn. H wird zu K. A wird zu D. L wird zu O. Auch das zweite L wird zu O. O wird zu R. Zusammen ergibt das KDOOR. Der Fehler KHOOR entsteht, wenn man die beiden L's verwechselt.",
       "schwierigkeit": "mittel"
     },
     {
@@ -179,7 +179,7 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "Caesar und Vigenère sind historische Verfahren: Die Zuordnung Zeichen → Geheimzeichen bleibt fest, daher sind sie per Häufigkeitsanalyse (Vigenère: Kasiski-Test) schnell brechbar. Echte Systeme nutzen geprüfte Algorithmen aus Bibliotheken (TLS, OpenSSL) – das ist Teil der Schutzbedarfsanalyse.",
+      "erklaerung": "Caesar und Vigenère sind alte Verfahren aus der Geschichte. Bei ihnen bleibt die Zuordnung von Buchstabe zu Geheimzeichen immer gleich. Ein Angreifer zählt, welche Zeichen oft vorkommen. Das nennt man Häufigkeitsanalyse. So knackt er den Code schnell. Bei Vigenère hilft der Kasiski-Test. Echte Systeme nutzen geprüfte Algorithmen aus Bibliotheken, zum Beispiel OpenSSL für TLS. Diese Entscheidung gehört zur Schutzbedarfsanalyse: Man prüft, wie viel Schutz die Daten brauchen.",
       "schwierigkeit": "leicht"
     },
     {
@@ -201,7 +201,7 @@
         "Spiele"
       ],
       "punkte": 4,
-      "erklaerung": "TCP ist verbindungsorientiert: Vor dem Datenaustausch wird eine Verbindung aufgebaut, Pakete werden bestätigt und bei Verlust erneut gesendet – Reihenfolge und Vollständigkeit sind garantiert. Typisch: Web (HTTP), E-Mail, Dateiübertragung. UDP ist verbindungslos und unzuverlässig: Pakete gehen ohne Garantie raus, können verloren gehen oder in falscher Reihenfolge ankommen – dafür geringe Latenz. Typisch: DNS-Abfragen, Video-/Sprach-Streaming, Online-Spiele, wo ein verlorenes Paket weniger schlimm ist als Verzögerung.",
+      "erklaerung": "TCP baut vor dem Datenaustausch eine Verbindung auf, wie ein Telefonat. Jedes Paket (Daten-Päckchen) wird bestätigt. Geht ein Paket verloren, schickt TCP es noch einmal. Reihenfolge und Vollständigkeit sind garantiert. TCP nutzen zum Beispiel das Web (HTTP), E-Mail und die Dateiübertragung. UDP baut keine Verbindung auf. Die Pakete gehen ohne Garantie los. Sie können verloren gehen oder in falscher Reihenfolge ankommen. Dafür ist UDP schnell: Die Latenz (Wartezeit) ist gering. UDP nutzen DNS-Abfragen, Video-Streaming, Sprach-Streaming und Online-Spiele. Dort ist ein verlorenes Paket weniger schlimm als eine Verzögerung.",
       "schwierigkeit": "schwer"
     },
     {
@@ -220,7 +220,7 @@
         "Verbindung annehmen"
       ],
       "punkte": 2,
-      "erklaerung": "socket() erzeugt den Socket (Datei-ähnliches Objekt für Netzwerkkommunikation). bind() weist ihm die lokale Adresse und den Port zu (z. B. 127.0.0.1:50000). listen() versetzt ihn in den Lausch-Modus und puffert eingehende Verbindungen in einer Warteschlange. accept() blockiert, bis ein Client sich verbindet, und liefert ein neues Socket für genau diese Verbindung.",
+      "erklaerung": "socket() erzeugt den Socket: ein Objekt für die Netzwerk-Kommunikation, ähnlich wie eine Datei. bind() gibt dem Socket die lokale Adresse und den Port, zum Beispiel 127.0.0.1:50000. listen() schaltet den Socket in den Lausch-Modus. Eingehende Verbindungen werden in einer Warteschlange gepuffert (zwischengespeichert). accept() wartet (blockiert), bis ein Client sich verbindet. Dann liefert es ein neues Socket genau für diese eine Verbindung.",
       "schwierigkeit": "mittel"
     },
     {
@@ -238,7 +238,7 @@
         "Lock"
       ],
       "punkte": 2,
-      "erklaerung": "recv() blockiert, bis Daten ankommen. Ohne Threads würde der Server die Verbindung erst komplett abarbeiten, bevor er die nächste annimmt – ein zweiter Client würde blockieren bzw. in der listen()-Warteschlange hängen. Mit einem Thread pro Verbindung laufen die Anfragen nebeneinander. Neu entsteht das Problem der Race Conditions: Gemeinsam genutzte Daten (z. B. die Client-Liste) müssen mit Mutex/Lock geschützt werden.",
+      "erklaerung": "recv() wartet (blockiert), bis Daten ankommen. Ohne Threads arbeitet der Server eine Verbindung komplett ab, bevor er die nächste annimmt. Ein zweiter Client müsste warten: Er hängt in der Warteschlange von listen(). Mit einem Thread (einer eigenen Arbeitslinie) pro Verbindung laufen die Anfragen nebeneinander. Neu entsteht das Problem der Race Conditions: Zwei Threads greifen gleichzeitig auf dieselben Daten zu, zum Beispiel auf die Client-Liste. Deshalb schützt man die Daten mit einem Mutex (Lock, einem Schloss).",
       "schwierigkeit": "schwer"
     }
   ]

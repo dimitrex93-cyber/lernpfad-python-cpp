@@ -1,46 +1,46 @@
 {
   "id": "speicher",
   "titel": "Kapitel 12: Speicher und Pointer (C++)",
-  "einleitung": "Das ist das Kapitel, das C++ von Python am deutlichsten unterscheidet: Wer verwaltet den Speicher? Python nimmt dir die Arbeit ab, C++ gibt dir die volle Kontrolle – mit Verantwortung. Hier verstehst du, was unter der Haube passiert.",
+  "einleitung": "Hier lernst du den größten Unterschied zwischen C++ und Python kennen. Wer verwaltet den Speicher? Python macht das für dich. C++ gibt dir die Kontrolle. Dafür trägst du die Verantwortung. So schaust du dem Computer unter die Haube.",
   "abschnitte": [
     {
       "titel": "Automatische Speicherverwaltung in Python",
       "python": {
-        "text": "Python übernimmt die Speicherverwaltung komplett: Ein Garbage Collector räumt nicht mehr benötigte Objekte automatisch weg. Du musst Speicher weder reservieren noch freigeben und hast keine Pointer. Auch das Referenzzählen passiert unsichtbar – das ist einer der größten Komfortvorteile von Python.",
+        "text": "Python verwaltet den Speicher für dich. Ein Garbage Collector (der Aufräum-Roboter von Python) löscht Objekte, die du nicht mehr brauchst. Du musst keinen Speicher reservieren und keinen freigeben. Python zählt unsichtbar mit, wie viele Variablen ein Objekt benutzen. Pointer (Zeiger auf Adressen im Speicher) gibt es in Python nicht. Das ist ein großer Komfort-Vorteil.",
         "code": "def erstelle_liste():\n    liste = [1, 2, 3]   # Speicher wird reserviert\n    return liste        # lebt weiter\n\ndaten = erstelle_liste()\n# Wenn 'daten' nicht mehr gebraucht wird,\n# räumt der Garbage Collector automatisch auf.\n# Kein free(), kein delete – das macht Python."
       },
       "cpp": {
-        "text": "C++ gibt dir direkte Kontrolle: Lokale Variablen liegen auf dem Stack und werden beim Verlassen des Blocks automatisch aufgeräumt. Mit new reservierter Speicher liegt auf dem Heap – den musst du mit delete selbst freigeben. Pointer (int* p = &x;) speichern Speicheradressen. Fehler dabei (Vergessen, doppelt freigeben, falscher Zugriff) führen zu Speicherlecks oder Segmentation Faults.",
+        "text": "C++ gibt dir die volle Kontrolle über den Speicher. Lokale Variablen liegen auf dem Stack (einem Stapel). Beim Verlassen des Blocks räumt C++ sie automatisch auf. Speicher mit new liegt auf dem Heap (einem freien Bereich). Den musst du mit delete selbst freigeben. Ein Pointer (Zeiger) speichert eine Speicheradresse, zum Beispiel int* p = &x;. Wer vergisst, den Speicher freizugeben, erzeugt ein Speicherleck (verlorener Speicher). Doppeltes Freigeben oder falscher Zugriff lassen das Programm abstürzen (Segmentation Fault).",
         "code": "int x = 5;\nint* p = &x;        // p zeigt auf die Adresse von x\nstd::cout << *p;    // 5  (*p = Wert an der Adresse)\n\n// Heap-Speicher: selbst verwalten!\nint* arr = new int[10];\n// ... nutzen ...\ndelete[] arr;       // WICHTIG: selbst freigeben\n\n// Modern: smart pointer räumen automatisch auf\n#include <memory>\nauto ptr = std::make_unique<int>(5);\n// kein delete nötig!"
       },
-      "vergleich": "Python: Garbage Collector, keine Pointer, keine Lecks. C++: Stack automatisch, Heap manuell (oder smart pointer). Pointer sind Adressen – mächtig und gefährlich.",
-      "merk": "new = delete. Besser: std::unique_ptr. Python macht alles automatisch."
+      "vergleich": "Python: Der Aufräum-Roboter erledigt alles. Keine Pointer, keine Lecks. C++: Der Stack räumt sich selbst auf. Den Heap verwaltest du selbst. Oder du nimmst smart pointer (intelligente Zeiger) – die räumen automatisch auf.",
+      "merk": "new = delete: Wer Speicher mit new holt, gibt ihn mit delete zurück. Besser: std::unique_ptr. Python macht alles automatisch."
     },
     {
       "titel": "Referenzen und const – die sichere C++-Seite",
       "python": {
-        "text": "In Python sind alle Werte Referenzen auf Objekte – aber du merkst es kaum, weil unveränderliche Typen (int, str) sich wie Werte verhalten. Funktionen können große Objekte günstig übergeben, ohne dass du etwas tust. Das Konzept \"Referenz\" musst du in Python nicht aktiv lernen.",
+        "text": "In Python sind alle Werte Referenzen auf Objekte. Eine Referenz ist ein Hinweis auf ein Objekt. Du merkst es kaum, denn unveränderliche Typen (int, str) verhalten sich wie Werte. Funktionen bekommen große Objekte ganz leicht übergeben. Referenzen musst du in Python nicht aktiv lernen.",
         "code": "def aendern(liste):\n    liste.append(99)   # verändert das Original!\n\ndaten = [1, 2]\naendern(daten)\nprint(daten)          # [1, 2, 99]\n\n# Unveränderliche Typen verhalten sich wie Werte:\ndef plus_eins(x):\n    x += 1\n    return x\nn = 5\nplus_eins(n)\nprint(n)              # 5 (unverändert)"
       },
       "cpp": {
-        "text": "C++ unterscheidet Werte, Referenzen (&) und Pointer (*). Referenzen sind Aliase: void f(int& x) verändert das Original, ohne Kopie. const schützt: const int& kann nur lesen. Faustregel: Übergib große Objekte als const& (lesen ohne Kopie), veränderbare Objekte als &, kleine Werte einfach als Kopie. Pointer nur, wenn du Adressen oder Null-Zustände brauchst.",
+        "text": "C++ unterscheidet Werte, Referenzen (&) und Pointer (*). Eine Referenz ist ein anderer Name für dasselbe Objekt. void f(int& x) verändert das Original – ohne Kopie. const schützt: const int& kann das Objekt nur lesen. Faustregel: Große Objekte übergibst du als const& (lesen ohne Kopie). Veränderbare Objekte übergibst du als &. Kleine Werte gibst du einfach als Kopie. Pointer nimmst du nur, wenn du Adressen oder leere Zustände (Null) brauchst.",
         "code": "void lesen(const std::string& s) {  // keine Kopie, nur lesen\n    std::cout << s.size();\n}\n\nvoid aendern(std::string& s) {       // verändert Original\n    s += \"!\";\n}\n\nvoid als_kopie(std::string s) {      // teuer bei großen Strings\n    s += \"?\";\n}\n\nstd::string text = \"Hallo\";\naendern(text);       // text = \"Hallo!\"\nlesen(text);\nstd::cout << text;   // Hallo!"
       },
-      "vergleich": "Python: Referenzen unsichtbar, Unveränderliche schützen dich. C++: du wählst bewusst Kopie, & oder const& – und zahlst dafür in Performance.",
-      "merk": "C++-Faustregel: const& zum Lesen, & zum Ändern, Kopie nur für kleine Werte."
+      "vergleich": "Python: Referenzen passieren unsichtbar. Unveränderliche Typen schützen dich vor Fehlern. C++: Du entscheidest selbst zwischen Kopie, & und const&. Dafür arbeitet C++ schneller.",
+      "merk": "C++-Faustregel: const& liest, & ändert, Kopie nur für kleine Werte."
     },
     {
       "titel": "Kompilieren, Debuggen und Werkzeuge",
       "python": {
-        "text": "Python startest du direkt: python3 datei.py. Für größere Projekte: Virtuelle Umgebungen (venv) isolieren Pakete, pip installiert sie. Debuggen geht mit print(), besser aber mit dem pdb-Debugger (import pdb; pdb.set_trace()) oder einem IDE-Debugger. Syntaxfehler fallen beim Start auf, Laufzeitfehler erst an der betroffenen Zeile.",
+        "text": "Python startest du direkt: python3 datei.py. Für große Projekte gibt es virtuelle Umgebungen (venv). Sie halten Pakete getrennt. Pakete installierst du mit pip. Debuggen (Fehler suchen) geht mit print(). Besser ist der Debugger pdb: import pdb; pdb.set_trace(). Python zeigt Syntaxfehler (Schreibfehler) sofort beim Start. Laufzeitfehler (Fehler beim Ausführen) erscheinen erst an der betroffenen Zeile.",
         "code": "# Starten\n# python3 datei.py\n\n# Interaktiv testen (REPL):\n# python3\n# >>> 2 + 2\n# 4\n\n# Debuggen mit pdb:\nimport pdb\npdb.set_trace()   # Halt – jetzt Schritt für Schritt"
       },
       "cpp": {
-        "text": "C++ braucht den Build: g++ -std=c++17 -Wall -Wextra datei.cpp -o datei && ./datei. -Wall -Wextra schalten alle Warnungen ein – nutze sie IMMER. Debuggen mit gdb (gdb ./datei) oder IDE-Debuggern; Compiler-Fehlermeldungen zeigen Datei und Zeile. Für größere Projekte: CMake und ein Build-System statt Hand-Kompilieren.",
+        "text": "C++ übersetzt deinen Code zuerst in ein Programm. Das nennt man kompilieren: g++ -std=c++17 -Wall -Wextra datei.cpp -o datei. Danach startest du es mit ./datei. -Wall und -Wextra schalten alle Warnungen ein. Nutze sie immer! Fehler suchst du (debuggen) mit gdb oder einem IDE-Debugger. Der Compiler zeigt dir Datei und Zeile des Fehlers. Für große Projekte nimmst du CMake statt Hand-Kompilieren.",
         "code": "# Kompilieren (immer mit Warnungen!):\n# g++ -std=c++17 -Wall -Wextra datei.cpp -o datei\n# ./datei\n\n# Debuggen mit gdb:\n# g++ -std=c++17 -g datei.cpp -o datei   (-g = Debug-Infos)\n# gdb ./datei\n# (gdb) break main\n# (gdb) run\n\n# CMake für große Projekte: cmake -B build && cmake --build build"
       },
-      "vergleich": "Python: python3 startet sofort, pdb für Debugging. C++: erst kompilieren, gdb für Debugging, CMake für Projekte. -Wall -Wextra sind Pflicht.",
-      "merk": "C++-Build: g++ -std=c++17 -Wall -Wextra. Debuggen: pdb (Python) / gdb (C++)."
+      "vergleich": "Python: python3 startet sofort. Fehler suchst du mit pdb. C++: Erst kompilieren, dann starten. Fehler suchst du mit gdb. Große Projekte baust du mit CMake. -Wall und -Wextra sind Pflicht.",
+      "merk": "C++-Build: g++ -std=c++17 -Wall -Wextra. Fehler suchen: pdb (Python) oder gdb (C++)."
     }
   ]
 }

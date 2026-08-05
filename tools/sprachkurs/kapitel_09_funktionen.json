@@ -1,45 +1,45 @@
 {
   "id": "funktionen",
   "titel": "Kapitel 9: Funktionen – Code wiederverwenden",
-  "einleitung": "Funktionen bündeln Code unter einem Namen, damit du ihn mehrfach aufrufen kannst. Du lernst Definition, Parameter, Rückgabewerte und die Unterschiede zwischen den Sprachen – von einfachen Funktionen bis zu Default-Parametern.",
+  "einleitung": "Eine Funktion ist wie ein Rezept mit Namen. Du schreibst sie einmal auf und rufst sie beliebig oft auf. Du lernst Parameter (Eingaben), Rückgabewerte (Ergebnisse) und Default-Parameter. Außerdem siehst du die Unterschiede zwischen Python und C++.",
   "abschnitte": [
     {
       "titel": "Funktionen definieren und aufrufen",
       "python": {
-        "text": "In Python definierst du Funktionen mit def name(parameter):, gefolgt von eingerücktem Block. Rückgabetyp und Parametertypen werden NICHT angegeben – Python prüft zur Laufzeit. Ohne return liefert die Funktion None. Der Aufruf erfolgt mit name(argument).",
+        "text": "Eine Funktion legst du mit def an. Beispiel: def quadrat(x):. Danach kommt der Funktionskörper. Die Zeilen darin rückst du ein. Typen gibst du nicht an. Python prüft sie erst, wenn das Programm läuft. Ohne return liefert die Funktion None. None heißt: nichts. Aufrufen tust du die Funktion so: quadrat(4).",
         "code": "def quadrat(x):\n    return x * x\n\ndef begruesse(name):\n    print(f\"Hallo {name}!\")\n\nprint(quadrat(4))      # 16\nbegruesse(\"Anna\")     # Hallo Anna!\n\nprint(begruesse(\"Ben\"))  # None (kein return)"
       },
       "cpp": {
-        "text": "In C++ braucht jede Funktion einen Rückgabetyp (void, wenn nichts zurückkommt) und Typen für alle Parameter: int quadrat(int x). Aufruf wie in Python. Du kannst Deklaration (Prototyp) und Definition trennen – nützlich für eigene Header-Dateien. Ohne return ist das Verhalten bei nicht-void-Funktionen undefiniert!",
+        "text": "In C++ braucht jede Funktion einen Rückgabetyp. Das ist der Typ des Ergebnisses. Gibt es kein Ergebnis, schreibst du void. Auch jeder Parameter braucht einen Typ: int quadrat(int x). Den Aufruf schreibst du wie in Python. Du kannst die Ankündigung (Prototyp) von der Funktion trennen. Das hilft bei eigenen Header-Dateien. Fehlt return, ist das Verhalten undefiniert. Der Computer macht dann etwas Unerwartetes.",
         "code": "#include <iostream>\n\nint quadrat(int x) {      // Rückgabetyp + Parametertyp\n    return x * x;\n}\n\nvoid begruesse(std::string name) {\n    std::cout << \"Hallo \" << name << \"!\";\n}\n\nint main() {\n    std::cout << quadrat(4);   // 16\n    begruesse(\"Anna\");\n    return 0;\n}\n\n// Prototyp: int quadrat(int x);  -> Definition später"
       },
-      "vergleich": "Python: def + Einrückung, keine Typen. C++: Rückgabetyp, Parametertypen, geschweifte Klammern – und Prototypen möglich.",
+      "vergleich": "Python: def, Einrückung, keine Typen. C++: Rückgabetyp, Parametertypen und geschweifte Klammern. Prototypen gibt es nur in C++.",
       "merk": "Python: def f(x):  C++: int f(int x) { }"
     },
     {
       "titel": "Parameter und Argumente",
       "python": {
-        "text": "Python unterscheidet Positionsargumente (name(1, 2)) und Schlüsselwortargumente (name(x=1, y=2)). Default-Werte machen Parameter optional: def f(x, y=10) – y kannst du dann weglassen. Achtung, Falle: Als Default niemals eine veränderliche Liste verwenden (def f(x=[]) ist ein Anti-Pattern, da die Liste zwischen Aufrufen erhalten bleibt).",
+        "text": "Python kennt zwei Arten von Argumenten. Positionsargumente kommen in fester Reihenfolge: name(1, 2). Schlüsselwortargumente haben einen Namen: name(x=1, y=2). Ein Default-Wert macht einen Parameter optional. Beispiel: def f(x, y=10). Dann darfst du y weglassen. Achtung, Falle: Nimm nie eine Liste als Default. Die Liste bleibt über alle Aufrufe erhalten. Das nennt man Anti-Pattern – also eine schlechte Idee.",
         "code": "def beschreibe(name, alter, stadt=\"unbekannt\"):\n    print(f\"{name}, {alter}, aus {stadt}\")\n\nbeschreibe(\"Anna\", 25)                    # Positionsargumente\nbeschreibe(\"Ben\", stadt=\"Bonn\", alter=30) # Schlüsselwort\n\n# Anti-Pattern: def f(x=[]):  -> geteilte Liste!\ndef addiere(ziel, *werte):\n    return ziel + sum(werte)\nprint(addiere(1, 2, 3, 4))   # 10 (*werte sammelt)"
       },
       "cpp": {
-        "text": "C++ hat Default-Parameter ebenfalls: int f(int x, int y = 10). Es gibt keine Schlüsselwortargumente – die Reihenfolge ist fest. Referenzen machen Parameter effizient und veränderbar: void f(std::string& s) verändert das Original, void f(const std::string& s) liest ohne Kopie. Werte werden standardmäßig KOPIERT – bei großen Objekten teuer.",
+        "text": "Auch C++ kennt Default-Parameter: int f(int x, int y = 10). Schlüsselwortargumente gibt es nicht. Die Reihenfolge der Argumente ist fest. C++ kopiert Werte normalerweise. Das ist bei großen Objekten teuer. Mit einer Referenz (&) sparst du die Kopie. Eine Referenz ist wie ein zweiter Name für dieselbe Variable. void f(std::string& s) verändert das Original. Mit const liest du nur: void f(const std::string& s).",
         "code": "void beschreibe(std::string name, int alter,\n                std::string stadt = \"unbekannt\") {\n    std::cout << name << \", \" << alter\n              << \", aus \" << stadt;\n}\n\nbeschreibe(\"Anna\", 25);            // Default genutzt\nbeschreibe(\"Ben\", 30, \"Bonn\");\n\n// Referenz statt Kopie:\nvoid aendern(std::string& s) { s += \"!\"; }\n// const-Referenz zum Lesen: void lesen(const std::string& s)"
       },
-      "vergleich": "Default-Parameter gibt es in beiden. Python hat Schlüsselwortargumente und *args; C++ hat Referenzen (&) für Effizienz und Veränderbarkeit.",
+      "vergleich": "Beide Sprachen kennen Default-Parameter. Python hat Schlüsselwortargumente und *args. C++ hat Referenzen (&) gegen teure Kopien.",
       "merk": "Python: Schlüsselwortargumente, C++: Referenzen. Beide: Default-Parameter."
     },
     {
       "titel": "Gültigkeitsbereiche (Scopes)",
       "python": {
-        "text": "Variablen, die in einer Funktion definiert werden, sind lokal – außerhalb nicht sichtbar. Globale Variablen liest die Funktion, aber eine Zuweisung erzeugt eine NEUE lokale Variable, wenn du nicht global deklarierst. Als Faustregel: Funktionen sollten nur über Parameter und Rückgabewerte kommunizieren – globale Variablen sind ein Anti-Pattern.",
+        "text": "Ein Gültigkeitsbereich sagt: Wo ist die Variable sichtbar? Variablen aus einer Funktion sind lokal. Außerhalb der Funktion gibt es sie nicht. Eine globale Variable darf die Funktion lesen. Aber eine Zuweisung erzeugt eine NEUE lokale Variable. Nur mit dem Schlüsselwort global änderst du die globale. Faustregel: Funktionen kommunizieren nur über Parameter und Rückgabewerte. Globale Variablen sind ein Anti-Pattern – also eine schlechte Idee.",
         "code": "x = 10   # global\n\ndef f():\n    x = 5          # NEUE lokale Variable!\n    print(x)       # 5\n\nf()\nprint(x)           # 10 (global unverändert)\n\n# Mit 'global' (Vorsicht, Anti-Pattern):\ndef g():\n    global x\n    x = 99"
       },
       "cpp": {
-        "text": "In C++ gelten die gleichen Regeln: Variablen in geschweiften Klammern sind lokal. C++ hat zusätzlich Namensbereiche (namespaces): std::cout bedeutet cout aus dem namespace std – das verhindert Namenskollisionen in großen Projekten. using namespace std; am Anfang erspart das std::-Präfix, ist in größeren Dateien aber umstritten.",
+        "text": "In C++ gelten dieselben Regeln. Variablen in geschweiften Klammern sind lokal. Zusätzlich gibt es Namensbereiche (namespaces). Das ist wie ein Ordner für Namen. std::cout heißt: cout aus dem Ordner std. So stoßen Namen nicht zusammen, wenn zwei Stellen denselben Namen benutzen. Mit using namespace std; sparst du dir das std::. In großen Dateien ist das aber umstritten.",
         "code": "int x = 10;   // global\n\nvoid f() {\n    int x = 5;          // lokale Variable (schattiert global)\n    std::cout << x;     // 5\n}\n\n// namespaces:\n#include <iostream>\n// std::cout  = cout im namespace std\n// using namespace std;  -> dann reicht cout <<"
       },
-      "vergleich": "Lokale/globale Variablen funktionieren gleich. C++-namespaces (std::) sind die strukturierte Antwort auf Namenskollisionen.",
+      "vergleich": "Lokale und globale Variablen funktionieren in beiden Sprachen gleich. C++ hat zusätzlich namespaces (std::). So stoßen Namen nicht zusammen.",
       "merk": "Lokale Variablen schlagen globale. C++: std:: = namespace."
     }
   ]

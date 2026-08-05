@@ -14,7 +14,7 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "Ein Unit-Test prüft eine einzelne Einheit (Unit) – z. B. eine Funktion – isoliert mit festen Eingaben und erwarteten Ausgaben. Tests des ganzen Programms heißen Integrationstests bzw. End-to-End-Tests.",
+      "erklaerung": "Ein Unit-Test prüft nur ein kleines Stück Code, zum Beispiel eine einzelne Funktion. Das ist wie eine Probefahrt für ein Rad, nicht für das ganze Auto. Er gibt dem Code feste Eingaben und prüft die Ausgabe. Tests für das ganze Programm heißen Integrationstests oder End-to-End-Tests.",
       "schwierigkeit": "leicht"
     },
     {
@@ -29,7 +29,7 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "TDD heißt Red-Green-Refactor: Zuerst schreibt man einen Test, der fehlschlägt (RED). Dann implementiert man gerade so viel, dass er grün wird (GREEN). Zum Schluss verbessert man die Struktur, ohne das Verhalten zu ändern (REFACTOR).",
+      "erklaerung": "TDD läuft so: Zuerst schreibst du einen Test. Der schlägt fehl, das nennt man RED (Rot). Dann baust du gerade genug Code, bis der Test grün wird (GREEN). Zum Schluss räumst du den Code auf (REFACTOR). Das Verhalten bleibt dabei gleich.",
       "schwierigkeit": "mittel"
     },
     {
@@ -44,7 +44,7 @@
       ],
       "antwort": 2,
       "punkte": 1,
-      "erklaerung": "Refactoring verbessert die innere Qualität (Lesbarkeit, Wartbarkeit, DRY), während sich Ein- und Ausgabe nicht ändern. Neue Features gehören nicht ins Refactoring – sonst kann man Verhaltensänderungen nicht mehr von Strukturänderungen trennen.",
+      "erklaerung": "Beim Refactoring räumst du den Code auf: bessere Namen, keine doppelten Stellen, kleine Funktionen. So wird der Code lesbarer und leichter zu pflegen. Das Programm verhält sich danach genau wie vorher. Neue Features baust du beim Refactoring NICHT ein. Sonst kannst du Aufräumen und Verhaltensänderung nicht mehr unterscheiden.",
       "schwierigkeit": "leicht"
     },
     {
@@ -59,7 +59,7 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "pytest wird mit 'python3 -m pytest test_noten.py' gestartet. Ohne Dateiname sucht pytest automatisch nach Dateien, die mit test_ beginnen.",
+      "erklaerung": "Du startest pytest so: python3 -m pytest test_noten.py. Lässt du den Dateinamen weg, sucht pytest selbst. Es findet alle Dateien, die mit test_ beginnen.",
       "schwierigkeit": "leicht"
     },
     {
@@ -74,7 +74,7 @@
       ],
       "antwort": 1,
       "punkte": 1,
-      "erklaerung": "Ein fehlgeschlagener Test wird als 'failed' gemeldet, die anderen laufen weiter. pytest zeigt genau die assert-Zeile und beide Seiten des Vergleichs – das ist der große Vorteil gegenüber bloßem print()-Debugging.",
+      "erklaerung": "Schlägt ein Test fehl, meldet pytest ihn als 'failed'. Die anderen Tests laufen trotzdem weiter. pytest zeigt dir die genaue assert-Zeile und beide Werte. Du siehst den erwarteten und den echten Wert nebeneinander. Das ist besser als print()-Debugging.",
       "schwierigkeit": "mittel"
     },
     {
@@ -89,7 +89,7 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "assert() prüft zur Laufzeit: Ist die Bedingung falsch, bricht das Programm mit 'Assertion ... failed' ab (Exit-Code ungleich 0). Mit -DNDEBUG werden alle assert-Zeilen beim Kompilieren entfernt – dann findet keine Prüfung mehr statt.",
+      "erklaerung": "assert() ist wie ein Wächter im Programm. Stimmt die Bedingung nicht, bricht das Programm sofort ab. Es zeigt die Meldung 'Assertion ... failed' und liefert einen Exit-Code ungleich 0. Mit -DNDEBUG entfernt der Compiler beim Bauen alle assert-Zeilen. Dann prüft niemand mehr etwas.",
       "schwierigkeit": "mittel"
     },
     {
@@ -104,7 +104,7 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "Der Stacktrace zeigt, über welche Funktionsaufrufe die fehlerhafte Stelle erreicht wurde. Die unterste Zeile nennt den Fehlertyp (z. B. ZeroDivisionError) und die genaue Zeile – dort beginnt die Suche.",
+      "erklaerung": "Der Stacktrace ist wie eine Spur aus Brotkrumen. Er zeigt, welche Funktionen das Programm bis zum Fehler aufgerufen hat. Die unterste Zeile nennt den Fehlertyp, zum Beispiel ZeroDivisionError, und die genaue Zeile. Dort beginnst du mit der Suche.",
       "schwierigkeit": "leicht"
     },
     {
@@ -119,7 +119,7 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "Die Testfunktion test_kelvin ruft celsius_nach_kelvin(0) auf und vergleicht das Ergebnis per assert mit 273.15. Liefert die Funktion etwas anderes, schlägt der Test fehl und pytest zeigt den Vergleich.",
+      "erklaerung": "Die Funktion test_kelvin ruft celsius_nach_kelvin(0) auf. Dann prüft assert: Ist das Ergebnis 273.15? Liefert die Funktion etwas anderes, schlägt der Test fehl. pytest zeigt dir dann beide Werte zum Vergleichen.",
       "schwierigkeit": "mittel"
     },
     {
@@ -134,7 +134,7 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "'git checkout -b <name>' legt den Branch an UND wechselt hinein. 'git branch <name>' legt ihn nur an, ohne zu wechseln. Neuere Git-Versionen kennen auch 'git switch -c <name>'.",
+      "erklaerung": "'git checkout -b <name>' macht zwei Dinge: Es legt den Branch an. Und es wechselt sofort hinein. 'git branch <name>' legt den Branch nur an, du bleibst im alten. Neuere Git-Versionen können auch 'git switch -c <name>'.",
       "schwierigkeit": "mittel"
     },
     {
@@ -149,7 +149,7 @@
       ],
       "antwort": 2,
       "punkte": 1,
-      "erklaerung": "Der Product Owner (PO) ist für den Backlog verantwortlich: Er formuliert und priorisiert die Anforderungen (Issues). Der Scrum Master sorgt für den Prozess, das Dev-Team schätzt und setzt um.",
+      "erklaerung": "Der Product Owner (PO, der Produktverantwortliche) führt den Backlog. Der Backlog ist die Wunschliste mit allen Anforderungen (Issues). Der PO schreibt sie und entscheidet, was zuerst dran ist. Der Scrum Master passt auf den Ablauf auf. Das Development Team schätzt den Aufwand und setzt um.",
       "schwierigkeit": "leicht"
     },
     {
@@ -164,7 +164,7 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "CI bedeutet: Änderungen werden häufig (bei jedem Push) automatisch integriert, kompiliert und getestet. So findet man kaputte Änderungen sofort, statt erst kurz vor dem Release.",
+      "erklaerung": "CI (Continuous Integration) heißt: Bei jedem Push baut eine Maschine den Code automatisch. Danach testet sie ihn. Zum Beispiel eine GitHub-Actions-Pipeline. Ist etwas kaputt, merkst du es sofort. Du musst nicht bis kurz vor dem Release warten.",
       "schwierigkeit": "mittel"
     },
     {
@@ -179,7 +179,7 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "Bei zwei int-Operanden führt C++ eine Ganzzahl-Division durch und schneidet den Rest ab: 7 / 2 == 3. Für 3.5 müsste mindestens ein Operand double sein (z. B. 7.0 / 2). Der Test schlägt also fehl – der Klassiker beim Testen! Generell sollte man double-Vergleiche mit einer Toleranz (Approx) prüfen.",
+      "erklaerung": "C++ teilt 7 durch 2. Es schneidet den Rest ab: 7 / 2 ist 3, nicht 3.5. Beide Zahlen sind int (ganze Zahlen), deshalb gibt es keine Nachkommastellen. Für 3.5 brauchst du eine Kommazahl (double), zum Beispiel 7.0 / 2. Der Test schlägt also fehl. Das ist der Klassiker beim Testen! Tipp: double-Werte vergleichst du besser mit einer Toleranz (Approx).",
       "schwierigkeit": "schwer"
     },
     {
@@ -196,7 +196,7 @@
         "Verhalten unverändert"
       ],
       "punkte": 4,
-      "erklaerung": "Bei TDD schreibt man ZUERST einen Test für das gewünschte Verhalten und führt ihn aus – er schlägt fehl, weil die Funktion noch nicht existiert oder falsch ist (RED). Dann implementiert man gerade so viel, dass der Test grün wird (GREEN). Zum Schluss verbessert man die Struktur des Codes (Refactoring), ohne das Verhalten zu ändern – die Tests bleiben grün und dienen als Sicherheitsnetz.",
+      "erklaerung": "Bei TDD schreibst du ZUERST den Test. Du führst ihn aus, und er schlägt fehl (RED). Die Funktion existiert noch nicht oder ist falsch. Dann baust du gerade so viel Code, bis der Test grün wird (GREEN). Zum Schluss räumst du den Code auf (Refactoring), ohne das Verhalten zu ändern. Die Tests bleiben grün und sind dein Sicherheitsnetz.",
       "schwierigkeit": "schwer"
     },
     {
@@ -213,7 +213,7 @@
         "umsetzen"
       ],
       "punkte": 3,
-      "erklaerung": "Der Product Owner (PO) verwaltet und priorisiert den Product Backlog und vertritt die Kundeninteressen. Der Scrum Master sorgt dafür, dass der Scrum-Prozess eingehalten wird, und räumt Hindernisse (Impediments) des Teams aus dem Weg. Das Development Team setzt die Backlog-Einträge des Sprints um und schätzt den Aufwand.",
+      "erklaerung": "Der Product Owner (PO) führt den Product Backlog, die Wunschliste des Kunden. Er setzt die Prioritäten und vertritt die Kundeninteressen. Der Scrum Master achtet auf den Scrum-Ablauf und räumt Hindernisse (Impediments) aus dem Weg. Das Development Team setzt die Backlog-Einträge um und schätzt den Aufwand.",
       "schwierigkeit": "mittel"
     },
     {
@@ -230,7 +230,7 @@
         "automatisch"
       ],
       "punkte": 3,
-      "erklaerung": "Automatisierte Tests sind (1) wiederholbar und laufen in Sekunden – man kann sie nach jeder Änderung ausführen, (2) finden sie Regressionen: Änderungen, die etwas kaputt gemacht haben, fallen sofort auf, (3) dokumentieren sie das erwartete Verhalten als ausführbare Spezifikation, und (4) decken sie Randfälle (leere Listen, Grenzwerte) systematisch ab, an die man beim manuellen Testen nicht denkt. Außerdem lassen sie sich in CI-Pipelines einbinden.",
+      "erklaerung": "Automatisierte Tests sind besser, weil: (1) Sie sind wiederholbar und laufen in Sekunden. Du kannst sie nach jeder Änderung ausführen. (2) Sie finden Regressionen: Hat eine Änderung etwas kaputt gemacht, fällt das sofort auf. (3) Sie dokumentieren das erwartete Verhalten. Der Test ist also eine ausführbare Dokumentation. (4) Sie prüfen Randfälle wie leere Listen oder Grenzwerte. Daran denkst du beim manuellen Testen oft nicht. Und du kannst sie in eine CI-Pipeline einbauen.",
       "schwierigkeit": "schwer"
     }
   ]

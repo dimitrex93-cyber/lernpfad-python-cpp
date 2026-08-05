@@ -14,7 +14,7 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "min() liefert den kleinsten Wert (1), max() den größten (8) und sum() die Summe 5+2+8+1 = 16. Die Ausgabe ist also '1 8 16'.",
+      "erklaerung": "min() sucht die kleinste Zahl: das ist die 1. max() sucht die größte Zahl: das ist die 8. sum() rechnet alle Zahlen zusammen: 5 + 2 + 8 + 1 = 16. Die Ausgabe ist also: 1 8 16.",
       "schwierigkeit": "leicht"
     },
     {
@@ -29,7 +29,7 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "std::ifstream ist der Eingabe-Dateistrom; der Dateiname wird im Konstruktor übergeben. std::cin ist die Tastatur, std::ofstream schreibt Dateien, und open(...) mit \"r\" ist C-Stil und existiert in C++ so nicht.",
+      "erklaerung": "std::ifstream ist der Eingabe-Dateistrom, also ein Strohhalm zum Lesen aus der Datei. Der Dateiname steht direkt in den Klammern. std::cin ist die Tastatur, kein Datei-Leser. std::ofstream schreibt Dateien, statt zu lesen. open(...) mit \"r\" ist C-Stil und existiert in C++ so nicht.",
       "schwierigkeit": "leicht"
     },
     {
@@ -44,7 +44,7 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "readlines() liefert eine Liste aller Zeilen (jeweils inklusive \\n). read() liefert einen einzigen String, readline() nur die nächste Zeile, scan() existiert nicht.",
+      "erklaerung": "readlines() gibt eine Liste mit allen Zeilen zurück. Jede Zeile hat ihr Zeilenende (\\n) noch dabei. read() gibt nur einen einzigen langen Text zurück. readline() liest nur die nächste Zeile. scan() gibt es nicht.",
       "schwierigkeit": "leicht"
     },
     {
@@ -59,7 +59,7 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "Bubble Sort hat zwei verschachtelte Schleifen: rund n Durchläufe mit je bis zu n Vergleichen – macht ~n² Vergleiche. Bei doppelter Datenmenge dauert es also etwa 4× so lange.",
+      "erklaerung": "n ist die Anzahl der Elemente, also der Zahlen in der Liste. Bubble Sort hat zwei Schleifen ineinander. Die äußere läuft n-mal, die innere bis zu n-mal. Zusammen sind das rund n mal n Vergleiche, also n². Verdoppelst du die Daten, dauert es viermal so lange.",
       "schwierigkeit": "schwer"
     },
     {
@@ -74,7 +74,7 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "Das ist Bubble Sort: Nach dem ersten Durchlauf steht die 3 am Ende, nach dem zweiten die 2 – übrig bleibt die aufsteigend sortierte Liste [1, 2, 3].",
+      "erklaerung": "Das ist Bubble Sort: Es vergleicht immer zwei Nachbarn. Ist der linke größer, tauscht es die beiden. So wandert die 3 ans Ende, dann die 2. Übrig bleibt die sortierte Liste [1, 2, 3].",
       "schwierigkeit": "mittel"
     },
     {
@@ -89,7 +89,7 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "Die binäre Suche halbiert den Suchbereich und vergleicht mit dem mittleren Element – das funktioniert nur, wenn die Liste aufsteigend sortiert ist. Auf unsortierten Listen liefert sie falsche Ergebnisse.",
+      "erklaerung": "Die binäre Suche halbiert den Suchbereich und schaut auf das Element in der Mitte. Das funktioniert nur, wenn die Liste aufsteigend sortiert ist, also von klein nach groß. Bei unsortierten Listen stimmt das Ergebnis nicht.",
       "schwierigkeit": "mittel"
     },
     {
@@ -104,7 +104,7 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "Mitte von Index 0–4 ist 2 (Wert 5) – zu klein, also links = 3. Mitte von 3–4 ist 3 (Wert 7) – Treffer. Zurückgegeben wird der Index 3, nicht der Wert 7.",
+      "erklaerung": "Der Index ist die Position in der Liste, gezählt ab 0. Die Liste {1, 3, 5, 7, 9} hat die Indizes 0 bis 4. Mitte ist Index 2, dort steht 5. 5 ist kleiner als 7, also geht es rechts weiter, ab Index 3. Mitte von 3 und 4 ist Index 3, dort steht 7. Treffer! Zurück kommt der Index 3, nicht der Wert 7.",
       "schwierigkeit": "schwer"
     },
     {
@@ -119,7 +119,7 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "operator[] führt keine Bereichsprüfung durch – der Zugriff ist undefiniertes Verhalten (zur Laufzeit, der Compiler kann es nicht erkennen). at() wirft dagegen eine std::out_of_range-Exception. Python wirft bei Listen automatisch einen IndexError.",
+      "erklaerung": "v[10] greift direkt auf Platz 10 zu, ohne zu prüfen, ob es ihn gibt. Das Verhalten ist undefiniert: Das Programm kann abstürzen oder Unsinn liefern. Der Compiler merkt den Fehler nicht. at() prüft dagegen und meldet einen Fehler (std::out_of_range). Python wirft automatisch einen IndexError.",
       "schwierigkeit": "schwer"
     },
     {
@@ -134,7 +134,7 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "get(wort, 0) liefert 0, wenn das Wort noch nicht im Dictionary steht – so wird der erste Treffer zu 1, statt einen KeyError zu werfen. Die Variante ohne get würde beim ersten neuen Wort abstürzen.",
+      "erklaerung": "get(wort, 0) ist wie ein Nachschlagewerk mit Sicherheitsnetz. Steht das Wort noch nicht im Wörterbuch, kommt 0 zurück. So wird der erste Treffer zu 1, statt dass das Programm abstürzt. Ohne get gibt es beim ersten neuen Wort einen KeyError.",
       "schwierigkeit": "mittel"
     },
     {
@@ -149,7 +149,7 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "std::map bildet Schlüssel (Wort) auf Werte (Anzahl) ab – das Pendant zum Python-Dictionary. Ein vector kann nur eine Liste von Strings speichern, kein Schlüssel-Wert-Paar.",
+      "erklaerung": "std::map ist wie ein Wörterbuch: Zu jedem Wort (Schlüssel) gehört eine Zahl (Anzahl). Das ist das Gleiche wie das Dictionary in Python. Ein vector kann nur eine einfache Liste speichern, keine Schlüssel-Wert-Paare.",
       "schwierigkeit": "mittel"
     },
     {
@@ -164,7 +164,7 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "perf_counter() liefert eine hochauflösende, monotone Uhr – ideal, um zwei Aufrufe zu subtrahieren und so Programmteile zu messen. In C++ übernimmt std::chrono diese Rolle.",
+      "erklaerung": "perf_counter() ist eine Stoppuhr mit sehr feinen Strichen. Du rufst sie vor dem Code auf und danach noch einmal. Ziehst du die beiden Werte ab, hast du die Laufzeit in Sekunden. In C++ übernimmt std::chrono diese Rolle.",
       "schwierigkeit": "leicht"
     },
     {
@@ -179,7 +179,7 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "Der Interpreter muss jede Zeile zur Laufzeit parsen, typisieren und ausführen; kompiliertes C++ läuft als native Maschinenbefehle. In der Praxis sind selbst geschriebene C++-Schleifen oft 50–100× schneller.",
+      "erklaerung": "Python muss jede Zeile erst lesen und verstehen, während das Programm läuft. Das kostet Zeit. C++ wird vorher komplett in Maschinensprache übersetzt. Das ist die Sprache, die der Computer direkt versteht. Deshalb sind C++-Schleifen oft 50 bis 100 mal schneller.",
       "schwierigkeit": "schwer"
     },
     {
@@ -197,7 +197,7 @@
         "std::sort"
       ],
       "punkte": 4,
-      "erklaerung": "Bubble Sort nutzt zwei verschachtelte Schleifen: Die äußere läuft etwa n-mal, die innere im Mittel n/2-mal – zusammen rund n²/2 Vergleiche, also O(n²). Verdoppelt man die Datenmenge, vervierfacht sich die Laufzeit. Für große Datenmengen nimmt man deshalb schnellere Verfahren mit O(n · log n) – in Python sorted(), in C++ std::sort.",
+      "erklaerung": "n ist die Anzahl der Elemente. Bubble Sort nutzt zwei verschachtelte Schleifen. Die äußere läuft n-mal, die innere im Mittel n/2-mal. Zusammen sind das rund n²/2 Vergleiche, also O(n²). Das Wachstum ist quadratisch. Doppelte Datenmenge? Dann dauert es viermal so lange. Bei großen Datenmengen nimmst du schnellere Verfahren mit O(n · log n): in Python sorted(), in C++ std::sort.",
       "schwierigkeit": "schwer"
     },
     {
@@ -216,7 +216,7 @@
         "log n"
       ],
       "punkte": 3,
-      "erklaerung": "Man schaut auf das Element in der Mitte des Suchbereichs. Ist es der gesuchte Wert, ist man fertig. Ist der mittlere Wert kleiner als der gesuchte, sucht man nur in der rechten Hälfte weiter, sonst in der linken. So halbiert sich der Bereich pro Schritt – nach höchstens log₂(n) Schritten ist die Suche entschieden. Zurückgegeben wird der Index; nicht gefunden → -1.",
+      "erklaerung": "Die Liste muss sortiert sein, von klein nach groß. Du schaust auf das Element in der Mitte. Ist es der gesuchte Wert, bist du fertig. Ist es kleiner, suchst du nur in der rechten Hälfte weiter. Ist es größer, suchst du nur in der linken. So halbiert sich der Bereich bei jedem Schritt. Nach höchstens log₂(n) Schritten ist die Suche fertig. Zurück kommt der Index. Gibt es den Wert nicht, kommt -1.",
       "schwierigkeit": "mittel"
     },
     {
@@ -235,7 +235,7 @@
         "Ganzzahl-Division"
       ],
       "punkte": 3,
-      "erklaerung": "Z. B.: (1) Öffnen prüfen – if (!datei.is_open()) { ... }, sonst arbeitet das Programm bei fehlender Datei mit einem ungültigen Strom. (2) Richtige Leseschleife – while (datei >> wert) liest bis zum Dateiende, mit std::getline liest man ganze Zeilen. (3) Datentypen im Blick behalten – beim Durchschnitt aus int-Werten droht Ganzzahl-Division, also mit double rechnen. Optional: Datei am Ende schließen (macht der Destruktor automatisch).",
+      "erklaerung": "(1) Prüfe, ob das Öffnen geklappt hat: if (!datei.is_open()) { ... }. Fehlt die Datei, arbeitet das Programm sonst mit einem ungültigen Strom weiter. (2) Nutze die richtige Leseschleife: while (datei >> wert) liest bis zum Dateiende. Mit std::getline liest du ganze Zeilen. (3) Achte auf die Datentypen: Bei int-Werten droht die Ganzzahl-Division, 10 / 3 wird dann 3. Rechne mit double, damit 3,33 herauskommt. Optional: Schließe die Datei am Ende. Der Destruktor macht das automatisch.",
       "schwierigkeit": "mittel"
     }
   ]

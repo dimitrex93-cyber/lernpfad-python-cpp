@@ -14,7 +14,7 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "Eine Klasse beschreibt Attribute und Methoden – ein Bauplan. Erst wenn man daraus ein Objekt erzeugt (Python: konto = Bankkonto(); C++: Bankkonto konto;), entsteht eine konkrete Instanz im Speicher.",
+      "erklaerung": "Eine Klasse ist ein Bauplan, wie eine Lego-Anleitung. Sie beschreibt Attribute (Eigenschaften) und Methoden (Fähigkeiten). Erst wenn du ein Objekt erzeugst, entsteht eine echte Instanz im Speicher. In Python: konto = Bankkonto(). In C++: Bankkonto konto;",
       "schwierigkeit": "leicht"
     },
     {
@@ -29,7 +29,7 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "__init__ läuft beim Erzeugen des Objekts und legt das Instanz-Attribut self.name an. print(bello.name) gibt dann den gespeicherten Wert aus: Bello.",
+      "erklaerung": "__init__ ist die Start-Methode der Klasse. Sie läuft automatisch, sobald ein Objekt entsteht. Sie legt das Attribut self.name an und speichert den Namen darin. print(bello.name) gibt den Wert aus: Bello.",
       "schwierigkeit": "mittel"
     },
     {
@@ -44,7 +44,7 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "private kapselt Attribute: Nur Member-Funktionen der eigenen Klasse dürfen darauf zugreifen. Von außen (z. B. main()) gibt es einen Compilerfehler. In Python ist das nur eine Konvention (führender Unterstrich), in C++ erzwingt es der Compiler.",
+      "erklaerung": "private ist wie ein Safe in der Klasse. Nur Methoden derselben Klasse dürfen hineinschauen. Greift main() von außen zu, meldet der Compiler einen Fehler. In C++ erzwingt der Compiler das. In Python ist es nur eine Konvention (führender Unterstrich).",
       "schwierigkeit": "mittel"
     },
     {
@@ -59,7 +59,7 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "__init__ ist der Konstruktor: Er wird automatisch ausgeführt, sobald ein Objekt der Klasse erzeugt wird, und initialisiert die Attribute. Das Pendant in C++ ist der Konstruktor mit dem Klassennamen.",
+      "erklaerung": "__init__ ist der Konstruktor, der Bauhelfer der Klasse. Er läuft automatisch, sobald ein Objekt entsteht. Er befüllt die Attribute mit Werten (initialisieren). In C++ trägt der Konstruktor den Klassennamen.",
       "schwierigkeit": "leicht"
     },
     {
@@ -74,7 +74,7 @@
       ],
       "antwort": 2,
       "punkte": 1,
-      "erklaerung": "Der Name in der Klammer ist die Basisklasse: Auto erbt von Fahrzeug. In C++ schreibt man 'class Auto : public Fahrzeug { ... };'.",
+      "erklaerung": "Die Klammer nennt die Basisklasse: Auto erbt von Fahrzeug. Erben heißt: Auto bekommt alles, was Fahrzeug kann. In C++ schreibt man: class Auto : public Fahrzeug { ... };",
       "schwierigkeit": "leicht"
     },
     {
@@ -89,7 +89,7 @@
       ],
       "antwort": 0,
       "punkte": 3,
-      "erklaerung": "Wegen 'virtual' entscheidet die dynamische Bindung zur Laufzeit: Der Zeiger ist vom Typ Fahrzeug*, das Objekt dahinter aber ein Auto – also läuft Auto::starten(). Ohne 'virtual' würde 'Fahrzeug startet' ausgegeben. (Hinweis: In echten Programmen gehört ein virtueller Destruktor dazu, damit delete sauber aufräumt.)",
+      "erklaerung": "virtual heißt: Das Programm prüft zur Laufzeit, welches Objekt wirklich dahintersteckt. Der Zeiger ist vom Typ Fahrzeug*, aber das Objekt ist ein Auto. Also läuft Auto::starten() und gibt 'Auto startet' aus. Ohne virtual käme 'Fahrzeug startet'. Tipp: Ein virtueller Destruktor sorgt dafür, dass delete sauber aufräumt.",
       "schwierigkeit": "schwer"
     },
     {
@@ -104,7 +104,7 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "self ist der erste Parameter jeder Instanzmethode und verweist auf das jeweilige Objekt. Über self.name erreicht man die Attribute dieses Objekts. (In C++ übernimmt 'this' diese Rolle – wird aber meist implizit genutzt.)",
+      "erklaerung": "self ist ein Verweis auf das eigene Objekt. Jede Instanzmethode bekommt ihn als ersten Parameter. Mit self.name greifst du auf die Attribute dieses Objekts zu. In C++ heißt das this und wird meist automatisch benutzt.",
       "schwierigkeit": "leicht"
     },
     {
@@ -119,7 +119,7 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "Der Konstruktor läuft bei der Erzeugung (erstellt), dann die main()-Ausgabe (im Scope), und wenn main() endet, verlässt k seinen Scope – der Destruktor wird automatisch aufgerufen (zerstoert). Objekte auf dem Stack räumen sich selbst auf (RAII).",
+      "erklaerung": "Die Reihenfolge ist wie eine To-do-Liste. Zuerst läuft der Konstruktor: 'erstellt'. Dann gibt main() aus: 'im Scope'. Am Ende verlässt k seinen Scope (Gültigkeitsbereich). Sofort läuft der Destruktor: 'zerstoert'. Stack-Objekte räumen sich selbst auf. Das nennt man RAII.",
       "schwierigkeit": "schwer"
     },
     {
@@ -134,7 +134,7 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "Dynamischer Dispatch: Python schaut bei jedem Aufruf zur Laufzeit, welche Klasse das Objekt wirklich hat. Das erste Element ist ein Tier (...), das zweite ein Hund (Wuff!).",
+      "erklaerung": "Python fragt bei jedem Aufruf nach: Welche Klasse steckt wirklich in dem Objekt? Das nennt man dynamischen Dispatch. Das erste Element ist ein Tier, also kommt '...'. Das zweite ist ein Hund, also kommt 'Wuff!'.",
       "schwierigkeit": "mittel"
     },
     {
@@ -149,7 +149,7 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "override ist eine Absicherung: Passt die Signatur nicht zu einer virtuellen Methode der Basisklasse (z. B. wegen eines Tippfehlers), meldet der Compiler einen Fehler. Ohne override würde stillschweigend eine neue, eigene Methode entstehen – ein häufiger Fehler.",
+      "erklaerung": "override ist wie ein Sicherheitsgurt. Es sagt dem Compiler: Diese Methode soll eine Methode der Basisklasse ersetzen. Passt die Signatur nicht, zum Beispiel wegen eines Tippfehlers, meldet der Compiler sofort einen Fehler. Ohne override entsteht still eine neue, eigene Methode. Das ist ein häufiger Fehler.",
       "schwierigkeit": "mittel"
     },
     {
@@ -164,7 +164,7 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "__str__ definiert die menschenlesbare Darstellung: print(obj) und str(obj) nutzen sie. Ohne eigene Implementierung zeigt Python eine wenig hilfreiche Standard-Darstellung an. Das C++-Pendant ist eine eigene print()-Methode (oder später ein operator<<).",
+      "erklaerung": "__str__ sagt Python, wie ein Objekt als Text aussieht. print(obj) und str(obj) nutzen diese Darstellung. Ohne eigene __str__ zeigt Python eine unschöne Standard-Ausgabe. In C++ machst du das mit einer eigenen print()-Methode oder mit operator<<.",
       "schwierigkeit": "leicht"
     },
     {
@@ -179,7 +179,7 @@
       ],
       "antwort": 2,
       "punkte": 2,
-      "erklaerung": "Lokale Objekte werden deterministisch beim Verlassen ihres Scopes zerstört – in umgekehrter Reihenfolge ihrer Erstellung. Das ist RAII und ein zentraler Unterschied zu Python, wo __del__ nicht garantiert sofort läuft.",
+      "erklaerung": "Lokale Objekte werden zerstört, wenn ihr Scope (Gültigkeitsbereich) endet. Das passiert zuverlässig und in umgekehrter Reihenfolge der Erstellung. Das nennt man RAII. Python ist anders: Dort läuft __del__ nicht garantiert sofort.",
       "schwierigkeit": "schwer"
     },
     {
@@ -195,7 +195,7 @@
         "erzeugen"
       ],
       "punkte": 4,
-      "erklaerung": "Die Klasse ist der Bauplan bzw. die Vorlage: Sie definiert, welche Attribute und Methoden die Objekte haben (z. B. Bankkonto mit kontostand und einzahlen()). Ein Objekt (Instanz) ist ein konkretes Exemplar, das nach diesem Bauplan im Speicher erzeugt wurde (z. B. mein Konto mit 100 €). Von einer Klasse kann man beliebig viele Objekte erzeugen, jedes mit eigenen Attributwerten.",
+      "erklaerung": "Die Klasse ist der Bauplan, zum Beispiel für ein Bankkonto. Sie legt fest, welche Attribute und Methoden die Objekte haben, etwa kontostand und einzahlen(). Ein Objekt (Instanz) ist ein konkretes Exemplar aus diesem Bauplan. Zum Beispiel: mein Konto mit 100 Euro. Aus einem Bauplan kannst du beliebig viele Objekte bauen. Jedes hat eigene Attributwerte.",
       "schwierigkeit": "schwer"
     },
     {
@@ -211,7 +211,7 @@
         "unabhängig ändern"
       ],
       "punkte": 3,
-      "erklaerung": "Z. B.: 1) Zugriff kontrollieren – Methoden können Eingaben validieren (keine negativen Beträge, keine Überziehung). 2) Innereien schützen – Außenstehende können den Zustand nicht versehentlich kaputt machen. 3) Änderbarkeit – die interne Umsetzung (z. B. der Datentyp) kann geändert werden, ohne dass die Nutzer der Klasse etwas anpassen müssen. In C++ erzwingt private das; in Python ist es Konvention (Unterstrich).",
+      "erklaerung": "Drei Vorteile: 1) Zugriff kontrollieren: Methoden prüfen die Eingaben, zum Beispiel gegen negative Beträge oder Überziehung. 2) Innereien schützen: Außenstehende können den Zustand nicht versehentlich kaputtmachen. 3) Leicht änderbar: Die interne Umsetzung, zum Beispiel der Datentyp, kann sich ändern. Die Nutzer der Klasse merken davon nichts. In C++ erzwingt private das. In Python ist es nur Konvention (Unterstrich).",
       "schwierigkeit": "mittel"
     },
     {
@@ -228,7 +228,7 @@
         "vorhersehbar"
       ],
       "punkte": 3,
-      "erklaerung": "In Python wird __del__ von der Speicherverwaltung (Referenzzählung bzw. Garbage Collection) aufgerufen, wenn die letzte Referenz auf ein Objekt verschwindet – der Zeitpunkt ist nicht garantiert. In C++ werden Objekte auf dem Stack deterministisch beim Verlassen ihres Scopes zerstört (RAII); der Destruktor läuft also vorhersehbar und sofort. Deshalb kann C++ Ressourcen wie Dateien oder Speicher zuverlässig automatisch freigeben.",
+      "erklaerung": "Python räumt auf, wenn die letzte Referenz auf ein Objekt verschwindet. Das macht die Speicherverwaltung (Referenzzählung und Garbage Collection). Wann genau __del__ läuft, ist nicht garantiert. C++ ist anders: Stack-Objekte werden sofort zerstört, wenn ihr Scope endet (RAII). Der Destruktor läuft also vorhersehbar. Deshalb gibt C++ Dateien und Speicher zuverlässig automatisch frei.",
       "schwierigkeit": "schwer"
     }
   ]

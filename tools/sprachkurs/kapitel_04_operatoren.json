@@ -1,46 +1,46 @@
 {
   "id": "operatoren",
   "titel": "Kapitel 4: Operatoren und Ausdrücke",
-  "einleitung": "Operatoren verbinden Werte zu Ausdrücken: Rechnen, Vergleichen, Verknüpfen. Hier lernst du die wichtigsten Operatoren in beiden Sprachen – inklusive einer berühmten Falle bei der Division.",
+  "einleitung": "Ein Operator ist ein Zeichen wie + oder -. Er macht aus Werten ein Ergebnis: Aus 7 + 2 wird 13. Mit Operatoren rechnest du, vergleichst du und verknüpfst du Bedingungen. In diesem Kapitel lernst du die wichtigsten Operatoren von Python und C++. Mitten drin wartet eine berühmte Falle bei der Division.",
   "abschnitte": [
     {
       "titel": "Arithmetik: Rechnen mit Zahlen",
       "python": {
-        "text": "Python kennt + - * / // % **. Wichtig: / liefert IMMER eine Kommazahl – 10 / 3 ergibt 3.333... Auch wenn beide Zahlen ganze Zahlen sind! // ist die Ganzzahldivision (10 // 3 = 3), % der Rest (10 % 3 = 1), ** die Potenz (2 ** 10 = 1024).",
+        "text": "Python kennt sieben Rechenzeichen: +, -, *, /, //, % und **. Das Zeichen / ergibt immer eine Kommazahl. 10 / 3 ist 3.333... – auch wenn beide Zahlen ganze Zahlen sind! // schneidet den Rest ab: 10 // 3 ist 3. % gibt nur den Rest, also das, was übrig bleibt: 10 % 3 ist 1. ** bedeutet Potenz, also mehrfach malnehmen: 2 ** 10 ist 1024.",
         "code": "print(10 / 3)    # 3.3333333333333335  (immer float!)\nprint(10 // 3)   # 3  (Ganzzahldivision)\nprint(10 % 3)    # 1  (Rest)\nprint(2 ** 10)   # 1024  (Potenz)\nprint(7 + 2 * 3) # 13  (Punkt vor Strich gilt)"
       },
       "cpp": {
-        "text": "C++ kennt + - * / % – aber kein ** (Potenz geht über std::pow). Die berühmte Falle: Bei zwei ganzen Zahlen ist / eine Ganzzahldivision! 10 / 3 ergibt 3, nicht 3.333. Erst wenn mindestens ein Operand eine Kommazahl ist, wird auch als Kommazahl dividiert. % (Modulo) gibt den Rest.",
+        "text": "C++ kennt +, -, *, / und %. Ein ** gibt es nicht. Für Potenzen nutzt du die Funktion std::pow. Jetzt die berühmte Falle: Wenn beide Zahlen ganze Zahlen sind, schneidet / den Rest ab. 10 / 3 ist also 3, nicht 3.333. Es reicht, wenn einer der Operanden eine Kommazahl ist. Operanden sind die Zahlen, mit denen das Zeichen rechnet. Dann kommt eine Kommazahl heraus. % heißt Modulo und gibt den Rest.",
         "code": "#include <iostream>\n\nint main() {\n    std::cout << 10 / 3 << std::endl;    // 3  (int / int!)\n    std::cout << 10.0 / 3 << std::endl;  // 3.33333\n    std::cout << 10 % 3 << std::endl;    // 1\n    std::cout << 7 + 2 * 3 << std::endl; // 13\n    return 0;\n}"
       },
-      "vergleich": "10 / 3: Python gibt 3.333..., C++ gibt 3 – weil int/int in C++ Ganzzahldivision ist. In Python musst du // explizit sagen, in C++ musst du explizit eine Kommazahl einsetzen.",
-      "merk": "Python: / = float, // = Ganzzahl. C++: int/int = Ganzzahl, sonst Kommazahl."
+      "vergleich": "Teilst du 10 durch 3, schreibt Python 3.333... hin. C++ schreibt 3 hin. Der Grund: Bei zwei ganzen Zahlen (int) schneidet C++ den Rest ab. In Python sagst du dafür //. In C++ setzt du eine Kommazahl ein.",
+      "merk": "Python: / ergibt eine Kommazahl, // eine ganze Zahl. C++: int geteilt durch int ergibt eine ganze Zahl."
     },
     {
       "titel": "Vergleichsoperatoren",
       "python": {
-        "text": "Vergleiche liefern immer einen bool: == (gleich), != (ungleich), <, >, <=, >=. Achtung: == vergleicht Werte, = weist zu – das ist die häufigste Anfängerfalle in beiden Sprachen. Strings lassen sich in Python direkt lexikografisch vergleichen (\"apfel\" < \"banane\").",
+        "text": "Mit Vergleichsoperatoren prüfst du, wie zwei Werte zueinander passen. Das Ergebnis ist immer ein bool – also wahr oder falsch. Die Zeichen sind: == (gleich), != (ungleich), < (kleiner) und > (größer). Dazu kommen <= (kleiner oder gleich) und >= (größer oder gleich). Achtung, die berühmteste Anfängerfalle: == vergleicht, = weist zu! Texte vergleichst du nach dem Alphabet: \"apfel\" < \"banane\" ist wahr, denn a kommt vor b.",
         "code": "alter = 18\nprint(alter == 18)   # True\nprint(alter != 21)   # True\nprint(alter >= 18)   # True\nprint(\"apfel\" < \"banane\")  # True (alphabetisch)"
       },
       "cpp": {
-        "text": "C++ kennt dieselben Vergleichsoperatoren: ==, !=, <, >, <=, >=. Das Ergebnis ist ein bool. Auch hier: == ist der Vergleich, = ist die Zuweisung. Ein häufiger C++-Fehler ist if (x = 5) – das weist zu (immer wahr) statt zu vergleichen. Gute Compiler warnen davor (-Wall).",
+        "text": "C++ kennt dieselben Zeichen: ==, !=, <, >, <= und >=. Das Ergebnis ist auch hier ein bool, also wahr oder falsch. Merke dir: == vergleicht, = weist zu. Eine Zuweisung gibt einer Variable einen Wert. Ein berühmter C++-Fehler ist if (x = 5). Das weist x den Wert 5 zu. Die Bedingung ist dann immer wahr. Gute Compiler warnen davor, wenn du -Wall einschaltest.",
         "code": "int alter = 18;\nbool a = (alter == 18);   // true\nbool b = (alter != 21);   // true\nbool c = (alter >= 18);   // true\n// if (alter = 18)  -> Zuweisung! Fehler (immer wahr)"
       },
-      "vergleich": "Gleiche Operatoren, gleiche Falle: == vergleicht, = weist zu. In C++ kann eine Zuweisung in einer Bedingung sogar kompilieren – Python verbietet das.",
-      "merk": "== ist der Vergleich, = die Zuweisung. Immer doppelt prüfen!"
+      "vergleich": "Beide Sprachen haben dieselben Zeichen und dieselbe Falle: == vergleicht, = weist zu. In C++ lässt der Compiler if (x = 5) einfach durch. Python verbietet das und meldet einen Fehler.",
+      "merk": "== vergleicht, = weist zu. Bei Bedingungen immer doppelt prüfen!"
     },
     {
       "titel": "Logische Operatoren: und / oder / nicht",
       "python": {
-        "text": "Python schreibt die logischen Operatoren als Wörter: and, or, not. Sie verknüpfen Bedingungen zu einem Gesamtergebnis. not kehrt um: not True ist False. Bedingungen lassen sich beliebig kombinieren – Klammern helfen bei der Lesbarkeit.",
+        "text": "Logische Operatoren verknüpfen Bedingungen zu einem Gesamtergebnis. Python schreibt sie als Wörter: and (und), or (oder), not (nicht). not dreht das Ergebnis um: not True ist False. Du darfst Bedingungen beliebig kombinieren. Klammern helfen, den Überblick zu behalten.",
         "code": "alter = 20\nhat_fuehrerschein = True\n\nif alter >= 18 and hat_fuehrerschein:\n    print(\"Darf Auto fahren\")\n\nif alter < 18 or alter > 65:\n    print(\"Sondertarif\")\n\nif not hat_fuehrerschein:\n    print(\"Kein Führerschein\")"
       },
       "cpp": {
-        "text": "C++ verwendet Symbole: && für und, || für oder, ! für nicht. In Bedingungen ist 0 falsch, alles andere wahr. Wichtig: && und || werten nur so viel aus wie nötig (Kurzschluss) – wenn der linke Teil von && schon falsch ist, wird der rechte nie ausgeführt.",
+        "text": "C++ nutzt Symbole statt Wörter: && für und, || für oder, ! für nicht. In Bedingungen zählt: 0 ist falsch, alles andere ist wahr. && und || arbeiten mit Kurzschluss. Kurzschluss heißt: Sie rechnen nur so lange, wie nötig. Ist der linke Teil von && schon falsch, prüft C++ den rechten Teil gar nicht mehr.",
         "code": "int alter = 20;\nbool hat_fuehrerschein = true;\n\nif (alter >= 18 && hat_fuehrerschein) {\n    std::cout << \"Darf Auto fahren\";\n}\nif (alter < 18 || alter > 65) {\n    std::cout << \"Sondertarif\";\n}\nif (!hat_fuehrerschein) {\n    std::cout << \"Kein Führerschein\";\n}"
       },
-      "vergleich": "and/or/not (Python) vs. &&/||/! (C++) – gleiche Logik, andere Schreibweise. Beide nutzen Kurzschluss-Auswertung.",
-      "merk": "Python: and, or, not. C++: &&, ||, !."
+      "vergleich": "Python schreibt and, or, not. C++ schreibt &&, ||, !. Die Logik ist dieselbe, nur die Schreibweise anders. Beide Sprachen stoppen bei && und ||, sobald das Ergebnis feststeht.",
+      "merk": "Python: and, or, not. C++: &&, ||, !. Das heißt: und, oder, nicht."
     }
   ]
 }

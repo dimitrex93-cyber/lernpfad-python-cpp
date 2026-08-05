@@ -1,45 +1,45 @@
 {
   "id": "git",
   "titel": "Kapitel 15: Git, Projektmanagement und CI",
-  "einleitung": "Programmieren ist Teamarbeit – auch mit deinem zukünftigen Ich. Git ist das Standard-Werkzeug zur Versionsverwaltung. Du lernst die wichtigsten Befehle, den Branch-Workflow, Scrum-Grundlagen und Continuous Integration (CI).",
+  "einleitung": "Programmieren ist Teamarbeit. Auch mit deinem zukünftigen Ich! Git ist das Standard-Werkzeug für Versionsverwaltung (das Verwalten von Code-Ständen). Du lernst die wichtigsten Befehle und Branches (Arbeitslinien). Dazu kommen Scrum und CI. CI (Continuous Integration) heißt: Nach jedem Push (Hochladen auf den Server) laufen die Tests automatisch.",
   "abschnitte": [
     {
       "titel": "Git-Grundlagen: Commits und Repositories",
       "python": {
-        "text": "Git ist sprachunabhängig – die Befehle sind für Python- und C++-Projekte identisch. Ein Repository ist der Ordner, den Git überwacht (git init). Änderungen landen in drei Schritten im Verlauf: git add (Staging-Bereich), git commit (Momentaufnahme mit Nachricht), git push (auf den Server). git status zeigt den aktuellen Zustand, git log die Geschichte.",
+        "text": "Git funktioniert mit jeder Sprache. Die Befehle sind bei Python und C++ gleich. Ein Repository (kurz Repo) ist der Ordner, den Git überwacht. Mit git init machst du einen Ordner zum Repository. Änderungen landen in drei Schritten im Verlauf. git add legt sie in den Staging-Bereich (den Wartebereich). git commit macht eine Momentaufnahme mit Nachricht. git push schickt sie auf den Server. git status zeigt den aktuellen Zustand. git log zeigt die Geschichte.",
         "code": "git init                  # Repo anlegen\n# Dateien bearbeiten ...\ngit status                # Was hat sich geändert?\ngit add datei.py          # Änderung stufen\ngit commit -m \"Erste Version\"   # Momentaufnahme\ngit log --oneline         # Verlauf ansehen\n\n# Auf GitHub/GitLab laden:\ngit remote add origin git@github.com:user/repo.git\ngit push -u origin main"
       },
       "cpp": {
-        "text": "Für C++-Projekte gelten dieselben Git-Befehle – aber zwei Besonderheiten: Erstens gehören kompilierte Dateien (die ausführbare .exe/Binary) und Build-Ordner NICHT ins Repository – sie landen in der .gitignore. Zweitens ist ein sauberer Commit-Stand besonders wertvoll, weil ein Build (Kompilieren + Linken) reproduzierbar sein sollte: gleicher Stand, gleiche Warnungen, gleiches Ergebnis.",
+        "text": "Für C++-Projekte gelten dieselben Git-Befehle. Aber es gibt zwei Besonderheiten. Erstens: Kompilierte Dateien (die ausführbare .exe) und Build-Ordner gehören NICHT ins Repository. Sie landen in der .gitignore (einer Liste von Dateien, die Git ignoriert). Zweitens: Ein sauberer Commit-Stand ist Gold wert. Sauber heißt: Alles kompiliert ohne Fehler. Ein Build (Kompilieren + Linken) sollte reproduzierbar sein. Das heißt: gleicher Stand, gleiche Warnungen, gleiches Ergebnis.",
         "code": "# .gitignore – kompilierte Artefakte ausschließen:\nbuild/\n*.o\n*.exe\nprojektname\n\n# Übliche C++-Arbeitsschleife:\ngit add main.cpp vergleich.md CMakeLists.txt\ngit commit -m \"feat: Funktion hinzugefügt\"\n# Erst bei sauberem Build committen!"
       },
-      "vergleich": "Git-Befehle sind identisch. C++-Projekte ignorieren Build-Artefakte (.o, Binaries), Python-Projekte z. B. __pycache__/ und .venv/.",
-      "merk": "add → commit → push. .gitignore hält Artefakte aus dem Repo."
+      "vergleich": "Die Git-Befehle sind identisch. C++-Projekte ignorieren Build-Artefakte (Dateien aus dem Kompilieren wie .o und Binaries). Python-Projekte ignorieren zum Beispiel __pycache__/ und .venv/.",
+      "merk": "add → commit → push. .gitignore hält Build-Dateien aus dem Repo."
     },
     {
       "titel": "Branches: paralleles Arbeiten",
       "python": {
-        "text": "Ein Branch ist eine parallele Arbeitslinie: Du kannst eine neue Funktion entwickeln, ohne main zu gefährden. git switch -c feature/noten erstellt und wechselt in einen neuen Branch. git merge bringt die Änderungen zurück. Der Workflow heißt kurz: Branch erstellen → arbeiten → committen → zurück zu main → mergen.",
+        "text": "Ein Branch (Zweig) ist eine parallele Arbeitslinie. Du kannst eine neue Funktion bauen, ohne main (die Hauptlinie) kaputt zu machen. git switch -c feature/noten erstellt einen neuen Branch und wechselt hinein. git merge bringt die Änderungen zurück. Der Workflow kurz: Branch erstellen → arbeiten → committen → zurück zu main → mergen.",
         "code": "git switch -c feature/noten   # Branch erstellen + wechseln\ngit switch main               # zurück zu main\n\ngit merge feature/noten       # Änderungen übernehmen\n\n# Übersicht:\ngit branch                    # alle Branches\ngit log --oneline --graph     # Verlauf mit Baum\n\n# Konflikt beim Merge?\n# Git markiert die Stellen, du entscheidest und committest."
       },
       "cpp": {
-        "text": "In C++-Projekten sind Branches besonders wichtig, weil große Refactorings (z. B. eine Klasse umbauen) das Projekt längere Zeit nicht baubar machen können. Auf einem Feature-Branch darf der Build zwischendurch kaputt sein – auf main nicht! Deshalb: Feature auf Branch entwickeln, erst mergen, wenn der Build sauber und die Tests grün sind.",
+        "text": "In C++-Projekten sind Branches besonders wichtig. Ein großes Refactoring (z. B. eine Klasse umbauen) kann das Projekt lange nicht baubar machen. Baubar heißt: Es lässt sich kompilieren (übersetzen). Auf einem Feature-Branch darf der Build zwischendurch kaputt sein. Auf main nicht! Deshalb: Entwickle das Feature auf einem Branch. Merge erst, wenn der Build sauber und die Tests grün sind.",
         "code": "# Feature-Branch für großes Refactoring:\ngit switch -c refactor/klasse\n# ... umbauen, zwischendurch ruhig kaputt ...\n# ... am Ende: kompilieren + Tests laufen lassen ...\n\ngit switch main\ngit merge refactor/klasse\n# main bleibt immer baubar!\n\n# Bei Merge-Konflikten in .cpp-Dateien:\n# <<<<<<< und >>>>>>> markieren die Konfliktstellen"
       },
-      "vergleich": "Branches funktionieren gleich. Faustregel für beide Sprachen: main bleibt immer baubar, Experimente laufen auf Feature-Branches.",
+      "vergleich": "Branches funktionieren in beiden Sprachen gleich. Faustregel: main bleibt immer baubar (kompilierbar). Experimente laufen auf Feature-Branches.",
       "merk": "Feature-Branch anlegen, arbeiten, erst mergen, wenn alles grün ist."
     },
     {
       "titel": "Scrum und Continuous Integration (CI)",
       "python": {
-        "text": "Scrum ist ein agiles Projektmanagement-Framework: In festen Sprints (2–4 Wochen) entsteht ein nutzbares Produkt-Inkrement. Drei Rollen: Product Owner (priorisiert das Product Backlog), Scrum Master (räumt Hindernisse weg), Development Team (baut). CI (Continuous Integration) heißt: Bei jedem Push läuft automatisch der Test – auf GitHub z. B. per GitHub Actions.",
+        "text": "Scrum ist eine agile Methode für Projektmanagement. Agil heißt: Arbeiten in kleinen Schritten mit viel Feedback. In festen Sprints (2–4 Wochen) entsteht ein nutzbares Stück Produkt. Es gibt drei Rollen. Der Product Owner entscheidet, was zuerst gebaut wird. Er pflegt das Product Backlog (die Aufgabenliste). Der Scrum Master räumt Hindernisse weg. Das Development Team baut das Produkt. CI (Continuous Integration) heißt: Bei jedem Push laufen die Tests automatisch. Grün heißt: Tests bestanden. Rot heißt: Etwas ist kaputt. Auf GitHub läuft das zum Beispiel per GitHub Actions.",
         "code": "# .github/workflows/tests.yml (GitHub Actions)\nname: Tests\non: [push]\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-python@v5\n        with:\n          python-version: \"3.12\"\n      - run: python3 -m pytest\n\n# Jeder Push -> Tests laufen automatisch\n# Rot = Push hat etwas kaputt gemacht"
       },
       "cpp": {
-        "text": "Scrum und CI funktionieren in C++-Projekten genauso – nur der CI-Build ist aufwendiger: Erst kompilieren (g++ -Wall -Wextra oder CMake), dann die Tests ausführen. Wichtig: CI läuft auf einem frischen System, damit Build-Artefakte von deinem Rechner keine Rolle spielen. Ein CI-Build, der auf deinem Rechner grün, aber in CI rot ist, ist ein klassischer Anfängerfehler.",
+        "text": "Scrum und CI funktionieren in C++-Projekten genauso. Nur der CI-Build ist aufwendiger. Erst kompilieren (g++ -Wall -Wextra oder CMake). Dann die Tests ausführen. Wichtig: CI läuft auf einem frischen System (einem sauberen Rechner ohne alte Dateien). So spielen Build-Artefakte von deinem Rechner keine Rolle. Ein klassischer Anfängerfehler: Der Build ist auf deinem Rechner grün (alles gut). In CI ist er rot (Fehler).",
         "code": "# .github/workflows/build.yml (GitHub Actions, C++)\nname: Build & Test\non: [push]\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - run: g++ -std=c++17 -Wall -Wextra \\\n              main.cpp -o programm\n      - run: ./programm\n\n# Frisches System -> reproduzierbarer Build"
       },
-      "vergleich": "Scrum und CI sind sprachunabhängig. Python-CI: pytest nach jedem Push. C++-CI: kompilieren + testen auf frischem System.",
+      "vergleich": "Scrum und CI funktionieren mit jeder Sprache. Python-CI: pytest (ein Test-Werkzeug) nach jedem Push. C++-CI: kompilieren und testen auf frischem System.",
       "merk": "Scrum: Product Owner, Scrum Master, Team. CI: jeder Push → automatischer Build + Tests."
     }
   ]

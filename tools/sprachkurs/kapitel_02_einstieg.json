@@ -1,46 +1,46 @@
 {
   "id": "einstieg",
   "titel": "Kapitel 2: Dein erstes Programm",
-  "einleitung": "Jetzt wird programmiert! Wir schreiben das erste Programm in beiden Sprachen, lernen den Einstiegspunkt von C++ kennen und holen Daten von der Tastatur – die Grundlage jeder Interaktion.",
+  "einleitung": "Jetzt wird programmiert! Wir schreiben unser erstes Programm in Python und in C++. Du lernst den Einstiegspunkt kennen. Das ist die Stelle, wo das Programm startet. Du holst Daten von der Tastatur. So spricht dein Programm mit dem Benutzer.",
   "abschnitte": [
     {
       "titel": "Hallo Welt!",
       "python": {
-        "text": "Ein Python-Programm läuft einfach von oben nach unten – es gibt kein Grundgerüst, keinen Pflicht-Baustein. Du schreibst Code in eine Datei (z. B. hallo.py) und führst sie mit python3 hallo.py aus. print() gibt Text auf der Konsole aus.",
+        "text": "Ein Python-Programm läuft einfach von oben nach unten. Es gibt kein Grundgerüst und keinen Pflicht-Baustein. Du schreibst den Code in eine Datei, zum Beispiel hallo.py. Dann startest du sie mit python3 hallo.py. print() gibt Text auf der Konsole aus. Die Konsole ist das schwarze Fenster, in dem du die Ausgabe siehst.",
         "code": "# hallo.py – dein erstes Python-Programm\nprint(\"Hallo Welt!\")\nprint(\"Ich lerne Python!\")\n\n# Ausführen im Terminal:\n# python3 hallo.py"
       },
       "cpp": {
-        "text": "Jedes C++-Programm braucht genau eine main-Funktion – hier beginnt die Ausführung, das ist der Pflicht-Einstiegspunkt. #include <iostream> bindet die Ein-/Ausgabe-Bibliothek ein. Ohne sie kennt der Compiler std::cout nicht. Jede Anweisung endet mit einem Semikolon. return 0 meldet dem Betriebssystem: alles gut.",
+        "text": "Jedes C++-Programm braucht genau eine main-Funktion. Hier beginnt die Ausführung. main ist der Pflicht-Einstiegspunkt. #include <iostream> lädt die Ein-/Ausgabe-Bibliothek. Eine Bibliothek ist eine Sammlung fertiger Bausteine. Ohne sie kennt der Compiler std::cout nicht. Der Compiler übersetzt deinen Code in ein Programm, das der Computer versteht. Das nennt man kompilieren. Jede Anweisung endet mit einem Semikolon. return 0 meldet dem Betriebssystem: Alles gut. Das Betriebssystem ist das Programm, das deinen Computer verwaltet.",
         "code": "#include <iostream>   // Ein-/Ausgabe bekannt machen\n\nint main() {          // Einstiegspunkt – Pflicht!\n    std::cout << \"Hallo Welt!\" << std::endl;\n    return 0;         // 0 = alles gut\n}\n\n// Kompilieren und starten:\n// g++ -std=c++17 -Wall -Wextra hallo.cpp -o hallo\n// ./hallo"
       },
-      "vergleich": "Python braucht kein Grundgerüst, C++ immer main(). Python braucht kein #include, C++ lädt nur das, was du anforderst.",
-      "merk": "Python: Datei schreiben, python3 starten. C++: main() ist Pflicht, erst kompilieren, dann ausführen."
+      "vergleich": "Python braucht kein Grundgerüst. C++ braucht immer main(). Python braucht kein #include. C++ lädt nur das, was du anforderst.",
+      "merk": "Python: Datei schreiben, dann python3 starten. C++: main() ist Pflicht. Erst kompilieren, dann ausführen."
     },
     {
       "titel": "Der Einstiegspunkt im Detail",
       "python": {
-        "text": "Python braucht keinen besonderen Einstiegspunkt: Der Interpreter führt die Datei von oben nach unten aus. Der Block if __name__ == \"__main__\": ist nur eine Konvention – er stellt sicher, dass Code nur beim direkten Start läuft und nicht, wenn die Datei als Modul importiert wird. Für einfache Skripte brauchst du ihn nicht, bei größeren Programmen ist er gute Praxis.",
+        "text": "Python braucht keinen besonderen Einstiegspunkt. Ein Interpreter ist ein Programm, das deinen Python-Code ausführt. Der Interpreter arbeitet die Datei von oben nach unten ab. Der Block if __name__ == \"__main__\": ist nur eine Konvention. Eine Konvention ist eine Gewohnheit, an die sich alle halten. Er stellt sicher, dass der Code nur beim direkten Start läuft. Beim Import läuft er nicht. Ein Modul ist eine andere Python-Datei, die du mit import nutzt. Für einfache Skripte brauchst du den Block nicht. Bei größeren Programmen ist er gute Praxis.",
         "code": "def main():\n    print(\"Programm gestartet\")\n\nif __name__ == \"__main__\":\n    main()   # nur beim direkten Start, nicht bei import"
       },
       "cpp": {
-        "text": "main ist in C++ die Funktion, die das Betriebssystem aufruft. Der Rückgabetyp ist immer int – der Rückgabewert (0 = Erfolg, anderes = Fehlercode) geht an das Betriebssystem. Ohne main meldet der Linker einen Fehler: Das Programm kann nicht gebaut werden. main darf es nur EINMAL geben.",
+        "text": "main ist in C++ die Funktion, die das Betriebssystem aufruft. Der Rückgabetyp ist immer int. Der Rückgabewert geht an das Betriebssystem. 0 bedeutet Erfolg, alles andere ist ein Fehlercode. Ohne main meldet der Linker einen Fehler. Der Linker setzt die Bausteine des Programms zusammen. Dann lässt sich das Programm nicht bauen. main darf es nur EINMAL geben.",
         "code": "int main() {           // Rückgabetyp int ist Pflicht\n    // ... dein Code ...\n    return 0;           // an das Betriebssystem\n}\n// int main() ist die EINZIGE Stelle, an der ein\n// C++-Programm startet – egal wie groß das Projekt ist."
       },
-      "vergleich": "Wer ein C++-Programm liest, findet den Einstieg immer sofort (main). Bei Python musst du wissen, wo die oberste Ebene beginnt – meist einfach Zeile 1.",
-      "merk": "C++: genau eine int main(). Python: Skript läuft von oben nach unten."
+      "vergleich": "Bei C++ findest du den Einstieg immer sofort: main. Bei Python musst du wissen, wo das Programm beginnt. Meist ist das einfach Zeile 1.",
+      "merk": "C++: genau eine int main(). Python: Das Skript läuft von oben nach unten."
     },
     {
       "titel": "Ein- und Ausgabe: mit dem Benutzer sprechen",
       "python": {
-        "text": "input() liest eine Zeile von der Tastatur – und liefert IMMER einen String zurück. Willst du eine Zahl, musst du umwandeln: int(input(...)). print() gibt Text aus; mehrere Werte werden mit Komma getrennt und automatisch mit Leerzeichen verbunden.",
+        "text": "input() liest eine Zeile von der Tastatur. Es liefert IMMER einen String zurück. Ein String ist ein Text. Willst du eine Zahl, musst du umwandeln: int(input(...)). print() gibt Text aus. Mehrere Werte trennst du mit Komma. Python verbindet sie automatisch mit Leerzeichen.",
         "code": "name = input(\"Wie heißt du? \")\nprint(\"Hallo\", name, \"!\")   # Hallo Anna !\n\nalter_text = input(\"Wie alt bist du? \")\nalter = int(alter_text)      # String -> Zahl\nprint(\"Nächstes Jahr:\", alter + 1)"
       },
       "cpp": {
-        "text": "std::cout gibt aus (Operator <<), std::cin liest ein (Operator >>). Achtung, Falle: std::cin >> liest nur bis zum nächsten Leerzeichen – bei Namen mit Leerzeichen bleibt der Rest im Puffer. Für ganze Zeilen nimmst du std::getline(std::cin, text).",
+        "text": "std::cout gibt etwas aus. Dafür nutzt es den Operator <<. std::cin liest etwas ein. Dafür nutzt es den Operator >>. Ein Operator ist ein Zeichen, das eine Aktion auslöst. Achtung, Falle: std::cin >> liest nur bis zum nächsten Leerzeichen. Bei Namen mit Leerzeichen bleibt der Rest im Puffer. Der Puffer ist ein Zwischenspeicher. Für ganze Zeilen nimmst du std::getline(std::cin, text).",
         "code": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string name;\n    std::cout << \"Wie heißt du? \";\n    std::getline(std::cin, name);   // ganze Zeile lesen\n    std::cout << \"Hallo \" << name << \"!\" << std::endl;\n\n    int alter;\n    std::cout << \"Wie alt bist du? \";\n    std::cin >> alter;\n    std::cout << \"Nächstes Jahr: \" << alter + 1 << std::endl;\n    return 0;\n}"
       },
-      "vergleich": "input() liefert immer Text (selbst umwandeln!), std::cin >> wandelt je nach Zieltyp automatisch – kann aber bei falscher Eingabe in einen Fehlerzustand geraten.",
-      "merk": "Python: input() = immer String. C++: getline für ganze Zeilen, cin >> für einzelne Werte."
+      "vergleich": "input() liefert immer Text. Du musst selbst umwandeln. std::cin >> wandelt automatisch um. Es passt sich der Variable an. Bei falscher Eingabe gerät es in einen Fehlerzustand. Das heißt: Es meldet einen Fehler und liest nicht weiter.",
+      "merk": "Python: input() liefert immer einen String. C++: getline für ganze Zeilen, cin >> für einzelne Werte."
     }
   ]
 }

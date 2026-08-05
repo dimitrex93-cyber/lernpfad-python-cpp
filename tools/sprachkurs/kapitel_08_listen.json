@@ -1,46 +1,46 @@
 {
   "id": "listen",
   "titel": "Kapitel 8: Listen, Vektoren und Maps",
-  "einleitung": "Einzelne Werte sind langweilig – Sammlungen machen Programme mächtig. Du lernst die Python-Liste und den C++-std::vector kennen, ihre wichtigsten Operationen und den Unterschied zu assoziativen Strukturen (dict/map).",
+  "einleitung": "Einzelne Werte sind langweilig. Sammlungen machen Programme stark. Du lernst die Liste aus Python kennen. Du lernst den vector aus C++ kennen. Das sind Behälter für viele Werte. Am Ende lernst du dict und map kennen. Das sind Nachschlagewerke wie ein Wörterbuch.",
   "abschnitte": [
     {
       "titel": "Listen: mehrere Werte in einer Variable",
       "python": {
-        "text": "Eine Python-Liste ist dynamisch: Sie wächst und schrumpft, darf gemischte Typen enthalten und unterstützt Slicing (z. B. liste[1:3]). Wichtige Operationen: append() am Ende, insert() an einer Position, pop() entfernt und liefert, len() gibt die Länge, sorted()/sort() sortieren. Der Zugriff ist 0-basiert: liste[0] ist das erste Element, liste[-1] das letzte.",
+        "text": "Eine Liste ist ein Behälter für viele Werte. Sie wächst und schrumpft. Das nennt man dynamisch. Du darfst verschiedene Typen mischen. Zum Beispiel Zahlen und Wörter zusammen. append() hängt einen Wert ans Ende. insert() setzt einen Wert an eine bestimmte Stelle. pop() nimmt den letzten Wert heraus und gibt ihn zurück. len() zählt die Werte. sort() ordnet die Liste. Der Zugriff beginnt bei 0. liste[0] ist das erste Element. liste[-1] ist das letzte. liste[1:3] holt einen Teil heraus. Das nennt man Slicing. Das heißt Scheibenschneiden.",
         "code": "zahlen = [3, 1, 2]\nzahlen.append(4)          # [3, 1, 2, 4]\nzahlen.insert(0, 0)       # [0, 3, 1, 2, 4]\nletztes = zahlen.pop()    # 4, zahlen=[0,3,1,2]\nzahlen.sort()             # [0, 1, 2, 3]\nprint(len(zahlen))        # 4\nprint(zahlen[0], zahlen[-1])  # 0 3\nprint(zahlen[1:3])        # [1, 2]"
       },
       "cpp": {
-        "text": "Der dynamische Listen-Typ in C++ ist std::vector (aus <vector>). Er wächst bei Bedarf, Zugriff über [] oder .at() (at prüft die Grenzen). Wichtig: Ein vector<int> enthält NUR ints – gemischte Typen sind nicht erlaubt (statische Typisierung!). Operationen: push_back() am Ende, insert()/erase() in der Mitte (teuer), size() für die Länge, sort() aus <algorithm>.",
+        "text": "In C++ heißt die dynamische Liste vector. Der ganze Name ist std::vector. Er kommt aus der Bibliothek <vector>. Eine Bibliothek ist eine Sammlung fertiger Bausteine. Der vector wächst, wenn er Platz braucht. Du greifst mit [] oder .at() zu. .at() prüft vorher die Grenzen. Ein vector<int> enthält nur ints. Mischen ist nicht erlaubt. In C++ hat jeder Wert einen festen Typ. Das nennt man statische Typisierung. push_back() hängt einen Wert ans Ende. size() zählt die Werte. insert() und erase() arbeiten in der Mitte. Das kostet Zeit. sort() sortiert. Es kommt aus <algorithm>.",
         "code": "#include <vector>\n#include <algorithm>\n\nstd::vector<int> zahlen = {3, 1, 2};\nzahlen.push_back(4);              // {3,1,2,4}\nzahlen.insert(zahlen.begin(), 0); // {0,3,1,2,4}\nstd::sort(zahlen.begin(), zahlen.end());  // {0,1,2,3}\nstd::cout << zahlen.size();       // 4\nstd::cout << zahlen[0];           // 0\nstd::cout << zahlen.at(1);        // 1 (prüft Grenzen)"
       },
-      "vergleich": "list ↔ std::vector. Python kann Typen mischen und slicen; C++ ist typisiert, .at() schützt vor falschen Zugriffen, [] nicht.",
-      "merk": "append = push_back, len = size, sort aus <algorithm>. Python: gemischt erlaubt, C++: ein Typ."
+      "vergleich": "list (Python) und std::vector (C++) sind Geschwister. Python mischt Typen und kann slicen. C++ erlaubt nur einen Typ. .at() schützt vor falschen Zugriffen. [] macht das nicht.",
+      "merk": "append (Python) ist wie push_back (C++). len ist wie size. Python mischt Typen, C++ nicht."
     },
     {
       "titel": "Vorsicht: Zugriffe und Grenzen",
       "python": {
-        "text": "Zugriff auf einen Index, den es nicht gibt, wirft in Python einen IndexError – das Programm bricht mit einem Traceback ab, wenn du den Fehler nicht abfängst. Negative Indizes zählen von hinten: liste[-1] ist das letzte Element. Das ist bequem, aber verwirrend für Anfänger – bleib anfangs bei positiven Indizes.",
+        "text": "Jeder Wert in der Liste hat eine Nummer. Diese Nummer heißt Index. Greifst du auf einen Index zu, den es nicht gibt, meldet Python einen Fehler. Der Fehler heißt IndexError. Das Programm stoppt dann. So siehst du deinen Fehler sofort. Negative Indizes zählen von hinten. liste[-1] ist das letzte Element. Das ist bequem. Aber es verwirrt am Anfang. Bleib zuerst bei positiven Indizes.",
         "code": "liste = [10, 20, 30]\nprint(liste[0])    # 10\nprint(liste[-1])   # 30 (letztes Element)\nprint(liste[2])    # 30\n# print(liste[3])  -> IndexError: list index out of range"
       },
       "cpp": {
-        "text": "In C++ ist der Zugriff mit [] NICHT geprüft: v[10] auf einen 5-elementigen Vektor ist undefiniertes Verhalten – das Programm kann abstürzen oder Müll liefern. .at(10) wirft dagegen eine std::out_of_range-Exception, die du abfangen kannst. Faustregel: Wenn du nicht 100 % sicher bist, nutze .at() oder prüfe mit size().",
+        "text": "In C++ prüft [] die Grenzen nicht. v[10] auf einem Vektor mit 5 Werten? Das ist gefährlich. Das Programm kann abstürzen. Es kann auch Müll liefern. Das nennt man undefiniertes Verhalten. .at() prüft die Grenzen. Passt der Index nicht, meldet .at() einen Fehler. Der Fehler heißt std::out_of_range. Du kannst ihn abfangen. Dann läuft das Programm weiter. Faustregel: Bist du nicht sicher, nimm .at(). Oder prüfe mit size().",
         "code": "std::vector<int> v = {1, 2, 3, 4, 5};\n// std::cout << v[10];   // UB! Absturz oder Müll\n// Besser:\ntry {\n    std::cout << v.at(10);\n} catch (const std::out_of_range&) {\n    std::cout << \"Index außerhalb!\";\n}\nif (10 < v.size()) std::cout << v[10];"
       },
-      "vergleich": "Python wirft immer einen IndexError (sicher, aber Programm stoppt). C++ [] ist ungeprüft (schnell, aber gefährlich), .at() wirft eine Exception.",
-      "merk": "Python: IndexError. C++: [] = schnell/gefährlich, .at() = sicher."
+      "vergleich": "Python stoppt immer bei einem Fehler. Es zeigt den IndexError. Das ist sicher, aber das Programm endet. C++ mit [] ist schnell und gefährlich. C++ mit .at() ist sicher.",
+      "merk": "Python zeigt IndexError. C++: [] ist schnell, aber gefährlich. .at() ist sicher."
     },
     {
       "titel": "Maps: Schlüssel-Wert-Paare",
       "python": {
-        "text": "Ein dict ordnet Schlüsseln Werte zu – wie ein Nachschlagewerk: woerterbuch[\"schluessel\"] liefert den Wert. dicts sind extrem schnell (Hashtabelle), können beliebige Typen mischen und lassen sich mit {} oder dict() erzeugen. Wichtige Operationen: .keys(), .values(), .items(), .get(key, default) (ohne Fehler), in prüft, ob ein Schlüssel existiert.",
+        "text": "Ein dict ist ein Nachschlagewerk. Es arbeitet wie ein Wörterbuch. Jeder Schlüssel hat einen Wert. preise['apfel'] holt den Wert zum Schlüssel 'apfel'. Ein dict ist sehr schnell. Das funktioniert mit einer Hashtabelle. Eine Hashtabelle ist eine clevere Ablage. Du darfst verschiedene Typen mischen. .keys() zeigt alle Schlüssel. .values() zeigt alle Werte. .items() zeigt Schlüssel und Wert zusammen. .get('banane', 0) holt ohne Fehler. Gibt es den Schlüssel nicht, kommt 0. Mit in fragst du: Gibt es den Schlüssel?",
         "code": "preise = {\"apfel\": 0.50, \"birne\": 0.70}\nprint(preise[\"apfel\"])         # 0.5\npreise[\"kirsche\"] = 1.20       # neu eintragen\nprint(preise.get(\"banane\", 0)) # 0 (kein Fehler)\n\nfor schluessel, wert in preise.items():\n    print(schluessel, wert)\nprint(\"apfel\" in preise)       # True"
       },
       "cpp": {
-        "text": "Das C++-Pendant ist std::map (aus <map>, sortiert, langsamer) oder std::unordered_map (aus <unordered_map>, Hashtabelle, schnell – meist die bessere Wahl). Zugriff mit []: preise[\"apfel\"] – Achtung: Wenn der Schlüssel nicht existiert, legt [] ihn mit Standardwert AN! Deshalb zum Nachschlagen .find() oder .at() verwenden.",
+        "text": "Das Gegenstück in C++ heißt std::map. Es kommt aus <map>. Die map sortiert ihre Schlüssel. Sortieren kostet Zeit. Deshalb ist sie langsamer. std::unordered_map ist schneller. Sie nutzt eine Hashtabelle. Nimm meist die unordered_map. Jetzt kommt die berühmte Falle. preise['apfel'] sucht mit [] den Schlüssel. Gibt es ihn nicht, legt [] ihn einfach an. Mit einem Standardwert. Beim Nachschlagen willst du das nicht. Nutze dann .find() oder .at().",
         "code": "#include <map>\n#include <string>\n\nstd::map<std::string, double> preise;\npreise[\"apfel\"] = 0.50;      // eintragen\npreise[\"kirsche\"] = 1.20;\n\n// Achtung: [] legt fehlende Schlüssel AN!\nauto it = preise.find(\"birne\");\nif (it != preise.end()) {\n    std::cout << it->second;\n}\n// Oder: preise.at(\"birne\") wirft out_of_range"
       },
-      "vergleich": "dict (Python) ↔ std::unordered_map (C++). Python .get() ist elegant; C++ [] legt still Schlüssel an – die berühmte Falle, .find()/.at() sind sicherer.",
-      "merk": "C++ map: [] erzeugt fehlende Schlüssel! find() oder at() zum Nachschlagen."
+      "vergleich": "dict (Python) und std::unordered_map (C++) sind Geschwister. Beide sind schnelle Nachschlagewerke. .get() ist in Python bequem. In C++ legt [] fehlende Schlüssel heimlich an. Das ist die Falle. .find() und .at() sind sicherer.",
+      "merk": "C++ map: [] legt fehlende Schlüssel an. Zum Nachschlagen: find() oder at()."
     }
   ]
 }

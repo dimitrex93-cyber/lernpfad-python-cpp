@@ -14,7 +14,7 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "SELECT fragt Daten ab (Read in CRUD). INSERT legt Datensätze an, UPDATE ändert sie, DELETE löscht sie.",
+      "erklaerung": "SELECT liest Daten aus einer Tabelle – das ist das R in CRUD (Read = lesen). INSERT legt neue Datensätze an. UPDATE ändert vorhandene Datensätze. DELETE löscht Datensätze.",
       "schwierigkeit": "leicht"
     },
     {
@@ -29,7 +29,7 @@
       ],
       "antwort": 1,
       "punkte": 1,
-      "erklaerung": "Das Modul heißt sqlite3 und ist Teil der Standardbibliothek: import sqlite3. In C++ wäre es dagegen #include <sqlite3.h>.",
+      "erklaerung": "Das Modul heißt sqlite3 und gehört zur Standardbibliothek (die mitgelieferten Bausteine von Python). Du schreibst: import sqlite3. In C++ nutzt du stattdessen #include <sqlite3.h>.",
       "schwierigkeit": "leicht"
     },
     {
@@ -44,7 +44,7 @@
       ],
       "antwort": 1,
       "punkte": 1,
-      "erklaerung": "sqlite3 arbeitet transaktionsbasiert: Ohne commit() werden INSERT/UPDATE/DELETE nach Programmende verworfen. In C++ setzt man BEGIN; und COMMIT; selbst.",
+      "erklaerung": "sqlite3 sammelt deine Änderungen erst in einer Transaktion (einem Paket). con.commit() speichert das Paket dauerhaft in der Datei. Ohne commit() gehen INSERT, UPDATE und DELETE beim Programmende verloren. In C++ machst du das selbst mit BEGIN; und COMMIT;.",
       "schwierigkeit": "leicht"
     },
     {
@@ -59,7 +59,7 @@
       ],
       "antwort": 2,
       "punkte": 2,
-      "erklaerung": "Der Primärschlüssel macht jeden Datensatz eindeutig identifizierbar – so kann man einzelne Zeilen gezielt ändern oder löschen. INTEGER PRIMARY KEY AUTOINCREMENT vergibt die Werte automatisch.",
+      "erklaerung": "Der Primärschlüssel ist wie eine Ausweisnummer für jeden Datensatz. Jede Nummer gibt es nur einmal, keine ist leer (NULL). Damit findest du jede Zeile eindeutig und kannst sie gezielt ändern oder löschen. INTEGER PRIMARY KEY AUTOINCREMENT vergibt die Nummern automatisch.",
       "schwierigkeit": "mittel"
     },
     {
@@ -74,7 +74,7 @@
       ],
       "antwort": 2,
       "punkte": 1,
-      "erklaerung": "UPDATE ... SET ... WHERE ... ändert bestehende Zeilen. ALTER ändert dagegen die Tabellenstruktur (z. B. eine Spalte hinzufügen).",
+      "erklaerung": "UPDATE ... SET ... WHERE ... ändert vorhandene Zeilen. ALTER ändert dagegen den Bauplan der Tabelle, zum Beispiel fügt es eine Spalte hinzu.",
       "schwierigkeit": "leicht"
     },
     {
@@ -89,7 +89,7 @@
       ],
       "antwort": 3,
       "punkte": 3,
-      "erklaerung": "Direkt eingebaute Eingaben können den SQL-Befehl umschreiben (SQL-Injection, z. B. ' OR 1=1 --) und brechen bei Anführungszeichen. Platzhalter übergeben Werte getrennt vom Befehl – der Befehl bleibt fest.",
+      "erklaerung": "SQL-Injection ist ein Angriff: Der Nutzer schmuggelt SQL-Befehle in seine Eingabe. Baust du die Eingabe direkt in den SQL-String ein, kann sie deinen Befehl umschreiben. Beispiel: ' OR 1=1 -- liefert auf einmal alle Datensätze. Anführungszeichen im Text können den Befehl sogar kaputt machen. Platzhalter übergeben Werte getrennt vom Befehl. So bleibt der Befehl fest und die Eingabe ist nur Daten.",
       "schwierigkeit": "schwer"
     },
     {
@@ -104,7 +104,7 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "LIKE arbeitet mit %-Wildcards: %python% bedeutet 'beliebiger Text davor und danach' – gefunden wird jeder Titel, der 'python' irgendwo enthält.",
+      "erklaerung": "LIKE sucht mit % als Joker (Platzhalter). %python% heißt: beliebiger Text davor und danach. Gefunden wird jeder Titel, der 'python' irgendwo enthält.",
       "schwierigkeit": "mittel"
     },
     {
@@ -119,7 +119,7 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "-lsqlite3 linkt die sqlite3-Bibliothek. Ohne sie meldet der Linker unbekannte sqlite3_*-Symbole. Vorher muss libsqlite3-dev installiert sein.",
+      "erklaerung": "-lsqlite3 bindet die sqlite3-Bibliothek (fertige Bausteine) an dein Programm. Ohne sie kennt der Linker (der Zusammenbauer des Programms) die sqlite3-Befehle nicht und meldet einen Fehler. Vorher muss libsqlite3-dev installiert sein.",
       "schwierigkeit": "schwer"
     },
     {
@@ -134,7 +134,7 @@
       ],
       "antwort": 2,
       "punkte": 1,
-      "erklaerung": "JSON (JavaScript Object Notation) ist ein textbasiertes Datenformat, das sich leicht lesen und schreiben lässt – der Standard für den Datenaustausch zwischen Web-Diensten und Programmen.",
+      "erklaerung": "JSON ist ein Textformat für Daten (JavaScript Object Notation). Programme und Menschen können es leicht lesen und schreiben. Deshalb ist es der Standard, wenn Programme Daten austauschen, zum Beispiel mit Web-Diensten.",
       "schwierigkeit": "leicht"
     },
     {
@@ -149,7 +149,7 @@
       ],
       "antwort": 3,
       "punkte": 2,
-      "erklaerung": "ORDER BY erstellt_am DESC sortiert absteigend (neueste zuerst), LIMIT 3 begrenzt das Ergebnis auf die ersten 3 Zeilen.",
+      "erklaerung": "ORDER BY erstellt_am DESC sortiert absteigend, also die neuesten zuerst. LIMIT 3 nimmt nur die ersten 3 Zeilen. Zusammen liefert das die 3 neuesten Notizen.",
       "schwierigkeit": "mittel"
     },
     {
@@ -164,7 +164,7 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "CRUD ist das Grundmuster fast jeder Datenverwaltung: anlegen (INSERT), lesen (SELECT), ändern (UPDATE) und löschen (DELETE).",
+      "erklaerung": "CRUD ist das Grundmuster fast jeder Datenverwaltung. Die vier Buchstaben bedeuten: Create (anlegen), Read (lesen), Update (ändern), Delete (löschen). In SQL: INSERT, SELECT, UPDATE, DELETE.",
       "schwierigkeit": "leicht"
     },
     {
@@ -179,7 +179,7 @@
       ],
       "antwort": 0,
       "punkte": 2,
-      "erklaerung": "LIMIT 2 begrenzt auf die ersten beiden Zeilen. fetchall() liefert Tupel; zeile[0] ist das erste Element des Tupels, also der Titel – nicht das Tupel selbst. Ausgabe: Einkaufen, dann Sport.",
+      "erklaerung": "LIMIT 2 nimmt nur die ersten beiden Zeilen. fetchall() liefert Tupel (kleine Pakete mit Werten). zeile[0] holt das erste Element aus dem Paket, also den Titel. Deshalb gibt das Programm 'Einkaufen' und dann 'Sport' aus.",
       "schwierigkeit": "mittel"
     },
     {
@@ -195,7 +195,7 @@
         "lokal"
       ],
       "punkte": 3,
-      "erklaerung": "SQLite ist eine eingebettete Datenbank: Die komplette Datenbank liegt in einer einzigen Datei, es gibt keinen separaten Server-Prozess – das Programm spricht sie direkt über eine Bibliothek an. MySQL/PostgreSQL laufen dagegen als eigener Server-Prozess, mit dem Programme über das Netzwerk sprechen (Client-Server). SQLite ist einfacher und ideal für lokale Anwendungen, Server-DBMS sind für viele gleichzeitige Zugriffe und große Datenmengen gedacht.",
+      "erklaerung": "SQLite ist eine eingebettete Datenbank (eingebaut in dein Programm). Die ganze Datenbank liegt in einer einzigen Datei, es gibt keinen eigenen Server. Dein Programm spricht die Datei direkt über eine Bibliothek an. MySQL und PostgreSQL laufen dagegen als eigener Server-Prozess. Programme sprechen mit ihnen über das Netzwerk – das ist das Client-Server-Modell (Kunde und Anbieter). SQLite ist einfach und ideal für lokale Anwendungen (auf deinem eigenen Gerät). Server-Datenbanken sind für viele gleichzeitige Zugriffe und große Datenmengen gedacht.",
       "schwierigkeit": "schwer"
     },
     {
@@ -211,7 +211,7 @@
         "Anführungszeichen"
       ],
       "punkte": 4,
-      "erklaerung": "Wenn eine Eingabe direkt in den SQL-String gesetzt wird, kann sie den Befehl umschreiben – z. B. macht ' OR 1=1 -- aus einer Suche einen Befehl, der alle Datensätze liefert (SQL-Injection). Außerdem brechen Anführungszeichen den String. Der sichere Weg: Werte getrennt übergeben – in Python mit ?-Platzhaltern (cur.execute(sql, (wert,))), in C++ mit vorbereiteten Statements und sqlite3_bind_text()/sqlite3_bind_int(). So bleibt der SQL-Befehl fest und Eingaben sind immer nur Daten.",
+      "erklaerung": "Baust du eine Eingabe direkt in den SQL-String ein, kann sie deinen Befehl umschreiben. Beispiel: ' OR 1=1 -- macht aus einer Suche einen Befehl, der alle Datensätze liefert. Das nennt man SQL-Injection (Einbruch über die Eingabe). Anführungszeichen im Text können den String außerdem kaputt machen. Der sichere Weg: Werte getrennt übergeben. In Python nutzt du ?-Platzhalter: cur.execute(sql, (wert,)). In C++ nutzt du vorbereitete Statements (prepare) und bindest Werte mit sqlite3_bind_text() oder sqlite3_bind_int(). So bleibt der SQL-Befehl fest und Eingaben sind immer nur Daten, nie Befehle.",
       "schwierigkeit": "schwer"
     },
     {
@@ -228,7 +228,7 @@
         "commit"
       ],
       "punkte": 4,
-      "erklaerung": "1) Datei öffnen: with open('notizen.csv', encoding='utf-8') as datei. 2) Zeilenweise lesen: for zeile in datei, Kopfzeile überspringen, zeile.strip() und mit zeile.split(';') in Felder zerlegen. 3) Gültigkeit prüfen (4 Felder, Titel nicht leer) – sonst Zeile überspringen. 4) Einfügen: cur.execute('INSERT INTO notizen (titel, inhalt, erstellt_am) VALUES (?, ?, ?)', (felder[1], felder[2], felder[3])). 5) Am Ende con.commit(), damit alles dauerhaft gespeichert wird.",
+      "erklaerung": "1) Datei öffnen: with open('notizen.csv', encoding='utf-8') as datei. 2) Zeilenweise lesen: for zeile in datei. Überspringe die Kopfzeile. Entferne Leerzeichen mit zeile.strip() und zerlege die Zeile mit zeile.split(';') in Felder. 3) Prüfe die Gültigkeit: 4 Felder und Titel nicht leer. Sonst überspringe die Zeile. 4) Einfügen: cur.execute('INSERT INTO notizen (titel, inhalt, erstellt_am) VALUES (?, ?, ?)', (felder[1], felder[2], felder[3])). 5) Am Ende con.commit(), damit alles dauerhaft gespeichert bleibt.",
       "schwierigkeit": "mittel"
     }
   ]
