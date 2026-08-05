@@ -10,6 +10,10 @@ und **C/C++** (statisch, kompiliert). So versteht man nicht nur *eine* Sprache, 
 
 > 🎯 Zielgruppe: Programmieranfänger\*innen, Fachinformatiker-Azubis, Quereinsteiger\*innen
 > und alle, die ihren Lernfortschritt strukturiert dokumentieren wollen.
+>
+> 💻 **Lern-App inklusive:** Quiz nach IHK-Standard, Sprachkurs (Python & C++) und
+> KI-Assistent – im **Terminal** (`tools/quiz.py`) oder im **Browser** (Web-Frontend).
+> Details weiter unten.
 
 ---
 
@@ -40,6 +44,54 @@ Die komplette Lernreise inkl. Zeitplan und Meilensteinen findest du in der
 [**ROADMAP.md**](ROADMAP.md). Wie der Kurs zum offiziellen Ausbildungsrahmenplan
 passt und wo Schwerpunkte gesetzt werden, erklärt die [**LEHRPLAN.md**](LEHRPLAN.md).
 
+## Lern-App: Terminal & Web
+
+Der Kurs enthält eine interaktive Lern-App mit **zwei Oberflächen**, die dieselben
+Inhalte nutzen und denselben Fortschritt teilen:
+
+- **Terminal:** `python3 tools/quiz.py` – Quiz, Sprachkurs, Status (`--status`)
+- **Web:** browserbasiertes Frontend (Vanilla JS, ohne Framework) – live unter
+  [**https://pottbot-werft.org**](https://pottbot-werft.org)
+
+### Quiz nach IHK-Standard
+
+- **6 Fragenbanken** (eine pro Lernfeld, `lernfeld_XX/test/fragen.json`, je 15 Fragen):
+  Multiple-Choice- und offene Fragen mit Punkten, Sofort-Feedback und Erklärungen
+- **IHK-Notenschlüssel** (100 Punkte): ≥ 92 → 1, ≥ 81 → 2, ≥ 67 → 3, ≥ 50 → 4 (bestanden),
+  ≥ 30 → 5, sonst 6
+- **Übungstests nach IHK-Standard** – freiwillige Selbstkontrolle, keine Prüfungssituation
+- Offene Fragen: erst eine eigene Antwort (mind. 20 Zeichen) schreiben, dann Musterantwort
+  und Selbstbewertung anzeigen lassen
+- Der Fortschritt wird lokal gespeichert (`~/.lernpfad/fortschritt.json`),
+  Übersicht mit `python3 tools/quiz.py --status`
+
+### Sprachkurs (Python & C++)
+
+- **18 Kapitel** in einfacher Sprache ([STIL.md](STIL.md): „Einfach erklärt“)
+- Jedes Kapitel führt **Python und C++ parallel**: Erklärung, Code, Vergleich, Merksatz
+- Mit **Glossar** der wichtigsten Begriffe (`tools/sprachkurs/glossar.json`)
+- Lesestatus wird erfasst und fließt in den Gesamtfortschritt ein
+
+### KI-Assistent (Abo-Modell)
+
+Der KI-Assistent läuft **lokal** (Ollama, Modell `qwen3.5:2b`) – keine externen Cloud-Dienste:
+
+- **Chat** zum Kursstoff, mit Wissen über deinen Lernstand
+- **Karteikarten** erstellen lassen (Frage + Antwort) und üben
+- **Bewertung offener Antworten**: Feedback und Punkte zu deiner eigenen Lösung
+- Zugang: Die KI-Funktionen werden je Sync-Code freigeschaltet
+  (Abo-Modell, Freischaltung per Transaktionscode)
+
+### Fortschritt, Sync & Konto
+
+- **Sync-Code** (32-stellige Hex-Zeichenfolge) verbindet alle deine Geräte:
+  Terminal (`~/.lernpfad/sync_code`), Browser (localStorage) und die Sync-API
+- Der Fortschritt wird **gemerged**: Test-Ergebnisse – das neuere Datum gewinnt,
+  bei Gleichstand die höhere Punktzahl; gelesene Sprachkurs-Kapitel werden vereinigt
+- **Konto** (E-Mail + Passwort): Bei der Registrierung wird automatisch ein Sync-Code
+  erzeugt und dem Konto zugeordnet – so ist dein Fortschritt auf jedem Gerät
+  wiederherstellbar. Einen bestehenden Sync-Code kannst du beim Registrieren angeben (Umzug)
+
 ## Struktur des Repositories
 
 ```
@@ -47,11 +99,20 @@ lernpfad-python-cpp/
 ├── README.md                  ← diese Datei
 ├── ROADMAP.md                 ← gesamter Lernpfad Junior → Senior
 ├── LEHRPLAN.md                ← Anbindung an den Ausbildungsrahmenplan
+├── STIL.md                    ← Stil-Guide „Einfach erklärt“ (Lerninhalte)
 ├── CONTRIBUTING.md            ← so kannst du mitwirken
+├── CODE_OF_CONDUCT.md         ← Verhaltenskodex
+├── SECURITY.md                ← Sicherheitsrichtlinie (private Meldung)
 ├── LICENSE                    ← MIT
 ├── tools/
-│   ├── quiz.py                ← interaktiver Wissenstest (Lern-App!)
+│   ├── quiz.py                ← Terminal-Lern-App (Quiz + Sprachkurs)
+│   ├── sync.py                ← Fortschritts-Sync (Sync-Code)
+│   ├── sprachkurs/            ← 18 Sprachkurs-Kapitel + Glossar (JSON)
 │   └── README.md              ← Benutzung von quiz.py
+├── web/
+│   ├── index.html             ← Web-Frontend der Lern-App
+│   ├── style.css
+│   └── app.js                 ← App-Logik (Vanilla JS, kein Framework)
 └── lernfeld_XX_thema/
     ├── python/
     │   ├── theorie/           ← Theorie-README (nur Python)
@@ -61,10 +122,11 @@ lernpfad-python-cpp/
     │   ├── theorie/           ← Theorie-README (nur C++)
     │   ├── aufgaben/          ← Übungsaufgaben (C++)
     │   └── loesungen/         ← Musterlösungen (C++)
-    ├── test/                  ← bewerteter Test: fragen.json, test.md, loesungen.md
+    ├── test/                  ← Übungstest nach IHK-Standard: fragen.json, test.md, loesungen.md
     ├── checklist.md           ← Lernfortschritt zum Abhaken
     ├── vergleich.md           ← Python vs. C++ im direkten Vergleich
     └── mini_projekt/          ← Abschlussprojekt des Moduls
+        └── referenz/          ← Musterlösung (erst selbst bauen, dann vergleichen)
 ```
 
 ## So arbeitest du mit dem Kurs
@@ -81,14 +143,15 @@ lernpfad-python-cpp/
 4. **Abhaken**: Setze in `checklist.md` einen Haken pro erledigtem Punkt.
 5. **Vertiefen**: Lies am Modulende `vergleich.md` mit der Gegenüberstellung
    von Performance, Speicher und Lesbarkeit.
-6. **Abschließen**: Baue das `mini_projekt/` – ganz ohne Lösung, du schaffst das!
-7. **Testen**: Stelle dein Wissen mit dem bewerteten Test des Moduls unter Beweis
+6. **Abschließen**: Baue das `mini_projekt/` – ganz ohne Lösung (die Musterlösung
+   liegt in `referenz/` und bleibt bis zum Schluss unangetastet), du schaffst das!
+7. **Testen**: Stelle dein Wissen mit dem Übungstest des Moduls unter Beweis
    (siehe unten) – bestanden ab Note 4.
 
 ## Tests & Punktebewertung (wie eine Lern-App)
 
 Zu **jedem Lernfeld** gibt es zwei Prüfungsformen mit einheitlichem
-Notenschlüssel (≥ 92 % = 1, ≥ 50 % = 4, < 30 % = 6):
+IHK-Notenschlüssel (≥ 92 % = 1, ≥ 50 % = 4, < 30 % = 6):
 
 1. **Interaktiver Wissenstest** – der Lern-App-Modus:
    `python3 tools/quiz.py 1` (bzw. 2–6) startet den Test des Lernfelds.
@@ -107,7 +170,8 @@ Details: [tools/README.md](tools/README.md) und [LEHRPLAN.md](LEHRPLAN.md).
 
 - **Python 3.10+** – nur die Standardbibliothek, keine externen Pakete nötig
 - **C++17-Compiler** – z. B. `g++` (Linux/macOS) oder MinGW (Windows)
-- **Terminal** – der Kurs ist bewusst **GUI-frei**, alles läuft in der Kommandozeile
+- **Terminal oder Browser** – der Kurs ist Terminal-first, die Lern-App gibt es
+  zusätzlich als Web-Frontend (kein Setup nötig)
 - **Git** (optional) – für die eigene Versionskontrolle des Lernfortschritts
 
 ### C++ kompilieren
@@ -126,19 +190,26 @@ python3 aufgabe_01.py
 
 ## Konventionen
 
-- **Keine GUIs** – nur Terminal-Anwendungen. Du bist mit der Kommandozeile vertraut? Perfekt.
+- **Terminal-first** – alle Kurse und Übungen laufen in der Kommandozeile; die
+  Lern-App gibt es zusätzlich als Web-Frontend
 - **Deutsch** als Unterrichts- und Kommentarsprache – der Kurs richtet sich an
-  deutschsprachige Lernende (Fachinformatiker-Ausbildung).
-- **Aufgaben immer zuerst in Python, dann in C++** – das ist kein Zufall, sondern Methode.
-- **Musterlösungen sind Vorschläge**, keine Dogmen – es gibt immer viele Wege.
+  deutschsprachige Lernende (Fachinformatiker-Ausbildung)
+- **Einfach erklärt** – alle Lerninhalte folgen dem Stil-Guide [STIL.md](STIL.md):
+  kurze Sätze, Alltags-Vergleiche, Fachbegriffe sofort erklärt (10-Jährigen-Niveau)
+- **Aufgaben immer zuerst in Python, dann in C++** – das ist kein Zufall, sondern Methode
+- **Musterlösungen sind Vorschläge**, keine Dogmen – es gibt immer viele Wege
 - **Jedes Modul endet mit einem bewerteten Test** – nur wer besteht, ist bereit
-  für das nächste Lernfeld.
+  für das nächste Lernfeld
 
 ## Mitwirken
 
 Dieses Projekt lebt von der Community: Fehler korrigieren, Aufgaben verbessern,
 Lösungen ergänzen, neue Module beisteuern. Wie das geht, steht in der
-[**CONTRIBUTING.md**](CONTRIBUTING.md).
+[**CONTRIBUTING.md**](CONTRIBUTING.md). Für Fragen und Ideen gibt es
+**Discussions**; Bugs und Feature-Wünsche meldest du über die **Issues**
+(Vorlagen für Bug-Reports und Feature-Requests liegen bereit).
+Sicherheitslücken bitte nicht öffentlich melden, sondern über
+[**SECURITY.md**](SECURITY.md) (Private Vulnerability Reporting).
 
 ## Danksagung
 
