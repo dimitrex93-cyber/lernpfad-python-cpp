@@ -8,7 +8,7 @@
 const DATEN_PFAD = "/daten/";
 // Versionsmarker: erscheint im Footer. LEER = Browser nutzt alte app.js
 // (Cache!) → Strg+F5 / Cache leeren.
-const APP_VERSION = "0.6.2";
+const APP_VERSION = "0.7.0";
 const STUFEN = ["leicht", "mittel", "schwer"];
 const STUFEN_BESCHREIBUNG = {
   leicht: "nur leichte Fragen",
@@ -27,75 +27,58 @@ const NOTEN = [
   { min: 0,  note: 6, text: "ungenügend" },
 ];
 
-// KI-Assistent (LLM) – nutzbar NUR mit persönlichem Freischalt-Key.
-// Der Chat läuft über den Server (/api/ki/*): Dort wird der Key geprüft
-// und die Anfrage an das lokale Ollama (qwen3:4b, Tailnet-only)
-// weitergeleitet. Ohne Key bleibt der Bereich gesperrt.
-const KI_KEY_STORAGE = "lernpfad_ki_key";
+// KI-Assistent (LLM) – Zugriff nur mit abgeschlossenem Abo je sync_code.
+// Der Chat läuft über den Server (/api/ki/*): Dort wird geprüft, ob für
+// den Sync-Code ein aktives Abo besteht, und die Anfrage an das lokale
+// Ollama (qwen3.5:2b, Tailnet-only) weitergeleitet. Ohne aktives Abo
+// bleibt der Bereich gesperrt.
+let kiAboStatus = null; // Ergebnis von /api/ki/check (gecacht)
 
-function kiKeyGespeichert() {
-  return localStorage.getItem(KI_KEY_STORAGE) || "";
-}
-
-function kiBereichOeffnen() {
-  const sperre = document.getElementById("ki-sperre");
-  const chat = document.getElementById("ki-chat");
-  if (!sperre || !chat) return;
-  const key = kiKeyGespeichert();
-  if (!key) {
-    sperre.hidden = false;
-    chat.hidden = true;
-    return;
-  }
-  kiPruefeKey(key).then((gueltig) => {
-    sperre.hidden = gueltig;
-    chat.hidden = !gueltig;
-    if (!gueltig) localStorage.removeItem(KI_KEY_STORAGE);
-  });
-}
-
-async function kiPruefeKey(key) {
+async function kiPruefeAbo() {
+  const code = ladeSyncCode();
+  if (!code) return null;
   try {
     const r = await fetch("/api/ki/check", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ key }),
+      body: JSON.stringify({ code }),
     });
-    if (!r.ok) return false;
+    if (!r.ok) return null;
     const d = await r.json();
-    return !!d.gueltig;
+    kiAboStatus = d;
+    return d;
   } catch (e) {
-    return false;
+    return null;
   }
 }
 
-async function kiEntsperren() {
-  const eingabe = document.getElementById("ki-key-input");
+function kiAboAktiv() {
+  return !!(kiAboStatus && kiAboStatus.gueltig);
+}
+
+async function kiBereichOeffnen() {
+  const sperre = document.getElementById("ki-sperre");
+  const chat = document.getElementById("ki-chat");
   const status = document.getElementById("ki-sperre-status");
-  if (!eingabe) return;
-  const key = (eingabe.value || "").trim().toLowerCase();
-  if (!key) {
-    zeigeToast("Bitte Freischalt-Key eingeben.", "info");
+  if (!sperre || !chat) return;
+  const code = ladeSyncCode();
+  if (!code) {
+    if (status) status.textContent =
+      "Kein Sync-Code hinterlegt. Bitte zuerst im Sync-Bereich einen Code erzeugen oder eingeben – dieser Code ist dein Schlüssel (Abo).";
+    sperre.hidden = false;
+    chat.hidden = true;
     return;
   }
-  status.textContent = "Prüfe Key …";
-  const gueltig = await kiPruefeKey(key);
-  if (!gueltig) {
-    status.textContent = "Dieser Key ist nicht gültig.";
-    zeigeToast("Freischalt-Key ungültig.", "fehler");
-    return;
+  if (status) status.textContent = "Prüfe Abo-Status …";
+  const d = await kiPruefeAbo();
+  const aktiv = !!(d && d.gueltig);
+  sperre.hidden = aktiv;
+  chat.hidden = !aktiv;
+  if (status) {
+    status.textContent = aktiv
+      ? ""
+      : "Kein aktives Abo für diesen Sync-Code (" + code + "). Der KI-Assistent ist ein Abo-Feature – für die Freischaltung den Betreiber kontaktieren.";
   }
-  localStorage.setItem(KI_KEY_STORAGE, key);
-  status.textContent = "";
-  eingabe.value = "";
-  kiBereichOeffnen();
-  zeigeToast("KI-Assistent freigeschaltet.", "erfolg");
-}
-
-function kiSperren() {
-  localStorage.removeItem(KI_KEY_STORAGE);
-  kiBereichOeffnen();
-  zeigeToast("KI-Assistent gesperrt – Key entfernt.", "info");
 }
 
 async function kiSenden() {
@@ -105,9 +88,9 @@ async function kiSenden() {
   if (!eingabe || !verlauf) return;
   const nachricht = (eingabe.value || "").trim();
   if (!nachricht) return;
-  const key = kiKeyGespeichert();
-  if (!key) {
-    zeigeToast("Bitte zuerst entsperren.", "info");
+  const code = ladeSyncCode();
+  if (!code || !kiAboAktiv()) {
+    zeigeToast("KI-Assistent nur mit aktivem Abo (Sync-Code).", "info");
     return;
   }
 
@@ -125,7 +108,7 @@ async function kiSenden() {
     const r = await fetch("/api/ki/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ key, nachricht }),
+      body: JSON.stringify({ code, nachricht }),
     });
     const d = await r.json().catch(() => ({}));
     denken.remove();
@@ -164,9 +147,9 @@ function kiKarteErstellen() {
     zeigeToast("Bitte zuerst ein Thema eingeben.", "info");
     return;
   }
-  const key = kiKeyGespeichert();
-  if (!key) {
-    zeigeToast("Bitte zuerst entsperren.", "info");
+  const code = ladeSyncCode();
+  if (!code || !kiAboAktiv()) {
+    zeigeToast("KI-Assistent nur mit aktivem Abo (Sync-Code).", "info");
     return;
   }
   const status = document.getElementById("ki-status");
@@ -178,7 +161,7 @@ function kiKarteErstellen() {
       const r = await fetch("/api/ki/karteikarte", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key, code: kartenCode(), thema }),
+        body: JSON.stringify({ code: kartenCode(), thema }),
       });
       const d = await r.json().catch(() => ({}));
       if (status) status.textContent = "";
@@ -230,31 +213,24 @@ function kartenErstellenWarteschlangeText() {
   return weitere > 0 ? ` (${weitere} weitere in der Warteschlange)` : "";
 }
 
-function kartenBereichOeffnen() {
+async function kartenBereichOeffnen() {
   const sperre = document.getElementById("karten-sperre");
   const inhalt = document.getElementById("karten-inhalt");
   if (!sperre || !inhalt) return;
-  const key = kiKeyGespeichert();
-  sperre.hidden = !!key;
-  inhalt.hidden = !key;
-  if (key) kartenLaden();
-}
-
-function kartenSperren() {
-  localStorage.removeItem(KI_KEY_STORAGE);
-  kartenBereichOeffnen();
-  zeigeToast("Karteikarten gesperrt – Key entfernt.", "info");
+  await kiPruefeAbo();
+  const aktiv = kiAboAktiv();
+  sperre.hidden = aktiv;
+  inhalt.hidden = !aktiv;
+  if (aktiv) kartenLaden();
 }
 
 function kartenCode() {
-  // Namespace: Sync-Code, falls vorhanden (sonst nutzt der Server den
-  // SHA-256-Hash des Freischalt-Keys als Namespace).
+  // Namespace: der Sync-Code (der Server speichert Karten pro Code).
   return ladeSyncCode();
 }
 
 async function kartenLaden(highlightId) {
-  const key = kiKeyGespeichert();
-  if (!key) return;
+  if (!kiAboAktiv()) return;
   const container = document.getElementById("karten-liste");
   const anzahl = document.getElementById("karten-anzahl");
   if (!container) return;
@@ -263,7 +239,7 @@ async function kartenLaden(highlightId) {
     const r = await fetch("/api/ki/karteikarten", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ key, code: kartenCode() }),
+      body: JSON.stringify({ code: kartenCode() }),
     });
     const d = await r.json().catch(() => ({}));
     if (!r.ok) {
@@ -312,9 +288,9 @@ function kartenErstellen() {
     zeigeToast("Bitte ein Thema eingeben.", "info");
     return;
   }
-  const key = kiKeyGespeichert();
-  if (!key) {
-    zeigeToast("Bitte zuerst entsperren.", "info");
+  const code = ladeSyncCode();
+  if (!code || !kiAboAktiv()) {
+    zeigeToast("KI-Assistent nur mit aktivem Abo (Sync-Code).", "info");
     return;
   }
   if (status) status.textContent = "🃏 In Warteschlange …" + kartenErstellenWarteschlangeText();
@@ -325,7 +301,7 @@ function kartenErstellen() {
       const r = await fetch("/api/ki/karteikarte", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key, code: kartenCode(), thema }),
+        body: JSON.stringify({ code: kartenCode(), thema }),
       });
       const d = await r.json().catch(() => ({}));
       if (status) status.textContent = "";
@@ -350,13 +326,12 @@ function kartenErstellen() {
 }
 
 async function kartenLoeschen(id) {
-  const key = kiKeyGespeichert();
-  if (!key) return;
+  if (!kiAboAktiv()) return;
   try {
     const r = await fetch("/api/ki/karteikarte/loeschen", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ key, code: kartenCode(), id }),
+      body: JSON.stringify({ code: kartenCode(), id }),
     });
     const d = await r.json().catch(() => ({}));
     if (!r.ok) {
@@ -827,9 +802,9 @@ async function kiBewertungAnzeigen() {
     zeigeToast("Keine eigene Antwort vorhanden.", "info");
     return;
   }
-  const key = kiKeyGespeichert();
-  if (!key) {
-    zeigeToast("KI-Bewertung braucht den Freischalt-Key (KI-Assistent).", "info");
+  const code = ladeSyncCode();
+  if (!code || !kiAboAktiv()) {
+    zeigeToast("KI-Bewertung braucht ein aktives Abo (KI-Assistent).", "info");
     return;
   }
   box.innerHTML = '<p class="subtitle">🤖 KI bewertet deine Antwort … (dauert einige Sekunden)</p>';
@@ -839,7 +814,7 @@ async function kiBewertungAnzeigen() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        key,
+        code,
         frage: frage.frage,
         musterantwort: frage.erklaerung || "",
         eigene_antwort: eigene,

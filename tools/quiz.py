@@ -74,10 +74,43 @@ BUCHSTABEN = "abcd"
 # - KI_URL: Server-Endpunkt (Caddy → lernapp_sync), per Env übersteuerbar.
 #   Default ist die Tailscale-IP des Servers – funktioniert vom Server selbst
 #   und von allen Geräten im Tailnet.
-# - Key in ~/.lernpfad/ki_key (außerhalb des Repos, chmod 600). Fehlt die
-#   Datei, wird die KI-Bewertung im Terminal nicht angeboten.
+# - Zugriff nur mit abgeschlossenem Abo: der eigene sync_code
+#   (~/.lernpfad/sync_code) wird per /api/ki/check geprüft (einmal pro
+#   Lauf gecacht). Ohne aktives Abo wird die KI-Bewertung im Terminal
+#   nicht angeboten.
 KI_URL = os.environ.get("LERNAPP_KI_URL", "http://100.80.76.27:8081")
-KI_KEY_DATEI = os.path.expanduser("~/.lernpfad/ki_key")
+SYNC_CODE_DATEI = os.path.expanduser("~/.lernpfad/sync_code")
+_KI_STATUS_CACHE = None
+
+
+def _ki_sync_code():
+    """Sync-Code aus ~/.lernpfad/sync_code (leer, wenn nicht vorhanden)."""
+    try:
+        with open(SYNC_CODE_DATEI, encoding="utf-8") as f:
+            return f.read().strip()
+    except FileNotFoundError:
+        return ""
+
+
+def _ki_verfuegbar():
+    """True, wenn für den eigenen sync_code ein aktives KI-Abo besteht."""
+    global _KI_STATUS_CACHE
+    if _KI_STATUS_CACHE is None:
+        code = _ki_sync_code()
+        if not code:
+            _KI_STATUS_CACHE = False
+        else:
+            body = {"code": code}
+            req = urllib.request.Request(
+                KI_URL + "/api/ki/check",
+                data=json.dumps(body).encode("utf-8"),
+                headers={"Content-Type": "application/json"})
+            try:
+                with urllib.request.urlopen(req, timeout=10) as r:
+                    _KI_STATUS_CACHE = bool(json.load(r).get("gueltig"))
+            except (urllib.error.URLError, TimeoutError, OSError, ValueError):
+                _KI_STATUS_CACHE = False
+    return _KI_STATUS_CACHE
 
 # ---------------------------------------------------------------------------
 # Übungstests nach IHK-Standard (angelehnt an die Abschlussprüfung
@@ -354,18 +387,14 @@ def _ki_bewerten(frage, musterantwort, eigene_antwort, stichworte, max_punkte):
     """Offene Antwort per KI bewerten (Schlüsselwörter, Teilpunkte).
 
     Gibt das API-Ergebnis (dict mit punkte/gefunden/fehlt/feedback) zurück
-    oder None, wenn die KI-Bewertung nicht verfügbar ist (kein Key,
-    Server nicht erreichbar, Fehler).
+    oder None, wenn die KI-Bewertung nicht verfügbar ist (kein aktives
+    Abo, Server nicht erreichbar, Fehler).
     """
-    try:
-        with open(KI_KEY_DATEI, encoding="utf-8") as f:
-            key = f.read().strip()
-    except FileNotFoundError:
-        return None
-    if not key:
+    code = _ki_sync_code()
+    if not code:
         return None
     body = {
-        "key": key,
+        "code": code,
         "frage": frage,
         "musterantwort": musterantwort,
         "eigene_antwort": eigene_antwort,
@@ -404,8 +433,8 @@ def frage_open(frage, index, anzahl):
     if "stichworte" in frage:
         print(c("Wichtige Stichworte: " + ", ".join(frage["stichworte"]), "dunkel"))
 
-    # (k) = KI-Bewertung: nur anbieten, wenn ein Freischalt-Key vorliegt
-    ki_verfuegbar = os.path.isfile(KI_KEY_DATEI)
+    # (k) = KI-Bewertung: nur anbieten, wenn ein aktives KI-Abo besteht
+    ki_verfuegbar = _ki_verfuegbar()
     optionen = ("(j) Kernpunkte genannt  (n) nicht genannt"
                 + ("  (k) KI-Bewertung" if ki_verfuegbar else ""))
     print(c(optionen, "dunkel"))
@@ -425,7 +454,7 @@ def frage_open(frage, index, anzahl):
                                     antwort, frage.get("stichworte", []),
                                     frage["punkte"])
             if ergebnis is None:
-                print(c("KI-Bewertung nicht verfügbar (Server/Key?). "
+                print(c("KI-Bewertung nicht verfügbar (Server/Abo?). "
                         "Bitte erneut wählen.", "gelb"))
                 continue
             vorschlag = int(ergebnis.get("punkte", 0))

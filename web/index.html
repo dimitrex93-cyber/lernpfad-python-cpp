@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lernpfad Python & C++ – Web-App</title>
-<link rel="stylesheet" href="style.css?v=0.6.2">
+<link rel="stylesheet" href="style.css?v=0.7.0">
 </head>
 <body>
 <header>
@@ -16,7 +16,7 @@
     <button id="nav-quiz" class="nav-btn" onclick="zeigeAnsicht('quiz')">Quiz</button>
     <button id="nav-kurs" class="nav-btn" onclick="zeigeAnsicht('kurs')">Sprachkurs</button>
     <button id="nav-glossar" class="nav-btn" onclick="zeigeAnsicht('glossar')">📚 Glossar</button>
-    <button id="nav-ki" class="nav-btn" onclick="zeigeAnsicht('ki')" title="Nur mit persönlichem Freischalt-Key">🤖 KI-Assistent</button>
+    <button id="nav-ki" class="nav-btn" onclick="zeigeAnsicht('ki')" title="Nur mit abgeschlossenem Abo">🤖 KI-Assistent</button>
     <button id="nav-karten" class="nav-btn" onclick="zeigeAnsicht('karten')" title="Erstellte Karteikarten – auf dem Server gespeichert">🃏 Karteikarten</button>
   </nav>
 </header>
@@ -188,16 +188,15 @@
     </div>
   </section>
 
-  <!-- ============ KI-ASSISTENT (nur mit persönlichem Freischalt-Key) ============ -->
+  <!-- ============ KI-ASSISTENT (nur mit abgeschlossenem Abo je sync_code) ============ -->
   <section id="ansicht-ki" class="ansicht" hidden>
     <div class="karte" id="ki-sperre">
       <h2>🤖 KI-Assistent – Freischaltung</h2>
-      <p class="subtitle">Der KI-Assistent läuft auf deinem eigenen Server (Ollama, qwen3.5:2b – lokal, keine Cloud) und ist nur mit deinem persönlichen Freischalt-Key nutzbar.</p>
-      <input type="password" id="ki-key-input" class="sync-code-input" placeholder="Freischalt-Key" autocomplete="off" onkeydown="if(event.key==='Enter')kiEntsperren()">
-      <div class="button-reihe">
-        <button class="primary" onclick="kiEntsperren()">🔓 Entsperren</button>
-      </div>
+      <p class="subtitle">Der KI-Assistent läuft auf deinem eigenen Server (Ollama, qwen3.5:2b – lokal, keine Cloud). Zugriff gibt es mit einem aktiven Abo für deinen Sync-Code.</p>
       <p id="ki-sperre-status" class="subtitle"></p>
+      <div class="button-reihe">
+        <button class="primary" onclick="kiBereichOeffnen()">↻ Abo-Status prüfen</button>
+      </div>
     </div>
 
     <div class="karte" id="ki-chat" hidden>
@@ -215,7 +214,7 @@
       <p id="ki-status" class="subtitle"></p>
       <div class="button-reihe">
         <button class="secondary" onclick="kiKarteErstellen()">🃏 Als Karteikarte speichern</button>
-        <button class="secondary" onclick="kiSperren()">🔒 Sperren &amp; Key entfernen</button>
+        <button class="secondary" onclick="kiBereichOeffnen()">↻ Abo-Status prüfen</button>
       </div>
     </div>
   </section>
@@ -223,9 +222,9 @@
   <section id="ansicht-karten" class="ansicht" hidden>
     <div class="karte" id="karten-sperre">
       <h2>🃏 Karteikarten – Freischaltung nötig</h2>
-      <p class="subtitle">Karteikarten werden auf dem Server gespeichert (pro Sync-Code bzw. Freischalt-Key) und automatisch dedupliziert. Zum Anlegen und Ansehen brauchst du deinen persönlichen Freischalt-Key.</p>
+      <p class="subtitle">Karteikarten werden auf dem Server gespeichert (pro Sync-Code) und automatisch dedupliziert. Zum Anlegen und Ansehen brauchst du ein aktives Abo (KI-Assistent).</p>
       <div class="button-reihe">
-        <button class="primary" onclick="zeigeAnsicht('ki')">🤖 Im KI-Assistenten entsperren</button>
+        <button class="primary" onclick="zeigeAnsicht('ki')">🤖 Zum KI-Assistenten (Abo prüfen)</button>
       </div>
     </div>
 
@@ -243,7 +242,7 @@
       <div id="karten-liste"></div>
       <div class="button-reihe">
         <button class="secondary" onclick="kartenLaden()">↻ Neu laden</button>
-        <button class="secondary" onclick="kartenSperren()">🔒 Sperren</button>
+        <button class="secondary" onclick="kartenBereichOeffnen()">↻ Abo-Status prüfen</button>
       </div>
     </div>
   </section>
@@ -257,6 +256,6 @@
 
 <div id="toast-container" aria-live="polite"></div>
 
-<script src="app.js?v=0.6.2"></script>
+<script src="app.js?v=0.7.0"></script>
 </body>
 </html>
