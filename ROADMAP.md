@@ -132,9 +132,16 @@ die Übersicht zeigt `python3 tools/quiz.py --status`.
 
 ---
 
-## Phase 5 – Ausblick: Web-Frontend (die Lern-App im Browser)
+## Phase 5 – Web-Frontend (die Lern-App im Browser) — UMGESETZT
 
-**Status:** geplant · **Hosting:** Cloudflare (eigene Domain vorhanden)
+**Status:** umgesetzt (v0.8.0) · **Live:** https://pottbot-werft.org · **Hosting:** Caddy + Cloudflare-Tunnel auf dem eigenen Server (Option C)
+
+Die Web-App (Vanilla JS) lädt alle Daten direkt aus dem Repo (JSON als
+einzige Quelle), bietet Quiz, Sprachkurs, Glossar, Karteikarten und
+KI-Assistent. Der Fortschritt wird per Sync-API (`lernapp_sync`, FastAPI)
+geräteübergreifend abgeglichen; seit v0.7/v0.8 gibt es Konten (E-Mail +
+Passwort), einen Keygen für den Bearbeitungsstand-Key (sync_code) und die
+KI-Freischaltung per Transaktionscode.
 
 Die Terminal-Lern-App ist das Herzstück – der nächste Schritt ist eine
 **solide HTML-Oberfläche**, damit der Lernpfad auch im Browser läuft.
@@ -164,6 +171,27 @@ sind reines JSON und damit direkt im Frontend nutzbar.
   das Frontend liest sie, damit Quiz und Web-App nie auseinanderlaufen.
 - Ein CORS-Problem entfällt, weil Pages die Dateien direkt ausliefert.
 - Erst wenn das Frontend stabil läuft, ist Option B (Workers-Sync) sinnvoll.
+
+## Phase 6 – „Einfach erklärt": alle Inhalte auf 10-Jährigen-Niveau
+
+**Status:** gestartet (05.08.2026) · **Standard:** STIL.md im Repo-Root
+
+Alle Texte der Lern-App werden in einfache Sprache umgeschrieben: kurze
+Sätze, Alltags-Vergleiche (CPU = Chef, RAM = Schreibtisch, Server = Küche),
+Fachbegriffe sofort erklärt. Fachlich bleibt alles exakt richtig
+(IHK-Niveau) – nur die Sprache wird einfacher. Code-Schnipsel werden nie
+verfälscht; wo nötig, ersetzt man sie durch ein kürzeres, korrektes Beispiel.
+
+- [x] STIL.md (Stil-Guide) angelegt
+- [x] Kapitel 19 „So funktioniert diese App" (echter Python-Code der App, sicherheitsgekürzt)
+- [x] Muster: Kapitel 1 + Lernfeld-1-Fragen (15 Erklärungen)
+- [ ] Kapitel 2–18 umschreiben (nächste Sitzungen)
+- [ ] Fragen-Erklärungen Lernfeld 2–6 (75 Fragen)
+
+**Sicherheitsregel:** In Code-Schnipseln aus der echten App erscheinen nie
+echte Geheimnisse (Admin-Key, Tokens, sync_codes, Dateipfade, Server-IPs).
+Sicherheitskritische Stellen (Keygen, Freischaltung, Admin-Prüfung) nur als
+Prinzip oder gekürzt – mit Hinweis „der echte Code ist gekürzt".
 
 ## Dein Fortschritt gehört dir
 

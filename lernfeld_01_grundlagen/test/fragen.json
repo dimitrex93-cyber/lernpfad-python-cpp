@@ -14,7 +14,7 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "Python wird zur Laufzeit Zeile für Zeile vom Interpreter ausgeführt. C++ dagegen wird vorab komplett kompiliert.",
+      "erklaerung": "Python wird Zeile für Zeile ausgeführt, während das Programm läuft – wie ein Vorleser, der ein Buch Wort für Wort vorliest. C++ dagegen wird vorher komplett übersetzt (kompiliert).",
       "schwierigkeit": "leicht"
     },
     {
@@ -29,7 +29,7 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "Bei int / int führt C++ eine Ganzzahl-Division durch und schneidet den Rest ab: 10 / 3 == 3. Für 3.333... braucht es mindestens einen double-Wert.",
+      "erklaerung": "C++ teilt 10 durch 3. Weil beide Zahlen ganze Zahlen (int) sind, schneidet C++ den Rest einfach ab: 10 / 3 = 3. Für 3,333… brauchst du eine Kommazahl (double).",
       "schwierigkeit": "mittel"
     },
     {
@@ -44,7 +44,7 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "C++ ist statisch typisiert (int x = 5;), Python dynamisch (x = 5; x = 'fünf' ist erlaubt). Der Compiler findet Typfehler in C++ schon beim Übersetzen.",
+      "erklaerung": "In C++ musst du den Typ jeder Variable ansagen (int x = 5;). In Python bestimmt das Programm den Typ von selbst – du darfst x = 5 und später x = 'fünf' schreiben. Der C++-Compiler findet Typfehler schon beim Übersetzen.",
       "schwierigkeit": "mittel"
     },
     {
@@ -59,7 +59,7 @@
       ],
       "antwort": 1,
       "punkte": 1,
-      "erklaerung": "input() gibt immer einen String zurück. Zum Rechnen muss man mit int() oder float() umwandeln, sonst gibt es einen TypeError.",
+      "erklaerung": "input() gibt immer einen Text (String) zurück – egal, ob du eine Zahl eintippst. Zum Rechnen musst du ihn erst umwandeln (int() oder float()), sonst gibt es einen Fehler.",
       "schwierigkeit": "leicht"
     },
     {
@@ -74,7 +74,7 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "Die Ausführung beginnt immer in int main(). Ohne main() verweigert der Linker die Arbeit.",
+      "erklaerung": "Jedes C++-Programm startet in der Funktion main() – sie ist die Eingangstür. Fehlt sie, weigert sich der Linker zu arbeiten.",
       "schwierigkeit": "leicht"
     },
     {
@@ -89,7 +89,7 @@
       ],
       "antwort": 1,
       "punkte": 1,
-      "erklaerung": "Python nutzt 'def name(parameter):' für Funktionsdefinitionen und 'return' für die Rückgabe.",
+      "erklaerung": "In Python schreibst du def addiere(a, b): und gibst das Ergebnis mit return zurück.",
       "schwierigkeit": "leicht"
     },
     {
@@ -104,7 +104,7 @@
       ],
       "antwort": 1,
       "punkte": 1,
-      "erklaerung": "#include fügt den Inhalt einer Header-Datei ein. <iostream> stellt die Ein-/Ausgabeströme bereit – ohne Include kennt der Compiler std::cout nicht.",
+      "erklaerung": "#include fügt den Inhalt einer Header-Datei ein. Mit <iostream> holst du die Ein- und Ausgabe (std::cout, std::cin) ins Programm – ohne diese Zeile kennt der Compiler std::cout nicht.",
       "schwierigkeit": "leicht"
     },
     {
@@ -119,7 +119,7 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "In Python UND C++ starten Indizes bei 0: noten[0] bzw. noten[0] ist das erste Element.",
+      "erklaerung": "In Python UND C++ beginnt das Zählen bei 0. Das erste Element hat also den Index 0 – das ist in beiden Sprachen gleich.",
       "schwierigkeit": "leicht"
     },
     {
@@ -134,7 +134,7 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "std::vector<T> ist typisiert: vector<int> enthält nur ints. Python-Listen können dagegen gemischte Typen enthalten.",
+      "erklaerung": "std::vector<int> ist eine Liste, die NUR ganze Zahlen (int) aufnehmen kann – der Typ steht in den spitzen Klammern. Python-Listen sind lockerer: Sie dürfen verschiedene Typen mischen.",
       "schwierigkeit": "mittel"
     },
     {
@@ -149,7 +149,7 @@
       ],
       "antwort": 1,
       "punkte": 1,
-      "erklaerung": "try/except fängt Ausnahmen (Exceptions) ab. In C++ übernimmt die Prüfung von std::cin.fail() eine ähnliche Rolle bei Eingabefehlern.",
+      "erklaerung": "try/except ist wie ein Sicherheitsnetz: Passiert beim Laufen ein Fehler (zum Beispiel 'aus dieser Eingabe wird keine Zahl'), fängt das Netz ihn ab – das Programm stürzt nicht ab. In C++ übernimmt std::cin.fail() eine ähnliche Rolle.",
       "schwierigkeit": "leicht"
     },
     {
@@ -164,7 +164,7 @@
       ],
       "antwort": 1,
       "punkte": 2,
-      "erklaerung": "Der Compiler analysiert das gesamte Programm beim Übersetzen: falsche Typen, fehlende Semikolons, unbekannte Namen – alles fällt vor dem Lauf auf. Python entdeckt solche Fehler erst zur Laufzeit.",
+      "erklaerung": "Der Compiler liest das ganze Programm vorher und prüft dabei: falsche Typen, fehlende Semikolons, unbekannte Namen – alles fällt schon vor dem Start auf. Python merkt solche Fehler erst, wenn die betroffene Zeile ausgeführt wird.",
       "schwierigkeit": "mittel"
     },
     {
@@ -179,7 +179,7 @@
       ],
       "antwort": 0,
       "punkte": 1,
-      "erklaerung": "range(5) erzeugt die Zahlen 0 bis 4 – genau das, was die C++-Zählschleife durchläuft.",
+      "erklaerung": "range(5) erzeugt die Zahlen 0, 1, 2, 3, 4 – genau die Werte, die die C++-Schleife for (int i = 0; i < 5; i++) durchläuft.",
       "schwierigkeit": "mittel"
     },
     {
@@ -194,7 +194,7 @@
         "Maschinensprache"
       ],
       "punkte": 4,
-      "erklaerung": "Interpretierte Sprachen (Python) werden zur Laufzeit Zeile für Zeile von einem Interpreter ausgeführt. Kompilierte Sprachen (C++) werden vorab komplett vom Compiler in Maschinensprache übersetzt; erst dann läuft die erzeugte Binärdatei. Dadurch ist C++ schneller und findet Fehler früher, Python aber schneller auszuprobieren.",
+      "erklaerung": "Interpretierte Sprachen wie Python werden Zeile für Zeile ausgeführt, während das Programm läuft – ein Interpreter liest jede Zeile und führt sie sofort aus. Kompilierte Sprachen wie C++ werden vorher komplett übersetzt (Compiler), erst dann läuft die fertige Datei. Deshalb ist C++ schneller und findet Fehler früher – aber Python ist schneller auszuprobieren.",
       "schwierigkeit": "schwer"
     },
     {
@@ -211,7 +211,7 @@
         "Kommazahl"
       ],
       "punkte": 3,
-      "erklaerung": "Z. B.: int = ganze Zahl (42), double = Kommazahl (3.14), bool = Wahrheitswert (true/false), char = einzelnes Zeichen ('A'), std::string = Text ('Hallo'). Wichtig: In C++ muss der Typ bei der Deklaration angesagt werden.",
+      "erklaerung": "Zum Beispiel: int = ganze Zahl (42), double = Kommazahl (3.14), bool = Wahrheitswert (true/false), char = einzelnes Zeichen ('A'), std::string = Text ('Hallo'). Wichtig: In C++ musst du den Typ bei der Deklaration ansagen.",
       "schwierigkeit": "mittel"
     },
     {
@@ -227,7 +227,7 @@
         "//"
       ],
       "punkte": 3,
-      "erklaerung": "In Python ergibt '/' immer eine Kommazahl (float); nur '//' schneidet ab. In C++ führt int / int eine Ganzzahl-Division durch und schneidet den Rest einfach ab – für eine Kommazahl muss mindestens ein Operand double sein (10.0 / 3).",
+      "erklaerung": "Python macht aus '/' immer eine Kommazahl: 10 / 3 = 3,333… – nur '//' schneidet ab (3). C++ teilt zwei ganze Zahlen (int) als Ganzzahl-Division und schneidet den Rest einfach ab: 10 / 3 = 3. Für eine Kommazahl in C++ muss mindestens eine Zahl eine Kommazahl sein, zum Beispiel 10.0 / 3.",
       "schwierigkeit": "schwer"
     }
   ]

@@ -1,0 +1,79 @@
+{
+  "id": "so_funktioniert_die_app",
+  "titel": "Kapitel 19: So funktioniert diese App",
+  "einleitung": "Hast du dich schon gefragt, wie diese Lern-App eigentlich funktioniert? Dieses Kapitel öffnet die Motorhaube. Du siehst echten Python-Code aus der App und lernst, wie Browser, Server und Datenbank zusammenarbeiten. Alles wird ganz einfach erklärt – und die geheimen Teile der App bleiben geheim.",
+  "abschnitte": [
+    {
+      "titel": "Drei Teile, die zusammenarbeiten",
+      "python": {
+        "text": "Diese App besteht aus drei Teilen – wie ein Restaurant. Der Browser auf deinem Gerät ist der Kellner: Er zeigt dir alles an und nimmt deine Wünsche entgegen. Der Server ist die Küche: Er macht die eigentliche Arbeit, rechnet und speichert. Die Datenbank ist der Vorratsraum: Dort liegen alle Daten, zum Beispiel dein Fortschritt oder deine Karteikarten. Der Kellner geht nie selbst in den Vorratsraum. Er bestellt bei der Küche. So bleibt alles ordentlich – und niemand kann fremde Daten anfassen.",
+        "code": "# Der Browser spricht mit dem Server über die API.\n# Ein Beispiel-Befehl, den der Browser schickt:\nGET /api/progress/mein-code"
+      },
+      "cpp": {
+        "text": "In C++ wären es dieselben drei Teile. Nur die Küche (der Server) wäre mit einem C++-Web-Framework wie Crow oder Drogon gebaut. Das geht, ist aber deutlich mehr Arbeit. Für einen Server, der vor allem Daten verwaltet, ist Python die schnellere Wahl."
+      },
+      "vergleich": "Python und C++ können beide Server bauen. Python ist wie ein Kochbuch mit fertigen Rezepten (FastAPI). C++ ist wie eine freie Küche, in der du alles selbst baust.",
+      "merk": "Kellner (Browser) → Küche (Server) → Vorratsraum (Datenbank). Der Browser spricht nie direkt mit der Datenbank."
+    },
+    {
+      "titel": "Der Server: Python empfängt Befehle",
+      "python": {
+        "text": "Der Server ist ein Python-Programm. Es wartet die ganze Zeit auf Anfragen – wie ein Kellner am Tresen, der auf Bestellungen wartet. Jede Anfrage hat eine Adresse, zum Beispiel /progress. So eine Adresse nennt man Route. Kommt eine Anfrage an, schaut das Programm auf die Adresse und weiß genau, was zu tun ist. Der echte Code ist länger (er prüft zum Beispiel, ob die Anfrage erlaubt ist). Hier siehst du die Idee dahinter:",
+        "code": "@app.get(\"/progress/{code}\")\ndef hole_progress(code):\n    # Im echten Programm passiert hier mehr:\n    # 1. Code prüfen  2. Daten lesen  3. Antwort zurückgeben\n    return {\"fortschritt\": daten}"
+      },
+      "cpp": {
+        "text": "Eine Route in C++ (mit dem Framework Crow) wäre ähnlich kurz. Aber vorher müsstest du sehr viel selbst einrichten: den HTTP-Server, die Verbindungen und die Speicherverwaltung. Python erledigt das mit einer Zeile: from fastapi import FastAPI."
+      },
+      "vergleich": "Eine Route ist wie eine Tür mit einem Schild. Kommt eine Anfrage an die richtige Tür, macht der Server das, was hinter der Tür steht.",
+      "merk": "Eine Route ist eine Adresse. Der Server hat für jede Adresse den passenden Befehl."
+    },
+    {
+      "titel": "Die Datenbank: ein Schrank mit Schubladen",
+      "python": {
+        "text": "Die Datenbank dieser App heißt SQLite. Sie steckt in einer einzigen Datei – wie ein kleiner Schrank, der in eine Schublade passt. Im Schrank gibt es beschriftete Schubladen. Jede Schublade ist eine Tabelle. In der Schublade nutzer liegt für jeden Benutzer ein Zettel: sein Code, ob die KI freigeschaltet ist und sein Lernstand. Der Server kann in die Schublade schauen, etwas hineinlegen oder verändern – aber nur mit Befehlen, die wir ihm erlauben. So sieht der Bauplan der Schublade aus:",
+        "code": "CREATE TABLE nutzer (\n    sync_code          TEXT PRIMARY KEY,\n    abo_abgeschlossen  INTEGER DEFAULT 0,\n    bearbeitungsstatus TEXT\n);"
+      },
+      "cpp": {
+        "text": "In C++ ist keine Datenbank eingebaut. Du würdest eine Bibliothek wie SQLite selbst einbinden oder dir eine eigene Datei-Verwaltung schreiben. Python hat SQLite direkt an Bord – es gehört schon zur Sprache dazu."
+      },
+      "vergleich": "SQLite ist wie ein Schrank in einer Schublade: klein und einfach. Große Datenbanken wie PostgreSQL sind wie ganze Lagerhallen mit vielen Regalen.",
+      "merk": "Eine Tabelle ist eine Schublade. SQLite ist eine Datenbank in einer einzigen Datei."
+    },
+    {
+      "titel": "Der Keygen: Schlüssel herstellen",
+      "python": {
+        "text": "Manchmal will die App jemandem einen Schlüssel geben – zum Beispiel einen Transaktionscode, mit dem man die KI-Funktion freischaltet. So einen Schlüssel darf niemand erraten können. Deshalb würfelt der Server ihn mit einem besonderen Zufallsgenerator. Der heißt secrets und ist extra für Schlüssel gemacht. Der echte Code in der App ist länger: Er prüft zum Beispiel, dass kein Schlüssel zweimal existiert, und er speichert jeden Schlüssel in der Datenbank. Diese schützenden Teile sind hier weggelassen. Das Prinzip siehst du trotzdem:",
+        "code": "import secrets\n\n# Würfle 15 zufällige Zeichen:\nroh = \"\".join(secrets.choice(\"ABCDEFGHJKMNPQRSTUVWXYZ23456789\")\n                for _ in range(15))\n# Fertig: ein Schlüssel wie AB12C-DE34F-GH56J"
+      },
+      "cpp": {
+        "text": "Zufallszahlen gibt es in C++ auch (std::random_device). Aber du musst selbst aufpassen, dass der Zufall wirklich zufällig ist. In Python macht das Modul secrets das richtig – es ist extra für Schlüssel gedacht."
+      },
+      "vergleich": "secrets ist wie ein guter Würfel: wirklich zufällig. Die normalen Zufallsfunktionen sind eher wie eine Münze, die man heimlich beeinflussen kann.",
+      "merk": "Schlüssel werden gewürfelt – mit einem Zufallsgenerator, den niemand vorhersagen kann."
+    },
+    {
+      "titel": "Der Sync: dein Fortschritt reist mit",
+      "python": {
+        "text": "Du lernst mal auf dem Handy, mal am Computer. Dein Fortschritt soll überall gleich sein. Dafür gibt es den Sync. Die App schickt deinen Lernstand an den Server. Auf dem anderen Gerät holt sie ihn wieder ab. Wenn beide Geräte etwas geändert haben, muss der Server die zwei Stände zusammensetzen. Das nennt man Merge. Die Regel aus der App ist einfach: Bei Tests gewinnt der neuere Stand. Gelesene Kapitel werden zusammengezählt – nichts geht verloren.",
+        "code": "# Vereinfachte Merge-Regel aus der App:\nif lokal.datum > remote.datum:\n    ergebnis = lokal   # der neuere Stand gewinnt\nelse:\n    ergebnis = remote"
+      },
+      "cpp": {
+        "text": "Dasselbe Merge-Problem gibt es überall, wo zwei Leute am selben Dokument arbeiten – auch Git macht so etwas. In C++ würdest du die Regeln genauso schreiben, nur mit mehr Typen und Klammern."
+      },
+      "vergleich": "Merge ist wie zwei Freunde, die dasselbe Bild ausmalen. Am Ende setzt man die Teile zusammen, ohne etwas zu verlieren.",
+      "merk": "Sync = Stand hochladen und herunterladen. Merge = zwei Stände verlustfrei zusammensetzen."
+    },
+    {
+      "titel": "Sicherheit: was du hier NICHT siehst",
+      "python": {
+        "text": "Eine echte App hat viele Geheimnisse: Passwörter, Schlüssel und geheime Codes. Diese App schützt sie mit mehreren Tricks. Passwörter werden nie im Klartext gespeichert. Der Server mischt sie mit einem zufälligen Zusatz (Salt) und rechnet sie zu einem unlesbaren Wert um. Wichtige Befehle – zum Beispiel Schlüssel erzeugen – brauchen einen geheimen Admin-Schlüssel. Und wer zu oft etwas Falsches versucht, wird kurz ausgesperrt (Rate-Limit). Genau diese schützenden Teile des Codes sind hier absichtlich weggelassen oder gekürzt. So bleibt die App schwer angreifbar – und niemand kann sie zu seinem Vorteil verändern.",
+        "code": "# Was der echte Code hier NICHT zeigt:\n# - den geheimen Admin-Schlüssel\n# - das Passwort-Hashing mit Salt\n# - das Rate-Limit (Aussperren bei zu vielen Versuchen)"
+      },
+      "cpp": {
+        "text": "Sicherheit ist keine Sprach-Frage. Ob Python oder C++ – die Regeln sind dieselben: Keine Geheimnisse in den Code schreiben, Zufall richtig machen und zu viele Versuche blockieren."
+      },
+      "vergleich": "Sicherheit ist wie ein Schloss an der Haustür. Man zeigt Fremden nicht, wo der Zweitschlüssel liegt.",
+      "merk": "Geheimnisse gehören nie in Code, den man anderen zeigt. Deshalb ist dieser Code gekürzt."
+    }
+  ]
+}
