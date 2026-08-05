@@ -4,21 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lernpfad Python & C++ – Web-App</title>
-<link rel="stylesheet" href="style.css?v=0.8.0">
+<link rel="stylesheet" href="style.css?v=0.8.1">
 </head>
 <body>
 <header>
   <h1>🐍⚙️ Lernpfad Python &amp; C++</h1>
   <p class="subtitle">Vom Programmieranfänger zum Senior-Entwickler – im Browser</p>
   <nav>
-    <button id="nav-start" class="nav-btn active" onclick="zeigeAnsicht('start')">Start</button>
-    <button id="nav-ziel" class="nav-btn" onclick="zeigeAnsicht('ziel')">🎯 Ziel &amp; Mission</button>
-    <button id="nav-quiz" class="nav-btn" onclick="zeigeAnsicht('quiz')">Quiz</button>
-    <button id="nav-kurs" class="nav-btn" onclick="zeigeAnsicht('kurs')">Sprachkurs</button>
-    <button id="nav-glossar" class="nav-btn" onclick="zeigeAnsicht('glossar')">📚 Glossar</button>
-    <button id="nav-ki" class="nav-btn" onclick="zeigeAnsicht('ki')" title="Nur mit abgeschlossenem Abo">🤖 KI-Assistent</button>
-    <button id="nav-karten" class="nav-btn" onclick="zeigeAnsicht('karten')" title="Erstellte Karteikarten – auf dem Server gespeichert">🃏 Karteikarten</button>
-    <button id="nav-konto" class="nav-btn" onclick="zeigeAnsicht('konto')" title="Konto, Bearbeitungsstand-Key und KI-Freischaltung">👤 Konto</button>
+    <div class="nav-gruppe">
+      <span class="nav-label">Lernen</span>
+      <div class="nav-btns">
+        <button id="nav-start" class="nav-btn active" onclick="zeigeAnsicht('start')">🏠 Start</button>
+        <button id="nav-ziel" class="nav-btn" onclick="zeigeAnsicht('ziel')">🎯 Ziel &amp; Mission</button>
+        <button id="nav-quiz" class="nav-btn" onclick="zeigeAnsicht('quiz')">📝 Quiz</button>
+        <button id="nav-kurs" class="nav-btn" onclick="zeigeAnsicht('kurs')">📖 Sprachkurs</button>
+        <button id="nav-glossar" class="nav-btn" onclick="zeigeAnsicht('glossar')">📚 Glossar</button>
+      </div>
+    </div>
+    <div class="nav-gruppe">
+      <span class="nav-label">KI &amp; Tools</span>
+      <div class="nav-btns">
+        <button id="nav-ki" class="nav-btn" onclick="zeigeAnsicht('ki')" title="Nur mit abgeschlossenem Abo">🤖 KI-Assistent</button>
+        <button id="nav-karten" class="nav-btn" onclick="zeigeAnsicht('karten')" title="Erstellte Karteikarten – auf dem Server gespeichert">🃏 Karteikarten</button>
+      </div>
+    </div>
+    <div class="nav-gruppe">
+      <span class="nav-label">Konto</span>
+      <div class="nav-btns">
+        <button id="nav-konto" class="nav-btn" onclick="zeigeAnsicht('konto')" title="Konto, Bearbeitungsstand-Key und KI-Freischaltung">👤 Konto</button>
+      </div>
+    </div>
   </nav>
 </header>
 
@@ -299,6 +314,6 @@
 
 <div id="toast-container" aria-live="polite"></div>
 
-<script src="app.js?v=0.8.0"></script>
+<script src="app.js?v=0.8.1"></script>
 </body>
 </html>
