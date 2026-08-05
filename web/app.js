@@ -8,7 +8,7 @@
 const DATEN_PFAD = "/daten/";
 // Versionsmarker: erscheint im Footer. LEER = Browser nutzt alte app.js
 // (Cache!) → Strg+F5 / Cache leeren.
-const APP_VERSION = "0.7.0";
+const APP_VERSION = "0.8.0";
 const STUFEN = ["leicht", "mittel", "schwer"];
 const STUFEN_BESCHREIBUNG = {
   leicht: "nur leichte Fragen",
@@ -345,6 +345,186 @@ async function kartenLoeschen(id) {
   }
 }
 
+// ------------------------------------------------------------------
+// Konto: Anmeldung, Registrierung (Keygen für Bearbeitungsstand-Key)
+// und KI-Freischaltung per Transaktionscode
+// ------------------------------------------------------------------
+// Der Bearbeitungsstand-Key IST der sync_code. Nach Anmeldung/Registrierung
+// wird er in localStorage gesetzt – damit laufen Fortschritt-Sync, KI und
+// Karteikarten automatisch unter dem Konto.
+const KONTO_TOKEN_KEY = "lernpfad_token";
+
+async function kontoZustand() {
+  const token = localStorage.getItem(KONTO_TOKEN_KEY) || "";
+  if (!token) return null;
+  try {
+    const r = await fetch("/api/auth/wer", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token }),
+    });
+    if (!r.ok) {
+      localStorage.removeItem(KONTO_TOKEN_KEY);
+      return null;
+    }
+    return await r.json();
+  } catch (e) {
+    return null;
+  }
+}
+
+async function kontoBereichOeffnen() {
+  const nichtAngemeldet = document.getElementById("konto-nicht-angemeldet");
+  const angemeldet = document.getElementById("konto-angemeldet");
+  if (!nichtAngemeldet || !angemeldet) return;
+  const konto = await kontoZustand();
+  nichtAngemeldet.hidden = !!konto;
+  angemeldet.hidden = !konto;
+  if (konto) kontoAnzeigen(konto);
+}
+
+function kontoAnzeigen(konto) {
+  const emailEl = document.getElementById("konto-email");
+  const codeEl = document.getElementById("konto-sync-code");
+  const aboEl = document.getElementById("konto-abo-status");
+  if (emailEl) emailEl.textContent = "Angemeldet als: " + konto.email;
+  if (codeEl) codeEl.textContent = konto.sync_code;
+  if (aboEl) {
+    aboEl.innerHTML = konto.abo_abgeschlossen
+      ? '<p>🤖 KI-Assistent: <strong class="kw-gefunden">✅ freigeschaltet</strong></p>'
+      : '<p>🤖 KI-Assistent: <strong>❌ noch nicht freigeschaltet</strong> – Transaktionscode unten eingeben.</p>';
+  }
+  // Bearbeitungsstand-Key des Kontos aktivieren (Fortschritt + KI)
+  if (konto.sync_code && ladeSyncCode() !== konto.sync_code) {
+    localStorage.setItem(SYNC_CODE_KEY, konto.sync_code);
+    syncJetzt(false);
+  }
+}
+
+async function kontoRegistrieren() {
+  const email = (document.getElementById("reg-email").value || "").trim();
+  const passwort = document.getElementById("reg-passwort").value || "";
+  const code = (document.getElementById("reg-sync-code").value || "")
+    .trim().toLowerCase().replace(/-/g, "");
+  const status = document.getElementById("konto-status");
+  if (!email || !passwort) {
+    zeigeToast("E-Mail und Passwort angeben.", "info");
+    return;
+  }
+  if (status) status.textContent = "Registriere …";
+  try {
+    const r = await fetch("/api/auth/registrieren", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, passwort, sync_code: code }),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      if (status) status.textContent = "";
+      zeigeToast(d.detail || ("Fehler " + r.status), "fehler");
+      return;
+    }
+    // Keygen-Ergebnis sofort als Bearbeitungsstand-Key aktivieren
+    localStorage.setItem(SYNC_CODE_KEY, d.sync_code);
+    await kontoAnmeldenNach(email, passwort);
+  } catch (e) {
+    if (status) status.textContent = "";
+    zeigeToast("Verbindungsfehler bei der Registrierung.", "fehler");
+  }
+}
+
+async function kontoAnmelden() {
+  const email = (document.getElementById("login-email").value || "").trim();
+  const passwort = document.getElementById("login-passwort").value || "";
+  if (!email || !passwort) {
+    zeigeToast("E-Mail und Passwort angeben.", "info");
+    return;
+  }
+  await kontoAnmeldenNach(email, passwort);
+}
+
+async function kontoAnmeldenNach(email, passwort) {
+  const status = document.getElementById("konto-status");
+  try {
+    const r = await fetch("/api/auth/anmelden", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, passwort }),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      if (status) status.textContent = "";
+      zeigeToast(d.detail || ("Fehler " + r.status), "fehler");
+      return;
+    }
+    localStorage.setItem(KONTO_TOKEN_KEY, d.token);
+    localStorage.setItem(SYNC_CODE_KEY, d.sync_code);
+    for (const id of ["reg-email", "reg-passwort", "reg-sync-code",
+                      "login-email", "login-passwort"]) {
+      const feld = document.getElementById(id);
+      if (feld) feld.value = "";
+    }
+    if (status) status.textContent = "";
+    await kontoBereichOeffnen();
+    syncJetzt(false);
+    zeigeToast("Angemeldet – Fortschritt wird mit dem Konto synchronisiert. ✅", "erfolg");
+  } catch (e) {
+    if (status) status.textContent = "";
+    zeigeToast("Verbindungsfehler bei der Anmeldung.", "fehler");
+  }
+}
+
+async function kontoAbmelden() {
+  const token = localStorage.getItem(KONTO_TOKEN_KEY) || "";
+  try {
+    await fetch("/api/auth/abmelden", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token }),
+    });
+  } catch (e) { /* Server nicht erreichbar – lokal trotzdem abmelden */ }
+  localStorage.removeItem(KONTO_TOKEN_KEY);
+  await kontoBereichOeffnen();
+  zeigeToast("Abgemeldet.", "info");
+}
+
+async function kontoFreischalten() {
+  const feld = document.getElementById("konto-transaktionscode");
+  const status = document.getElementById("konto-freischalt-status");
+  const code = ladeSyncCode();
+  const tcode = ((feld && feld.value) || "").trim().toUpperCase();
+  if (!code) {
+    zeigeToast("Kein Sync-Code – bitte zuerst ein Konto anlegen.", "info");
+    return;
+  }
+  if (!tcode) {
+    zeigeToast("Bitte Transaktionscode eingeben.", "info");
+    return;
+  }
+  if (status) status.textContent = "Prüfe Transaktionscode …";
+  try {
+    const r = await fetch("/api/auth/freischalten", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code, transaktions_code: tcode }),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      if (status) status.textContent = "";
+      zeigeToast(d.detail || ("Fehler " + r.status), "fehler");
+      return;
+    }
+    if (feld) feld.value = "";
+    if (status) status.textContent = "🎉 KI-Assistent freigeschaltet!";
+    kiAboStatus = null; // Cache invalidieren, damit die KI-Ansicht sofort reagiert
+    await kontoBereichOeffnen();
+    zeigeToast("KI-Assistent freigeschaltet! 🎉", "erfolg");
+  } catch (e) {
+    if (status) status.textContent = "";
+    zeigeToast("Verbindungsfehler bei der Freischaltung.", "fehler");
+  }
+}
+
 // Übungstests nach IHK-Standard (KEINE echten IHK-Prüfungen):
 // Test 1 (LF1–3, 40 %), Test 2 (LF1–6, 60 %)
 const PRUEFUNGEN = [
@@ -414,6 +594,7 @@ function zeigeAnsicht(name) {
   if (name === "glossar") zeigeGlossar();
   if (name === "ki") kiBereichOeffnen();
   if (name === "karten") kartenBereichOeffnen();
+  if (name === "konto") kontoBereichOeffnen();
 }
 
 // ------------------------------------------------------------------

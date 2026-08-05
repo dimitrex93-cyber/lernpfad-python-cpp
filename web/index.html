@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lernpfad Python & C++ – Web-App</title>
-<link rel="stylesheet" href="style.css?v=0.7.0">
+<link rel="stylesheet" href="style.css?v=0.8.0">
 </head>
 <body>
 <header>
@@ -18,6 +18,7 @@
     <button id="nav-glossar" class="nav-btn" onclick="zeigeAnsicht('glossar')">📚 Glossar</button>
     <button id="nav-ki" class="nav-btn" onclick="zeigeAnsicht('ki')" title="Nur mit abgeschlossenem Abo">🤖 KI-Assistent</button>
     <button id="nav-karten" class="nav-btn" onclick="zeigeAnsicht('karten')" title="Erstellte Karteikarten – auf dem Server gespeichert">🃏 Karteikarten</button>
+    <button id="nav-konto" class="nav-btn" onclick="zeigeAnsicht('konto')" title="Konto, Bearbeitungsstand-Key und KI-Freischaltung">👤 Konto</button>
   </nav>
 </header>
 
@@ -246,6 +247,48 @@
       </div>
     </div>
   </section>
+
+  <!-- ============ KONTO (Anmeldung/Registrierung, Bearbeitungsstand-Key, KI-Freischaltung) ============ -->
+  <section id="ansicht-konto" class="ansicht" hidden>
+    <div class="karte" id="konto-nicht-angemeldet">
+      <h2>👤 Anmelden oder registrieren</h2>
+      <p class="subtitle">Mit einem Konto bekommst du einen eigenen <strong>Bearbeitungsstand-Key</strong> (dein Sync-Code) – damit ist dein Fortschritt auf jedem Gerät wiederherstellbar. Die KI-Funktion wird per <strong>Transaktionscode</strong> freigeschaltet.</p>
+
+      <h3>Registrieren</h3>
+      <p class="subtitle">Der Server erzeugt automatisch deinen Bearbeitungsstand-Key und weist ihn deinem Konto zu. Wer schon einen Sync-Code hat (z.&nbsp;B. aus dem Terminal), trägt ihn unten ein, um umzuziehen.</p>
+      <input type="email" id="reg-email" class="sync-code-input" placeholder="E-Mail-Adresse" autocomplete="email">
+      <input type="password" id="reg-passwort" class="sync-code-input" placeholder="Passwort (min. 8 Zeichen)" autocomplete="new-password">
+      <input type="text" id="reg-sync-code" class="sync-code-input" placeholder="Bestehender Sync-Code (optional, für Umzug)" autocomplete="off">
+      <div class="button-reihe">
+        <button class="primary" onclick="kontoRegistrieren()">🔑 Konto erstellen</button>
+      </div>
+
+      <h3>Anmelden</h3>
+      <input type="email" id="login-email" class="sync-code-input" placeholder="E-Mail-Adresse" autocomplete="email">
+      <input type="password" id="login-passwort" class="sync-code-input" placeholder="Passwort" autocomplete="current-password">
+      <div class="button-reihe">
+        <button class="primary" onclick="kontoAnmelden()">🔓 Anmelden</button>
+      </div>
+      <p id="konto-status" class="subtitle"></p>
+    </div>
+
+    <div class="karte" id="konto-angemeldet" hidden>
+      <h2>👤 Dein Konto</h2>
+      <p id="konto-email" class="subtitle"></p>
+      <p>Bearbeitungsstand-Key (Sync-Code): <code id="konto-sync-code" class="code"></code></p>
+      <p class="subtitle">Damit kannst du deinen Fortschritt auf jedem Gerät wiederherstellen – im Sync-Bereich eintragen oder im Terminal in <code class="code">~/.lernpfad/sync_code</code>.</p>
+      <p id="konto-abo-status"></p>
+
+      <h3>🤖 KI-Funktion freischalten</h3>
+      <p class="subtitle">Transaktionscode eingeben, um den KI-Assistenten für dieses Konto freizuschalten.</p>
+      <input type="text" id="konto-transaktionscode" class="sync-code-input" placeholder="Transaktionscode (XXXXX-XXXXX-XXXXX)" autocomplete="off" onkeydown="if(event.key==='Enter')kontoFreischalten()">
+      <div class="button-reihe">
+        <button class="primary" onclick="kontoFreischalten()">✅ Freischalten</button>
+        <button class="secondary" onclick="kontoAbmelden()">🚪 Abmelden</button>
+      </div>
+      <p id="konto-freischalt-status" class="subtitle"></p>
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -256,6 +299,6 @@
 
 <div id="toast-container" aria-live="polite"></div>
 
-<script src="app.js?v=0.7.0"></script>
+<script src="app.js?v=0.8.0"></script>
 </body>
 </html>
