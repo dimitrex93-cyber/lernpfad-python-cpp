@@ -8,7 +8,7 @@
 const DATEN_PFAD = "/daten/";
 // Versionsmarker: erscheint im Footer. LEER = Browser nutzt alte app.js
 // (Cache!) → Strg+F5 / Cache leeren.
-const APP_VERSION = "0.8.1";
+const APP_VERSION = "0.8.2";
 const STUFEN = ["leicht", "mittel", "schwer"];
 const STUFEN_BESCHREIBUNG = {
   leicht: "nur leichte Fragen",
@@ -581,16 +581,17 @@ function lfSchluessel(nr, stufe) {
 // Ansichten wechseln
 // ------------------------------------------------------------------
 function zeigeAnsicht(name) {
-  for (const id of ["start", "ziel", "quiz", "kurs", "glossar", "ki", "karten"]) {
+  for (const id of ["start", "ziel", "quiz", "kurs", "json", "glossar", "ki", "karten", "konto"]) {
     document.getElementById("ansicht-" + id).hidden = id !== name;
   }
-  for (const id of ["start", "ziel", "quiz", "kurs", "glossar", "ki", "karten"]) {
+  for (const id of ["start", "ziel", "quiz", "kurs", "json", "glossar", "ki", "karten", "konto"]) {
     document.getElementById("nav-" + id).classList.toggle("active", id === name);
   }
   if (name === "start") zeigeStart();
   if (name === "ziel") zeigeZiel();
   if (name === "quiz") zeigeQuizAuswahl();
   if (name === "kurs") zeigeKursUebersicht();
+  if (name === "json") zeigeJsonUebersicht();
   if (name === "glossar") zeigeGlossar();
   if (name === "ki") kiBereichOeffnen();
   if (name === "karten") kartenBereichOeffnen();
@@ -1252,6 +1253,102 @@ function kursZurueck() {
   document.getElementById("kurs-kapitel").hidden = true;
   document.getElementById("kurs-uebersicht").hidden = false;
   zeigeKursUebersicht();
+}
+
+// ------------------------------------------------------------------
+// JSON-KURS (eigener Reiter, eigene Kapiteldatei tools/jsonkurs/)
+// ------------------------------------------------------------------
+let jsonZustand = { kapitel: [], aktuellesKapitel: 0, abschnittIndex: 0 };
+
+async function zeigeJsonUebersicht() {
+  const liste = document.getElementById("json-liste");
+  if (!liste) return;
+  liste.innerHTML = '<p class="subtitle">Kapitel werden geladen …</p>';
+  try {
+    const kapitel = await ladeJsonKapitel();
+    jsonZustand = { kapitel, aktuellesKapitel: 0, abschnittIndex: 0 };
+    let html = "";
+    kapitel.forEach((k, i) => {
+      html += `<div class="kurs-eintrag" onclick="oeffneJsonKapitel(${i})">
+          <strong>${escapeHtml(k.titel)}</strong><br>
+          <span class="subtitle">${(k.abschnitte || []).length} Abschnitte</span>
+        </div>`;
+    });
+    liste.innerHTML = html;
+  } catch (e) {
+    liste.innerHTML = `<p class="nicht-bestanden">JSON-Kapitel konnten nicht geladen werden: ${e.message}</p>`;
+  }
+}
+
+async function ladeJsonKapitel() {
+  // JSON-Kurs hat ein eigenes Verzeichnis (tools/jsonkurs/) mit Manifest,
+  // damit der Browser die Dateien ohne Wildcard-Fetch finden kann.
+  const manifestResp = await fetch(`${DATEN_PFAD}tools/jsonkurs/manifest.json`);
+  if (!manifestResp.ok) {
+    throw new Error("JSON-Kurs-Manifest nicht gefunden");
+  }
+  const namen = await manifestResp.json();
+  const kapitel = [];
+  for (const name of namen) {
+    const resp = await fetch(`${DATEN_PFAD}tools/jsonkurs/${name}`);
+    if (resp.ok) kapitel.push(await resp.json());
+  }
+  if (!kapitel.length) throw new Error("Keine JSON-Kapitel geladen");
+  return kapitel;
+}
+
+function oeffneJsonKapitel(index) {
+  const k = jsonZustand.kapitel[index];
+  jsonZustand.aktuellesKapitel = index;
+  jsonZustand.abschnittIndex = 0;
+  document.getElementById("json-uebersicht").hidden = true;
+  document.getElementById("json-kapitel").hidden = false;
+  document.getElementById("json-kapitel-titel").textContent = k.titel;
+  document.getElementById("json-kapitel-einleitung").textContent = k.einleitung || "";
+  zeigeJsonAbschnitt();
+}
+
+function zeigeJsonAbschnitt() {
+  const z = jsonZustand;
+  const k = z.kapitel[z.aktuellesKapitel];
+  const a = k.abschnitte[z.abschnittIndex];
+  const container = document.getElementById("json-abschnitte");
+  let html = `<div class="abschnitt">
+    <h3>${z.abschnittIndex + 1}/${k.abschnitte.length}: ${escapeHtml(a.titel)}</h3>`;
+  for (const sprache of ["python", "cpp"]) {
+    const block = a[sprache];
+    if (!block) continue;
+    const label = sprache === "python" ? "🐍 Python" : "⚙️  C++";
+    html += `<div class="sprache-titel ${sprache}">${label}</div>`;
+    html += `<p>${escapeHtml(block.text)}</p>`;
+    if (block.code) html += `<pre class="code">${escapeHtml(block.code)}</pre>`;
+  }
+  if (a.vergleich) html += `<div class="vergleich">💡 <strong>Vergleich:</strong> ${escapeHtml(a.vergleich)}</div>`;
+  if (a.merk) html += `<div class="merk">📌 ${escapeHtml(a.merk)}</div>`;
+  html += `</div>`;
+  container.innerHTML = html;
+
+  const weiter = document.getElementById("json-weiter-btn");
+  const letzter = z.abschnittIndex >= k.abschnitte.length - 1;
+  weiter.textContent = letzter ? "Kapitel abschließen ✓" : "Weiter →";
+}
+
+function jsonNaechsterAbschnitt() {
+  const z = jsonZustand;
+  const k = z.kapitel[z.aktuellesKapitel];
+  if (z.abschnittIndex < k.abschnitte.length - 1) {
+    z.abschnittIndex++;
+    zeigeJsonAbschnitt();
+  } else {
+    zeigeToast("JSON-Kapitel abgeschlossen – weiter so! 🧾", "erfolg");
+    jsonZurueck();
+  }
+}
+
+function jsonZurueck() {
+  document.getElementById("json-kapitel").hidden = true;
+  document.getElementById("json-uebersicht").hidden = false;
+  zeigeJsonUebersicht();
 }
 
 function escapeHtml(s) {

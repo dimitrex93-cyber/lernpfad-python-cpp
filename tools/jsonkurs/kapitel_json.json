@@ -1,0 +1,72 @@
+{
+  "id": "json",
+  "titel": "JSON – das Datenaustausch-Format",
+  "einleitung": "Programme müssen Daten austauschen. Zum Beispiel: Dein Browser schickt Daten an einen Server. Oder zwei Programme reden miteinander. Dafür gibt es JSON. JSON ist eine Sprache für Daten. Sie ist leicht zu lesen – für Menschen und für Maschinen. In diesem Kapitel lernst du JSON kennen. Du liest es, du schreibst es, und du nutzt es in Python und C++.",
+  "abschnitte": [
+    {
+      "titel": "Was ist JSON?",
+      "python": {
+        "text": "JSON heißt ausgeschrieben JavaScript Object Notation. Gesprochen: Dschäjson. Objekt-Notation heißt: Daten werden in Objekten gespeichert. Ein Objekt ist eine Sammlung von Namen und Werten. JSON ist ein Textformat. Das heißt: JSON-Daten sind ganz normaler Text. Du kannst sie in jeder Textdatei speichern. Die Datei bekommt dann die Endung .json. JSON ist sprachunabhängig. Das bedeutet: Jede Programmiersprache kann JSON lesen und schreiben. Python kann es. C++ kann es. JavaScript kann es. Das macht JSON perfekt für den Datenaustausch. Ein Server schickt JSON an deinen Browser. Dein Browser versteht es sofort.",
+        "code": "# Eine JSON-Datei sieht so aus:\n{\n  \"name\": \"Lernpfad\",\n  \"sprache\": \"Python\",\n  \"level\": 1\n}\n\n# In Python liest du sie so:\nimport json\n\nwith open(\"daten.json\", encoding=\"utf-8\") as datei:\n    daten = json.load(datei)   # JSON -> Python-Wörterbuch\n\nprint(daten[\"name\"])          # Lernpfad"
+      },
+      "cpp": {
+        "text": "Auch C++ kann JSON lesen und schreiben. Dafür gibt es eine beliebte Bibliothek: nlohmann/json. Eine Bibliothek ist eine Sammlung von fertigem Code. Du musst JSON nicht selbst zerlegen. Die Bibliothek macht das für dich. In C++ brauchst du nur die Header-Datei json.hpp. Mit #include bindest du sie ein. Danach steht dir der Typ json zur Verfügung. Ein Typ ist eine Art Bauplan für Daten. Mit json erstellst du Objekte. Du kannst sie füllen, lesen und in Text umwandeln. So tauschst du Daten zwischen Programmen aus – ganz ohne Stress.",
+        "code": "// C++ mit der Bibliothek nlohmann/json\n#include <nlohmann/json.hpp>\n#include <iostream>\n#include <fstream>\n\nusing json = nlohmann::json;\n\nint main() {\n    std::ifstream datei(\"daten.json\");\n    json daten = json::parse(datei);   // JSON -> json-Objekt\n\n    std::cout << daten[\"name\"] << std::endl;  // Lernpfad\n    return 0;\n}\n// Kompilieren: g++ -std=c++17 datei.cpp -o programm"
+      },
+      "vergleich": "Python: json.load() liest JSON und macht ein Wörterbuch daraus. C++: json::parse() liest JSON und macht ein json-Objekt daraus. Beide Sprachen brauchen nur eine kleine Bibliothek. In Python ist json eingebaut. In C++ holst du nlohmann/json.",
+      "merk": "JSON ist Text zum Datenaustausch. Jede Sprache kann es lesen. Die Datei-Endung ist .json."
+    },
+    {
+      "titel": "Die Bausteine von JSON",
+      "python": {
+        "text": "JSON hat nur wenige Bausteine. Die geschweiften Klammern { } machen ein Objekt. Ein Objekt speichert Name-Wert-Paare. Name und Wert trennt ein Doppelpunkt. Zum Beispiel: \"name\": \"Lernpfad\". Die eckigen Klammern [ ] machen ein Array. Ein Array ist eine geordnete Liste. Zum Beispiel: [1, 2, 3]. Werte trennt ein Komma. Es gibt vier Wert-Arten: Strings sind Text in doppelten Anführungszeichen. Zahlen sind Zahlen ohne Anführungszeichen. true und false sind Wahrheitswerte. null bedeutet: kein Wert. Objekte und Arrays können ineinander stecken. So baust du verschachtelte Daten. In Python wird ein Objekt zum Wörterbuch. Ein Array wird zur Liste.",
+        "code": "import json\n\n# Ein Objekt mit allen Wert-Arten:\ndaten = {\n    \"name\": \"Lernpfad\",        # String\n    \"level\": 3,                 # Zahl\n    \"aktiv\": True,              # true\n    \"leer\": None,               # null\n    \"themen\": [\"Python\", \"C++\"]  # Array\n}\n\n# In JSON-Text umwandeln:\ntext = json.dumps(daten, indent=2)\nprint(text)\n\n# Und wieder zurück:\nzurueck = json.loads(text)\nprint(zurueck[\"themen\"][0])   # Python"
+      },
+      "cpp": {
+        "text": "In C++ baust du JSON mit dem Typ json. Du schreibst die Klammern genau wie im JSON-Text. Mit j.dump() machst du daraus einen String. Mit std::cout gibst du ihn aus. Du kannst auch direkt auf Werte zugreifen. j[\"name\"] holt den Wert zum Namen. Mit .get<std::string>() bekommst du ihn als C++-String. Arrays liest du mit einer for-Schleife. Das ist wie bei einem normalen Vektor. Wichtig: In JSON heißen Strings doppelte Anführungszeichen. In C++ schreibst du den Text auch in doppelten Anführungszeichen. So bleiben die Daten sauber.",
+        "code": "// JSON in C++ bauen und ausgeben\n#include <nlohmann/json.hpp>\n#include <iostream>\n\nusing json = nlohmann::json;\n\nint main() {\n    json daten = {\n        {\"name\", \"Lernpfad\"},\n        {\"level\", 3},\n        {\"aktiv\", true},\n        {\"themen\", {\"Python\", \"C++\"}}\n    };\n\n    std::cout << daten.dump(2) << std::endl;  // schöner Text\n\n    std::string name = daten[\"name\"].get<std::string>();\n    std::cout << name << std::endl;           // Lernpfad\n    return 0;\n}"
+      },
+      "vergleich": "Python: Wörterbuch + json.dumps() für Text, json.loads() zurück. C++: json-Objekt + .dump() für Text, json::parse() zurück. Die Bausteine sind identisch: Objekt {}, Array [], String, Zahl, true, false, null.",
+      "merk": "JSON-Bausteine: {} Objekt, [] Array, Strings mit doppelten Anführungszeichen, true/false/null. Objekte und Arrays dürfen sich verschachteln."
+    },
+    {
+      "titel": "JSON-Dateien schreiben",
+      "python": {
+        "text": "Du kannst Daten auch als JSON-Datei speichern. Dafür nutzt du json.dump(). Achtung: dump ohne s schreibt in eine Datei. dumps mit s macht einen String. Mit indent=2 bekommst du schöne Einrückung. Ohne indent steht alles in einer Zeile. Das spart Platz, ist aber schwer zu lesen. Denk an encoding=\"utf-8\". Sonst werden Umlaute wie ä oder ö kaputt. Die Datei-Endung ist .json. So speicherst du zum Beispiel Einstellungen oder Spielfortschritt. Lade sie beim Start mit json.load(). Fertig ist dein Speicherstand.",
+        "code": "import json\n\nspielstand = {\n    \"spieler\": \"Alex\",\n    \"level\": 7,\n    \"punkte\": 1250,\n    \"items\": [\"Schwert\", \"Schild\"]\n}\n\n# In Datei schreiben:\nwith open(\"spielstand.json\", \"w\", encoding=\"utf-8\") as datei:\n    json.dump(spielstand, datei, indent=2)\n\n# Wieder laden:\nwith open(\"spielstand.json\", encoding=\"utf-8\") as datei:\n    geladen = json.load(datei)\n\nprint(geladen[\"spieler\"])   # Alex\nprint(geladen[\"punkte\"])    # 1250"
+      },
+      "cpp": {
+        "text": "In C++ schreibst du JSON mit ofstream. Das ist der Ausgabe-Strom für Dateien. Du erstellst ein json-Objekt und füllst es. Dann schreibst du j.dump() in die Datei. Mit j.dump(2) bekommst du Einrückung. So bleibt die Datei lesbar. Danach schließt du die Datei. RAII schließt sie aber auch von selbst. RAII heißt: Das Objekt räumt von allein auf. Zum Laden öffnest du ifstream und rufst json::parse() auf. Prüfe immer, ob das Öffnen geklappt hat. if (!datei) bedeutet: Es gab einen Fehler. Dann brauchst du die Datei nicht zu lesen.",
+        "code": "// JSON-Datei schreiben und lesen (C++)\n#include <nlohmann/json.hpp>\n#include <iostream>\n#include <fstream>\n\nusing json = nlohmann::json;\n\nint main() {\n    json spielstand = {\n        {\"spieler\", \"Alex\"},\n        {\"level\", 7},\n        {\"punkte\", 1250},\n        {\"items\", {\"Schwert\", \"Schild\"}}\n    };\n\n    // Schreiben:\n    std::ofstream aus(\"spielstand.json\");\n    aus << spielstand.dump(2);\n    aus.close();\n\n    // Lesen:\n    std::ifstream ein(\"spielstand.json\");\n    if (!ein) { std::cerr << \"Datei fehlt!\" << std::endl; return 1; }\n    json geladen = json::parse(ein);\n\n    std::cout << geladen[\"spieler\"] << std::endl;  // Alex\n    return 0;\n}"
+      },
+      "vergleich": "Python: json.dump(obj, datei, indent=2) schreibt, json.load(datei) liest. C++: ofstream + .dump(2) schreibt, ifstream + json::parse() liest. Beide: encoding utf-8 bzw. Prüfung if (!datei).",
+      "merk": "Schreiben: Python json.dump, C++ ofstream + dump. Lesen: Python json.load, C++ json::parse. Immer auf Umlaute und Dateifehler achten."
+    },
+    {
+      "titel": "Häufige JSON-Fehler",
+      "python": {
+        "text": "JSON ist streng. Ein kleiner Fehler und das Lesen schlägt fehl. Fehler 1: Einzelne Anführungszeichen. JSON will doppelte. 'Hallo' ist falsch, \"Hallo\" ist richtig. Fehler 2: Ein Komma am Ende. JSON erlaubt kein letztes Komma. Nach dem letzten Wert kommt nichts mehr. Fehler 3: Kommentare. JSON hat keine Kommentare. Zeilen mit # oder // sind nicht erlaubt. Fehler 4: Falsche Werte. NaN oder undefined gibt es in JSON nicht. Nur Zahlen, Strings, true, false und null. In Python bekommst du bei Fehlern eine JSONDecodeError. Die Nachricht sagt dir, wo das Problem ist. Prüfe deine Daten mit einem Validator. Das ist ein Programm, das JSON prüft.",
+        "code": "import json\n\nkaputt = \"\"\"\n{\n  'name': 'Alex',     # Fehler: einzelne Anführungszeichen\n  'level': 3,         # und Kommentar ist nicht erlaubt\n}\n\"\"\"\n\ntry:\n    daten = json.loads(kaputt)\nexcept json.JSONDecodeError as fehler:\n    print(\"JSON-Fehler:\", fehler)   # zeigt Zeile und Stelle\n\n# Richtig sieht es so aus:\ngut = '{\"name\": \"Alex\", \"level\": 3}'\ndaten = json.loads(gut)\nprint(daten[\"name\"])   # Alex"
+      },
+      "cpp": {
+        "text": "Auch C++ meldet JSON-Fehler. json::parse() wirft dann eine Ausnahme. Eine Ausnahme ist ein Fehlersignal. Ohne Behandlung stürzt das Programm ab. Fange sie mit try und catch ab. Das ist dein Sicherheitsnetz. Die Ausnahme heißt json::parse_error. Sie sagt dir, wo der Fehler ist. Die häufigsten Fehler sind dieselben wie in Python: einzelne Anführungszeichen, ein Komma am Ende, Kommentare. Merke: JSON ist kein Programm. Es ist nur Daten. Deshalb gibt es keine Kommentare und keine Befehle. Wenn du JSON von außen bekommst, prüfe es erst. Zum Beispiel mit einem Online-Validator. So findest du Fehler, bevor dein Programm sie findet.",
+        "code": "// JSON-Fehler abfangen (C++)\n#include <nlohmann/json.hpp>\n#include <iostream>\n\nusing json = nlohmann::json;\n\nint main() {\n    std::string kaputt = R\"({\n        'name': 'Alex',\n        'level': 3,\n    })\";\n\n    try {\n        json daten = json::parse(kaputt);\n    } catch (const json::parse_error& e) {\n        std::cerr << \"JSON-Fehler: \" << e.what() << std::endl;\n    }\n    return 0;\n}"
+      },
+      "vergleich": "Beide Sprachen melden JSON-Fehler mit einer Meldung. Python: JSONDecodeError. C++: json::parse_error. Beide zeigen Zeile und Stelle. Fange die Fehler mit try/except bzw. try/catch ab.",
+      "merk": "JSON-Regeln: doppelte Anführungszeichen, kein letztes Komma, keine Kommentare. Fehler fängst du mit try/except (Python) oder try/catch (C++)."
+    },
+    {
+      "titel": "JSON im echten Leben",
+      "python": {
+        "text": "JSON ist überall. Wenn eine App Wetterdaten holt, kommen sie meist als JSON. Wenn ein Browser mit einem Server redet, schickt er oft JSON. Auch diese Lern-App nutzt JSON. Alle Fragen und Kapitel sind JSON-Dateien. Das ist praktisch: Man kann die Daten ändern, ohne das Programm umzubauen. In Python holst du oft JSON von einer Internet-Adresse. Dafür nutzt du urllib oder die Bibliothek requests. Der Server schickt Text. Den Text machst du mit json.loads() zu einem Wörterbuch. Dann liest du die Werte einfach aus. Genauso schickst du Daten an einen Server: Wörterbuch -> json.dumps() -> Text -> Abschicken.",
+        "code": "import json\nfrom urllib.request import urlopen\n\n# JSON von einer Internet-Adresse holen:\nwith urlopen(\"https://api.open-meteo.com/v1/forecast?latitude=52&longitude=13&current_weather=true\") as antwort:\n    text = antwort.read().decode(\"utf-8\")\n\nwetter = json.loads(text)\nprint(wetter[\"current_weather\"][\"temperature\"])  # z. B. 21.4"
+      },
+      "cpp": {
+        "text": "In C++ holst du JSON meist mit einer Bibliothek für Netzwerke. Zum Beispiel mit libcurl oder mit der Bibliothek cpp-httplib. Der Weg ist immer derselbe: Du schickst eine Anfrage an einen Server. Der Server antwortet mit Text. Den Text gibst du an json::parse(). Fertig ist dein json-Objekt. Auch Konfigurationsdateien sind oft JSON. Eine Konfiguration sind Einstellungen für ein Programm. Zum Beispiel: Lautstärke, Farbe, Sprache. Du liest die Datei beim Start und stellst das Programm ein. So bleibt der Code einfach. Du änderst nur die Datei, nicht das Programm.",
+        "code": "// JSON als Konfiguration nutzen (C++)\n#include <nlohmann/json.hpp>\n#include <iostream>\n#include <fstream>\n\nusing json = nlohmann::json;\n\nint main() {\n    std::ifstream datei(\"config.json\");\n    json config = json::parse(datei);\n\n    int lautstaerke = config[\"lautstaerke\"];\n    std::string sprache = config[\"sprache\"].get<std::string>();\n\n    std::cout << \"Sprache: \" << sprache << std::endl;\n    std::cout << \"Lautstärke: \" << lautstaerke << std::endl;\n    return 0;\n}"
+      },
+      "vergleich": "JSON ist die gemeinsame Sprache zwischen Programmen und Servern. Python: urlopen + json.loads(). C++: Netzwerk-Bibliothek + json::parse(). Auch Konfigurationen liegen oft als .json vor.",
+      "merk": "JSON steckt in fast jeder App: Wetter, Einstellungen, Speicherstände, APIs. Lesen: json.loads (Python) bzw. json::parse (C++)."
+    }
+  ]
+}

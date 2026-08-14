@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lernpfad Python & C++ – Web-App</title>
-<link rel="stylesheet" href="style.css?v=0.8.1">
+<link rel="stylesheet" href="style.css?v=0.8.2">
 </head>
 <body>
 <header>
@@ -18,6 +18,7 @@
         <button id="nav-ziel" class="nav-btn" onclick="zeigeAnsicht('ziel')">🎯 Ziel &amp; Mission</button>
         <button id="nav-quiz" class="nav-btn" onclick="zeigeAnsicht('quiz')">📝 Quiz</button>
         <button id="nav-kurs" class="nav-btn" onclick="zeigeAnsicht('kurs')">📖 Sprachkurs</button>
+        <button id="nav-json" class="nav-btn" onclick="zeigeAnsicht('json')">🧾 JSON-Kurs</button>
         <button id="nav-glossar" class="nav-btn" onclick="zeigeAnsicht('glossar')">📚 Glossar</button>
       </div>
     </div>
@@ -184,6 +185,28 @@
     </div>
   </section>
 
+  <!-- ============ JSON-KURS ============ -->
+  <section id="ansicht-json" class="ansicht" hidden>
+    <div class="karte" id="json-uebersicht">
+      <h2>🧾 JSON-Kurs: Das Datenaustausch-Format</h2>
+      <p class="subtitle">JSON ist die gemeinsame Sprache zwischen Programmen und Servern. Lerne die Bausteine kennen – und wie du JSON in Python und C++ liest, schreibst und einsetzt.</p>
+      <div id="json-liste">
+        <p class="subtitle">Kapitel werden geladen …</p>
+      </div>
+    </div>
+
+    <div class="karte" id="json-kapitel" hidden>
+      <button class="secondary" onclick="jsonZurueck()">← Zurück zur Übersicht</button>
+      <h2 id="json-kapitel-titel"></h2>
+      <p class="subtitle" id="json-kapitel-einleitung"></p>
+      <div id="json-abschnitte"></div>
+      <div class="button-reihe">
+        <button id="json-weiter-btn" class="primary" onclick="jsonNaechsterAbschnitt()">Weiter →</button>
+        <button class="secondary" onclick="jsonZurueck()">Kapitel schließen</button>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ GLOSSAR ============ -->
   <section id="ansicht-glossar" class="ansicht" hidden>
     <div class="karte">
@@ -314,6 +337,6 @@
 
 <div id="toast-container" aria-live="polite"></div>
 
-<script src="app.js?v=0.8.1"></script>
+<script src="app.js?v=0.8.2"></script>
 </body>
 </html>
