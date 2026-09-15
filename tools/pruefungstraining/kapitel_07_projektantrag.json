@@ -1,0 +1,65 @@
+{
+  "id": "projektantrag",
+  "titel": "Projektantrag & Projektarbeit (Teil 2)",
+  "einleitung": "In Teil 2 machst du ein eigenes betriebliches Projekt. Der Antrag entscheidet, ob du starten darfst – und hier passieren die meisten Fehler.",
+  "abschnitte": [
+    {
+      "titel": "Was ein Projekt ist – und was nicht",
+      "text": "Eine Anleitung abarbeiten ist kein Projekt. Wenn das Ziel schon feststeht und du nur klickst, gibt es nichts zu entscheiden – und genau das bewerten die Prüfer. Ein Projekt beginnt mit einem echten Problem im Betrieb, das mehrere Lösungswege zulässt. Du vergleichst die Wege, rechnest sie durch und entscheidest dich begründet.",
+      "code": "kein Projekt:  \"Windows Server nach Handbuch installieren\"\nProjekt:       \"20 Laptops sollen ausgerollt werden ->\n                manuell oder Deploymentsystem? vergleichen, rechnen, entscheiden\"",
+      "tipp": "Wenn dein Betrieb die Lösung schon gekauft hat: Formuliere nicht die fertige Lösung, sondern das ursprüngliche Problem. \"Ich evaluiere eine optimale Lösung für Problem X\" zeigt Entscheidungskompetenz.",
+      "merk": "Prüfer bewerten deinen Entscheidungsweg, nicht das blinkende System."
+    },
+    {
+      "titel": "Die vier Pflichtteile des Antrags",
+      "text": "Ein Antrag besteht aus vier Teilen. Fehlt einer, kommt er mit Auflagen zurück.",
+      "checkliste": [
+        "Projekttitel – kurz, prägnant, auch für fachfremde Leser verständlich",
+        "Problembeschreibung – Auftraggeber und der aktuelle Zustand, der verbessert werden soll",
+        "Soll-Konzept – messbare Ziele und die Lösungsalternativen, die du bewertest",
+        "Zeitplanung – Phasen, Puffer und korrekt kalkulierte Dokumentationszeit"
+      ],
+      "merk": "Titel, Problem, Soll-Konzept, Zeitplan – vier Teile, alle vier nötig."
+    },
+    {
+      "titel": "Soll-Konzept: die vier Ziele",
+      "text": "Das Soll-Konzept beschreibt, wie der perfekte Endzustand aussieht. Es braucht vier messbare Ziele – sonst kannst du am Ende den Erfolg nicht nachweisen.",
+      "code": "Sachziel:      was technisch geliefert wird (z. B. konfigurierter Praxis-Server)\nKostenziel:    maximal verfuegbares Budget\nZeitziel:      maximaler zeitlicher Aufwand\nQualitaetsziel: harte Leistungsmerkmale, z. B. 99,9 % Verfuegbarkeit",
+      "merk": "Vier Ziele: Sache, Kosten, Zeit, Qualität."
+    },
+    {
+      "titel": "Falscher Begriff: nicht \"Soll-Analyse\"",
+      "text": "Beobachten und untersuchen kannst du nur etwas, das schon existiert – das ist die Ist-Analyse. Der gewünschte Zustand in der Zukunft existiert noch nicht, den musst du entwerfen. Deshalb heißt er Soll-Konzept, nicht Soll-Analyse. Der Begriff \"Soll-Analyse\" verrät den Prüfern, dass die Methode nicht sitzt.",
+      "merk": "Analyse = Gegenwart. Konzept = Zukunft."
+    },
+    {
+      "titel": "Das Zeitbudget und die Dokumentations-Falle",
+      "text": "Für die Projektarbeit gilt ein festes Stundenbudget – bei Fachinformatiker Systemintegration 40 Stunden, bei Anwendungsentwicklung 80 Stunden. Darin steckt alles: Analyse, Umsetzung, Tests und die Kundendokumentation. Es gibt zwei völlig verschiedene Dokumente, die dauernd verwechselt werden.",
+      "code": "Kundendokumentation (Handbuch, Netzplan fuer den Auftraggeber):\n   gehoert ins Projektbudget, maximal 10 % der Zeit\n   -> bei 40 Stunden: hoechstens 4 Stunden\n\nProjektbericht / Projektdokumentation (fuer den Pruefungsausschuss):\n   zaehlt mit exakt 0 Stunden im Antrag\n   -> entsteht ausserhalb der Projektzeit",
+      "tipp": "Wer fünf Stunden für den Prüfungsbericht einplant, bekommt den Antrag zurück. Plane dafür 0 Stunden und trenne die beiden Dokumente sauber.",
+      "merk": "Kundendoku rein (max. 10 %), Prüfbericht mit 0 Stunden."
+    },
+    {
+      "titel": "Der Projektbericht ist nicht die Dokumentation für den Kunden",
+      "text": "Der Projektbericht erklärt den Prüfern, wie du vorgegangen bist und warum du so entschieden hast. Die Kundendokumentation erklärt dem Anwender, wie er etwas benutzt. Eine Klick-für-Klick-Anleitung gehört deshalb in die Kundendokumentation – meist als Pflichtanlage – und nicht in den Bericht.",
+      "merk": "Bericht = warum. Kundendoku = wie."
+    },
+    {
+      "titel": "Nach der Genehmigung: Ist-Analyse",
+      "text": "Jetzt geht es los. Der erste Schritt ist die Ist-Analyse: den aktuellen Zustand genau dokumentieren. Welche Hardware läuft, welche Software, wo sind Schwachstellen, die in keiner Fehlermeldung auftauchen? Ein sauber dokumentierter Ist-Zustand ist das Fundament, sonst stützt sich deine Lösung auf Vermutungen.",
+      "merk": "Ohne Ist-Analyse baut die Lösung auf Vermutungen."
+    },
+    {
+      "titel": "Antrag abgelehnt? Dann stehen Auflagen drin",
+      "text": "Ein abgelehnter Antrag ist kein gescheitertes Projekt. Du bekommst eine Begründung und eine Frist. In der Regel sind es Auflagen: es fehlt zum Beispiel technische Tiefe oder der Vergleich der Lösungswege mit Kosten und Nutzen. Arbeite die Punkte ab, reiche nach – und behalte dein Thema.",
+      "checkliste": [
+        "Begründung und Frist genau lesen",
+        "Auflagen als To-do-Liste abarbeiten",
+        "Kosten-Nutzen-Betrachtung ergänzen",
+        "Thema nicht komplett über den Haufen werfen",
+        "Innerhalb der Frist nachreichen"
+      ],
+      "merk": "Auflagen sind eine To-do-Liste, kein Urteil."
+    }
+  ]
+}

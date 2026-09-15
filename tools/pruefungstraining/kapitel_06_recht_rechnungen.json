@@ -1,0 +1,43 @@
+{
+  "id": "recht-rechnungen",
+  "titel": "Recht & Rechnungen in der Prüfung",
+  "einleitung": "Diese vier Themen werden gern gefragt, weil man sie leicht verwechselt. Mit Alltagsbildern bleiben sie hängen.",
+  "abschnitte": [
+    {
+      "titel": "Gewährleistung oder Garantie?",
+      "text": "Die Gewährleistung (auch Mängelhaftung) ist gesetzlich und gilt gegenüber dem Verkäufer – bei neuen Sachen im Geschäftsverkehr üblicherweise 24 Monate. Die Garantie ist freiwillig und kommt vom Hersteller. Bei einem Mangel darfst du zuerst zwischen Reparatur oder Ersatzlieferung wählen, das nennt man Nacherfüllung.",
+      "merk": "Gewährleistung = Gesetz und Verkäufer. Garantie = freiwillig und Hersteller."
+    },
+    {
+      "titel": "Wareneingang sofort prüfen (§ 377 HGB)",
+      "text": "Im Geschäftsverkehr zwischen Unternehmen musst du offene Mängel unverzüglich rügen – also sofort nach dem Wareneingang melden. Wer die Kartons wochenlang ungeprüft stehen lässt, verliert seine Ansprüche: Die Ware gilt rechtlich als genehmigt. In der Prüfung ist das die klassische Falle.",
+      "tipp": "Lieferung annehmen, auspacken, prüfen, Mängel sofort schriftlich melden. Erst dann ins Lager.",
+      "merk": "Nicht prüfen heißt genehmigen."
+    },
+    {
+      "titel": "Dienstvertrag oder Werkvertrag?",
+      "text": "Beim Dienstvertrag bezahlst du die Tätigkeit, also die Zeit. Beim Werkvertrag bezahlst du das Ergebnis, den Erfolg. Der Unterschied merkt man am Geld, wenn es schiefgeht: Beim Werkvertrag muss der Auftragnehmer kostenlos nachbessern, bis es funktioniert. Beim Dienstvertrag zahlst du die Fehlersuche selbst.",
+      "code": "Dienstvertrag:  geschuldet ist die Taetigkeit   -> Fehler kostet den Auftraggeber\nWerkvertrag:    geschuldet ist der Erfolg      -> Nachbesserung zahlt der Auftragnehmer",
+      "merk": "Werkvertrag = Werk muss funktionieren."
+    },
+    {
+      "titel": "Rechnung prüfen nach § 14 UStG",
+      "text": "Eine Rechnung ist nur dann rechtssicher, wenn die Pflichtangaben vollständig sind. Fehlt etwas, verliert der Betrieb den Vorsteuerabzug. Prüfe die Rahmendaten der Reihe nach.",
+      "checkliste": [
+        "Vollständige Anschrift von Absender und Empfänger",
+        "Rechnungsdatum und Leistungs- oder Lieferdatum",
+        "Fortlaufende Rechnungsnummer",
+        "Umsatzsteuer-Identifikationsnummern beider Seiten",
+        "Genaue Leistungsbeschreibung (was wurde geliefert?)",
+        "Netto-Betrag, Steuersatz und Bruttosumme getrennt ausgewiesen"
+      ],
+      "merk": "Fehlt ein Pflichtfeld, ist die Rechnung nicht rechtssicher."
+    },
+    {
+      "titel": "Drei-Wege-Abgleich",
+      "text": "Ob Menge und Preis auch stimmen, klärst du mit dem Drei-Wege-Abgleich: Bestellung, Lieferschein und Rechnung müssen zusammenpassen. Erst wenn alle drei Dokumente übereinstimmen, gibst du die Rechnung zur Zahlung frei.",
+      "code": "Bestellung  <->  Lieferschein  <->  Rechnung\n  Preise          gelieferte Menge     berechnete Menge + Preise",
+      "merk": "Drei Dokumente, eine Wahrheit – sonst nicht freigeben."
+    }
+  ]
+}

@@ -8,7 +8,7 @@
 const DATEN_PFAD = "/daten/";
 // Versionsmarker: erscheint im Footer. LEER = Browser nutzt alte app.js
 // (Cache!) → Strg+F5 / Cache leeren.
-const APP_VERSION = "0.8.2";
+const APP_VERSION = "0.8.3";
 const STUFEN = ["leicht", "mittel", "schwer"];
 const STUFEN_BESCHREIBUNG = {
   leicht: "nur leichte Fragen",
@@ -581,10 +581,10 @@ function lfSchluessel(nr, stufe) {
 // Ansichten wechseln
 // ------------------------------------------------------------------
 function zeigeAnsicht(name) {
-  for (const id of ["start", "ziel", "quiz", "kurs", "json", "glossar", "ki", "karten", "konto"]) {
+  for (const id of ["start", "ziel", "quiz", "kurs", "json", "pruefung", "glossar", "ki", "karten", "konto"]) {
     document.getElementById("ansicht-" + id).hidden = id !== name;
   }
-  for (const id of ["start", "ziel", "quiz", "kurs", "json", "glossar", "ki", "karten", "konto"]) {
+  for (const id of ["start", "ziel", "quiz", "kurs", "json", "pruefung", "glossar", "ki", "karten", "konto"]) {
     document.getElementById("nav-" + id).classList.toggle("active", id === name);
   }
   if (name === "start") zeigeStart();
@@ -592,6 +592,7 @@ function zeigeAnsicht(name) {
   if (name === "quiz") zeigeQuizAuswahl();
   if (name === "kurs") zeigeKursUebersicht();
   if (name === "json") zeigeJsonUebersicht();
+  if (name === "pruefung") zeigePruefungUebersicht();
   if (name === "glossar") zeigeGlossar();
   if (name === "ki") kiBereichOeffnen();
   if (name === "karten") kartenBereichOeffnen();
@@ -1280,21 +1281,25 @@ async function zeigeJsonUebersicht() {
   }
 }
 
-async function ladeJsonKapitel() {
-  // JSON-Kurs hat ein eigenes Verzeichnis (tools/jsonkurs/) mit Manifest,
-  // damit der Browser die Dateien ohne Wildcard-Fetch finden kann.
-  const manifestResp = await fetch(`${DATEN_PFAD}tools/jsonkurs/manifest.json`);
+async function ladeKursKapitel(ordner, anzeigename) {
+  // Kurse mit eigenem Verzeichnis (tools/<ordner>/) brauchen ein Manifest,
+  // weil der Browser keine Wildcard-Pfade lesen kann.
+  const manifestResp = await fetch(`${DATEN_PFAD}tools/${ordner}/manifest.json`);
   if (!manifestResp.ok) {
-    throw new Error("JSON-Kurs-Manifest nicht gefunden");
+    throw new Error(`${anzeigename}-Manifest nicht gefunden`);
   }
   const namen = await manifestResp.json();
   const kapitel = [];
   for (const name of namen) {
-    const resp = await fetch(`${DATEN_PFAD}tools/jsonkurs/${name}`);
+    const resp = await fetch(`${DATEN_PFAD}tools/${ordner}/${name}`);
     if (resp.ok) kapitel.push(await resp.json());
   }
-  if (!kapitel.length) throw new Error("Keine JSON-Kapitel geladen");
+  if (!kapitel.length) throw new Error(`Keine ${anzeigename}-Kapitel geladen`);
   return kapitel;
+}
+
+async function ladeJsonKapitel() {
+  return ladeKursKapitel("jsonkurs", "JSON-Kurs");
 }
 
 function oeffneJsonKapitel(index) {
@@ -1349,6 +1354,94 @@ function jsonZurueck() {
   document.getElementById("json-kapitel").hidden = true;
   document.getElementById("json-uebersicht").hidden = false;
   zeigeJsonUebersicht();
+}
+
+// ------------------------------------------------------------------
+// PRÜFUNGSTRAINING (eigener Reiter, Kapitel in tools/pruefungstraining/)
+// Wissens- und Taktik-Kurs zu Teil 1 und Teil 2 – reiner Lesekurs,
+// Schema: {id, titel, einleitung, abschnitte:[{titel, text, code?,
+//          checkliste?[], tipp?, merk?}]}
+// ------------------------------------------------------------------
+let pruefungZustand = { kapitel: [], aktuellesKapitel: 0, abschnittIndex: 0 };
+
+async function zeigePruefungUebersicht() {
+  const liste = document.getElementById("pruefung-liste");
+  if (!liste) return;
+  liste.innerHTML = '<p class="subtitle">Kapitel werden geladen …</p>';
+  try {
+    const kapitel = await ladeKursKapitel("pruefungstraining", "Prüfungstraining");
+    pruefungZustand = { kapitel, aktuellesKapitel: 0, abschnittIndex: 0 };
+    let html = "";
+    kapitel.forEach((k, i) => {
+      html += `<div class="kurs-eintrag" onclick="oeffnePruefungKapitel(${i})">
+          <strong>${escapeHtml(k.titel)}</strong><br>
+          <span class="subtitle">${(k.abschnitte || []).length} Abschnitte</span>
+        </div>`;
+    });
+    liste.innerHTML = html;
+  } catch (e) {
+    liste.innerHTML = `<p class="nicht-bestanden">Prüfungstraining konnte nicht geladen werden: ${e.message}</p>`;
+  }
+}
+
+function oeffnePruefungKapitel(index) {
+  const k = pruefungZustand.kapitel[index];
+  pruefungZustand.aktuellesKapitel = index;
+  pruefungZustand.abschnittIndex = 0;
+  document.getElementById("pruefung-uebersicht").hidden = true;
+  document.getElementById("pruefung-kapitel").hidden = false;
+  document.getElementById("pruefung-kapitel-titel").textContent = k.titel;
+  document.getElementById("pruefung-kapitel-einleitung").textContent = k.einleitung || "";
+  zeigePruefungAbschnitt();
+}
+
+function zeigePruefungAbschnitt() {
+  const z = pruefungZustand;
+  const k = z.kapitel[z.aktuellesKapitel];
+  const a = k.abschnitte[z.abschnittIndex];
+  const container = document.getElementById("pruefung-abschnitte");
+  let html = `<div class="abschnitt">
+    <h3>${z.abschnittIndex + 1}/${k.abschnitte.length}: ${escapeHtml(a.titel)}</h3>`;
+  if (a.text) html += `<p>${escapeHtml(a.text)}</p>`;
+  if (a.code) html += `<pre class="code">${escapeHtml(a.code)}</pre>`;
+  for (const sprache of ["python", "cpp"]) {
+    const block = a[sprache];
+    if (!block) continue;
+    const label = sprache === "python" ? "🐍 Python" : "⚙️  C++";
+    html += `<div class="sprache-titel ${sprache}">${label}</div>`;
+    html += `<p>${escapeHtml(block.text)}</p>`;
+    if (block.code) html += `<pre class="code">${escapeHtml(block.code)}</pre>`;
+  }
+  if (Array.isArray(a.checkliste) && a.checkliste.length) {
+    html += `<div class="merk"><strong>✅ Checkliste</strong><ul>` +
+      a.checkliste.map((x) => `<li>${escapeHtml(x)}</li>`).join("") + `</ul></div>`;
+  }
+  if (a.tipp) html += `<div class="vergleich">💡 <strong>Tipp:</strong> ${escapeHtml(a.tipp)}</div>`;
+  if (a.merk) html += `<div class="merk">📌 ${escapeHtml(a.merk)}</div>`;
+  html += `</div>`;
+  container.innerHTML = html;
+
+  const weiter = document.getElementById("pruefung-weiter-btn");
+  const letzter = z.abschnittIndex >= k.abschnitte.length - 1;
+  weiter.textContent = letzter ? "Kapitel abschließen ✓" : "Weiter →";
+}
+
+function pruefungNaechsterAbschnitt() {
+  const z = pruefungZustand;
+  const k = z.kapitel[z.aktuellesKapitel];
+  if (z.abschnittIndex < k.abschnitte.length - 1) {
+    z.abschnittIndex++;
+    zeigePruefungAbschnitt();
+  } else {
+    zeigeToast("Kapitel abgeschlossen – weiter so! 🧠", "erfolg");
+    pruefungZurueck();
+  }
+}
+
+function pruefungZurueck() {
+  document.getElementById("pruefung-kapitel").hidden = true;
+  document.getElementById("pruefung-uebersicht").hidden = false;
+  zeigePruefungUebersicht();
 }
 
 function escapeHtml(s) {

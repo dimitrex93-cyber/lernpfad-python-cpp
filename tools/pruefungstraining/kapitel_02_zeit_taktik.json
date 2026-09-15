@@ -1,0 +1,41 @@
+{
+  "id": "zeit-taktik",
+  "titel": "Die 90 Minuten im Griff",
+  "einleitung": "Taktik bringt Punkte, ohne dass du mehr wissen musst. Diese vier Regeln sind der Kern.",
+  "abschnitte": [
+    {
+      "titel": "Die 15-Minuten-Regel",
+      "text": "Am Anfang liegt ein dicker Stapel Papier vor dir. Nicht blind losrechnen. Trenne zuerst den Aufgabensatz vom Belegsatz – also die Aufgabenblätter von den Anlagen. Lies dann immer zuerst die Aufgabenstellung und erst danach die Anlagen. So weißt du, wonach du suchst.",
+      "checkliste": [
+        "Aufgabensatz vom Belegsatz trennen",
+        "Aufgabenstellung zuerst lesen",
+        "Anlagen gezielt nach den gesuchten Daten durchsuchen",
+        "Gefundene Werte (IPs, Preise, Mengen) sofort auffällig markieren",
+        "Einfache Aufgaben nach oben sortieren"
+      ],
+      "merk": "Erst wissen, was gesucht wird – dann suchen."
+    },
+    {
+      "titel": "22 Minuten pro Block – und überspringen statt verbeissen",
+      "text": "Dir bleiben im Schnitt 22,5 Minuten pro Aufgabenblock. Der klassische Fehler ist, sich in eine knifflige Detailfrage zu verbeissen. Die Zeit läuft weiter, Punkte kommen keine dazu, und die Panik wächst. Die Lösung: markieren und weitergehen.",
+      "code": "Erster Durchlauf: alle sicheren Punkte einsammeln\nZweiter Durchlauf: die markierten Brocken mit der Restzeit",
+      "merk": "Weitergehen ist kein Aufgeben, sondern Punkte einsammeln."
+    },
+    {
+      "titel": "Blackout-Rezept",
+      "text": "Plötzlich verschwimmt der Text und nichts geht mehr. Dann hilft nur ein klarer Ablauf: Aufgabe abbrechen, eine einfache Zwei-Punkte-Frage suchen und die lösen. Das holt den Kopf aus der Panikspirale. Die unfertigen Gedanken schreibst du in Stichpunkten auf das Konzeptpapier – damit ist der Kopf frei.",
+      "checkliste": [
+        "Aufgabe mit einem Pfeil markieren und umblättern",
+        "Eine leichte Aufgabe lösen",
+        "Gedanken zum Problem kurz aufs Konzeptpapier",
+        "Später mit Ruhe zurückkommen"
+      ],
+      "merk": "Erst den Kopf leeren, dann weiterarbeiten."
+    },
+    {
+      "titel": "Konzeptpapier – was zählt und was nicht",
+      "text": "Das herausgetrennte Konzeptpapier ist zum Denken da, nicht als Lösung. Für die Bewertung existiert nur, was auf dem offiziellen Prüfungsbogen steht. Rechenwege und Zwischenschritte gehören also in das Feld auf dem Bogen.",
+      "merk": "Auf dem Konzeptpapier stehen null Punkte."
+    }
+  ]
+}

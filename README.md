@@ -11,8 +11,9 @@ und **C/C++** (statisch, kompiliert). So versteht man nicht nur *eine* Sprache, 
 > 🎯 Zielgruppe: Programmieranfänger\*innen, Fachinformatiker-Azubis, Quereinsteiger\*innen
 > und alle, die ihren Lernfortschritt strukturiert dokumentieren wollen.
 >
-> 💻 **Lern-App inklusive:** Quiz nach IHK-Standard, Sprachkurs (Python & C++) und
-> KI-Assistent – im **Terminal** (`tools/quiz.py`) oder im **Browser** (Web-Frontend).
+> 💻 **Lern-App inklusive:** Quiz nach IHK-Standard, Sprachkurs (Python & C++),
+> Prüfungstraining (Wissen & Taktik) und KI-Assistent – im **Terminal**
+> (`tools/quiz.py`) oder im **Browser** (Web-Frontend).
 > Details weiter unten.
 
 ---
@@ -72,6 +73,23 @@ Inhalte nutzen und denselben Fortschritt teilen:
 - Mit **Glossar** der wichtigsten Begriffe (`tools/sprachkurs/glossar.json`)
 - Lesestatus wird erfasst und fließt in den Gesamtfortschritt ein
 
+### Prüfungstraining (Wissen & Taktik)
+
+- **8 Kapitel, 43 Abschnitte** zu dem, was in den Prüfungsteilen 1 und 2 wirklich drankommt:
+  Ablauf und Taktik (15-Minuten-Regel, Zeit pro Aufgabe, Blackout-Rezept),
+  Punkte holen (Operatoren, Rechenwege, was auf den Tisch darf),
+  Wirtschaftlichkeit (Nutzwertanalyse mit KO-Kriterien, Amortisation, ROI, TCO),
+  USV & Strom (Schein-/Wirkleistung, Überbrückungszeit, Shutdown-Kaskade),
+  Recht & Rechnungen (Gewährleistung/Garantie, § 377 HGB, Dienst-/Werkvertrag, § 14 UStG),
+  Projektantrag, Projektarbeit und Dokumentation bis hin zu Präsentation und Fachgespräch
+- Jeder Abschnitt in einfacher Sprache ([STIL.md](STIL.md)) mit Beispielrechnung,
+  Tipp, Checkliste und Merksatz
+- Inhalte aus der Videoreihe **@movement4u** (Stand 09/2026), in eigene Worte gefasst
+  und gegen die IHK-Vorgaben geprüft. Formate wie Seitenzahl, Schriftgröße und
+  Abgabetermine unterscheiden sich je IHK – dort gilt immer die Vorgabe deiner IHK.
+- Erreichbar im Web-Frontend über den Reiter **🧠 Prüfungstraining**
+  (`tools/pruefungstraining/kapitel_*.json`)
+
 ### KI-Assistent (Abo-Modell)
 
 Der KI-Assistent läuft **lokal** (Ollama, Modell `qwen3.5:2b`) – keine externen Cloud-Dienste:
@@ -108,6 +126,8 @@ lernpfad-python-cpp/
 │   ├── quiz.py                ← Terminal-Lern-App (Quiz + Sprachkurs)
 │   ├── sync.py                ← Fortschritts-Sync (Sync-Code)
 │   ├── sprachkurs/            ← 18 Sprachkurs-Kapitel + Glossar (JSON)
+│   ├── jsonkurs/              ← JSON-Kurs (Kapitel + Manifest)
+│   ├── pruefungstraining/     ← Prüfungstraining: 8 Kapitel + Manifest
 │   └── README.md              ← Benutzung von quiz.py
 ├── web/
 │   ├── index.html             ← Web-Frontend der Lern-App

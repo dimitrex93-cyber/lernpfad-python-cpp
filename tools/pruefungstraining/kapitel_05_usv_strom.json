@@ -1,0 +1,37 @@
+{
+  "id": "usv-strom",
+  "titel": "USV & Stromversorgung richtig rechnen",
+  "einleitung": "USV-Aufgaben tauchen in beiden Prüfungsteilen und in vielen Projekten auf. Erst die Begriffe, dann die Rechnung.",
+  "abschnitte": [
+    {
+      "titel": "Scheinleistung und Wirkleistung",
+      "text": "Auf dem Datenblatt einer USV steht die Scheinleistung in VA (Volt-Ampere). Deine Server brauchen aber Wirkleistung in Watt – die Energie, die wirklich verbraucht wird. Beides ist nicht dasselbe. Der Leistungsfaktor sagt, welcher Anteil der Scheinleistung in Watt verfügbar ist.",
+      "code": "Wirkleistung (W)  = Scheinleistung (VA) x Leistungsfaktor\n\nBeispiel:  1000 VA x 0,6 = 600 W verfuegbar\n           800 W Bedarf  >  600 W Limit  ->  Ueberlastung",
+      "tipp": "Die Falle: Eine USV mit 1000 VA sieht stärker aus als ein 800-Watt-Rack. Mit Leistungsfaktor 0,6 bleiben nur 600 Watt – die Anlage schaltet ab. Rechne immer in Watt.",
+      "merk": "Server wollen Watt, nicht Volt-Ampere."
+    },
+    {
+      "titel": "Überbrückungszeit berechnen",
+      "text": "Die Überbrückungszeit sagt, wie lange die USV die Last noch versorgen kann. Zuerst rechnest du die Auslastung aus, danach liest du die Laufzeit aus der Entladekurve des Herstellers ab. Wichtig: Batterien verhalten sich nicht linear – halbe Last bedeutet NICHT doppelte Laufzeit. Ein einfacher Dreisatz ist hier falsch.",
+      "code": "Auslastung = gemessene Last / maximale Wirkleistung\n\nBeispiel:  324 W / 600 W = 0,54 -> 54 % Auslastung\n\nDann: 54 % auf der y-Achse der Entladekurve einzeichnen,\n      Schnittpunkt mit der Kurve, senkrecht nach unten lesen\n      -> etwa 11 Minuten",
+      "merk": "Auslastung rechnen, Laufzeit aus der Kurve lesen."
+    },
+    {
+      "titel": "Shutdown-Kaskade verstehen",
+      "text": "Steigt die Last nicht mehr ausreichend, meldet der Hauptserver das Signal zum Herunterfahren. Die virtuellen Maschinen fahren zuerst sauber herunter und schreiben ihre Daten zu Ende. Der Hauptserver wartet zwingend, bis alle abhängigen Systeme aus sind – erst dann schließt er seine eigenen Dateisysteme.",
+      "tipp": "Zieht der Hauptserver zu früh den Strom, stürzen die VMs ab. Die Reihenfolge ist die eigentliche Prüfungsaussage.",
+      "merk": "Erst die Kinder, dann der Chef – Reihenfolge schützt die Daten."
+    },
+    {
+      "titel": "Wenn das Datenkabel bricht (DataStale)",
+      "text": "Reißt das Kabel zwischen USV und Steuerrechner ab, kann der Rechner den Ladezustand nicht mehr abfragen. Die Software interpretiert das nicht als Stromausfall, sondern markiert die letzten Werte als veraltet. Diese Markierung verhindert die Abschaltung, die Server laufen weiter und die Administration bekommt einen Hinweis.",
+      "merk": "Alte Messwerte sind kein Stromausfall – nicht blind abschalten."
+    },
+    {
+      "titel": "Tests beweisen, keine Behauptungen",
+      "text": "Für die Bewertung zählt der Nachweis. Eine Testmatrix hält pro Testfall fest, was geprüft wurde, was erwartet war und was wirklich gemessen wurde – mit Zeitstempel. Unter Linux liefert das Systemprotokoll die Belege; mit einem gezielten Filter auf den Dienst bleiben nur die relevanten Zeilen übrig, die du als Anlage in die Dokumentation aufnimmst.",
+      "code": "Testmatrix-Spalten:\n  Testfall | Vorgehen | Soll-Zustand | Ist-Zustand (Log) | Ergebnis\n\nBeispiel-Zeile:\n  Stromausfall simuliert | Netzstecker ziehen | Server faehrt in 5 Min herunter\n  | Log: 11:04:12 UPS on battery, 11:09:31 shutdown completed | bestanden",
+      "merk": "Soll und Ist nebeneinander – das ist Handlungskompetenz."
+    }
+  ]
+}

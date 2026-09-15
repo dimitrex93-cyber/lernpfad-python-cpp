@@ -1,0 +1,34 @@
+{
+  "id": "punkte-holen",
+  "titel": "Punkte holen statt verschenken",
+  "einleitung": "Viele Punkte gehen nicht durch fehlendes Wissen verloren, sondern durch Form. Das lässt sich leicht abstellen.",
+  "abschnitte": [
+    {
+      "titel": "Operatoren sind der Bauplan",
+      "text": "Jede Aufgabe beginnt mit einem Operator, also einem Signalwort. Nennen heißt: nur präzise Stichpunkte, keine Sätze. Erläutern oder erklären heißt: Zusammenhänge in vollständigen Sätzen, Ursache und Wirkung. Auch die Anzahl zählt: Bei drei Vorteilen wird der vierte Punkt nicht mehr bewertet.",
+      "code": "nennen        -> Stichpunkte, knapp, ohne Ausschmückung\nerläutern     -> ganze Sätze, Ursache und Wirkung\nerklären      -> so, dass ein Laie es versteht\nbegründen     -> Entscheidung + Argumente\nberechnen     -> Rechenweg + Ergebnis mit Einheit",
+      "tipp": "Markiere den Operator, bevor du antwortest. Er sagt dir Format, Länge und Anzahl.",
+      "merk": "Der Operator ist die Anleitung, wie die Antwort aussehen muss."
+    },
+    {
+      "titel": "Rechenwege sichtbar machen",
+      "text": "Die Bewertung läuft über Teilpunkte. Richtige Formel und richtig eingesetzte Werte bringen Punkte, selbst wenn sich am Ende ein Tippfehler einschleicht. Deshalb: jeden Zwischenschritt auf den offiziellen Bogen schreiben, nicht nur das Ergebnis.",
+      "code": "Beispiel:\n  Formel:        Ueberbrueckungszeit = Last / max. Wirkleistung\n  Werte:         324 W / 600 W = 0,54  -> 54 %\n  Ergebnis:      Auslastung 54 % -> aus der Entladekurve 11 Minuten",
+      "merk": "Wer den Weg zeigt, bekommt Punkte für jeden Schritt."
+    },
+    {
+      "titel": "Was auf den Tisch darf – und was nicht",
+      "text": "Erlaubt sind dokumentenechte Stifte in Schwarz oder Blau, ein Geodreieck und ein einfacher Taschenrechner. Der Rechner muss netzunabhängig und darf nicht programmierbar sein. Verbote: alle gedruckten Nachschlagewerke wie IT-Handbuch oder eigene Formelsammlung, Smartwatches und alles mit Netzwerk. Verstöße gelten als Täuschungsversuch.",
+      "checkliste": [
+        "Taschenrechner ohne Programm- und Kommunikationsfunktion",
+        "Stifte dokumentenecht, schwarz oder blau",
+        "Geodreieck, Lineal",
+        "Personalausweis und Einladung der IHK",
+        "Analoge Uhr (billige Absicherung für die Zeitplanung)",
+        "Wasser und leise Nervennahrung (kein Raschelpapier)"
+      ],
+      "tipp": "Benötigte Datenblätter, Auszüge und Kennzahlen druckt die IHK als Anlage in den Aufgabenbogen. Du musst Formeln nicht auswendig können, aber du musst sie schnell finden und anwenden.",
+      "merk": "Leerer Tisch, klarer Kopf: Rechner, Stifte, Geodreieck."
+    }
+  ]
+}

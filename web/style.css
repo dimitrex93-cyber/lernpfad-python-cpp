@@ -291,6 +291,8 @@ pre.code {
   white-space: pre-wrap;
 }
 .vergleich { margin-top: 0.8rem; padding: 0.6rem 0.9rem; background: rgba(255, 183, 77, 0.08); border-left: 3px solid var(--akzent-2); border-radius: 0 6px 6px 0; }
+.merk ul { margin: 0.4rem 0 0 1.2rem; font-weight: 400; }
+
 .merk { margin-top: 0.6rem; padding: 0.6rem 0.9rem; background: rgba(76, 175, 80, 0.08); border-left: 3px solid var(--gruen); border-radius: 0 6px 6px 0; font-weight: 600; }
 
 footer {

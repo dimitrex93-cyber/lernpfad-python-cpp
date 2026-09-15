@@ -1,0 +1,74 @@
+{
+  "id": "doku-praesentation",
+  "titel": "Dokumentation, Abgabe, Präsentation & Fachgespräch",
+  "einleitung": "Der Schlussteil von Teil 2. Hier entscheidet Form und Vorbereitung über die Note.",
+  "abschnitte": [
+    {
+      "titel": "Formatierung des Projektberichts",
+      "text": "Der Textteil deines Berichts ist begrenzt – üblich sind maximal 15 Seiten, Deckblatt und Anlagen zählen nicht mit. Kleine Schrift ist kein Trick. Verlange deiner IHK die genauen Vorgaben ab, typisch sind Schriftgröße 11 bis 12, Zeilenabstand 1,5 und Seitenränder von 2,5 cm links und 1,5 cm rechts. Inhaltsverzeichnis und durchgehende Seitennummerierung gehören dazu.",
+      "checkliste": [
+        "Textteil maximal 15 Seiten",
+        "Schriftgröße 11–12, Zeilenabstand 1,5",
+        "Seitenränder 2,5 cm links, 1,5 cm rechts",
+        "Inhaltsverzeichnis",
+        "Durchgehende Seitennummerierung",
+        "Anlagen im Anhang, im Text darauf verweisen"
+      ],
+      "tipp": "Die genauen Werte gibt deine IHK vor und sie unterscheiden sich leicht. Nimm die Vorgabe deiner IHK, nicht die aus einem Video.",
+      "merk": "Form ist Gratis-Punkte – oder Gratis-Abzug."
+    },
+    {
+      "titel": "Tests dokumentieren, nicht behaupten",
+      "text": "Für die Bewertung zählt der Nachweis. Zu jedem Test gehört, was du gemacht hast, was du erwartet hast, was messbar passiert ist und das Ergebnis. Systemprotokolle liefern die Belege mit Zeitstempel – gefiltert auf den relevanten Dienst, als Auszug in die Anlage.",
+      "merk": "Ein Log-Eintrag ist ein Beweis, eine Behauptung nicht."
+    },
+    {
+      "titel": "Nachweise aus dem Systemprotokoll ziehen",
+      "text": "Unter Linux protokolliert das System dauerhaft mit. Die vollständige Liste ist unlesbar, deshalb filterst du auf den Dienst, den du testen willst. Übrig bleiben die Zeilen mit Zeitstempel und Ereignis – genau das, was in die Dokumentation gehört.",
+      "code": "# Beispiel: nur die Zeilen des USV-Dienstes, mit Zeitstempel\njournalctl -u nut-server --since \"2026-09-14 11:00\" --no-pager\n\n# Ausgabe (gekuerzt):\n# 11:04:12 UPS on battery\n# 11:09:31 shutdown completed",
+      "merk": "Filtern statt klicken – dann ist der Auszug vorzeigbar."
+    },
+    {
+      "titel": "Rechte sparsam vergeben (PoLP)",
+      "text": "Ein Skript, das einen Server herunterfahren soll, braucht Rechte – aber nur genau diese. Nach dem Principle of Least Privilege läuft der Dienst als normaler, unprivilegierter Benutzer und bekommt eine einzige erlaubte Ausnahme: den Shutdown-Befehl, sonst nichts. Nutzt ein Angreifer den Dienst aus, kann er höchstens den Server ausschalten.",
+      "code": "# Passwoerter in Konfigurationsdateien schuetzen:\nchmod 640 datei.conf\n\n# 6 = 4 (lesen) + 2 (schreiben)  -> Besitzer darf lesen und schreiben\n# 4 = nur lesen                  -> Gruppe darf mitlesen\n# 0 = keine Rechte               -> alle anderen: kein Zugriff",
+      "merk": "So viel Rechte wie nötig, so wenig wie möglich."
+    },
+    {
+      "titel": "Abgabe im Portal: der Systemstichtag kennt keine Kulanz",
+      "text": "Die Abgabe läuft online. Der Upload schließt auf die Minute genau zum Stichtag, das System arbeitet stur nach Serverzeit. Danach lässt sich nichts mehr hochladen – auch nicht per E-Mail. Plane deshalb Puffer ein und lade früh am Tag hoch, nicht um 23:59 Uhr. Prüfe vorher, ob die E-Mail-Adresse in deinem Profil stimmt, sonst verpasst du die Genehmigung oder Auflagen.",
+      "checkliste": [
+        "E-Mail-Adresse im Portal korrekt",
+        "Antrag genehmigt, erst dann starten",
+        "Dokumentation als ein PDF",
+        "Upload deutlich vor dem Stichtag (Puffer!)",
+        "Grüne Bestätigung abwarten"
+      ],
+      "merk": "Puffer einplanen – das System wartet nicht."
+    },
+    {
+      "titel": "KI-Nutzung: erlaubt, aber mit Grenze",
+      "text": "Ein Sprachmodell darf beim Formulieren helfen und deine Rechtschreibung prüfen. Die Grenze ist klar: Sobald die KI eigene Gedanken produziert, statt deine zu korrigieren, ist es Täuschung. Jeder KI-Einsatz gehört transparent in den Anhang – welches Werkzeug, wofür, mit Screenshot der Eingaben.",
+      "code": "erlaubt:   Recherche, Struktur-Hinweise, Grammatik und Kommafehler pruefen\nverboten:  Absaetze generieren lassen, Inhalte erfinden lassen",
+      "tipp": "Faustregel: Deine Sätze bleiben deine Sätze. Die KI darf nur den Lack ausbessern, nicht das Auto bauen.",
+      "merk": "KI korrigiert, sie schreibt nicht für dich."
+    },
+    {
+      "titel": "Präsentation: wenig Text, viel Struktur",
+      "text": "Die Präsentation ist 15 Minuten lang. Plane nur 10 bis 12 Minuten ein – der Rest ist Puffer. Auf den Folien stehen Stichpunkte, Grafiken und ein Netzwerkplan, kein Fließtext: Lesen die Prüfer, hören sie dir nicht zu. Für jede Folie schreibst du dir einen ausformulierten Startsatz auf, damit der Einstieg nach dem Folienwechsel klappt. Der Rest bleibt Stichpunkt.",
+      "checkliste": [
+        "10–12 Minuten Inhalt, 2–3 Minuten Puffer",
+        "Folien: wenig Text, klare Grafik in der Mitte",
+        "Pro Folie ein ausformulierter Startsatz",
+        "Mehrfach mit Stoppuhr üben"
+      ],
+      "merk": "Die Folie ist die Bühne, nicht das Drehbuch."
+    },
+    {
+      "titel": "Fachgespräch: der Experten-Zyklus",
+      "text": "Nach der Präsentation kommen etwa 15 Minuten Fachgespräch. Es ist kein Verhör – für dieses Projekt bist du der Experte. Der größte Fehler ist, aus Panik sofort unüberlegt loszureden. Nutze stattdessen drei Schritte: Frage anhören, kurz Bedenkzeit einfordern, dann strukturiert antworten.",
+      "code": "1. Frage anhoeren (ausreden lassen)\n2. Taktische Pause: \"Interessante Frage - lassen Sie mich kurz ueberlegen.\"\n3. Strukturierte Antwort: erst die Kernaussage, dann die Begruendung",
+      "merk": "Bedenkzeit wirkt souverän, nicht ahnungslos."
+    }
+  ]
+}

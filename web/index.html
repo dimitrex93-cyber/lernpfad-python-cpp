@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lernpfad Python & C++ – Web-App</title>
-<link rel="stylesheet" href="style.css?v=0.8.2">
+<link rel="stylesheet" href="style.css?v=0.8.3">
 </head>
 <body>
 <header>
@@ -19,6 +19,7 @@
         <button id="nav-quiz" class="nav-btn" onclick="zeigeAnsicht('quiz')">📝 Quiz</button>
         <button id="nav-kurs" class="nav-btn" onclick="zeigeAnsicht('kurs')">📖 Sprachkurs</button>
         <button id="nav-json" class="nav-btn" onclick="zeigeAnsicht('json')">🧾 JSON-Kurs</button>
+        <button id="nav-pruefung" class="nav-btn" onclick="zeigeAnsicht('pruefung')" title="Wissen &amp; Taktik für die Prüfungsteile 1 und 2">🧠 Prüfungstraining</button>
         <button id="nav-glossar" class="nav-btn" onclick="zeigeAnsicht('glossar')">📚 Glossar</button>
       </div>
     </div>
@@ -207,6 +208,29 @@
     </div>
   </section>
 
+  <!-- ============ PRÜFUNGSTRAINING ============ -->
+  <section id="ansicht-pruefung" class="ansicht" hidden>
+    <div class="karte" id="pruefung-uebersicht">
+      <h2>🧠 Prüfungstraining: Wissen &amp; Taktik</h2>
+      <p class="subtitle">Was in den Prüfungsteilen 1 und 2 wirklich drankommt – Taktik, Wirtschaftlichkeit, Projektantrag und Dokumentation. Kein Grund zur Panik: Das hier ist Wissen, keine Prüfung. 😊</p>
+      <p class="subtitle">Quelle: Videoreihe @movement4u (Stand 09/2026), in eigene Worte gefasst und gegen die IHK-Vorgaben geprüft. Formate wie Seitenzahl, Schriftgröße oder Abgabetermin unterscheiden sich je IHK – dort gilt die Vorgabe deiner IHK.</p>
+      <div id="pruefung-liste">
+        <p class="subtitle">Kapitel werden geladen …</p>
+      </div>
+    </div>
+
+    <div class="karte" id="pruefung-kapitel" hidden>
+      <button class="secondary" onclick="pruefungZurueck()">← Zurück zur Übersicht</button>
+      <h2 id="pruefung-kapitel-titel"></h2>
+      <p class="subtitle" id="pruefung-kapitel-einleitung"></p>
+      <div id="pruefung-abschnitte"></div>
+      <div class="button-reihe">
+        <button id="pruefung-weiter-btn" class="primary" onclick="pruefungNaechsterAbschnitt()">Weiter →</button>
+        <button class="secondary" onclick="pruefungZurueck()">Kapitel schließen</button>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ GLOSSAR ============ -->
   <section id="ansicht-glossar" class="ansicht" hidden>
     <div class="karte">
@@ -337,6 +361,6 @@
 
 <div id="toast-container" aria-live="polite"></div>
 
-<script src="app.js?v=0.8.2"></script>
+<script src="app.js?v=0.8.3"></script>
 </body>
 </html>

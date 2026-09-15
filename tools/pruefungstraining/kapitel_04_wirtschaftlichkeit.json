@@ -1,0 +1,36 @@
+{
+  "id": "wirtschaftlichkeit",
+  "titel": "Wirtschaftlichkeit: Nutzwertanalyse, Amortisation, ROI & TCO",
+  "einleitung": "In Teil 1 und in der Projektarbeit zählt der kaufmännische Teil genauso wie die Technik. Diese vier Werkzeuge kommen immer wieder.",
+  "abschnitte": [
+    {
+      "titel": "Nutzwertanalyse – und die KO-Falle",
+      "text": "Bei der Nutzwertanalyse vergleichst du mehrere Angebote in einer Tabelle. Jedes Kriterium bekommt eine Gewichtung in Prozent und jede Bewertung eine Punktzahl. Du multiplizierst Zeile für Zeile: Punktzahl mal Gewichtung. Danach addierst du die Teilwerte spaltenweise – das ist der Gesamtnutzwert pro Angebot.",
+      "code": "Schritt 1: Bewertung x Gewichtung = Teilwert   (je Kriterium, je Angebot)\nSchritt 2: Teilwerte eines Angebots addieren = Gesamtnutzwert\n\nKO-Kriterium nicht erfuellt -> Angebot scheidet aus,\n                              egal wie hoch der Nutzwert ist",
+      "tipp": "Die Prüfungsfalle: Ein Angebot gewinnt rechnerisch, erfüllt aber ein Musskriterium nicht. Dann gewinnt das zweitbeste Angebot. Prüfe die KO-Kriterien deshalb zuerst, nicht zuletzt.",
+      "merk": "KO-Kriterium schlägt jede Punktzahl."
+    },
+    {
+      "titel": "Amortisation",
+      "text": "Die Amortisationszeit sagt, wie lange es dauert, bis sich eine teurere Anschaffung durch Einsparungen bezahlt gemacht hat. Du teilst die Mehrkosten durch die Ersparnis pro Zeitraum. Achte darauf, ob pro Jahr oder pro Woche gerechnet wird.",
+      "code": "Amortisationszeit = Mehrkosten / Ersparnis je Zeitraum\n\nBeispiel 1:  1200 EUR Aufpreis / 400 EUR Stromersparnis pro Jahr = 3 Jahre\nBeispiel 2:  720 EUR Projektkosten / 38 EUR Ersparnis pro Woche   = 19 Wochen",
+      "merk": "Einmalige Kosten geteilt durch regelmäßige Ersparnis."
+    },
+    {
+      "titel": "ROI – Return on Investment",
+      "text": "Der ROI zeigt dem Prüfer, dass sich das Projekt lohnt. Wichtig ist die Denkweise: Ein vermiedener Schaden ist genauso viel wert wie ein neuer Gewinn. Du stellst die Projektdauer samt Personalkosten dem gegenüber, was ohne das Projekt passieren würde – zum Beispiel mehrere tausend Euro Datenrettung nach einem einzigen Absturz. Der Schnittpunkt ist der Zeitpunkt der Amortisation.",
+      "merk": "Vermiedener Schaden ist auch ein Nutzen."
+    },
+    {
+      "titel": "TCO – Total Cost of Ownership",
+      "text": "Die TCO sind die echten Gesamtkosten eines Projekts. Nur den Hardware-Preis zu nennen ist zu wenig. Dazu gehören Materialkosten, Lizenzkosten, Nebenkosten und immer die eigene Arbeitszeit. Die rechnest du mit einem Stundensatz inklusive Lohnnebenkosten, bei Fachkräften oft nach Tarif (zum Beispiel TV-L).",
+      "code": "TCO = Hardware + Lizenzen + Nebenkosten + (Stundensatz x Projektstunden)\n\nBeispiel:  971 EUR Hardware + Personal  = rund 2300 EUR Projektvolumen",
+      "merk": "Ohne Personalkosten ist die Kostenrechnung nicht vollständig."
+    },
+    {
+      "titel": "Sicher entscheiden statt Bauchgefühl",
+      "text": "Auf die Frage, warum genau diese Software oder Hardware gewählt wurde, ist die Antwort nie \"weil der Chef das wollte\". Du begründest mit Kriterien wie Kosten, Funktionsumfang, Skriptfähigkeit und Support – und vor allem mit der Gewichtung. Eine billige Lösung, die das Ziel nicht erfüllt, darf nicht gewinnen.",
+      "merk": "Entscheidungen werden begründet, nicht behauptet."
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "teil1-ablauf",
+  "titel": "Prüfungsteil 1: Was auf dich zukommt",
+  "einleitung": "Teil 1 ist die erste schriftliche Prüfung in deiner Ausbildung. Hier erfährst du ruhig und sachlich, wie sie aufgebaut ist – ohne Panik, nur mit Fakten.",
+  "abschnitte": [
+    {
+      "titel": "Alle vier Fachrichtungen schreiben dieselbe Arbeit",
+      "text": "Fachinformatiker für Systemintegration, Anwendungsentwicklung, Daten- und Prozessanalyse und Digitale Vernetzung sitzen am selben Tag mit demselben Aufgabenbogen in der Halle. Der Grund ist einfach: Teil 1 prüft nur die gemeinsamen Grundlagen der ersten 18 Monate. Deine spätere Spezialisierung spielt hier keine Rolle. Die Aufgaben kommen aus den berufsübergreifenden Themen wie Projektmanagement, Wirtschaftlichkeit, Netzwerkarchitektur und Subnetting.",
+      "tipp": "Es bringt nichts, sich nur auf deine Spezialisierung vorzubereiten. Die gemeinsamen Grundlagen sind das Thema.",
+      "merk": "Teil 1 = Grundlagen für alle, nicht dein Spezialgebiet."
+    },
+    {
+      "titel": "Das eine Thema: einen IT-Arbeitsplatz einrichten",
+      "text": "Die ganze Arbeit dreht sich um einen einzigen Ablauf: ein IT-gestützter Arbeitsplatz wird eingerichtet. Die IHK fragt keine Einzelfakten ab, sondern den kompletten Weg von der Kundenanfrage bis zur Übergabe. Du zeigst damit, was du in den ersten 18 Monaten gelernt hast.",
+      "checkliste": [
+        "Bedarf beim Kunden ermitteln",
+        "Hard- und Software auswählen und begründen (z. B. mit Nutzwertanalyse)",
+        "System konfigurieren und testen",
+        "IT-Sicherheit, Datenschutz und Qualität bewerten",
+        "Kunden einweisen und Leistung dokumentieren"
+      ],
+      "merk": "Ein Projekt von Anfang bis Ende – nicht ein einzelner Arbeitsschritt."
+    },
+    {
+      "titel": "Die harten Zahlen",
+      "text": "90 Minuten Zeit, 100 Punkte, vier offene Aufgabenblöcke. Multiple Choice gibt es nicht. Jeder Block bringt also rund 25 Punkte. Teil 1 zählt 20 Prozent deiner Gesamtnote – die restlichen 80 Prozent kommen in Teil 2.",
+      "code": "90 Minuten / 4 Aufgaben = 22,5 Minuten pro Aufgabe\n100 Punkte / 4 Aufgaben = ca. 25 Punkte pro Aufgabe\nGesamtnote: Teil 1 = 20 %   Teil 2 = 80 %",
+      "merk": "90 Minuten, 100 Punkte, 4 Aufgaben, 20 % der Note."
+    },
+    {
+      "titel": "Die Belegsätze fressen die Zeit",
+      "text": "Zu jeder Aufgabe bekommst du echte Praxisunterlagen: Netzpläne, Kundenanforderungen, Hardware-Rechnungen, Lieferscheine. Das Lesen und Suchen kostet mehr Zeit als das Rechnen. Wer sich in einen einzigen Netzplan verbeißt, verliert den Rest.",
+      "merk": "Die Zeit geht beim Suchen verloren, nicht beim Rechnen."
+    },
+    {
+      "titel": "Teil 1 kann man nicht mündlich retten",
+      "text": "Die mündliche Ergänzungsprüfung (kurz MEP) gibt es nur in Teil 2 – und auch dort nur für einen einzigen schriftlichen Bereich. In Teil 1 ist sie ausdrücklich nicht möglich. Dein Ergebnis steht fest, sobald die Arbeit abgegeben ist. Genau deshalb lohnt sich die Vorbereitung hier doppelt.",
+      "tipp": "Rechne dir trotzdem vorher aus, ob eine MEP überhaupt etwas bringt: schriftliches Ergebnis zählt doppelt, das mündliche einfach. Mit 0 bis 24 Punkten schriftlich ist es rechnerisch nicht mehr zu retten.",
+      "merk": "Teil 1: kein Ausgleich, kein zweiter Versuch."
+    }
+  ]
+}
