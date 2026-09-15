@@ -174,6 +174,29 @@ wenn LF1, LF2 und LF3 jeweils eine Stufe bestanden haben; der Abschlusstest
 erst, wenn alle 6 Lernfelder durchlaufen sind. In `--status` und im Menü
 siehst du, welche Lernfelder noch fehlen.
 
+### Prüfungstraining (Wissen & Taktik)
+
+Vier eigene Fragenbanken zum Reiter **🧠 Prüfungstraining** – gleiches Schema und
+gleicher Ablauf wie die Lernfeld-Tests, eigener Fortschritt (`pt<N>_<stufe>`):
+
+| Bank | Thema |
+|---|---|
+| p1 | Teil 1: Ablauf, Zeit & Taktik |
+| p2 | Punkte holen & Wirtschaftlichkeit |
+| p3 | Technik & Recht: USV, Strom, Rechnungen |
+| p4 | Projekt (Teil 2): Antrag, Doku & Präsentation |
+
+```bash
+python3 tools/quiz.py --pruefungstraining 1      # Bank p1 (Stufe wird abgefragt)
+python3 tools/quiz.py --pt 3 -s leicht           # kurz: nur leichte Fragen
+python3 tools/quiz.py --reset-pt 2               # Fortschritt von p2 löschen
+```
+
+Im Auswahlmenü startest du die Banken mit `p1`–`p4`; `--status` zeigt den Stand
+in einem eigenen Block. Die Dateien liegen in
+`tools/pruefungstraining/test/fragen_01.json` bis `fragen_04.json`
+(je 15 Fragen: 12 Multiple-Choice + 3 offene, Punkte wie bei den Lernfeldern).
+
 ### Fortschritt
 
 Dein Stand wird in `~/.lernpfad/fortschritt.json` gespeichert – **bewusst

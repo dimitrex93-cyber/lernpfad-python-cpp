@@ -5,11 +5,15 @@ quiz.py – Interaktiver Wissenstest für den Lernpfad Python & C++
 Der Quiz-Runner ist das "Lern-App"-Herzstück des Projekts: Er lädt pro Lernfeld
 eine Fragenbank (test/fragen.json), stellt die Fragen interaktiv im Terminal,
 vergibt Punkte, zeigt sofortige Erklärungen und speichert den Fortschritt.
+Zusätzlich gibt es das Prüfungstraining (Wissen & Taktik) mit vier eigenen
+Fragenbanken unter tools/pruefungstraining/test/ – gleicher Ablauf, eigener
+Fortschritt (pt<N>_<stufe>).
 
 Verwendung:
     python3 tools/quiz.py                 # Lernfeld-Auswahlmenü
     python3 tools/quiz.py 2               # Test für Lernfeld 2 starten
     python3 tools/quiz.py 2 --schwierigkeit schwer   # Stufe direkt wählen
+    python3 tools/quiz.py --pruefungstraining 1 -s mittel   # Prüfungstraining-Fragenbank (1–4)
     python3 tools/quiz.py --zwischenpruefung    # Zwischentest nach IHK-Standard (LF1–3, 40 %)
     python3 tools/quiz.py --abschlusspruefung   # Abschlusstest nach IHK-Standard (LF1–6, 60 %)
     python3 tools/quiz.py --status        # Fortschritt aller Lernfelder
@@ -52,6 +56,15 @@ LERN_FELDER = [
     (4, "Datenbanken und Schnittstellen", "lernfeld_04_datenbanken"),
     (5, "Komplexe Systeme und Netzwerke", "lernfeld_05_netzwerke"),
     (6, "Softwarequalität, Testing und Projektmanagement", "lernfeld_06_qualitaet"),
+]
+
+# Prüfungstraining: Wissens- und Taktik-Kapitel (Reiter der Web-App) mit eigener
+# Fragenbank je Themenblock. Die Banken liegen beim Kurs in tools/pruefungstraining/test/.
+PRUEFUNGSTRAINING = [
+    (1, "Teil 1: Ablauf, Zeit & Taktik", "tools/pruefungstraining/test/fragen_01.json"),
+    (2, "Punkte holen & Wirtschaftlichkeit", "tools/pruefungstraining/test/fragen_02.json"),
+    (3, "Technik & Recht: USV, Strom, Rechnungen", "tools/pruefungstraining/test/fragen_03.json"),
+    (4, "Projekt (Teil 2): Antrag, Doku & Präsentation", "tools/pruefungstraining/test/fragen_04.json"),
 ]
 
 FORTSCHRITT_DATEI = os.path.expanduser("~/.lernpfad/fortschritt.json")
@@ -189,17 +202,12 @@ def notentext(note):
 # Fragenbank laden
 # ---------------------------------------------------------------------------
 
-def lade_fragen(lf_nr, stufe="schwer"):
-    """Lädt die Fragenbank eines Lernfelds, optional nach Stufe gefiltert.
+def _lade_bank(pfad, stufe="schwer"):
+    """Lädt eine Fragenbank und filtert kumulativ nach Schwierigkeitsstufe.
 
-    Filterung ist kumulativ: leicht → nur 'leicht', mittel → 'leicht' +
-    'mittel', schwer → alle Fragen.
+    Filterung: leicht → nur 'leicht', mittel → 'leicht' + 'mittel',
+    schwer → alle Fragen.
     """
-    eintrag = next((e for e in LERN_FELDER if e[0] == lf_nr), None)
-    if eintrag is None:
-        sys.exit(c(f"Unbekanntes Lernfeld: {lf_nr}", "rot"))
-
-    pfad = os.path.join(PROJEKT_ROOT, eintrag[2], "test", "fragen.json")
     if not os.path.isfile(pfad):
         sys.exit(c(f"Keine Fragenbank gefunden: {pfad}", "rot"))
 
@@ -207,13 +215,29 @@ def lade_fragen(lf_nr, stufe="schwer"):
         daten = json.load(f)
 
     fragen = daten["fragen"]
-    # Kumulative Filterung anhand der Stufen-Reihenfolge
     stufen_wert = dict(STUFEN)[stufe]
     fragen = [q for q in fragen
               if dict(STUFEN)[q.get("schwierigkeit", "mittel")] <= stufen_wert]
 
     gesamt = sum(q["punkte"] for q in fragen)
     return daten, fragen, gesamt
+
+
+def lade_fragen(lf_nr, stufe="schwer"):
+    """Lädt die Fragenbank eines Lernfelds (optional nach Stufe gefiltert)."""
+    eintrag = next((e for e in LERN_FELDER if e[0] == lf_nr), None)
+    if eintrag is None:
+        sys.exit(c(f"Unbekanntes Lernfeld: {lf_nr}", "rot"))
+    return _lade_bank(
+        os.path.join(PROJEKT_ROOT, eintrag[2], "test", "fragen.json"), stufe)
+
+
+def lade_pt_fragen(nr, stufe="schwer"):
+    """Lädt die Fragenbank eines Prüfungstraining-Kapitels."""
+    eintrag = next((e for e in PRUEFUNGSTRAINING if e[0] == nr), None)
+    if eintrag is None:
+        sys.exit(c(f"Unbekanntes Prüfungstraining-Kapitel: {nr}", "rot"))
+    return _lade_bank(os.path.join(PROJEKT_ROOT, eintrag[2]), stufe)
 
 
 def waehle_stufe():
@@ -311,6 +335,23 @@ def zeige_status(fortschritt):
         else:
             print(c("Noch kein Kapitel gelesen – öffne den Sprachkurs mit "
                     "'w'.", "dunkel"))
+
+    # Prüfungstraining (Wissen & Taktik): Lesekurs + je Themenblock eine Fragenbank
+    print()
+    print(c("=== Prüfungstraining: Wissen & Taktik ===", "fett"))
+    for nr, titel, _ in PRUEFUNGSTRAINING:
+        status = ""
+        noten = []
+        for stufe, _ in STUFEN:
+            eintrag = fortschritt.get(f"pt{nr}_{stufe}")
+            status += "✓" if (eintrag and eintrag["bestanden"]) else \
+                      ("✗" if eintrag else "·")
+            if eintrag:
+                noten.append(f"{stufe[:2]} {eintrag['note']}")
+        zusatz = f"   ({', '.join(noten)})" if noten else ""
+        print(f"  [{status}] p{nr}: {titel[:38]}{zusatz}")
+    print(c("  p1–p4 = Fragenbank starten (z. B. --pruefungstraining 1), "
+            "Kurs lesen im Web-Reiter", "dunkel"))
 
     # Übungstests nach IHK-Standard (Zwischen- & Abschlusstest)
     print(c("=== Übungstests nach IHK-Standard ===", "fett"))
@@ -480,13 +521,26 @@ def frage_open(frage, index, anzahl):
 # Test durchführen
 # ---------------------------------------------------------------------------
 
-def run_test(lf_nr, fortschritt, stufe=None):
-    daten, fragen, gesamt_max = lade_fragen(lf_nr, stufe or "schwer")
-    titel = daten["titel"]
-    stufe = stufe or "schwer"
-    schluessel = f"lf{lf_nr}_{stufe}"
+def run_test(nr, fortschritt, stufe=None, bereich="lf"):
+    """Wissenstest durchführen.
 
-    print(c(f"\n=== Lernfeld {lf_nr}: {titel} ===", "fett"))
+    bereich="lf" → Lernfeld (Fortschritt unter lf<N>_<stufe>)
+    bereich="pt" → Prüfungstraining (Fortschritt unter pt<N>_<stufe>)
+    """
+    stufe = stufe or "schwer"
+    if bereich == "pt":
+        daten, fragen, gesamt_max = lade_pt_fragen(nr, stufe)
+        schluessel = f"pt{nr}_{stufe}"
+        ueberschrift = f"Prüfungstraining {nr}: {daten['titel']}"
+        bereich_titel = "Kapitel"
+    else:
+        daten, fragen, gesamt_max = lade_fragen(nr, stufe)
+        schluessel = f"lf{nr}_{stufe}"
+        ueberschrift = f"Lernfeld {nr}: {daten['titel']}"
+        bereich_titel = "Lernfeld"
+    titel = daten["titel"]
+
+    print(c(f"\n=== {ueberschrift} ===", "fett"))
     print(c(f"Stufe: {stufe} ({STUFEN_BESCHREIBUNG[stufe]})", "cyan"))
     print(c(f"Wissenstest: {len(fragen)} Fragen, {gesamt_max} Punkte, "
             f"bestanden ab {PASS_PERCENT}%.", "cyan"))
@@ -512,7 +566,7 @@ def run_test(lf_nr, fortschritt, stufe=None):
     print(c("\n" + "=" * 52, "fett"))
     print(c("ERGEBNIS", "fett"))
     print("=" * 52)
-    print(f"Lernfeld:   {lf_nr} – {titel}")
+    print(f"{bereich_titel + ':':<12}{nr} – {titel}")
     print(f"Stufe:      {stufe}")
     print(f"Punkte:     {erreicht} / {gesamt_max}")
     print(f"Prozent:    {prozent:.1f}%   {zeige_balken(prozent)}")
@@ -971,8 +1025,16 @@ def zeige_menue(fortschritt):
         bereich = f"LF{p['lf_bereiche'][0]}–{p['lf_bereiche'][-1]}"
         print(f"  [{marker}] {p['menue']}: {p['titel']} "
               f"({bereich}, {gewicht} % der Gesamtnote)")
+    for nr, titel, _ in PRUEFUNGSTRAINING:
+        status = ""
+        for stufe, _ in STUFEN:
+            eintrag = fortschritt.get(f"pt{nr}_{stufe}")
+            status += "✓" if (eintrag and eintrag["bestanden"]) else \
+                      ("✗" if eintrag else "·")
+        print(f"  [{status}] p{nr}: {titel} (Prüfungstraining)")
     print(c("Status: ✓ = bestanden · 🔒 = gesperrt (Lernfelder fehlen) · "
-            "Übungstests: 7 = Zwischen-, 8 = Abschlusstest", "dunkel"))
+            "Übungstests: 7 = Zwischen-, 8 = Abschlusstest · "
+            "Prüfungstraining: p1–p4", "dunkel"))
     print()
 
 
@@ -998,6 +1060,13 @@ def main():
                         choices=["leicht", "mittel", "schwer"],
                         help="Schwierigkeitsgrad direkt wählen "
                              "(statt interaktiver Abfrage)")
+    parser.add_argument("--pruefungstraining", "--pt", type=int, metavar="KAPITEL",
+                        help="Fragenbank des Prüfungstrainings starten "
+                             "(1 = Teil 1 Ablauf/Zeit/Taktik, 2 = Punkte & "
+                             "Wirtschaftlichkeit, 3 = Technik & Recht, "
+                             "4 = Projekt & Präsentation)")
+    parser.add_argument("--reset-pt", type=int, metavar="KAPITEL",
+                        help="Fortschritt eines Prüfungstraining-Kapitels löschen")
     parser.add_argument("--zwischenpruefung", action="store_true",
                         help="Zwischentest nach IHK-Standard starten (LF1–3, 40 %%)")
     parser.add_argument("--abschlusspruefung", action="store_true",
@@ -1014,6 +1083,27 @@ def main():
     if args.abschlusspruefung:
         p = next(x for x in PRUEFUNGEN if x["key"] == "abschlusspruefung")
         run_pruefung(p, fortschritt)
+        return
+
+    if args.pruefungstraining is not None:
+        stufe = args.schwierigkeit or waehle_stufe()
+        run_test(args.pruefungstraining, fortschritt, stufe, bereich="pt")
+        return
+
+    if args.reset_pt is not None:
+        geloescht = False
+        for stufe, _ in STUFEN:
+            schluessel = f"pt{args.reset_pt}_{stufe}"
+            if schluessel in fortschritt:
+                del fortschritt[schluessel]
+                geloescht = True
+        if geloescht:
+            speichere_fortschritt(fortschritt)
+            print(c(f"Fortschritt von Prüfungstraining {args.reset_pt} gelöscht.",
+                    "gelb"))
+        else:
+            print(c(f"Kein gespeicherter Fortschritt für Prüfungstraining "
+                    f"{args.reset_pt}.", "gelb"))
         return
 
     if args.status:
@@ -1046,6 +1136,13 @@ def main():
                 eintrag = fortschritt.get(f"lf{nr}_{stufe}")
                 status += "✓" if (eintrag and eintrag["bestanden"]) else "·"
             print(f"  [{status}] {nr}: {titel}")
+        for nr, titel, _ in PRUEFUNGSTRAINING:
+            status = ""
+            for stufe, _ in STUFEN:
+                eintrag = fortschritt.get(f"pt{nr}_{stufe}")
+                status += "✓" if (eintrag and eintrag["bestanden"]) else \
+                          ("✗" if eintrag else "·")
+            print(f"  [{status}] p{nr}: {titel} (Prüfungstraining)")
         print(c("  [···] w: Sprachkurs – Python & C++ im ganzen erklärt", "cyan"))
         print(c("  [···] g: Glossar – Grundbegriffe von A bis Z", "cyan"))
         print()
@@ -1067,7 +1164,8 @@ def main():
     # Kein Argument → Auswahlmenü
     zeige_menue(fortschritt)
     while True:
-        eingabe = input("Auswahl (1–8, w = Wissen, g = Glossar, q = Ende): ")
+        eingabe = input("Auswahl (1–6, 7/8 = Übungstests, p1–p4 = "
+                        "Prüfungstraining, w = Wissen, g = Glossar, q = Ende): ")
         if eingabe.lower() in ("q", "quit", "exit"):
             print("Bis bald!")
             return
@@ -1084,11 +1182,15 @@ def main():
             p = next(x for x in PRUEFUNGEN if x["menue"] == eingabe)
             run_pruefung(p, fortschritt)
             return
+        if eingabe.lower() in ("p1", "p2", "p3", "p4"):
+            stufe = args.schwierigkeit or waehle_stufe()
+            run_test(int(eingabe[1]), fortschritt, stufe, bereich="pt")
+            return
         if eingabe.isdigit() and 1 <= int(eingabe) <= len(LERN_FELDER):
             stufe = args.schwierigkeit or waehle_stufe()
             run_test(int(eingabe), fortschritt, stufe)
             return
-        print(c("Bitte 1–8, w, g oder q eingeben.", "gelb"))
+        print(c("Bitte 1–6, 7/8, p1–p4, w, g oder q eingeben.", "gelb"))
 
 
 if __name__ == "__main__":

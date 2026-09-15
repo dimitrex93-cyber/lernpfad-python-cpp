@@ -1,0 +1,232 @@
+{
+  "bereich": "pruefungstraining",
+  "kapitel": 3,
+  "titel": "Technik & Recht: USV, Strom, Rechnungen",
+  "fragen": [
+    {
+      "id": "pt3_01",
+      "typ": "mc",
+      "frage": "In welcher Einheit wird die Scheinleistung einer USV angegeben?",
+      "optionen": [
+        "Watt (W)",
+        "Volt-Ampere (VA)",
+        "Ampere (A)",
+        "Kilowattstunden (kWh)"
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "Die Scheinleistung steht in VA auf dem Datenblatt. Die Wirkleistung, die deine Server wirklich brauchen, wird in Watt gemessen.",
+      "schwierigkeit": "leicht"
+    },
+    {
+      "id": "pt3_02",
+      "typ": "mc",
+      "frage": "In welcher Einheit rechnest du den Verbrauch deiner Server?",
+      "optionen": [
+        "In VA",
+        "In Watt (Wirkleistung)",
+        "In Volt",
+        "In Ohm"
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "Server verbrauchen Wirkleistung in Watt. Wer mit VA rechnet, überschätzt die verfügbare Leistung und die Anlage schaltet im Ernstfall ab.",
+      "schwierigkeit": "leicht"
+    },
+    {
+      "id": "pt3_03",
+      "typ": "mc",
+      "frage": "Gegenüber wem gilt die gesetzliche Gewährleistung?",
+      "optionen": [
+        "Gegenüber dem Hersteller",
+        "Gegenüber dem Verkäufer",
+        "Gegenüber dem Versicherer",
+        "Gegenüber niemandem, sie ist freiwillig"
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "Die Gewährleistung ist gesetzlich und gilt gegenüber dem Verkäufer, bei neuen Sachen im Geschäftsverkehr üblicherweise 24 Monate. Die Garantie kommt vom Hersteller und ist freiwillig.",
+      "schwierigkeit": "leicht"
+    },
+    {
+      "id": "pt3_04",
+      "typ": "mc",
+      "frage": "Was ist eine Garantie?",
+      "optionen": [
+        "Eine gesetzliche Pflicht des Verkäufers.",
+        "Eine freiwillige Zusage des Herstellers.",
+        "Dasselbe wie Gewährleistung.",
+        "Eine Versicherung gegen Diebstahl."
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "Die Garantie ist freiwillig und kommt vom Hersteller. Sie kann länger oder kürzer als die Gewährleistung sein – ein Anspruch darauf besteht nur, wenn sie zugesagt wurde.",
+      "schwierigkeit": "leicht"
+    },
+    {
+      "id": "pt3_05",
+      "typ": "mc",
+      "frage": "Eine USV hat 1000 VA, der Leistungsfaktor ist 0,6. Wie viel Wirkleistung steht zur Verfügung?",
+      "optionen": [
+        "1000 W",
+        "600 W",
+        "1600 W",
+        "60 W"
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Wirkleistung = Scheinleistung × Leistungsfaktor: 1000 VA × 0,6 = 600 W. Ein Rack mit 800 W Bedarf überlastet diese USV.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt3_06",
+      "typ": "mc",
+      "frage": "Warum ist der Dreisatz bei der Überbrückungszeit falsch?",
+      "optionen": [
+        "Weil die Spannung schwankt.",
+        "Weil Batterien nicht linear entladen – halbe Last bedeutet nicht doppelte Laufzeit.",
+        "Weil die USV geeicht werden muss.",
+        "Weil Watt keine SI-Einheit ist."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Die Laufzeit liest man aus der Entladekurve des Herstellers ab: Auslastung berechnen, auf der Kurve einzeichnen, Laufzeit senkrecht ablesen.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt3_07",
+      "typ": "mc",
+      "frage": "Dein Rack zieht 324 W, die USV leistet maximal 600 W. Wie hoch ist die Auslastung?",
+      "optionen": [
+        "rund 18 %",
+        "rund 54 %",
+        "rund 84 %",
+        "rund 46 %"
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "324 W / 600 W = 0,54, also 54 % Auslastung. Diesen Wert nimmst du als Startpunkt für die Entladekurve.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt3_08",
+      "typ": "mc",
+      "frage": "In welcher Reihenfolge läuft eine saubere Shutdown-Kaskade ab?",
+      "optionen": [
+        "Hauptserver zuerst, dann die VMs.",
+        "Erst die abhängigen VMs, der Hauptserver wartet und schaltet sich zuletzt ab.",
+        "Alle Systeme gleichzeitig.",
+        "Nur der Hauptserver, VMs bleiben an."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Der Hauptserver muss warten, bis alle Nebensysteme offline sind – sonst stürzen sie ab. Erst danach schließt er seine eigenen Dateisysteme.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt3_09",
+      "typ": "mc",
+      "frage": "Das Datenkabel zwischen USV und Steuerrechner bricht. Was ist das gewünschte Verhalten?",
+      "optionen": [
+        "Sofort alle Server abschalten.",
+        "Die letzten Messwerte als veraltet markieren, die Abschaltung blockieren und Alarm auslösen.",
+        "Die USV aus- und wieder einschalten.",
+        "Den Server neu starten."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Die als veraltet markierten Werte (DataStale) verhindern ein Abschalten wegen fehlender Daten. Es wird ein Fehler protokolliert und die Administration informiert.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt3_10",
+      "typ": "mc",
+      "frage": "Was verlangt § 377 HGB beim Wareneingang im Geschäftsverkehr?",
+      "optionen": [
+        "Man darf die Ware 30 Tage ungeprüft lagern.",
+        "Offene Mängel müssen unverzüglich gerügt werden – sonst gilt die Ware als genehmigt.",
+        "Mängel meldet immer der Hersteller.",
+        "Nur der Einkauf darf Mängel melden."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Wer die Kartons wochenlang stehen lässt, verliert Ansprüche. Sofort auspacken, prüfen und Mängel schriftlich melden.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt3_11",
+      "typ": "mc",
+      "frage": "Was ist beim Werkvertrag geschuldet?",
+      "optionen": [
+        "Die Tätigkeit, also die Arbeitszeit.",
+        "Der Erfolg – der Auftragnehmer muss kostenlos nachbessern, bis es funktioniert.",
+        "Nur das Material.",
+        "Eine Beratung ohne Ergebnis."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Werkvertrag = Erfolg geschuldet (Nachbesserung auf Kosten des Auftragnehmers). Dienstvertrag = Tätigkeit geschuldet, dort zahlt der Auftraggeber die Fehlersuche.",
+      "schwierigkeit": "schwer"
+    },
+    {
+      "id": "pt3_12",
+      "typ": "mc",
+      "frage": "Was prüfst du beim Drei-Wege-Abgleich?",
+      "optionen": [
+        "Bestellung, Lieferschein und Rechnung – Preise und Mengen müssen übereinstimmen.",
+        "Nur die Rechnung auf Rechenfehler.",
+        "Ob der Lieferant pünktlich war.",
+        "Ob die Verpackung beschädigt ist."
+      ],
+      "antwort": 1,
+      "punkte": 3,
+      "erklaerung": "Erst wenn Bestellung, Lieferschein und Rechnung lückenlos zusammenpassen, gibst du die Rechnung zur Zahlung frei.",
+      "schwierigkeit": "schwer"
+    },
+    {
+      "id": "pt3_13",
+      "typ": "open",
+      "frage": "Warum rechnet man bei der Dimensionierung einer USV in Watt und nicht in VA?",
+      "stichworte": [
+        "Wirkleistung",
+        "Leistungsfaktor",
+        "Scheinleistung",
+        "Überlastung"
+      ],
+      "punkte": 3,
+      "erklaerung": "Weil Server Wirkleistung in Watt verbrauchen, während die USV ihre Scheinleistung in VA angibt. Der Leistungsfaktor verbindet beides: Aus 1000 VA werden bei Faktor 0,6 nur 600 W. Rechnest du in VA, überschätzt du die Anlage und sie schaltet im Ernstfall wegen Überlast ab.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt3_14",
+      "typ": "open",
+      "frage": "Nenne vier Pflichtangaben einer Rechnung nach § 14 UStG.",
+      "stichworte": [
+        "Anschrift Absender und Empfänger",
+        "Rechnungsdatum",
+        "Rechnungsnummer fortlaufend",
+        "Umsatzsteuer-Identifikationsnummer",
+        "Leistungsbeschreibung",
+        "Netto Steuersatz Brutto"
+      ],
+      "punkte": 4,
+      "erklaerung": "Zum Beispiel: vollständige Anschrift von Absender und Empfänger, Rechnungsdatum, fortlaufende Rechnungsnummer, Umsatzsteuer-Identifikationsnummern beider Seiten, genaue Leistungsbeschreibung sowie Netto-Betrag, Steuersatz und Bruttosumme getrennt. Fehlt ein Pflichtfeld, ist die Rechnung nicht rechtssicher und der Betrieb verliert den Vorsteuerabzug.",
+      "schwierigkeit": "schwer"
+    },
+    {
+      "id": "pt3_15",
+      "typ": "open",
+      "frage": "Erkläre an einem eigenen Beispiel, wie du einen Test so dokumentierst, dass er als Nachweis gilt.",
+      "stichworte": [
+        "Testfall",
+        "Soll-Zustand",
+        "Ist-Zustand",
+        "Zeitstempel",
+        "Log"
+      ],
+      "punkte": 5,
+      "erklaerung": "In einer Testmatrix hältst du pro Testfall fest: was du gemacht hast, was erwartet war, was messbar passiert ist und das Ergebnis. Der Ist-Zustand wird durch ein Systemprotokoll mit Zeitstempel belegt (z. B. der Eintrag 'UPS on battery' um 11:04 und 'shutdown completed' um 11:09) und als Anlage beigefügt. Nur dieser Abgleich von Soll und Ist beweist die Funktion – eine Behauptung reicht nicht.",
+      "schwierigkeit": "schwer"
+    }
+  ]
+}

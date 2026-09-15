@@ -8,7 +8,7 @@
 const DATEN_PFAD = "/daten/";
 // Versionsmarker: erscheint im Footer. LEER = Browser nutzt alte app.js
 // (Cache!) → Strg+F5 / Cache leeren.
-const APP_VERSION = "0.8.3";
+const APP_VERSION = "0.8.4";
 const STUFEN = ["leicht", "mittel", "schwer"];
 const STUFEN_BESCHREIBUNG = {
   leicht: "nur leichte Fragen",
@@ -546,6 +546,14 @@ const PRUEFUNGEN = [
   },
 ];
 const PASS_PERCENT = 50;
+// Prüfungstraining (Reiter „🧠 Prüfungstraining"): je Themenblock eine Fragenbank.
+// Gleiches Schema wie die Lernfeld-Banken, Fortschritt unter pt<N>_<stufe>.
+const PRUEFUNGSTRAINING = [
+  { nr: 1, titel: "Teil 1: Ablauf, Zeit & Taktik" },
+  { nr: 2, titel: "Punkte holen & Wirtschaftlichkeit" },
+  { nr: 3, titel: "Technik & Recht: USV, Strom, Rechnungen" },
+  { nr: 4, titel: "Projekt (Teil 2): Antrag, Doku & Präsentation" },
+];
 const LERN_FELDER = [
   { nr: 1, titel: "Grundlagen der IT und erste Programme", ordner: "lernfeld_01_grundlagen" },
   { nr: 2, titel: "Einfache Datenverarbeitung und Algorithmen", ordner: "lernfeld_02_datenverarbeitung" },
@@ -575,6 +583,20 @@ function speichereFortschritt(fortschritt) {
 
 function lfSchluessel(nr, stufe) {
   return `lf${nr}_${stufe}`;
+}
+
+function ptSchluessel(nr, stufe) {
+  return `pt${nr}_${stufe}`;
+}
+
+function ptPfad(nr) {
+  return `${DATEN_PFAD}tools/pruefungstraining/test/fragen_${String(nr).padStart(2, "0")}.json`;
+}
+
+// Anzeigetitel eines laufenden Tests (Lernfeld oder Prüfungstraining)
+function quizTitel(z) {
+  return z.pt ? `Prüfungstraining ${z.pt.nr}: ${z.pt.titel}`
+              : `LF${z.lf.nr}: ${z.lf.titel}`;
 }
 
 // ------------------------------------------------------------------
@@ -685,6 +707,24 @@ function zeigeStart() {
         ${status}<span class="lf-titel">🎓 ${p.titel} (${p.bereich})</span>
       </div>`;
   }
+
+  // Prüfungstraining (Wissen & Taktik) – eigener Block, eigener Zähler
+  let ptInfo = "";
+  let ptBestanden = 0;
+  for (const b of PRUEFUNGSTRAINING) {
+    const bestanden = STUFEN.filter(s => {
+      const e = fortschritt[ptSchluessel(b.nr, s)];
+      return e && e.bestanden;
+    }).length;
+    ptBestanden += bestanden;
+    ptInfo += `<div class="lf-eintrag">
+        <span class="lf-status ${bestanden > 0 ? "" : "offen"}">${bestanden}/3</span>
+        <span class="lf-titel">🧠 p${b.nr}: ${b.titel}</span>
+      </div>`;
+  }
+  ptInfo += `<p><strong>${ptBestanden}/${PRUEFUNGSTRAINING.length * STUFEN.length}</strong>
+    Prüfungstraining-Stufen bestanden</p>`;
+
   const zp = fortschritt.zwischenpruefung;
   const ap = fortschritt.abschlusspruefung;
   if (zp && ap) {
@@ -698,6 +738,7 @@ function zeigeStart() {
     `<h3>Quiz</h3>${html}
      <p><strong>${quizBestanden}/${quizGesamt}</strong> Lernfeld-Stufen bestanden</p>
      <h3>Übungstests nach IHK-Standard</h3>${pruefungsInfo}
+     <h3>Prüfungstraining (Wissen &amp; Taktik)</h3>${ptInfo}
      <h3>Sprachkurs</h3>${kursInfo}`;
 
   // Sync-Status und gespeicherten Code anzeigen
@@ -770,6 +811,23 @@ async function zeigeQuizAuswahl() {
     ph += '</div>';
     pruefungsButtons.innerHTML = ph;
   }
+
+  // Fragenbanken des Prüfungstrainings (Wissen & Taktik)
+  const ptButtons = document.getElementById("pt-buttons");
+  if (ptButtons) {
+    let th = '<div class="button-reihe">';
+    for (const b of PRUEFUNGSTRAINING) {
+      const bestanden = STUFEN.filter(s => {
+        const e = fortschritt[ptSchluessel(b.nr, s)];
+        return e && e.bestanden;
+      }).length;
+      const status = bestanden > 0 ? ` · ${bestanden}/3 ✓` : "";
+      th += `<button class="secondary" onclick="startePT(${b.nr})">
+        🧠 p${b.nr}: ${b.titel}${status}</button>`;
+    }
+    th += '</div>';
+    ptButtons.innerHTML = th;
+  }
 }
 
 function gewaehlteStufe() {
@@ -810,7 +868,42 @@ async function starteQuiz(nr) {
     document.getElementById("quiz-ergebnis").hidden = true;
     document.getElementById("quiz-laeuft").hidden = false;
     document.getElementById("quiz-titel").textContent =
-      `LF${lf.nr}: ${lf.titel} · Stufe: ${stufe}`;
+      `${quizTitel(quizZustand)} · Stufe: ${stufe}`;
+    zeigeFrage();
+  } catch (e) {
+    zeigeToast("Fragen konnten nicht geladen werden: " + e.message, "fehler");
+  }
+}
+
+// Fragenbank des Prüfungstrainings starten – gleicher Ablauf wie ein Lernfeld-Test
+async function startePT(nr) {
+  const bank = PRUEFUNGSTRAINING.find((x) => x.nr === nr);
+  if (!bank) return;
+  const stufe = gewaehlteStufe();
+  try {
+    const resp = await fetch(ptPfad(nr));
+    if (!resp.ok) throw new Error("HTTP " + resp.status);
+    const daten = await resp.json();
+    let fragen = daten.fragen || [];
+    const wert = STUFEN.indexOf(stufe);
+    fragen = fragen.filter((q) => STUFEN.indexOf(q.schwierigkeit || "mittel") <= wert);
+    if (!fragen.length) throw new Error("Keine Fragen in dieser Stufe");
+
+    quizZustand = {
+      lf: null,
+      pt: bank,
+      stufe,
+      fragen,
+      index: 0,
+      erreicht: 0,
+      max: fragen.reduce((s, q) => s + (q.punkte || 1), 0),
+      pruefung: null,
+    };
+    document.getElementById("quiz-auswahl").hidden = true;
+    document.getElementById("quiz-ergebnis").hidden = true;
+    document.getElementById("quiz-laeuft").hidden = false;
+    document.getElementById("quiz-titel").textContent =
+      `${quizTitel(quizZustand)} · Stufe: ${stufe}`;
     zeigeFrage();
   } catch (e) {
     zeigeToast("Fragen konnten nicht geladen werden: " + e.message, "fehler");
@@ -1102,7 +1195,7 @@ function zeigeErgebnis() {
       <div id="gesamtnote-box"></div>`;
   } else {
     details.innerHTML = `
-      <p>LF${z.lf.nr}: ${z.lf.titel} · Stufe: ${z.stufe}</p>
+      <p>${quizTitel(z)} · Stufe: ${z.stufe}</p>
       <p>Punkte: <strong>${z.erreicht} / ${z.max}</strong> (${prozent.toFixed(1)} %)</p>
       <div class="note-gross note-${note.note}">Note ${note.note} (${note.text})</div>
       <p class="${bestanden ? "bestanden" : "nicht-bestanden"}">
@@ -1111,7 +1204,8 @@ function zeigeErgebnis() {
 
   // Fortschritt speichern (bester Versuch pro Stufe / Prüfung)
   const fortschritt = ladeFortschritt();
-  const schluessel = istPruefung ? z.pruefung.key : lfSchluessel(z.lf.nr, z.stufe);
+  const schluessel = istPruefung ? z.pruefung.key
+    : (z.pt ? ptSchluessel(z.pt.nr, z.stufe) : lfSchluessel(z.lf.nr, z.stufe));
   const alt = fortschritt[schluessel];
   if (!alt || z.erreicht > alt.punkte) {
     fortschritt[schluessel] = {

@@ -1,0 +1,231 @@
+{
+  "bereich": "pruefungstraining",
+  "kapitel": 2,
+  "titel": "Punkte holen & Wirtschaftlichkeit",
+  "fragen": [
+    {
+      "id": "pt2_01",
+      "typ": "mc",
+      "frage": "Die Aufgabe sagt: „Nenne drei Vorteile von Cloud Computing.“ Wie sieht die beste Antwort aus?",
+      "optionen": [
+        "Drei ausführliche Sätze mit Beispielen.",
+        "Drei knappe Stichpunkte, ohne Ausschmückung.",
+        "Ein Fließtext, aus dem drei Vorteile erkennbar sind.",
+        "Fünf Vorteile, damit drei garantiert richtig sind."
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "„Nennen“ verlangt präzise Stichpunkte. Wer mehr auflistet als verlangt, bekommt nur die verlangte Anzahl bewertet.",
+      "schwierigkeit": "leicht"
+    },
+    {
+      "id": "pt2_02",
+      "typ": "mc",
+      "frage": "Was bedeutet der Operator „erläutern“?",
+      "optionen": [
+        "Stichpunkte genügen.",
+        "Zusammenhänge in vollständigen Sätzen erklären, Ursache und Wirkung.",
+        "Nur das Ergebnis hinschreiben.",
+        "Eine Zeichnung anfertigen."
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "„Erläutern“ zwingt zu vollständigen Sätzen mit Ursache und Wirkung – reine Stichpunktlisten bringen hier keine Punkte.",
+      "schwierigkeit": "leicht"
+    },
+    {
+      "id": "pt2_03",
+      "typ": "mc",
+      "frage": "Du sollst drei Vorteile nennen, schreibst aber vier. Was passiert?",
+      "optionen": [
+        "Alle vier werden bewertet.",
+        "Der vierte Punkt wird ignoriert, es zählen nur die ersten drei.",
+        "Die Aufgabe wird mit 0 Punkten bewertet.",
+        "Es gibt Abzug für den vierten Punkt."
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "Der Korrektor bewertet genau die verlangte Anzahl. Zeit für einen vierten Punkt ist verschwendet.",
+      "schwierigkeit": "leicht"
+    },
+    {
+      "id": "pt2_04",
+      "typ": "mc",
+      "frage": "Warum musst du in Rechenaufgaben den Rechenweg auf den offiziellen Bogen schreiben?",
+      "optionen": [
+        "Weil es die Prüfungsordnung verlangt.",
+        "Weil es Teilpunkte für Formel und eingesetzte Werte gibt – auch wenn sich am Ende ein Tippfehler einschleicht.",
+        "Damit der Korrektor die Aufgabe schneller findet.",
+        "Weil das Ergebnis sonst nicht gezählt wird."
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "Die Bewertung läuft über Teilpunkte: Formel und Werte bringen Punkte. Das Konzeptpapier zählt dagegen nicht.",
+      "schwierigkeit": "leicht"
+    },
+    {
+      "id": "pt2_05",
+      "typ": "mc",
+      "frage": "Welche Anforderungen muss dein Taschenrechner in der Prüfung erfüllen?",
+      "optionen": [
+        "Er darf programmierbar sein, wenn er keine Formeln speichert.",
+        "Er muss netzunabhängig und darf nicht programmierbar sein.",
+        "Er darf eine Funkverbindung haben, solange sie aus ist.",
+        "Es gibt keine Vorgaben."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Erlaubt ist nur ein einfacher, netzunabhängiger und nicht programmierbarer Rechner. Verstöße gelten als Täuschungsversuch.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt2_06",
+      "typ": "mc",
+      "frage": "Was gehört NICHT auf den Prüfungstisch?",
+      "optionen": [
+        "Dokumentenechte Stifte",
+        "Ein Geodreieck",
+        "Das IT-Handbuch oder eine eigene Formelsammlung",
+        "Ein einfacher Taschenrechner"
+      ],
+      "antwort": 2,
+      "punkte": 2,
+      "erklaerung": "Gedruckte Nachschlagewerke und Formelsammlungen sind verboten. Benötigte Datenblätter druckt die IHK als Anlage in den Aufgabenbogen.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt2_07",
+      "typ": "mc",
+      "frage": "Wie gehst du bei einer Nutzwertanalyse vor?",
+      "optionen": [
+        "Gewichtungen addieren und die günstigsten Kosten wählen.",
+        "Je Kriterium Bewertung mal Gewichtung rechnen, dann die Teilwerte pro Angebot addieren – vorher die KO-Kriterien prüfen.",
+        "Nur den Preis vergleichen, alles andere ist subjektiv.",
+        "Die Angebote nach Gefühl ordnen und die Reihenfolge begründen."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Erst KO-Kriterien prüfen, dann Bewertung × Gewichtung je Zeile, danach spaltenweise addieren. Der Gesamtnutzwert entscheidet.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt2_08",
+      "typ": "mc",
+      "frage": "Ein Angebot hat den höchsten Gesamtnutzwert, erfüllt aber ein KO-Kriterium nicht. Was gilt?",
+      "optionen": [
+        "Es gewinnt trotzdem, weil der Nutzwert am höchsten ist.",
+        "Es scheidet aus – dann gewinnt das nächstbeste Angebot.",
+        "Das KO-Kriterium wird halb gewertet.",
+        "Die Aufgabe ist unlösbar."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Ein KO-Kriterium ist ein Musskriterium. Wer es nicht erfüllt, fällt komplett raus – unabhängig vom Nutzwert. Das ist die klassische Prüfungsfalle.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt2_09",
+      "typ": "mc",
+      "frage": "Wie berechnest du die Amortisationszeit?",
+      "optionen": [
+        "Ersparnis geteilt durch Anschaffungskosten.",
+        "Mehrkosten der Anschaffung geteilt durch die Ersparnis je Zeitraum.",
+        "Kosten mal Laufzeit.",
+        "Nutzungsdauer geteilt durch die Abschreibung."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Amortisationszeit = Mehrkosten / Ersparnis pro Zeitraum. Achte darauf, ob in Jahren oder Wochen gerechnet wird.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt2_10",
+      "typ": "mc",
+      "frage": "Ein Server kostet 1200 € mehr als das Standardmodell und spart 400 € Strom pro Jahr. Ab wann bringt er Vorteile?",
+      "optionen": [
+        "Nach 2 Jahren",
+        "Nach 3 Jahren",
+        "Ab dem 4. Jahr",
+        "Nach 12 Jahren"
+      ],
+      "antwort": 2,
+      "punkte": 3,
+      "erklaerung": "1200 € / 400 € pro Jahr = 3 Jahre. Nach 36 Monaten ist der Aufpreis ausgeglichen, ab dem vierten Jahr bringt der Server echten finanziellen Vorteil.",
+      "schwierigkeit": "schwer"
+    },
+    {
+      "id": "pt2_11",
+      "typ": "mc",
+      "frage": "Warum ist ein vermiedener Schaden beim ROI genauso viel wert wie ein neuer Erlös?",
+      "optionen": [
+        "Weil es die Steuer so vorsieht.",
+        "Weil eingespartes Geld wirtschaftlich dasselbe Ergebnis hat wie zusätzlich verdientes Geld.",
+        "Weil Schäden versichert sind.",
+        "Das stimmt nicht – Schäden zählen nicht."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Der ROI vergleicht Projektkosten mit dem Nutzen. Ein verhinderter Ausfall (z. B. teure Datenrettung) spart Geld und zählt damit als Nutzen.",
+      "schwierigkeit": "schwer"
+    },
+    {
+      "id": "pt2_12",
+      "typ": "mc",
+      "frage": "Was gehört alles in die Total Cost of Ownership (TCO) eines Projekts?",
+      "optionen": [
+        "Nur die Hardware-Kosten.",
+        "Hardware, Lizenzen, Nebenkosten und die eigene Arbeitszeit mit Stundensatz inklusive Lohnnebenkosten.",
+        "Hardware und Lizenzen – Arbeitszeit ist unbezahlt.",
+        "Nur die Personalkosten."
+      ],
+      "antwort": 1,
+      "punkte": 3,
+      "erklaerung": "Die TCO sind die echten Gesamtkosten. Die eigene Arbeitszeit rechnest du mit einem Stundensatz inklusive Lohnnebenkosten – sonst ist die Kostenrechnung unvollständig.",
+      "schwierigkeit": "schwer"
+    },
+    {
+      "id": "pt2_13",
+      "typ": "open",
+      "frage": "Erkläre in zwei bis drei Sätzen die KO-Kriterien-Falle bei einer Nutzwertanalyse.",
+      "stichworte": [
+        "Musskriterium",
+        "Ausschluss",
+        "Nutzwert",
+        "egal"
+      ],
+      "punkte": 3,
+      "erklaerung": "Ein KO-Kriterium ist ein Musskriterium, das ein Angebot zwingend erfüllen muss. Erfüllt es das nicht, scheidet es sofort aus – egal wie hoch sein Gesamtnutzwert ist. Deshalb prüft man die KO-Kriterien vor der Bewertung.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt2_14",
+      "typ": "open",
+      "frage": "Ein Projekt kostet 720 € und spart 38 € pro Woche. Berechne die Amortisationsdauer und erkläre, was die Zahl aussagt.",
+      "stichworte": [
+        "720",
+        "38",
+        "19 Wochen",
+        "geteilt",
+        "ab dann Vorteil"
+      ],
+      "punkte": 4,
+      "erklaerung": "720 € / 38 € je Woche = rund 19 Wochen. Nach 19 Wochen hat das Projekt seine Kosten wieder eingespielt; ab dann arbeitet es wirtschaftlich im Vorteil.",
+      "schwierigkeit": "schwer"
+    },
+    {
+      "id": "pt2_15",
+      "typ": "open",
+      "frage": "Warum will der Prüfer in der Wirtschaftlichkeitsbetrachtung auch die Personalkosten sehen?",
+      "stichworte": [
+        "Arbeitszeit kostet Geld",
+        "Stundensatz",
+        "Nebenkosten",
+        "vollständige Kosten",
+        "nicht nur Hardware"
+      ],
+      "punkte": 4,
+      "erklaerung": "Weil die eigene Arbeitszeit echtes Geld kostet. Rechnest du nur die Hardware, unterschätzt du den Aufwand und die Entscheidung wirkt falsch. Mit Stundensatz inklusive Lohnnebenkosten wird die Rechnung vollständig – erst dann ist sie belastbar.",
+      "schwierigkeit": "schwer"
+    }
+  ]
+}

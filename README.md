@@ -89,6 +89,10 @@ Inhalte nutzen und denselben Fortschritt teilen:
   Abgabetermine unterscheiden sich je IHK – dort gilt immer die Vorgabe deiner IHK.
 - Erreichbar im Web-Frontend über den Reiter **🧠 Prüfungstraining**
   (`tools/pruefungstraining/kapitel_*.json`)
+- **4 Fragenbanken** dazu (je 15 Fragen, also 60 Fragen insgesamt) für den
+  Quiz-Reiter und das Terminal: `python3 tools/quiz.py --pruefungstraining 1`
+  – Taktik & Ablauf, Punkte & Wirtschaftlichkeit, Technik & Recht,
+  Projekt & Präsentation. Eigener Fortschritt, gleiche Bewertung wie die Lernfelder.
 
 ### KI-Assistent (Abo-Modell)
 

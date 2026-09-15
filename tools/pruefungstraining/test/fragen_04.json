@@ -1,0 +1,232 @@
+{
+  "bereich": "pruefungstraining",
+  "kapitel": 4,
+  "titel": "Projekt (Teil 2): Antrag, Doku & Präsentation",
+  "fragen": [
+    {
+      "id": "pt4_01",
+      "typ": "mc",
+      "frage": "Wann darfst du mit der Umsetzung deiner Projektarbeit beginnen?",
+      "optionen": [
+        "Sobald du den Antrag abgeschickt hast.",
+        "Erst wenn der Antrag offiziell genehmigt ist.",
+        "Wenn der Betrieb zustimmt – die IHK ist egal.",
+        "Nach dem ersten Prüfungsgespräch."
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "Die Umsetzung startet erst nach der Genehmigung. Prüfe dabei die E-Mail-Adresse in deinem Portal-Profil, sonst verpasst du die Freigabe oder Auflagen.",
+      "schwierigkeit": "leicht"
+    },
+    {
+      "id": "pt4_02",
+      "typ": "mc",
+      "frage": "Wie viel Bearbeitungszeit hat ein Fachinformatiker für Systemintegration für die Projektarbeit?",
+      "optionen": [
+        "20 Stunden",
+        "40 Stunden",
+        "80 Stunden",
+        "100 Stunden"
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "Bei Systemintegration sind es 40 Stunden (bei Anwendungsentwicklung 80). Darin steckt alles: Analyse, Umsetzung, Tests und die Kundendokumentation.",
+      "schwierigkeit": "leicht"
+    },
+    {
+      "id": "pt4_03",
+      "typ": "mc",
+      "frage": "Wie lange ist die Projektpräsentation und wie viel Zeit solltest du einplanen?",
+      "optionen": [
+        "10 Minuten – genau einplanen.",
+        "15 Minuten – aber nur 10 bis 12 Minuten durchplanen.",
+        "30 Minuten – ohne Zeitvorgabe.",
+        "5 Minuten mit anschließender Diskussion."
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "Die Präsentation dauert 15 Minuten. Plane 10 bis 12 Minuten Inhalt, damit Puffer für Nervosität und Technik bleibt – nach der Zeit wird hart abgebrochen.",
+      "schwierigkeit": "leicht"
+    },
+    {
+      "id": "pt4_04",
+      "typ": "mc",
+      "frage": "Wie lange dauert das Fachgespräch nach der Präsentation?",
+      "optionen": [
+        "etwa 5 Minuten",
+        "etwa 15 Minuten",
+        "etwa 45 Minuten",
+        "so lange, wie die Prüfer wollen"
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "Es sind rund 15 Minuten. Für dieses eine Projekt bist du der Experte – es ist ein Fachgespräch auf Augenhöhe, kein Verhör.",
+      "schwierigkeit": "leicht"
+    },
+    {
+      "id": "pt4_05",
+      "typ": "mc",
+      "frage": "Welche vier Pflichtteile hat der Projektantrag?",
+      "optionen": [
+        "Deckblatt, Inhaltsverzeichnis, Text, Anhang",
+        "Projekttitel, Problembeschreibung, Soll-Konzept, Zeitplanung",
+        "Anschreiben, Lebenslauf, Zeugnisse, Projektidee",
+        "Hardware, Software, Kosten, Risiken"
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Diese vier Teile gehören zusammen und müssen logisch ineinandergreifen – fehlt einer, kommt der Antrag mit Auflagen zurück.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt4_06",
+      "typ": "mc",
+      "frage": "Welche vier Ziele gehören in das Soll-Konzept?",
+      "optionen": [
+        "Sachziel, Kostenziel, Zeitziel, Qualitätsziel",
+        "Lernziel, Umsatzziel, Personalziel, Imageziel",
+        "Ziel, Weg, Mittel, Ergebnis",
+        "Analyse, Planung, Umsetzung, Kontrolle"
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Sachziel (was geliefert wird), Kostenziel (Budget), Zeitziel (Aufwand) und Qualitätsziel (z. B. 99,9 % Verfügbarkeit) – erst damit ist der Erfolg messbar.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt4_07",
+      "typ": "mc",
+      "frage": "Warum ist der Begriff „Soll-Analyse“ im Antrag falsch?",
+      "optionen": [
+        "Weil er zu lang ist.",
+        "Weil man nur Bestehendes analysieren kann – der zukünftige Zustand wird entworfen: Soll-Konzept.",
+        "Weil die IHK das Wort nicht kennt.",
+        "Er ist nicht falsch, beide Begriffe sind gleich."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Analysieren kannst du nur die Gegenwart (Ist-Analyse). Der gewünschte Zustand in der Zukunft existiert noch nicht, er wird geplant – das ist das Soll-Konzept.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt4_08",
+      "typ": "mc",
+      "frage": "Wie viel Zeit darf die Kundendokumentation im Projektbudget einnehmen?",
+      "optionen": [
+        "beliebig viel",
+        "höchstens 10 % – bei 40 Stunden also 4 Stunden",
+        "genau die Hälfte",
+        "0 Stunden"
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Die Kundendokumentation (Handbuch, Netzplan für den Auftraggeber) gehört ins Projekt, ist aber auf maximal 10 % begrenzt.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt4_09",
+      "typ": "mc",
+      "frage": "Mit wie vielen Stunden steht der Projektbericht für den Prüfungsausschuss im Antrag?",
+      "optionen": [
+        "Mit 10 Stunden",
+        "Mit 5 Stunden",
+        "Mit 0 Stunden",
+        "Mit der halben Projektzeit"
+      ],
+      "antwort": 2,
+      "punkte": 2,
+      "erklaerung": "Der Projektbericht ist eine reine Prüfungsleistung und wird mit exakt 0 Stunden kalkuliert. Wer dafür Stunden einplant, bekommt den Antrag zurück.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt4_10",
+      "typ": "mc",
+      "frage": "Dein Antrag wird abgelehnt. Was ist der richtige Weg?",
+      "optionen": [
+        "Ein komplett neues Thema suchen.",
+        "Die Auflagen aus der Begründung abarbeiten und fristgerecht nachreichen.",
+        "Ohne Änderung erneut einreichen.",
+        "Auf die Prüfung verzichten."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Meist sind es Auflagen wie fehlende technische Tiefe oder ein fehlender Kosten-Nutzen-Vergleich. Behandle die Begründung als To-do-Liste und behalte dein Thema.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt4_11",
+      "typ": "mc",
+      "frage": "Warum gilt „20 Laptops nach Anleitung installieren“ nicht als Projektarbeit?",
+      "optionen": [
+        "Weil es zu wenige Geräte sind.",
+        "Weil die Lösung vorher feststeht – du triffst keine eigenen Entscheidungen.",
+        "Weil es zu viel Zeit kostet.",
+        "Weil Hardware generell nicht erlaubt ist."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Bewertet wird der Entscheidungsweg: ein Problem analysieren, Lösungswege vergleichen und begründet auswählen. Ein Deploymentsystem zu evaluieren wäre ein Projekt – 20-mal klicken nicht.",
+      "schwierigkeit": "schwer"
+    },
+    {
+      "id": "pt4_12",
+      "typ": "mc",
+      "frage": "Was ist beim Einsatz von KI für die Dokumentation erlaubt?",
+      "optionen": [
+        "Alles, solange es schnell geht.",
+        "Recherche und Rechtschreib- beziehungsweise Grammatikprüfung – aber keine generierten Textinhalte; jeder Einsatz gehört transparent in den Anhang.",
+        "Nichts, KI ist grundsätzlich verboten.",
+        "Nur das Erzeugen ganzer Absätze."
+      ],
+      "antwort": 1,
+      "punkte": 3,
+      "erklaerung": "Die Grenze: korrigieren ja, generieren nein. Sobald die KI eigene Gedanken produziert statt deine zu prüfen, gilt das als Täuschung. Tools und Eingaben müssen im Anhang nachvollziehbar sein.",
+      "schwierigkeit": "schwer"
+    },
+    {
+      "id": "pt4_13",
+      "typ": "open",
+      "frage": "Erkläre den Unterschied zwischen dem Projektbericht und der Kundendokumentation.",
+      "stichworte": [
+        "Prüfungsausschuss",
+        "Anwender",
+        "warum",
+        "wie",
+        "Anhang"
+      ],
+      "punkte": 3,
+      "erklaerung": "Der Projektbericht ist für den Prüfungsausschuss: Er begründet deine Vorgehensweise und deine technischen Entscheidungen. Die Kundendokumentation ist für den Anwender: Sie erklärt Schritt für Schritt die Bedienung, zum Beispiel als Notfallhandbuch, und gehört als Anlage in den Anhang. Klick-Anleitungen gehören also nicht in den Bericht, sondern in die Kundendokumentation.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt4_14",
+      "typ": "open",
+      "frage": "Beschreibe die drei Schritte im Fachgespräch, mit denen du souverän antwortest.",
+      "stichworte": [
+        "Frage anhören",
+        "taktische Pause",
+        "Bedenkzeit",
+        "strukturierte Antwort",
+        "Kernaussage dann Begründung"
+      ],
+      "punkte": 4,
+      "erklaerung": "1) Die Frage vollständig anhören. 2) Eine taktische Pause einfordern: 'Interessante Frage – lassen Sie mich kurz überlegen.' 3) Strukturiert antworten: erst die Kernaussage, dann die Begründung. Die Pause ordnet die Gedanken und wirkt souverän statt ahnungslos.",
+      "schwierigkeit": "schwer"
+    },
+    {
+      "id": "pt4_15",
+      "typ": "open",
+      "frage": "Warum bewerten die Prüfer deinen Entscheidungsweg und nicht das fertige System? Erkläre es am Beispiel einer Serverinstallation.",
+      "stichworte": [
+        "Problem",
+        "Lösungsalternativen",
+        "bewerten",
+        "entscheiden",
+        "nicht nur abarbeiten"
+      ],
+      "punkte": 5,
+      "erklaerung": "Weil ein fertiges System nur zeigt, dass du eine Anleitung befolgen kannst. Bewertet wird, ob du ein Problem erkannt, mehrere Lösungswege verglichen und dich begründet entschieden hast. Beispiel: Nicht 'Windows Server nach Handbuch installieren', sondern 'sicheren Datenaustausch für Kunden schaffen' – dann Alternativen vergleichen, wirtschaftlich bewerten, und die Installation folgt als Ergebnis dieser Entscheidung.",
+      "schwierigkeit": "schwer"
+    }
+  ]
+}

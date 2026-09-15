@@ -1,0 +1,231 @@
+{
+  "bereich": "pruefungstraining",
+  "kapitel": 1,
+  "titel": "Teil 1: Ablauf, Zeit & Taktik",
+  "fragen": [
+    {
+      "id": "pt1_01",
+      "typ": "mc",
+      "frage": "Wie lange dauert Prüfungsteil 1 und wie viele Punkte kannst du holen?",
+      "optionen": [
+        "60 Minuten, 60 Punkte",
+        "90 Minuten, 100 Punkte",
+        "120 Minuten, 100 Punkte",
+        "90 Minuten, 50 Punkte"
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "Teil 1 dauert 90 Minuten, es gibt 100 Punkte und vier offene Aufgabenblöcke. Multiple Choice kommt nicht vor.",
+      "schwierigkeit": "leicht"
+    },
+    {
+      "id": "pt1_02",
+      "typ": "mc",
+      "frage": "Wie viel zählt Prüfungsteil 1 für deine Gesamtnote?",
+      "optionen": [
+        "10 %",
+        "20 %",
+        "40 %",
+        "50 %"
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "Teil 1 zählt 20 %, die restlichen 80 % kommen in Teil 2. Deshalb ist Teil 1 kein Probelauf.",
+      "schwierigkeit": "leicht"
+    },
+    {
+      "id": "pt1_03",
+      "typ": "mc",
+      "frage": "Schreiben Fachinformatiker für Systemintegration und für Anwendungsentwicklung dieselbe Arbeit in Teil 1?",
+      "optionen": [
+        "Nein, jede Fachrichtung hat eigene Aufgaben.",
+        "Ja, die Arbeit ist identisch – sie prüft nur die gemeinsamen Grundlagen.",
+        "Nur die Hälfte der Aufgaben ist gleich.",
+        "Das entscheidet die Berufsschule."
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "Teil 1 prüft die Stammqualifikationen der ersten 18 Monate. Die spätere Spezialisierung spielt hier keine Rolle.",
+      "schwierigkeit": "leicht"
+    },
+    {
+      "id": "pt1_04",
+      "typ": "mc",
+      "frage": "Du hast 90 Minuten für vier Aufgabenblöcke. Wie viel Zeit bleibt im Schnitt pro Block?",
+      "optionen": [
+        "rund 15 Minuten",
+        "rund 22,5 Minuten",
+        "rund 30 Minuten",
+        "rund 45 Minuten"
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "90 Minuten geteilt durch 4 Blöcke sind 22,5 Minuten pro Block – inklusive Lesen der Belegsätze.",
+      "schwierigkeit": "leicht"
+    },
+    {
+      "id": "pt1_05",
+      "typ": "mc",
+      "frage": "Wie sind die Aufgaben in Teil 1 grundsätzlich gestellt?",
+      "optionen": [
+        "Als Multiple-Choice-Fragen mit vier Antworten.",
+        "Als vier offene, handlungsorientierte Aufgaben mit Belegsätzen.",
+        "Als Lückentext zum Ankreuzen.",
+        "Als einzige große Programmieraufgabe."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Es gibt keine Multiple-Choice-Fragen. Du bekommst vier offene Aufgaben und dazu seitenweise Praxisunterlagen (Belegsätze).",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt1_06",
+      "typ": "mc",
+      "frage": "Was ist in den ersten 15 Minuten von Teil 1 die beste Strategie?",
+      "optionen": [
+        "Sofort mit der ersten Rechnung anfangen, um Zeit zu sparen.",
+        "Aufgabensatz vom Belegsatz trennen, erst die Aufgabenstellung lesen, dann die Anlagen gezielt durchsuchen.",
+        "Alle Belegsätze von vorne nach hinten komplett durchlesen.",
+        "Erst alle Aufgaben abschreiben, um den Überblick zu behalten."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Wer blind liest, sucht ohne zu wissen wonach. Erst die Aufgabe lesen, dann gezielt in den Anlagen nach IPs, Preisen oder Mengen suchen und die Fundstellen markieren.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt1_07",
+      "typ": "mc",
+      "frage": "Du hängst bei einer kniffligen Teilaufgabe fest und die Zeit läuft. Was ist richtig?",
+      "optionen": [
+        "Weiterarbeiten, bis sie gelöst ist – sonst verlierst du die Punkte komplett.",
+        "Aufgabe markieren, weitergehen und im zweiten Durchlauf mit der Restzeit zurückkommen.",
+        "Sofort abgeben, wenn die Zeit zu knapp wird.",
+        "Die Aufgabe komplett streichen und nie wieder anschauen."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Überspringen ist kein Aufgeben: erst alle sicheren Punkte einsammeln, dann die markierten Brocken mit Restzeit lösen.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt1_08",
+      "typ": "mc",
+      "frage": "Der Text verschwimmt, du hast einen Blackout. Welche Reihenfolge hilft am schnellsten?",
+      "optionen": [
+        "Tief durchatmen und die schwere Aufgabe weiter versuchen.",
+        "Aufgabe abbrechen, eine leichte Aufgabe lösen, die Gedanken aufs Konzeptpapier schreiben.",
+        "Die Prüfung für fünf Minuten liegen lassen.",
+        "Den Prüfer rufen und um Hilfe bitten."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Eine leichte Aufgabe holt den Kopf aus der Panikspirale. Die unfertigen Gedanken kommen in Stichpunkten aufs Konzeptpapier, damit der Kopf frei wird.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt1_09",
+      "typ": "mc",
+      "frage": "Was gilt für das Konzeptpapier in der Prüfung?",
+      "optionen": [
+        "Rechenwege darauf zählen als Lösung, wenn das Ergebnis fehlt.",
+        "Es ist nur zum Denken da – bewertet wird nur, was auf dem offiziellen Prüfungsbogen steht.",
+        "Es darf nicht herausgetrennt werden.",
+        "Es zählt nur, wenn es mit abgegeben wird."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Für die Bewertung existiert das Konzeptpapier nicht. Rechenwege und Zwischenschritte gehören deshalb auf den Bogen.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt1_10",
+      "typ": "mc",
+      "frage": "Kannst du ein schlechtes Ergebnis in Teil 1 mit einer mündlichen Ergänzungsprüfung ausgleichen?",
+      "optionen": [
+        "Ja, immer.",
+        "Ja, aber nur einmal.",
+        "Nein – die mündliche Ergänzungsprüfung gibt es nur in Teil 2.",
+        "Nur, wenn der Betrieb zustimmt."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Die mündliche Ergänzungsprüfung (MEP) ist nur in Teil 2 möglich und dort auch nur für einen schriftlichen Bereich.",
+      "schwierigkeit": "schwer"
+    },
+    {
+      "id": "pt1_11",
+      "typ": "mc",
+      "frage": "Warum sagt man, die Belegsätze sind der Zeitfresser in Teil 1?",
+      "optionen": [
+        "Weil sie in einer Fremdsprache geschrieben sind.",
+        "Weil das Lesen und Suchen mehr Zeit kostet als das Rechnen – deshalb gezielt scannen statt komplett lesen.",
+        "Weil man sie nicht anfassen darf.",
+        "Weil sie erst am Ende ausgeteilt werden."
+      ],
+      "antwort": 1,
+      "punkte": 2,
+      "erklaerung": "Netzpläne, Kundenanforderungen und Rechnungen kosten Zeit. Wer gezielt nach den gesuchten Daten sucht, gewinnt Minuten für die Rechnung.",
+      "schwierigkeit": "schwer"
+    },
+    {
+      "id": "pt1_12",
+      "typ": "mc",
+      "frage": "Was gehört zur Pflichtausrüstung am Prüfungstag?",
+      "optionen": [
+        "Ein ausgedrucktes Tabellenbuch",
+        "Personalausweis und die Einladung der IHK",
+        "Ein Laptop für Recherchen",
+        "Eine Smartwatch zum Zeitnehmen"
+      ],
+      "antwort": 1,
+      "punkte": 1,
+      "erklaerung": "Ohne Ausweis und Einladung kommst du nicht in den Raum – da gibt es keine Ausnahmen. Für die Zeitplanung reicht eine einfache analoge Armbanduhr.",
+      "schwierigkeit": "leicht"
+    },
+    {
+      "id": "pt1_13",
+      "typ": "open",
+      "frage": "Beschreibe dein Vorgehen in den ersten 15 Minuten von Teil 1 in drei bis vier Schritten.",
+      "stichworte": [
+        "Aufgabensatz trennen",
+        "Aufgabenstellung zuerst",
+        "Anlagen scannen",
+        "markieren",
+        "leichte zuerst"
+      ],
+      "punkte": 4,
+      "erklaerung": "1) Aufgabensatz vom Belegsatz trennen. 2) Immer zuerst die Aufgabenstellung lesen. 3) Danach die Anlagen gezielt nach den gesuchten Daten durchsuchen und Fundstellen markieren. 4) Die einfachen Aufgaben nach oben sortieren, damit die sicheren Punkte zuerst kommen.",
+      "schwierigkeit": "schwer"
+    },
+    {
+      "id": "pt1_14",
+      "typ": "open",
+      "frage": "Erkläre in zwei bis drei Sätzen, warum es besser ist, eine schwere Aufgabe zu überspringen, als daran hängen zu bleiben.",
+      "stichworte": [
+        "Zeit",
+        "sichere Punkte",
+        "zweiter Durchlauf",
+        "Panik",
+        "markieren"
+      ],
+      "punkte": 3,
+      "erklaerung": "Pro Aufgabe bleiben nur etwa 22 Minuten. Wer hängen bleibt, verliert diese Zeit und sammelt keine Punkte. Überspringen und markieren erlaubt es, erst alle sicheren Punkte zu holen und die schwere Aufgabe danach mit Restzeit in Ruhe zu lösen.",
+      "schwierigkeit": "mittel"
+    },
+    {
+      "id": "pt1_15",
+      "typ": "open",
+      "frage": "Warum ist Teil 1 nicht durch eine mündliche Prüfung zu retten – und was bedeutet das für deine Vorbereitung?",
+      "stichworte": [
+        "keine mündliche Ergänzungsprüfung",
+        "nur Teil 2",
+        "Ergebnis steht fest",
+        "Vorbereitung lohnt"
+      ],
+      "punkte": 5,
+      "erklaerung": "Die mündliche Ergänzungsprüfung gibt es nur in Teil 2. In Teil 1 steht das Ergebnis fest, sobald die Arbeit abgegeben ist – keine zweite Chance, kein Ausgleich. Deshalb lohnt sich die Vorbereitung hier besonders: Übung, Zeitmanagement und ein sicherer Umgang mit den Belegsätzen.",
+      "schwierigkeit": "schwer"
+    }
+  ]
+}
