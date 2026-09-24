@@ -18,6 +18,18 @@ und **C/C++** (statisch, kompiliert). So versteht man nicht nur *eine* Sprache, 
 
 ---
 
+## Ein Blick in die Lern-App
+
+![Rundgang durch die Web-Lern-App: Start, Quiz, Sprachkurs, Prüfungstraining, Glossar](docs/screenshots/rundgang.gif)
+
+| Start, Ziel & Fortschritt | Quiz nach IHK-Standard | Prüfungstraining |
+|---|---|---|
+| ![Start mit Fortschrittsübersicht](docs/screenshots/start.png) | ![Quiz: Lernfeld wählen, Schwierigkeitsgrad, Notenschlüssel](docs/screenshots/quiz.png) | ![Prüfungstraining: 8 Kapitel Wissen & Taktik](docs/screenshots/pruefung.png) |
+
+Weitere Ansichten liegen in [`docs/screenshots/`](docs/screenshots/):
+Sprachkurs (18 Kapitel), Glossar (durchsuchbar, Python/C++ filterbar), JSON-Kurs.
+Die Bilder sind echte Screenshots der Web-App (1400 × 1000), nicht gestellt.
+
 ## Warum Python UND C++?
 
 | | Python | C++ |
@@ -126,6 +138,7 @@ lernpfad-python-cpp/
 ├── CODE_OF_CONDUCT.md         ← Verhaltenskodex
 ├── SECURITY.md                ← Sicherheitsrichtlinie (private Meldung)
 ├── LICENSE                    ← MIT
+├── docs/screenshots/          ← Screenshots der Web-App + Rundgang-GIF (README)
 ├── tools/
 │   ├── quiz.py                ← Terminal-Lern-App (Quiz + Sprachkurs)
 │   ├── sync.py                ← Fortschritts-Sync (Sync-Code)
