@@ -1,46 +1,176 @@
 {
-  "id": "variablen",
-  "titel": "Kapitel 3: Variablen und Datentypen",
-  "einleitung": "Variablen sind die Bausteine jedes Programms. Eine Variable ist ein Name für einen Wert. Diesen Wert legst du im Speicher ab. Hier lernst du die wichtigsten Datentypen kennen. Datentypen sagen, ob ein Wert eine Zahl oder Text ist. Python erkennt den Typ automatisch. Bei C++ musst du den Typ selbst festlegen.",
-  "abschnitte": [
-    {
-      "titel": "Was ist eine Variable?",
-      "python": {
-        "text": "Eine Variable ist ein Name für einen Wert. Den Wert legst du im Speicher ab. Stell dir eine Schublade mit Etikett vor. Auf dem Etikett steht der Name. In der Schublade liegt der Wert. In Python erzeugt die erste Zuweisung die Variable automatisch. Zuweisung heißt: Name = Wert. Du musst nichts anmelden. Python erkennt den Typ von selbst. Das nennt man dynamische Typisierung. Deine Variable darf sogar den Typ wechseln. Mit type() kannst du den Typ prüfen.",
-        "code": "name = \"Anna\"        # str (Zeichenkette)\nalter = 25           # int (ganze Zahl)\ngroesse = 1.72       # float (Kommazahl)\nist_student = True   # bool (Wahrheitswert)\n\nprint(type(alter))   # <class 'int'>\n\nalter = \"fünfundzwanzig\"  # erlaubt! Typwechsel\nprint(type(alter))        # <class 'str'>"
-      },
-      "cpp": {
-        "text": "In C++ musst du den Typ ansagen. Das machst du, bevor du die Variable benutzt. So: int alter = 25. Der Typ ist int, das heißt ganze Zahl. C++ ist statisch typisiert. Statisch heißt: Der Typ steht fest und bleibt so. Eine int-Variable bleibt für immer int. Der Compiler prüft die Typen. Der Compiler ist das Werkzeug, das dein Programm übersetzt. Er findet Fehler, bevor das Programm startet. Legst du Text in eine int-Variable, lehnt er das ab.",
-        "code": "std::string name = \"Anna\";   // Text (aus <string>)\nint alter = 25;              // ganze Zahl\n double groesse = 1.72;      // Kommazahl\nbool ist_student = true;     // Wahrheitswert\n\nint x = 5;\nx = \"fünf\";   // Fehler! Compiler lehnt das ab"
-      },
-      "vergleich": "Python entscheidet erst beim Ausführen. C++ entscheidet schon beim Übersetzen. Deshalb ist C++ strenger. Dafür findet C++ Typfehler früher. C++ läuft auch schneller. Der Compiler kennt nämlich jeden Typ genau.",
-      "merk": "Python erkennt den Typ selbst, C++ legt ihn fest und dann bleibt er."
-    },
-    {
-      "titel": "Die wichtigsten Datentypen im Überblick",
-      "python": {
-        "text": "Python hat wenige Grundtypen. Sie sind trotzdem sehr flexibel. int ist für ganze Zahlen. Sie dürfen beliebig groß sein. float ist für Kommazahlen. str ist für Text. bool ist für wahr oder falsch. list ist für Sammlungen. dict ist für Schlüssel-Wert-Paare. Schlüssel-Wert-Paare sind wie ein Wörterbuch: Zu jedem Wort gehört eine Bedeutung. Python kennt kein char. Ein einzelnes Zeichen ist einfach ein str mit Länge 1. Python kennt auch kein double. Eine Kommazahl ist einfach ein float.",
-        "code": "ganze_zahl = 42        # int\nkommazahl = 3.14      # float\nzeichenkette = \"A\"    # str (auch einzelne Zeichen)\ntext = \"Hallo\"        # str\nliste = [1, 2, 3]     # list\nwoerterbuch = {\"a\": 1}  # dict"
-      },
-      "cpp": {
-        "text": "C++ unterscheidet strenger. int ist für ganze Zahlen. double ist für Kommazahlen. Es braucht 8 Byte. Ein Byte ist eine Speicher-Einheit. float ist für kleinere Kommazahlen. char ist für genau EIN Zeichen. Du schreibst es so: 'A'. Das sind einfache Anführungszeichen. bool ist für wahr oder falsch. std::string ist für Text. Du schreibst ihn so: \"Hallo\". Das sind doppelte Anführungszeichen. char und std::string sind verschiedene Typen. Meistens braucht int 4 Byte, double 8, float 4 und char 1.",
-        "code": "int ganze_zahl = 42;      // 4 Byte\n double kommazahl = 3.14;   // 8 Byte, doppelte Genauigkeit\nchar buchstabe = 'A';      // 1 Byte, EIN Zeichen\nbool wahr = true;          // 1 Byte\nstd::string text = \"Hallo\"; // Text, aus <string>\n// 'A' und \"A\" sind NICHT dasselbe!"
-      },
-      "vergleich": "Python ist einfacher. str übernimmt auch die Arbeit von char. float übernimmt die Arbeit von double. C++ gibt dir mehr Kontrolle. Du wählst Größe und Genauigkeit selbst. Dafür musst du den passenden Typ kennen.",
-      "merk": "char ist ein Zeichen, string ist Text, und Python kennt nur str."
-    },
-    {
-      "titel": "Typumwandlung (Cast)",
-      "python": {
-        "text": "Mit Funktionen wandelst du Typen um. Das nennt man Cast. int(\"42\") macht aus Text eine Zahl. str(42) macht aus einer Zahl Text. float(\"3.14\") macht eine Kommazahl. Manchmal schlägt die Umwandlung fehl. Zum Beispiel bei int(\"abc\"). Das ist kein Text mit einer Zahl. Dann wirft Python einen ValueError. Werfen heißt: Python meldet einen Fehler. Mit try/except fängst du den Fehler ab.",
-        "code": "zahl_text = \"42\"\nzahl = int(zahl_text)     # 42 (int)\nprint(zahl + 8)           # 50\n\ntext = str(42)            # \"42\" (str)\nkomma = float(\"3.14\")     # 3.14 (float)\n\n# Fehlerfall:\n# int(\"abc\")  -> ValueError"
-      },
-      "cpp": {
-        "text": "In C++ gibt es mehrere Arten der Umwandlung. Die sichere Variante ist static_cast<Typ>(wert). Damit wandelst du zum Beispiel Zahlen um. Für Zahlen-zu-Text nutzt du std::to_string(zahl). Für Text-zu-Zahl nutzt du std::stoi(text). stoi heißt string to int. Bei ungültigem Text wirft std::stoi eine Exception. Das ist eine Fehler-Meldung. Sie heißt std::invalid_argument. Mit try/catch fängst du sie ab.",
-        "code": "#include <string>\n\nint zahl = std::stoi(\"42\");      // Text -> int\nstd::string text = std::to_string(42);  // int -> Text\ndouble komma = std::stod(\"3.14\");      // Text -> double\n\n// Moderne Umwandlung zwischen Zahlen:\ndouble d = 3.99;\nint n = static_cast<int>(d);   // 3 (Nachkommateil wird abgeschnitten)"
-      },
-      "vergleich": "Python nutzt int(), str() und float(). Bei Fehlern gibt es einen ValueError. C++ nutzt std::stoi, std::to_string und std::stod. Bei Fehlern gibt es Exceptions. Für Zahlen-Umwandlung nutzt C++ static_cast.",
-      "merk": "Text zu Zahl und zurück: Python nutzt int() und str(), C++ nutzt std::stoi() und std::to_string()."
-    }
-  ]
+ "id": "variablen",
+ "titel": "Kapitel 3: Variablen und Datentypen",
+ "einleitung": "Variablen sind die Bausteine jedes Programms. Eine Variable ist ein Name für einen Wert. Diesen Wert legst du im Speicher ab. Hier lernst du die wichtigsten Datentypen kennen. Datentypen sagen, ob ein Wert eine Zahl oder Text ist. Python erkennt den Typ automatisch. Bei C++ musst du den Typ selbst festlegen.",
+ "abschnitte": [
+  {
+   "titel": "Was ist eine Variable?",
+   "python": {
+    "text": "Eine Variable ist ein Name für einen Wert. Den Wert legst du im Speicher ab. Stell dir eine Schublade mit Etikett vor. Auf dem Etikett steht der Name. In der Schublade liegt der Wert. In Python erzeugt die erste Zuweisung die Variable automatisch. Zuweisung heißt: Name = Wert. Du musst nichts anmelden. Python erkennt den Typ von selbst. Das nennt man dynamische Typisierung. Deine Variable darf sogar den Typ wechseln. Mit type() kannst du den Typ prüfen.",
+    "code": "name = \"Anna\"        # str (Zeichenkette)\nalter = 25           # int (ganze Zahl)\ngroesse = 1.72       # float (Kommazahl)\nist_student = True   # bool (Wahrheitswert)\n\nprint(type(alter))   # <class 'int'>\n\nalter = \"fünfundzwanzig\"  # erlaubt! Typwechsel\nprint(type(alter))        # <class 'str'>"
+   },
+   "cpp": {
+    "text": "In C++ musst du den Typ ansagen. Das machst du, bevor du die Variable benutzt. So: int alter = 25. Der Typ ist int, das heißt ganze Zahl. C++ ist statisch typisiert. Statisch heißt: Der Typ steht fest und bleibt so. Eine int-Variable bleibt für immer int. Der Compiler prüft die Typen. Der Compiler ist das Werkzeug, das dein Programm übersetzt. Er findet Fehler, bevor das Programm startet. Legst du Text in eine int-Variable, lehnt er das ab.",
+    "code": "std::string name = \"Anna\";   // Text (aus <string>)\nint alter = 25;              // ganze Zahl\n double groesse = 1.72;      // Kommazahl\nbool ist_student = true;     // Wahrheitswert\n\nint x = 5;\nx = \"fünf\";   // Fehler! Compiler lehnt das ab"
+   },
+   "vergleich": "Python entscheidet erst beim Ausführen. C++ entscheidet schon beim Übersetzen. Deshalb ist C++ strenger. Dafür findet C++ Typfehler früher. C++ läuft auch schneller. Der Compiler kennt nämlich jeden Typ genau.",
+   "merk": "Python erkennt den Typ selbst, C++ legt ihn fest und dann bleibt er."
+  },
+  {
+   "titel": "Die wichtigsten Datentypen im Überblick",
+   "python": {
+    "text": "Python hat wenige Grundtypen. Sie sind trotzdem sehr flexibel. int ist für ganze Zahlen. Sie dürfen beliebig groß sein. float ist für Kommazahlen. str ist für Text. bool ist für wahr oder falsch. list ist für Sammlungen. dict ist für Schlüssel-Wert-Paare. Schlüssel-Wert-Paare sind wie ein Wörterbuch: Zu jedem Wort gehört eine Bedeutung. Python kennt kein char. Ein einzelnes Zeichen ist einfach ein str mit Länge 1. Python kennt auch kein double. Eine Kommazahl ist einfach ein float.",
+    "code": "ganze_zahl = 42        # int\nkommazahl = 3.14      # float\nzeichenkette = \"A\"    # str (auch einzelne Zeichen)\ntext = \"Hallo\"        # str\nliste = [1, 2, 3]     # list\nwoerterbuch = {\"a\": 1}  # dict"
+   },
+   "cpp": {
+    "text": "C++ unterscheidet strenger. int ist für ganze Zahlen. double ist für Kommazahlen. Es braucht 8 Byte. Ein Byte ist eine Speicher-Einheit. float ist für kleinere Kommazahlen. char ist für genau EIN Zeichen. Du schreibst es so: 'A'. Das sind einfache Anführungszeichen. bool ist für wahr oder falsch. std::string ist für Text. Du schreibst ihn so: \"Hallo\". Das sind doppelte Anführungszeichen. char und std::string sind verschiedene Typen. Meistens braucht int 4 Byte, double 8, float 4 und char 1.",
+    "code": "int ganze_zahl = 42;      // 4 Byte\n double kommazahl = 3.14;   // 8 Byte, doppelte Genauigkeit\nchar buchstabe = 'A';      // 1 Byte, EIN Zeichen\nbool wahr = true;          // 1 Byte\nstd::string text = \"Hallo\"; // Text, aus <string>\n// 'A' und \"A\" sind NICHT dasselbe!"
+   },
+   "vergleich": "Python ist einfacher. str übernimmt auch die Arbeit von char. float übernimmt die Arbeit von double. C++ gibt dir mehr Kontrolle. Du wählst Größe und Genauigkeit selbst. Dafür musst du den passenden Typ kennen.",
+   "merk": "char ist ein Zeichen, string ist Text, und Python kennt nur str."
+  },
+  {
+   "titel": "Typumwandlung (Cast)",
+   "python": {
+    "text": "Mit Funktionen wandelst du Typen um. Das nennt man Cast. int(\"42\") macht aus Text eine Zahl. str(42) macht aus einer Zahl Text. float(\"3.14\") macht eine Kommazahl. Manchmal schlägt die Umwandlung fehl. Zum Beispiel bei int(\"abc\"). Das ist kein Text mit einer Zahl. Dann wirft Python einen ValueError. Werfen heißt: Python meldet einen Fehler. Mit try/except fängst du den Fehler ab.",
+    "code": "zahl_text = \"42\"\nzahl = int(zahl_text)     # 42 (int)\nprint(zahl + 8)           # 50\n\ntext = str(42)            # \"42\" (str)\nkomma = float(\"3.14\")     # 3.14 (float)\n\n# Fehlerfall:\n# int(\"abc\")  -> ValueError"
+   },
+   "cpp": {
+    "text": "In C++ gibt es mehrere Arten der Umwandlung. Die sichere Variante ist static_cast<Typ>(wert). Damit wandelst du zum Beispiel Zahlen um. Für Zahlen-zu-Text nutzt du std::to_string(zahl). Für Text-zu-Zahl nutzt du std::stoi(text). stoi heißt string to int. Bei ungültigem Text wirft std::stoi eine Exception. Das ist eine Fehler-Meldung. Sie heißt std::invalid_argument. Mit try/catch fängst du sie ab.",
+    "code": "#include <string>\n\nint zahl = std::stoi(\"42\");      // Text -> int\nstd::string text = std::to_string(42);  // int -> Text\ndouble komma = std::stod(\"3.14\");      // Text -> double\n\n// Moderne Umwandlung zwischen Zahlen:\ndouble d = 3.99;\nint n = static_cast<int>(d);   // 3 (Nachkommateil wird abgeschnitten)"
+   },
+   "vergleich": "Python nutzt int(), str() und float(). Bei Fehlern gibt es einen ValueError. C++ nutzt std::stoi, std::to_string und std::stod. Bei Fehlern gibt es Exceptions. Für Zahlen-Umwandlung nutzt C++ static_cast.",
+   "merk": "Text zu Zahl und zurück: Python nutzt int() und str(), C++ nutzt std::stoi() und std::to_string()."
+  },
+  {
+   "titel": "Die Variable als Namensschild",
+   "python": {
+    "text": "Das Wort Variable klingt nach Schulmathematik. Dort heißt x = 5: x ist gleich fünf. In Python ist das keine Behauptung, sondern ein Befehl. Lies das Gleichheitszeichen als bekommt den Wert. Links steht der Name, rechts steht der Wert. Diese Richtung ist Vorschrift. Drehst du sie um, bricht Python sofort ab. Ein besseres Bild als die Schublade ist ein Namensschild. Das Schild hängt an einem Wert. Das Schild ist nicht der Wert, es hängt nur daran. Bei einer Neuzuweisung nimmst du das Schild ab und hängst es an einen anderen Wert. Der alte Wert bleibt dabei unverändert. Niemand benennt ihn mehr, deshalb räumt Python ihn weg.",
+    "code": "nachricht = \"Hallo Welt!\"\nprint(nachricht)          # Hallo Welt!\n\n# Falsche Richtung:\n# 12 = anzahl_teilnehmer  -> SyntaxError: cannot assign to literal\n\n# Name vor der Zuweisung benutzen:\n# print(anzahl)           -> NameError"
+   },
+   "merk": "Das Gleichheitszeichen heißt bekommt den Wert. Links der Name, rechts der Wert."
+  },
+  {
+   "titel": "Neu zuweisen und aufeinander aufbauen",
+   "python": {
+    "text": "Ein Name ist nicht für immer vergeben. Dieselbe Variable darf jederzeit einen neuen Wert bekommen. Die Zuweisung sieht genauso aus wie beim ersten Mal. Entscheidend ist der Zeitpunkt. print gibt immer den Wert aus, der gerade am Schild hängt. Steht die Ausgabe vor der zweiten Zuweisung, kommt noch der alte Wert. Variablen dürfen aufeinander aufbauen. Rechts vom Gleichheitszeichen darf stehen, was schon bekannt ist, auch eine andere Variable. Bei Texten hängt das Pluszeichen die Stücke aneinander. Das Leerzeichen dazwischen musst du selbst schreiben. Fehlt es, gibt es keine Fehlermeldung, nur MarieCurie. Für Text und Zahl zusammen nimmst du besser das Komma in print. Mit dem Pluszeichen gäbe es einen TypeError. Eine Rechnung wird genau an ihrer Zeile ausgeführt. Gespeichert wird das Ergebnis, nicht die Rechnung. Ändert sich später eine Zutat, bleibt das alte Ergebnis stehen.",
+    "code": "vorname = \"Marie\"\nnachname = \"Curie\"\nvoller_name = vorname + \" \" + nachname\nprint(voller_name)      # Marie Curie\n\nanzahl_teilnehmer = 12\nprint(\"Teilnehmer:\", anzahl_teilnehmer)   # Teilnehmer: 12\n\nnachricht = \"Hallo Welt!\"\nprint(nachricht)        # Hallo Welt!\nnachricht = \"Hallo Python!\"\nprint(nachricht)        # Hallo Python!\n\ngesamt = 10\nprint(gesamt)           # 10\ngesamt = 5\nprint(gesamt)           # 5"
+   },
+   "vergleich": "Bei Python steht das Ergebnis im Speicher, sobald die Zeile gelaufen ist. Eine spätere Änderung an einer Zutat wirkt nicht rückwirkend.",
+   "merk": "print zeigt den Wert, der beim Aufruf am Namensschild hängt. Zuerst zuweisen, dann benutzen."
+  },
+  {
+   "titel": "Erlaubte und verbotene Namen",
+   "python": {
+    "text": "Ein Variablenname heißt in der Sprachreferenz Bezeichner. Er darf nicht beliebig aussehen. Erlaubt sind Buchstaben, Ziffern und der Unterstrich. Eine Ziffer darf aber nie am Anfang stehen. Ein Leerzeichen im Namen trennt zwei Dinge, Python sieht dann zwei Wörter. Minus und Punkt haben in Python eine eigene Bedeutung. Deshalb sind sie im Namen verboten. Schlüsselwörter gehören der Sprache selbst. Sie sind als Name gesperrt. Ein Verstoß ergibt einen SyntaxError. Der fällt auf, bevor überhaupt etwas läuft. Groß- und Kleinschreibung zählen als Unterschied. alter, Alter und ALTER sind drei verschiedene Namen. Umlaute sind technisch erlaubt, im Kurs aber unerwünscht.",
+    "code": "alter = 30\nalter2 = 31\nmein_alter = 32\n_intern = 33\n\n# 2alter = 30       -> SyntaxError: invalid decimal literal\n# mein alter = 30   -> SyntaxError: invalid syntax\n# mein-alter = 30   -> SyntaxError\n# class = 1         -> SyntaxError, class ist ein Schlüsselwort"
+   },
+   "cpp": {
+    "text": "In C++ gelten für Namen dieselben Regeln. Erlaubt sind Buchstaben, Ziffern und der Unterstrich. Auch hier darf keine Ziffer am Anfang stehen und kein Leerzeichen im Namen sein. Schlüsselwörter wie int, double, if, for oder class sind gesperrt. Groß- und Kleinschreibung wird unterschieden. Ein Verstoß fällt schon beim Übersetzen auf. Der Compiler lehnt das Programm ab, bevor es startet.",
+    "code": "int alter = 30;\nint alter2 = 31;\nint mein_alter = 32;\n\n// 2alter = 30;     -> Fehler beim Übersetzen\n// int class = 1;   // Fehler, class ist ein Schlüsselwort"
+   },
+   "checkliste": [
+    "Erlaubt: Buchstaben, Ziffern und der Unterstrich, etwa alter, alter2, mein_alter, _intern",
+    "Verboten: eine Ziffer am Anfang, etwa 2alter, das ergibt einen SyntaxError",
+    "Verboten: ein Leerzeichen im Namen, etwa mein alter, Python sieht zwei Wörter",
+    "Verboten: Minus und Punkt im Namen, etwa mein-alter oder preis.netto",
+    "Verboten: Schlüsselwörter wie if, else, for, while, def, class, import, True, False und None",
+    "Groß und klein zählen als Unterschied: alter, Alter und ALTER sind drei Namen"
+   ],
+   "merk": "Buchstaben, Ziffern und Unterstrich sind erlaubt, aber keine Ziffer am Anfang und kein Leerzeichen."
+  },
+  {
+   "titel": "Gute Namen wählen",
+   "python": {
+    "text": "Erlaubt ist nicht dasselbe wie sinnvoll. a = 12 ist nach den Regeln einwandfrei. Nach zwei Tagen weiß trotzdem niemand mehr, was a bedeuten sollte. Namen sind die billigste Dokumentation, die es gibt. Eine besondere Gruppe sind die eingebauten Namen. print, list, str, type, sum und input gibt es in Python schon. Sie sind keine Schlüsselwörter, deshalb verbietet Python sie nicht. Es passiert genau das, was dasteht. Das Schild wird vom alten Wert abgenommen und an den neuen gehängt. Danach ist die eingebaute Funktion weg. Der Fehler erscheint dann an einer ganz anderen Stelle. Editoren färben eingebaute Namen ein. Wer print als Variable tippt, sieht die Farbe sofort.",
+    "code": "anzahl_teilnehmer = 12\nprint(\"Teilnehmer:\", anzahl_teilnehmer)\n\ndauer_minuten = 45\n\n# Eingebauten Namen überschreiben:\n# print = \"Hallo\"\n# print(\"Und jetzt?\")   -> TypeError: 'str' object is not callable"
+   },
+   "checkliste": [
+    "alles klein schreiben: anzahl_teilnehmer statt AnzahlTeilnehmer",
+    "Wörter mit dem Unterstrich trennen: preis_netto statt preisnetto",
+    "beschreibend benennen: anzahl_teilnehmer statt a, x1 oder temp",
+    "ausschreiben statt abkürzen: nachricht statt nchrcht oder msg2",
+    "die Einheit mitnennen, wenn es eine gibt: dauer_minuten statt dauer",
+    "eingebaute Namen wie print, list, str, type, sum und input nie als Variable benutzen"
+   ],
+   "merk": "Ein Name wird einmal getippt und viele Male gelesen."
+  },
+  {
+   "titel": "Was ein Datentyp festlegt",
+   "python": {
+    "text": "In Python ist jeder Wert ein Objekt, auch eine Zahl. Jedes Objekt hat einen Typ. Der Typ legt zwei Dinge fest. Erstens: welche Werte möglich sind. Zweitens: was man mit ihnen tun darf. Genau darin liegt der Unterschied zwischen 3 und dem Text 3. Der eine Wert lässt sich verdoppeln, der andere großschreiben. Dasselbe Sternchen bedeutet bei Text etwas anderes als bei Zahlen. Bei Text wiederholt es, bei Zahlen multipliziert es. Was der eine Typ kann, kann der andere nicht. Ein Text lässt sich großschreiben, eine Zahl nicht. Wer es trotzdem versucht, bekommt einen AttributeError. Die Meldung nennt den Typ und das, was er nicht hat.",
+    "code": "print(type(42))         # <class 'int'>\nprint(type(4.2))        # <class 'float'>\nprint(type(\"42\"))       # <class 'str'>\nprint(type(True))       # <class 'bool'>\nprint(type([1, 2, 3]))  # <class 'list'>\n\nprint(\"3\" * 4)          # 3333\nprint(3 * 4)            # 12\n\nprint(\"hallo\".upper())     # HALLO\nprint((42).bit_length())   # 6\n\n# \"hallo\".bit_length()   -> AttributeError: 'str' object has no attribute 'bit_length'"
+   },
+   "vergleich": "Der Typ ist nicht daran zu erkennen, wie ein Wert aussieht, sondern wie er geschrieben wurde. 42 und der Text 42 sehen fast gleich aus und verhalten sich ganz verschieden. Im Zweifel fragst du type().",
+   "merk": "Der Typ legt fest, welche Werte möglich sind und was man mit ihnen tun darf."
+  },
+  {
+   "titel": "Welchen Typ nimmt man wofür",
+   "python": {
+    "text": "Die Frage ist nicht, welcher Typ der beste ist. Die Frage ist, welche Form dein Problem hat. Kommt der Wert einzeln vor, nimm str, int oder float. Sind es mehrere gleichartige Dinge in einer Reihenfolge, nimm eine list. Gehören immer zwei Dinge zusammen, nimm ein dict. Gibt es nur ja oder nein, nimm bool. Eine Postleitzahl gehört in einen str, obwohl sie wie eine Zahl aussieht. Mit ihr rechnet niemand. Und 01067 muss die führende Null behalten. Als int wäre die Null weg. Die Leitfrage lautet also nicht: sieht es aus wie eine Zahl? Sie lautet: was tue ich mit diesem Wert?",
+    "code": "name = \"Mueller\"              # str, Text\nanzahl = 42                   # int, etwas zählen\npreis = 4.5                   # float, etwas messen\nbezahlt = True                # bool, ja oder nein\nteilnehmer = [\"Anna\", \"Ben\"]  # list, mehrere in Reihenfolge\neinstellung = {\"farbe\": \"rot\"}  # dict, Schlüssel und Wert\nplz = \"01067\"                 # str, sieht nur aus wie eine Zahl"
+   },
+   "checkliste": [
+    "Einzelner Wert: str für Text, int zum Zählen, float zum Messen",
+    "Mehrere gleichartige Dinge in einer Reihenfolge: list, etwa alle Teilnehmer oder alle Messwerte",
+    "Zwei Dinge gehören immer zusammen: dict, etwa Artikelnummer und Bestand",
+    "Nur ja oder nein: bool, etwa bezahlt, anwesend, bestanden",
+    "Postleitzahl oder Artikelnummer: str, weil damit nicht gerechnet wird und die führende Null bleiben muss",
+    "tuple für mehrere Werte, die unveränderbar bleiben, set für jeden Wert höchstens einmal, None für hier ist nichts"
+   ],
+   "merk": "Gezählt wird mit int, gemessen mit float, geschrieben mit str. Mehreres hält die list, Zuordnungen das dict."
+  },
+  {
+   "titel": "Veränderbar oder nicht",
+   "python": {
+    "text": "Manche Typen lassen sich nach dem Erzeugen ändern, andere nicht. Veränderbar sind list, dict und set. Unveränderbar sind str, int, float, bool und tuple. Die Sprachreferenz nennt das mutable und immutable. Bei einer Liste darfst du einen Eintrag ersetzen. Der Text lässt sich nicht ändern. upper() liefert einen neuen Text. Der alte steht unverändert da. Wer das Ergebnis behalten will, muss es zuweisen. Deshalb ändert name.title() den Namen nicht, liste.sort() aber die Liste. Das ist keine Inkonsequenz, sondern folgt aus dem Typ.",
+    "code": "liste = [\"a\", \"b\", \"c\"]\nliste[0] = \"x\"\nprint(liste)          # ['x', 'b', 'c']\n\ntext = \"abc\"\nprint(text.upper())   # ABC\nprint(text)           # abc\n\n# Ergebnis behalten:\ntext = text.upper()\nprint(text)           # ABC"
+   },
+   "cpp": {
+    "text": "In C++ entscheidest du selbst, ob sich ein Wert ändern darf. Mit const vor dem Typ verbietet der Compiler jede spätere Zuweisung. Ein std::string ohne const darf geändert werden. Willst du eine const-Variable ändern, lehnt der Compiler das Programm ab.",
+    "code": "#include <string>\n#include <iostream>\n\nint main() {\n    std::string text = \"abc\";\n    text = \"xyz\";            // erlaubt, std::string ist veränderbar\n\n    const int maximum = 10;\n    // maximum = 12;         // Fehler, const verbietet die Zuweisung\n\n    std::cout << text << \" \" << maximum << std::endl;   // xyz 10\n}"
+   },
+   "vergleich": "Python regelt Veränderbarkeit über den Typ. C++ regelst du es selbst mit const. In beiden Sprachen gilt: Was nicht verändert werden darf, meldet der Prüfer, in Python der Interpreter, in C++ der Compiler.",
+   "merk": "list, dict und set ändern sich selbst. str, int, float, bool und tuple geben einen neuen Wert zurück."
+  },
+  {
+   "titel": "Typische Fehler zu Variablen und Typen",
+   "python": {
+    "text": "Diese Fehler kommen bei fast allen Anfängern vor. Wer sie kennt, findet sie schneller. Die meisten entstehen aus einer falschen Vorstellung, nicht aus Unwissen. Beim Gleichheitszeichen ist es die Schulmathematik. Beim Namen in Anführungszeichen ist es die Verwechslung von Name und Text. Beim NameError ist es die Reihenfolge im Kopf statt auf dem Papier. Beim überschriebenen print ist es ein naheliegendes Wort. Wichtig ist: Lies die Meldung. Sie nennt meist Typ und Zeile, und damit die halbe Lösung.",
+    "code": "# Name und Text sind nicht dasselbe:\nnachricht = \"Der Lehrgang beginnt.\"\nprint(nachricht)     # Der Lehrgang beginnt.\nprint(\"nachricht\")   # nachricht\n\n# Zahl und Text mit dem Pluszeichen:\n# print(\"5\" + 3)     -> TypeError\nprint(\"5\" + str(3))  # 53\nprint(int(\"5\") + 3)  # 8"
+   },
+   "checkliste": [
+    "Das Gleichheitszeichen als ist gleich lesen: 12 = anzahl_teilnehmer ergibt einen SyntaxError, links gehört immer der Name",
+    "Den Namen in Anführungszeichen setzen: print(\"nachricht\") gibt das Wort aus statt des Werts",
+    "Eine Variable vor der Zuweisung benutzen: das ergibt einen NameError, Python kennt nur, was oberhalb steht",
+    "Tippfehler im Namen: ergibt einen NameError, oft mit dem Hinweis Did you mean und dem richtigen Namen",
+    "Eine Ziffer oder ein Leerzeichen im Namen: ergibt einen SyntaxError, noch bevor etwas läuft",
+    "Eingebaute Namen wie print oder list überschreiben: die Funktion ist danach weg, der Fehler erscheint an anderer Stelle",
+    "Nichtssagende Namen wie a oder x1: der eigene Code ist nach einem Tag fremd",
+    "Zahl und Text mit dem Pluszeichen verbinden: TypeError, Abhilfe sind str() oder ein f-String",
+    "Mit einer eingetippten Zahl rechnen, ohne sie umzuwandeln: input liefert immer Text, aus 5 und 3 wird dann 53",
+    "Dezimalkomma statt Dezimalpunkt: 5,0 ist in Python kein float, sondern zwei getrennte Werte",
+    "Eine Postleitzahl als int speichern: die führende Null verschwindet",
+    "Erwarten, dass text.upper() den Text ändert: das Ergebnis geht verloren, wenn es nicht zugewiesen wird"
+   ],
+   "merk": "Lies die Meldung: Sie nennt Typ und Zeile, und damit die halbe Lösung."
+  },
+  {
+   "titel": "Übungen",
+   "python": {
+    "text": "Hier übst du die Themen dieses Kapitels. Nimm dir eine Aufgabe nach der anderen vor. Wichtig ist nicht das Tempo, sondern dass du jede Meldung liest. Die Musterlösung unten zeigt zwei der Aufgaben. Tippe sie einmal selbst ab und ändere dann eine Zeile. So siehst du sofort, was passiert.",
+    "code": "vorname = \"Marie\"\nnachname = \"Curie\"\nvoller_name = vorname + \" \" + nachname\nprint(voller_name)          # Marie Curie\n\nstandort = \"München\"\nprint(standort)             # München\nstandort = \"Hamburg\"\nprint(standort)             # Hamburg\n\nanzahl_teilnehmer = 12\ndauer_tage = 5\nprint(\"Teilnehmer:\", anzahl_teilnehmer)   # Teilnehmer: 12\nprint(\"Dauer:\", dauer_tage)               # Dauer: 5"
+   },
+   "aufgaben": [
+    "Der erste Name für einen Wert: Lege eine Variable an, die einen Satz enthält, und gib sie aus. Der Satz darf nur an einer Stelle im Programm stehen. Fertig, wenn: Der Lehrgang beginnt. im Terminal steht und nicht das Wort nachricht.",
+    "Derselbe Name, ein neuer Wert: Lege eine Variable standort mit einem Ort an und gib sie aus. Weise derselben Variablen danach einen anderen Ort zu und gib sie erneut aus. Fertig, wenn: zwei verschiedene Orte untereinander stehen, obwohl beide print-Zeilen denselben Namen benutzen.",
+    "Aus zwei Namen wird einer: Lege eine Variable für den Vornamen und eine für den Nachnamen an. Setze beide in einer dritten Variablen zusammen und gib nur diese aus. Fertig, wenn: Marie Curie in einer Zeile steht, mit Leerzeichen und nicht MarieCurie.",
+    "Verbotene Namen reparieren: Die Vorgabe bricht ab, bevor etwas läuft. Lies die Meldung und repariere die Namen so, dass sie den Regeln und dem Stil des Kurses folgen. Fertig, wenn: nacheinander 30 und Feldwebel ausgegeben werden und kein Name mit einer Ziffer beginnt oder ein Leerzeichen enthält.",
+    "Ein eingebauter Name wurde überschrieben: Die Vorgabe bricht in Zeile 3 ab, obwohl diese Zeile harmlos aussieht. Finde die Zeile, in der der Fehler gemacht wurde, und gib dem Text einen eigenen Namen. Fertig, wenn: zuerst Teilnehmerliste und darunter Teilnehmer: 12 erscheint und kein eingebauter Name mehr als Variable dient.",
+    "Den passenden Typ wählen: Lege eine Postleitzahl, eine Anzahl Umzugskartons und ein Gewicht in Kilogramm mit einer Nachkommastelle an. Gib die Postleitzahl und die Typen aller drei Variablen aus. Fertig, wenn: die Postleitzahl mit führender Null erscheint und die Typzeilen str, int und float nennen.",
+    "Veränderbar oder nicht: Die Vorgabe soll den ersten Eintrag einer Ausrüstungsliste und die Schreibweise einer Kennung ändern. Einer der Versuche wirkt nicht. Finde ihn und repariere ihn. Fertig, wenn: die Liste Muetze, Weste und Stiefel ausgibt und die Kennung in Großbuchstaben erscheint."
+   ],
+   "merk": "Erst tippen, dann ändern, dann die Meldung lesen."
+  }
+ ]
 }

@@ -1,46 +1,253 @@
 {
-  "id": "listen",
-  "titel": "Kapitel 8: Listen, Vektoren und Maps",
-  "einleitung": "Einzelne Werte sind langweilig. Sammlungen machen Programme stark. Du lernst die Liste aus Python kennen. Du lernst den vector aus C++ kennen. Das sind Behälter für viele Werte. Am Ende lernst du dict und map kennen. Das sind Nachschlagewerke wie ein Wörterbuch.",
-  "abschnitte": [
-    {
-      "titel": "Listen: mehrere Werte in einer Variable",
-      "python": {
-        "text": "Eine Liste ist ein Behälter für viele Werte. Sie wächst und schrumpft. Das nennt man dynamisch. Du darfst verschiedene Typen mischen. Zum Beispiel Zahlen und Wörter zusammen. append() hängt einen Wert ans Ende. insert() setzt einen Wert an eine bestimmte Stelle. pop() nimmt den letzten Wert heraus und gibt ihn zurück. len() zählt die Werte. sort() ordnet die Liste. Der Zugriff beginnt bei 0. liste[0] ist das erste Element. liste[-1] ist das letzte. liste[1:3] holt einen Teil heraus. Das nennt man Slicing. Das heißt Scheibenschneiden.",
-        "code": "zahlen = [3, 1, 2]\nzahlen.append(4)          # [3, 1, 2, 4]\nzahlen.insert(0, 0)       # [0, 3, 1, 2, 4]\nletztes = zahlen.pop()    # 4, zahlen=[0,3,1,2]\nzahlen.sort()             # [0, 1, 2, 3]\nprint(len(zahlen))        # 4\nprint(zahlen[0], zahlen[-1])  # 0 3\nprint(zahlen[1:3])        # [1, 2]"
-      },
-      "cpp": {
-        "text": "In C++ heißt die dynamische Liste vector. Der ganze Name ist std::vector. Er kommt aus der Bibliothek <vector>. Eine Bibliothek ist eine Sammlung fertiger Bausteine. Der vector wächst, wenn er Platz braucht. Du greifst mit [] oder .at() zu. .at() prüft vorher die Grenzen. Ein vector<int> enthält nur ints. Mischen ist nicht erlaubt. In C++ hat jeder Wert einen festen Typ. Das nennt man statische Typisierung. push_back() hängt einen Wert ans Ende. size() zählt die Werte. insert() und erase() arbeiten in der Mitte. Das kostet Zeit. sort() sortiert. Es kommt aus <algorithm>.",
-        "code": "#include <vector>\n#include <algorithm>\n\nstd::vector<int> zahlen = {3, 1, 2};\nzahlen.push_back(4);              // {3,1,2,4}\nzahlen.insert(zahlen.begin(), 0); // {0,3,1,2,4}\nstd::sort(zahlen.begin(), zahlen.end());  // {0,1,2,3}\nstd::cout << zahlen.size();       // 4\nstd::cout << zahlen[0];           // 0\nstd::cout << zahlen.at(1);        // 1 (prüft Grenzen)"
-      },
-      "vergleich": "list (Python) und std::vector (C++) sind Geschwister. Python mischt Typen und kann slicen. C++ erlaubt nur einen Typ. .at() schützt vor falschen Zugriffen. [] macht das nicht.",
-      "merk": "append (Python) ist wie push_back (C++). len ist wie size. Python mischt Typen, C++ nicht."
-    },
-    {
-      "titel": "Vorsicht: Zugriffe und Grenzen",
-      "python": {
-        "text": "Jeder Wert in der Liste hat eine Nummer. Diese Nummer heißt Index. Greifst du auf einen Index zu, den es nicht gibt, meldet Python einen Fehler. Der Fehler heißt IndexError. Das Programm stoppt dann. So siehst du deinen Fehler sofort. Negative Indizes zählen von hinten. liste[-1] ist das letzte Element. Das ist bequem. Aber es verwirrt am Anfang. Bleib zuerst bei positiven Indizes.",
-        "code": "liste = [10, 20, 30]\nprint(liste[0])    # 10\nprint(liste[-1])   # 30 (letztes Element)\nprint(liste[2])    # 30\n# print(liste[3])  -> IndexError: list index out of range"
-      },
-      "cpp": {
-        "text": "In C++ prüft [] die Grenzen nicht. v[10] auf einem Vektor mit 5 Werten? Das ist gefährlich. Das Programm kann abstürzen. Es kann auch Müll liefern. Das nennt man undefiniertes Verhalten. .at() prüft die Grenzen. Passt der Index nicht, meldet .at() einen Fehler. Der Fehler heißt std::out_of_range. Du kannst ihn abfangen. Dann läuft das Programm weiter. Faustregel: Bist du nicht sicher, nimm .at(). Oder prüfe mit size().",
-        "code": "std::vector<int> v = {1, 2, 3, 4, 5};\n// std::cout << v[10];   // UB! Absturz oder Müll\n// Besser:\ntry {\n    std::cout << v.at(10);\n} catch (const std::out_of_range&) {\n    std::cout << \"Index außerhalb!\";\n}\nif (10 < v.size()) std::cout << v[10];"
-      },
-      "vergleich": "Python stoppt immer bei einem Fehler. Es zeigt den IndexError. Das ist sicher, aber das Programm endet. C++ mit [] ist schnell und gefährlich. C++ mit .at() ist sicher.",
-      "merk": "Python zeigt IndexError. C++: [] ist schnell, aber gefährlich. .at() ist sicher."
-    },
-    {
-      "titel": "Maps: Schlüssel-Wert-Paare",
-      "python": {
-        "text": "Ein dict ist ein Nachschlagewerk. Es arbeitet wie ein Wörterbuch. Jeder Schlüssel hat einen Wert. preise['apfel'] holt den Wert zum Schlüssel 'apfel'. Ein dict ist sehr schnell. Das funktioniert mit einer Hashtabelle. Eine Hashtabelle ist eine clevere Ablage. Du darfst verschiedene Typen mischen. .keys() zeigt alle Schlüssel. .values() zeigt alle Werte. .items() zeigt Schlüssel und Wert zusammen. .get('banane', 0) holt ohne Fehler. Gibt es den Schlüssel nicht, kommt 0. Mit in fragst du: Gibt es den Schlüssel?",
-        "code": "preise = {\"apfel\": 0.50, \"birne\": 0.70}\nprint(preise[\"apfel\"])         # 0.5\npreise[\"kirsche\"] = 1.20       # neu eintragen\nprint(preise.get(\"banane\", 0)) # 0 (kein Fehler)\n\nfor schluessel, wert in preise.items():\n    print(schluessel, wert)\nprint(\"apfel\" in preise)       # True"
-      },
-      "cpp": {
-        "text": "Das Gegenstück in C++ heißt std::map. Es kommt aus <map>. Die map sortiert ihre Schlüssel. Sortieren kostet Zeit. Deshalb ist sie langsamer. std::unordered_map ist schneller. Sie nutzt eine Hashtabelle. Nimm meist die unordered_map. Jetzt kommt die berühmte Falle. preise['apfel'] sucht mit [] den Schlüssel. Gibt es ihn nicht, legt [] ihn einfach an. Mit einem Standardwert. Beim Nachschlagen willst du das nicht. Nutze dann .find() oder .at().",
-        "code": "#include <map>\n#include <string>\n\nstd::map<std::string, double> preise;\npreise[\"apfel\"] = 0.50;      // eintragen\npreise[\"kirsche\"] = 1.20;\n\n// Achtung: [] legt fehlende Schlüssel AN!\nauto it = preise.find(\"birne\");\nif (it != preise.end()) {\n    std::cout << it->second;\n}\n// Oder: preise.at(\"birne\") wirft out_of_range"
-      },
-      "vergleich": "dict (Python) und std::unordered_map (C++) sind Geschwister. Beide sind schnelle Nachschlagewerke. .get() ist in Python bequem. In C++ legt [] fehlende Schlüssel heimlich an. Das ist die Falle. .find() und .at() sind sicherer.",
-      "merk": "C++ map: [] legt fehlende Schlüssel an. Zum Nachschlagen: find() oder at()."
-    }
-  ]
+ "id": "listen",
+ "titel": "Kapitel 8: Listen, Vektoren und Maps",
+ "einleitung": "Einzelne Werte sind langweilig. Sammlungen machen Programme stark. Du lernst die Liste aus Python kennen. Du lernst den vector aus C++ kennen. Das sind Behälter für viele Werte. Am Ende lernst du dict und map kennen. Das sind Nachschlagewerke wie ein Wörterbuch.",
+ "abschnitte": [
+  {
+   "titel": "Listen: mehrere Werte in einer Variable",
+   "python": {
+    "text": "Eine Liste ist ein Behälter für viele Werte. Sie wächst und schrumpft. Das nennt man dynamisch. Du darfst verschiedene Typen mischen. Zum Beispiel Zahlen und Wörter zusammen. append() hängt einen Wert ans Ende. insert() setzt einen Wert an eine bestimmte Stelle. pop() nimmt den letzten Wert heraus und gibt ihn zurück. len() zählt die Werte. sort() ordnet die Liste. Der Zugriff beginnt bei 0. liste[0] ist das erste Element. liste[-1] ist das letzte. liste[1:3] holt einen Teil heraus. Das nennt man Slicing. Das heißt Scheibenschneiden.",
+    "code": "zahlen = [3, 1, 2]\nzahlen.append(4)          # [3, 1, 2, 4]\nzahlen.insert(0, 0)       # [0, 3, 1, 2, 4]\nletztes = zahlen.pop()    # 4, zahlen=[0,3,1,2]\nzahlen.sort()             # [0, 1, 2, 3]\nprint(len(zahlen))        # 4\nprint(zahlen[0], zahlen[-1])  # 0 3\nprint(zahlen[1:3])        # [1, 2]"
+   },
+   "cpp": {
+    "text": "In C++ heißt die dynamische Liste vector. Der ganze Name ist std::vector. Er kommt aus der Bibliothek <vector>. Eine Bibliothek ist eine Sammlung fertiger Bausteine. Der vector wächst, wenn er Platz braucht. Du greifst mit [] oder .at() zu. .at() prüft vorher die Grenzen. Ein vector<int> enthält nur ints. Mischen ist nicht erlaubt. In C++ hat jeder Wert einen festen Typ. Das nennt man statische Typisierung. push_back() hängt einen Wert ans Ende. size() zählt die Werte. insert() und erase() arbeiten in der Mitte. Das kostet Zeit. sort() sortiert. Es kommt aus <algorithm>.",
+    "code": "#include <vector>\n#include <algorithm>\n\nstd::vector<int> zahlen = {3, 1, 2};\nzahlen.push_back(4);              // {3,1,2,4}\nzahlen.insert(zahlen.begin(), 0); // {0,3,1,2,4}\nstd::sort(zahlen.begin(), zahlen.end());  // {0,1,2,3}\nstd::cout << zahlen.size();       // 4\nstd::cout << zahlen[0];           // 0\nstd::cout << zahlen.at(1);        // 1 (prüft Grenzen)"
+   },
+   "vergleich": "list (Python) und std::vector (C++) sind Geschwister. Python mischt Typen und kann slicen. C++ erlaubt nur einen Typ. .at() schützt vor falschen Zugriffen. [] macht das nicht.",
+   "merk": "append (Python) ist wie push_back (C++). len ist wie size. Python mischt Typen, C++ nicht."
+  },
+  {
+   "titel": "Vorsicht: Zugriffe und Grenzen",
+   "python": {
+    "text": "Jeder Wert in der Liste hat eine Nummer. Diese Nummer heißt Index. Greifst du auf einen Index zu, den es nicht gibt, meldet Python einen Fehler. Der Fehler heißt IndexError. Das Programm stoppt dann. So siehst du deinen Fehler sofort. Negative Indizes zählen von hinten. liste[-1] ist das letzte Element. Das ist bequem. Aber es verwirrt am Anfang. Bleib zuerst bei positiven Indizes.",
+    "code": "liste = [10, 20, 30]\nprint(liste[0])    # 10\nprint(liste[-1])   # 30 (letztes Element)\nprint(liste[2])    # 30\n# print(liste[3])  -> IndexError: list index out of range"
+   },
+   "cpp": {
+    "text": "In C++ prüft [] die Grenzen nicht. v[10] auf einem Vektor mit 5 Werten? Das ist gefährlich. Das Programm kann abstürzen. Es kann auch Müll liefern. Das nennt man undefiniertes Verhalten. .at() prüft die Grenzen. Passt der Index nicht, meldet .at() einen Fehler. Der Fehler heißt std::out_of_range. Du kannst ihn abfangen. Dann läuft das Programm weiter. Faustregel: Bist du nicht sicher, nimm .at(). Oder prüfe mit size().",
+    "code": "std::vector<int> v = {1, 2, 3, 4, 5};\n// std::cout << v[10];   // UB! Absturz oder Müll\n// Besser:\ntry {\n    std::cout << v.at(10);\n} catch (const std::out_of_range&) {\n    std::cout << \"Index außerhalb!\";\n}\nif (10 < v.size()) std::cout << v[10];"
+   },
+   "vergleich": "Python stoppt immer bei einem Fehler. Es zeigt den IndexError. Das ist sicher, aber das Programm endet. C++ mit [] ist schnell und gefährlich. C++ mit .at() ist sicher.",
+   "merk": "Python zeigt IndexError. C++: [] ist schnell, aber gefährlich. .at() ist sicher."
+  },
+  {
+   "titel": "Maps: Schlüssel-Wert-Paare",
+   "python": {
+    "text": "Ein dict ist ein Nachschlagewerk. Es arbeitet wie ein Wörterbuch. Jeder Schlüssel hat einen Wert. preise['apfel'] holt den Wert zum Schlüssel 'apfel'. Ein dict ist sehr schnell. Das funktioniert mit einer Hashtabelle. Eine Hashtabelle ist eine clevere Ablage. Du darfst verschiedene Typen mischen. .keys() zeigt alle Schlüssel. .values() zeigt alle Werte. .items() zeigt Schlüssel und Wert zusammen. .get('banane', 0) holt ohne Fehler. Gibt es den Schlüssel nicht, kommt 0. Mit in fragst du: Gibt es den Schlüssel?",
+    "code": "preise = {\"apfel\": 0.50, \"birne\": 0.70}\nprint(preise[\"apfel\"])         # 0.5\npreise[\"kirsche\"] = 1.20       # neu eintragen\nprint(preise.get(\"banane\", 0)) # 0 (kein Fehler)\n\nfor schluessel, wert in preise.items():\n    print(schluessel, wert)\nprint(\"apfel\" in preise)       # True"
+   },
+   "cpp": {
+    "text": "Das Gegenstück in C++ heißt std::map. Es kommt aus <map>. Die map sortiert ihre Schlüssel. Sortieren kostet Zeit. Deshalb ist sie langsamer. std::unordered_map ist schneller. Sie nutzt eine Hashtabelle. Nimm meist die unordered_map. Jetzt kommt die berühmte Falle. preise['apfel'] sucht mit [] den Schlüssel. Gibt es ihn nicht, legt [] ihn einfach an. Mit einem Standardwert. Beim Nachschlagen willst du das nicht. Nutze dann .find() oder .at().",
+    "code": "#include <map>\n#include <string>\n\nstd::map<std::string, double> preise;\npreise[\"apfel\"] = 0.50;      // eintragen\npreise[\"kirsche\"] = 1.20;\n\n// Achtung: [] legt fehlende Schlüssel AN!\nauto it = preise.find(\"birne\");\nif (it != preise.end()) {\n    std::cout << it->second;\n}\n// Oder: preise.at(\"birne\") wirft out_of_range"
+   },
+   "vergleich": "dict (Python) und std::unordered_map (C++) sind Geschwister. Beide sind schnelle Nachschlagewerke. .get() ist in Python bequem. In C++ legt [] fehlende Schlüssel heimlich an. Das ist die Falle. .find() und .at() sind sicherer.",
+   "merk": "C++ map: [] legt fehlende Schlüssel an. Zum Nachschlagen: find() oder at()."
+  },
+  {
+   "titel": "Eine Liste anlegen",
+   "python": {
+    "text": "Eine Liste schreibst du mit eckigen Klammern. Die Werte stehen darin und werden durch Kommas getrennt. fahrzeuge = ['lkw', 'jeep'] ist eine Liste mit zwei Werten. Die Reihenfolge bleibt erhalten. Du darfst Text und Zahlen mischen. Auch eine leere Liste ist erlaubt: zwei eckige Klammern ohne Inhalt. Ein einzelner Wert in der Liste heißt Element. Eine Liste ist also ein Platz für viele Werte in einer Variablen. Gibst du die ganze Liste mit print aus, siehst du eckige Klammern und Anführungszeichen. Das ist die Schreibweise von Python, keine schöne Ausgabe für Menschen. Der Name einer Liste steht im Plural: fahrzeuge, nicht fahrzeug. Dann weiß jeder Leser sofort, dass mehrere Werte darin liegen.",
+    "code": "fahrzeuge = ['lkw', 'jeep', 'transporter', 'bus']\nzahlen = [42, 7, 13]\ngemischt = ['panzer', 4, 2.49]\nleer = []\n\nprint(fahrzeuge)\nprint(zahlen)\nprint(gemischt)\nprint(leer)\nprint(len(leer))"
+   },
+   "cpp": {
+    "text": "In C++ heißt die Sammlung vector. Der volle Name ist std::vector. Er steht in der Bibliothek vector. Ein vector<int> hält nur ganze Zahlen. Ein vector<string> hält nur Text. Mischen geht nicht, weil jeder vector einen festen Typ hat. Die Werte stehen in geschweiften Klammern. Ein leerer vector hat keine Werte. size() zählt sie.",
+    "code": "#include <vector>\n#include <string>\n#include <iostream>\n\nstd::vector<std::string> fahrzeuge = {\"lkw\", \"jeep\", \"bus\"};\nstd::vector<int> zahlen = {42, 7, 13};\nstd::vector<std::string> leer;\n\nstd::cout << fahrzeuge.size();   // 3\nstd::cout << leer.size();        // 0"
+   },
+   "vergleich": "Python schreibt eckige Klammern und darf Typen mischen. C++ schreibt geschweifte Klammern und erlaubt nur einen Typ pro vector. size() in C++ ist das len() aus Python.",
+   "merk": "Eckige Klammern, Kommas, Name im Plural: fertig ist die Liste."
+  },
+  {
+   "titel": "Der Index zählt die Schritte",
+   "python": {
+    "text": "Jedes Element hat eine Nummer. Diese Nummer heißt Index. Der Index beginnt bei null. Das erste Element hat den Index 0. Der Index zählt die Schritte vom Listenanfang. Beim ersten Element bist du null Schritte gegangen. Deshalb 0. In die Klammern darf auch eine Variable. So entscheidet das Programm erst beim Laufen, welches Fach es öffnet. Der Index muss eine ganze Zahl sein. Eine Kommazahl wie 1.0 lehnt Python mit TypeError ab. Es gibt kein halbes Regalfach. Negative Indizes zählen von hinten. -1 ist das letzte Element, -2 das vorletzte. Das bleibt richtig, wenn die Liste wächst. -0 ist dasselbe wie 0, also das erste Element. len() nennt die Anzahl der Elemente. Achtung: len() zählt Elemente, der Index zählt Schritte. Bei vier Elementen ist der größte Index also 3. Anzahl und größter Index unterscheiden sich immer um eins. Ein Zugriff daneben meldet IndexError: list index out of range. Die Meldung liest man von unten nach oben. Die letzte Zeile nennt Fehlerart und Grund.",
+    "code": "fahrzeuge = ['lkw', 'jeep', 'transporter', 'bus']\n\nprint(fahrzeuge[0])            # lkw\nprint(fahrzeuge[3])            # bus\nprint(fahrzeuge[-1])           # bus\nprint(fahrzeuge[-2])           # transporter\nprint(fahrzeuge[-0])           # lkw, denn -0 ist 0\n\nposition = 2\nprint(fahrzeuge[position])     # transporter\n\nprint(len(fahrzeuge))          # 4\nletzter = len(fahrzeuge) - 1\nprint(fahrzeuge[letzter])      # bus\n\n# print(fahrzeuge[1.0])  -> TypeError: list indices must be integers\n# print(fahrzeuge[4])    -> IndexError: list index out of range"
+   },
+   "cpp": {
+    "text": "In C++ gilt dieselbe Zählung ab null. size() ist das len() aus Python. Der größte gültige Index ist also size() minus eins. [] prüft die Grenzen nicht. at() prüft sie und meldet std::out_of_range.",
+    "code": "#include <vector>\n#include <string>\n#include <iostream>\n\nstd::vector<std::string> fahrzeuge = {\"lkw\", \"jeep\", \"transporter\", \"bus\"};\n\nstd::cout << fahrzeuge[0];                     // lkw\nstd::cout << fahrzeuge.at(2);                  // transporter\nstd::cout << fahrzeuge[fahrzeuge.size() - 1];  // bus"
+   },
+   "vergleich": "Beide Sprachen zählen ab null. In Python ist der größte Index len(liste) minus 1. In C++ ist er size() minus 1. Python prüft bei jedem Zugriff, C++ mit [] nicht.",
+   "merk": "Der Index zählt Schritte vom Anfang, nicht Elemente. Null Schritte, erstes Element.",
+   "checkliste": [
+    "Erstes Element: Index 0",
+    "Letztes Element: Index -1",
+    "Größter gültiger Index: len(liste) minus 1",
+    "Index als Kommazahl: TypeError",
+    "Zugriff daneben: IndexError, list index out of range"
+   ]
+  },
+  {
+   "titel": "Ein Element ist ein ganz normaler Wert",
+   "python": {
+    "text": "Ein Element ist kein Sonderfall. fahrzeuge[0] ist ein ganz normaler Text. Du darfst damit alles machen, was du mit Text machst. title() macht aus lkw die Schreibweise Lkw. upper() macht alles groß. Auch in einem f-String darf der Zugriff stehen. Bei Zahlen in der Liste rechnest du einfach damit. Wichtig: Die Methode hängt am Element, nicht an der Liste. fahrzeuge.title() gibt es nicht. Eine Liste hat keine Großschreibung. Das endet mit AttributeError. Richtig ist fahrzeuge[0].title(). Das Original bleibt dabei unberührt: title() liefert eine geänderte Fassung zurück, in der Liste steht weiterhin lkw.",
+    "code": "fahrzeuge = ['lkw', 'jeep', 'transporter']\n\nprint(fahrzeuge[0].title())    # Lkw\nprint(fahrzeuge[1].upper())    # JEEP\nprint(f\"Mein erstes Fahrzeug war ein {fahrzeuge[1].title()}.\")\n\nmengen = [12, 30, 5]\nprint(mengen[0] + mengen[1])   # 42\ngesamt = mengen[0] + mengen[1] + mengen[2]\nprint(f\"Gesamt: {gesamt} Stück\")\n\n# fahrzeuge.title()  -> AttributeError"
+   },
+   "cpp": {
+    "text": "In C++ ist ein Element genauso ein normaler Wert. v[0] ist ein int, damit rechnest du wie mit jeder Zahl. Textfunktionen wie title() gibt es bei std::string nicht als Methode. Dafür nutzt du freie Funktionen aus der Bibliothek.",
+    "code": "#include <vector>\n#include <string>\n#include <iostream>\n\nstd::vector<int> mengen = {12, 30, 5};\nstd::cout << mengen[0] + mengen[1];   // 42\n\nint gesamt = mengen[0] + mengen[1] + mengen[2];\nstd::cout << \"Gesamt: \" << gesamt << \" Stück\";"
+   },
+   "vergleich": "In Python ist ein Element ein normaler Wert mit allen Methoden seines Typs. In C++ ist es genauso, nur kommen Textfunktionen nicht als Methode, sondern als freie Funktion.",
+   "merk": "Erst das Fach öffnen, dann mit dem Inhalt arbeiten: liste[index].methode()."
+  },
+  {
+   "titel": "Ein Element ersetzen",
+   "python": {
+    "text": "Ein Fach belegst du neu, indem du ihm einen Wert zuweist. Links steht das Fach, rechts der neue Wert, dazwischen das Gleichheitszeichen. Das ist dieselbe Schreibweise wie bei einer Variablen. Der alte Wert ist danach weg, ohne Rückfrage. Die Länge der Liste bleibt gleich. Das Fach war belegt und ist es noch. Auch negative Indizes gehen: fahrzeuge[-1] = 'bus' tauscht das letzte Element. Achtung: Zuweisen legt kein neues Fach an. Bei zwei Elementen sind nur 0 und 1 belegbar. Ein Schreibversuch auf Index 2 endet mit IndexError: list assignment index out of range. Zum Verlängern brauchst du append() oder insert().",
+    "code": "fahrzeuge = ['lkw', 'jeep', 'transporter']\nprint(fahrzeuge)        # ['lkw', 'jeep', 'transporter']\n\nfahrzeuge[0] = 'panzer'\nprint(fahrzeuge)        # ['panzer', 'jeep', 'transporter']\n\nfahrzeuge[-1] = 'bus'\nprint(fahrzeuge)        # ['panzer', 'jeep', 'bus']\nprint(len(fahrzeuge))   # 3\n\n# fahrzeuge[3] = 'auto'  -> IndexError: list assignment index out of range"
+   },
+   "cpp": {
+    "text": "In C++ ersetzt du genauso über den Index. v[0] = wert schreibt in ein vorhandenes Fach. Ein neues Fach entsteht dabei nicht. at() prüft vorher die Grenzen und meldet sonst std::out_of_range. Ein vector wächst nur mit push_back() oder insert().",
+    "code": "#include <vector>\n#include <string>\n\nstd::vector<std::string> fahrzeuge = {\"lkw\", \"jeep\"};\nfahrzeuge[0] = \"panzer\";      // ersetzt\nfahrzeuge.at(1) = \"bus\";      // ersetzt, mit Prüfung\n// fahrzeuge.at(2) = \"auto\";  // std::out_of_range"
+   },
+   "vergleich": "Ersetzen ist in beiden Sprachen eine Zuweisung an ein vorhandenes Fach. Keine der beiden Sprachen verlängert die Liste dabei.",
+   "merk": "liste[i] = wert tauscht aus und verlängert nie."
+  },
+  {
+   "titel": "append() und das Muster leer anlegen und füllen",
+   "python": {
+    "text": "append() hängt einen Wert immer ans Ende. Du gibst keine Position an, weil es nichts zu entscheiden gibt. Die vorhandenen Fächer bleiben, wo sie sind. Ihre Indizes ändern sich nicht. Die Liste wird bei jedem Aufruf um ein Element länger. Das wichtigste Muster überhaupt: erst eine leere Liste anlegen, dann füllen. Du musst beim Schreiben des Programms noch nicht wissen, wie viele Werte es werden. Die Liste wächst mit den Daten. Dieses Muster ist die Grundlage fast aller Programme, die etwas sammeln.",
+    "code": "namen = []\nprint(namen)        # []\nprint(len(namen))   # 0\n\nnamen.append('mueller')\nnamen.append('schmidt')\nnamen.append('weber')\n\nprint(namen)        # ['mueller', 'schmidt', 'weber']\nprint(len(namen))   # 3\nprint(namen[-1])    # weber"
+   },
+   "cpp": {
+    "text": "In C++ heißt das Anhängen push_back(). Der vector darf vorher leer sein. back() liefert das letzte Element. push_back() gibt nichts zurück.",
+    "code": "#include <vector>\n#include <string>\n#include <iostream>\n\nstd::vector<std::string> namen;   // leer\nnamen.push_back(\"mueller\");\nnamen.push_back(\"schmidt\");\n\nstd::cout << namen.size();        // 2\nstd::cout << namen.back();        // schmidt"
+   },
+   "vergleich": "append() in Python und push_back() in C++ tun dasselbe: hinten anfügen. back() in C++ ist das [-1] aus Python.",
+   "merk": "Leer anlegen, dann mit append() füllen: so sammelt ein Programm Daten, deren Menge es noch nicht kennt."
+  },
+  {
+   "titel": "insert() an beliebiger Stelle",
+   "python": {
+    "text": "insert() setzt einen Wert an eine bestimmte Stelle. Du gibst zwei Dinge an: erst die Position, dann den Wert. Alles ab dieser Stelle rückt um ein Fach nach hinten. insert(0, 'abel') setzt den Wert ganz nach vorn. Die Reihenfolge der Angaben ist fest. Vertauschst du sie, bricht Python mit TypeError ab. Eine zu große Position ist kein Fehler. insert() hängt den Wert dann einfach hinten an. Das ist bequem und eine stille Falle: Ein Rechenfehler in der Position fällt nicht auf. Merke auch: Nach dem Einfügen stimmen alte Positionsnummern nicht mehr.",
+    "code": "namen = ['mueller', 'schmidt', 'weber']\n\nnamen.insert(0, 'abel')\nprint(namen)    # ['abel', 'mueller', 'schmidt', 'weber']\n\nnamen.insert(2, 'nowak')\nprint(namen)    # ['abel', 'mueller', 'nowak', 'schmidt', 'weber']\n\nnamen.insert(99, 'zink')\nprint(namen)    # zink landet am Ende, ohne Fehler\n\n# namen.insert('abel', 0)  -> TypeError"
+   },
+   "cpp": {
+    "text": "In C++ fügt insert() an einer Position ein. Statt einer Zahl brauchst du einen Zeiger auf die Stelle: begin() plus Position. Alles ab dort rückt nach hinten.",
+    "code": "#include <vector>\n#include <string>\n\nstd::vector<std::string> namen = {\"mueller\", \"schmidt\"};\nnamen.insert(namen.begin(), \"abel\");       // vorn\nnamen.insert(namen.begin() + 1, \"nowak\");  // an Position 1"
+   },
+   "vergleich": "C++ braucht statt der Zahl einen Zeiger auf die Stelle: begin() plus Position. Python nimmt die Zahl direkt.",
+   "merk": "insert erst wohin, dann was. Alles dahinter rückt nach hinten."
+  },
+  {
+   "titel": "Entfernen: del, pop() und remove()",
+   "python": {
+    "text": "Zum Entfernen gibt es drei Befehle. del arbeitet über die Position. del ist ein Schlüsselwort, es steht vor dem Ausdruck und hat keine Klammern. Der Wert ist danach weg. pop() entfernt das letzte Element und gibt es zurück. Du kannst es in einer Variablen auffangen. pop(0) nimmt das erste Element. remove() sucht über den Wert. Die Position musst du nicht kennen. remove() trifft nur das erste Vorkommen. Steht der Wert zweimal in der Liste, bleibt der zweite stehen. Findet remove() den Wert nicht, bricht das Programm mit ValueError ab. pop() auf einer leeren Liste endet mit IndexError: pop from empty list. Die Entscheidung läuft über zwei Fragen: Kenne ich Position oder Wert? Brauche ich das Entfernte noch?",
+    "code": "namen = ['mueller', 'schmidt', 'weber']\n\ndel namen[0]\nprint(namen)      # ['schmidt', 'weber']\n\nletzter = namen.pop()\nprint(letzter)    # weber\nprint(namen)      # ['schmidt']\n\nnamen.remove('schmidt')\nprint(namen)      # []\nprint(len(namen)) # 0\n\n# leere = []\n# leere.pop()    -> IndexError: pop from empty list\n# namen.remove('schulz')  -> ValueError: x not in list"
+   },
+   "cpp": {
+    "text": "In C++ entfernt erase() über eine Position. pop_back() entfernt das letzte Element. Beide geben nichts zurück. Für remove() über den Wert suchst du erst mit std::find und löschst dann mit erase.",
+    "code": "#include <vector>\n#include <string>\n\nstd::vector<std::string> namen = {\"mueller\", \"schmidt\", \"weber\"};\nnamen.erase(namen.begin());   // erstes Element weg\nnamen.pop_back();             // letztes Element weg"
+   },
+   "vergleich": "Pythons pop() gibt das Element zurück, C++ pop_back() nicht. del und erase arbeiten beide über die Position.",
+   "merk": "del wirft weg, pop() reicht heraus, remove() sucht nach dem Wert.",
+   "checkliste": [
+    "Position bekannt, Wert egal: del liste[i]",
+    "Letztes Element, Wert wird gebraucht: liste.pop()",
+    "Bestimmte Position, Wert wird gebraucht: liste.pop(i)",
+    "Nur der Wert bekannt: liste.remove(wert), trifft das erste Vorkommen",
+    "Wert nicht in der Liste: remove() bricht mit ValueError ab",
+    "Liste ist leer: pop() bricht mit IndexError ab"
+   ]
+  },
+  {
+   "titel": "Was diese Befehle zurückgeben",
+   "python": {
+    "text": "Ein verändernder Befehl gibt nichts zurück. append() ändert die Liste an Ort und Stelle. Zurück kommt None. None ist Pythons Wort für nichts. Es ist nicht 0, nicht die leere Liste und nicht der leere Text. Schreibt man namen = namen.append('weber'), steht danach None in namen. Die Liste ist überschrieben und weg. Diesen Fehler siehst du nicht als Fehlermeldung. Du siehst nur ein falsches Ergebnis. Deshalb heißt er stiller Fehler. Richtig ist der Aufruf ohne Zuweisung. Die Ausnahme ist pop(): Es gibt das entfernte Element zurück. Zugewiesen wird nur, wo etwas herauskommt. Kurz: Befehle, die umbauen, liefern nichts. Befehle, die ermitteln, liefern ein Ergebnis.",
+    "code": "namen = ['mueller', 'schmidt']\n\nnamen.append('weber')     # richtig: keine Zuweisung\nprint(namen)              # ['mueller', 'schmidt', 'weber']\n\nkaputt = ['mueller', 'schmidt']\nkaputt = kaputt.append('weber')\nprint(kaputt)             # None\n\nletzter = namen.pop()     # richtig: pop gibt etwas zurück\nprint(letzter)            # weber\nprint(len(namen))         # 2"
+   },
+   "cpp": {
+    "text": "In C++ ist es genauso. push_back() und erase() geben nichts zurück. Wer sie einer Variablen zuweist, bekommt einen Compilerfehler. Das ist der Vorteil: C++ meldet den Fehler sofort.",
+    "code": "#include <vector>\n#include <string>\n\nstd::vector<std::string> namen = {\"mueller\"};\nnamen.push_back(\"schmidt\");        // richtig\n// namen = namen.push_back(\"x\");   // Compilerfehler"
+   },
+   "vergleich": "Python meldet den stillen Fehler erst beim Ausführen, mit None. C++ verweigert die Zuweisung schon beim Übersetzen.",
+   "merk": "Verändernde Befehle stehen allein in der Zeile. Nur pop() wird zugewiesen.",
+   "checkliste": [
+    "append() gibt None zurück",
+    "insert() gibt None zurück",
+    "remove() gibt None zurück",
+    "sort() gibt None zurück",
+    "reverse() gibt None zurück",
+    "pop() gibt das entfernte Element zurück",
+    "len() gibt eine Zahl zurück"
+   ]
+  },
+  {
+   "titel": "sorted() gegen .sort()",
+   "python": {
+    "text": "sorted() ist eine Funktion. Die Liste steht in der Klammer. Du bekommst eine neue, geordnete Liste zurück. Das Original bleibt unberührt. .sort() ist eine Methode. Die Liste steht davor, mit einem Punkt. .sort() ordnet die Liste selbst um. Die alte Reihenfolge ist danach verloren. Die Schreibweise verrät also das Verhalten: Liste in der Klammer heißt anschauen. Liste davor heißt verändern. sorted() allein in einer Zeile tut nichts. Die geordnete Liste entsteht, wird nicht aufgefangen und verfällt sofort. autos = autos.sort() ist der häufigste Fehler. sort() gibt None zurück, also steht danach None in autos. Für beide Befehle gibt es reverse=True. Das dreht die Richtung um: von Z nach A statt von A nach Z.",
+    "code": "autos = ['bmw', 'audi', 'toyota', 'subaru']\n\nprint(sorted(autos))              # ['audi', 'bmw', 'subaru', 'toyota']\nprint(autos)                      # unverändert\n\ngeordnet = sorted(autos, reverse=True)\nprint(geordnet)                   # ['toyota', 'subaru', 'bmw', 'audi']\n\nautos.sort()\nprint(autos)                      # dauerhaft sortiert\n\n# autos = autos.sort()  -> autos ist danach None"
+   },
+   "cpp": {
+    "text": "In C++ gibt es kein sorted(), das eine Kopie liefert. std::sort ordnet den vector selbst. Wer eine Kopie will, kopiert ihn vorher und sortiert die Kopie. std::sort bekommt zwei Grenzen: Anfang und Ende.",
+    "code": "#include <vector>\n#include <string>\n#include <algorithm>\n\nstd::vector<std::string> autos = {\"bmw\", \"audi\", \"toyota\"};\nstd::vector<std::string> kopie = autos;\n\nstd::sort(kopie.begin(), kopie.end());   // Kopie sortiert\nstd::sort(autos.begin(), autos.end());   // Original sortiert"
+   },
+   "vergleich": "Python hat beide Wege: sorted() für die Kopie und .sort() für das Original. C++ hat nur std::sort und arbeitet an Ort und Stelle. Eine Kopie machst du selbst.",
+   "merk": "In der Klammer heißt anschauen, davor heißt verändern."
+  },
+  {
+   "titel": ".reverse() ist nicht sortieren",
+   "python": {
+    "text": ".reverse() dreht die aktuelle Reihenfolge um. Das letzte Element steht danach vorn. Sortiert wird dabei nichts. Zweimal aufgerufen stellt .reverse() den Ausgangszustand wieder her. Das kann kein anderer Ordnungsbefehl. Der Unterschied zu sort(reverse=True): reverse() nimmt die Liste, wie sie ist. Das Ergebnis ist nur dann alphabetisch, wenn die Liste vorher schon alphabetisch war. sort(reverse=True) sortiert zuerst und dreht dann die Richtung. Das Ergebnis ist immer geordnet. reverse() ist sinnvoll, wenn die vorhandene Reihenfolge richtig ist. Ein Beispiel: Eine Liste wächst mit append(). Darin steht das Älteste vorn. Soll das Neueste zuerst erscheinen, ist reverse() genau richtig. Auch reverse() gibt None zurück und steht allein in der Zeile.",
+    "code": "autos = ['bmw', 'audi', 'toyota', 'subaru']\n\nautos.reverse()\nprint(autos)     # ['subaru', 'toyota', 'audi', 'bmw']\n\nautos.reverse()\nprint(autos)     # wieder die Ausgangsreihenfolge\n\nvergleich = ['bmw', 'audi', 'toyota', 'subaru']\nvergleich.sort(reverse=True)\nprint(vergleich) # ['toyota', 'subaru', 'bmw', 'audi']"
+   },
+   "cpp": {
+    "text": "In C++ dreht std::reverse die Reihenfolge. Es kommt aus algorithm. Für rückwärts sortiert nimmst du std::sort mit std::greater. Das sind zwei verschiedene Bausteine, genau wie in Python.",
+    "code": "#include <vector>\n#include <string>\n#include <algorithm>\n#include <functional>\n\nstd::vector<std::string> autos = {\"bmw\", \"audi\", \"toyota\"};\nstd::reverse(autos.begin(), autos.end());\nstd::sort(autos.begin(), autos.end(), std::greater<std::string>());"
+   },
+   "vergleich": "reverse() dreht um, sort(reverse=True) ordnet rückwärts. In C++ heißen die Bausteine std::reverse und std::sort mit std::greater.",
+   "merk": "reverse() dreht um. Nur sort(reverse=True) ordnet."
+  },
+  {
+   "titel": "Wonach Python sortiert",
+   "python": {
+    "text": "Sortieren heißt: Python vergleicht die Elemente und bringt sie in eine Reihenfolge. Wonach sortiert wird, hängt vom Datentyp ab. Zahlen ordnet Python nach ihrer Größe. Text ordnet Python alphabetisch, Zeichen für Zeichen von links nach rechts. Dabei kommen Großbuchstaben vor Kleinbuchstaben. Der Grund ist die interne Nummerierung der Zeichen. Eine Liste mit gemischter Schreibweise zerfällt also in zwei Blöcke: erst alle großgeschriebenen Einträge, dann alle kleingeschriebenen. Deshalb: Schreibe deine Daten einheitlich. Zahlen in Anführungszeichen sind Text. Sie werden alphabetisch sortiert, nicht nach Größe. Aus 10, 9, 100, 2 als Text wird 10, 100, 2, 9. Eine Liste mit Text und Zahlen zusammen lässt sich gar nicht sortieren. Python bricht mit TypeError ab.",
+    "code": "zahlen = [42, 7, 13, 99, 1]\nzahlen.sort()\nprint(zahlen)          # [1, 7, 13, 42, 99]\n\ndienstgrade = ['Oberst', 'gefreiter', 'Major', 'feldwebel']\ndienstgrade.sort()\nprint(dienstgrade)     # ['Major', 'Oberst', 'feldwebel', 'gefreiter']\n\nzahlen_als_text = ['10', '9', '100', '2']\nzahlen_als_text.sort()\nprint(zahlen_als_text) # ['10', '100', '2', '9']\n\nechte_zahlen = [10, 9, 100, 2]\nechte_zahlen.sort()\nprint(echte_zahlen)    # [2, 9, 10, 100]\n\n# gemischt = ['zehn', 10]\n# gemischt.sort()      -> TypeError"
+   },
+   "cpp": {
+    "text": "In C++ sortiert std::sort nach dem kleiner-Operator des Typs. Zahlen werden nach Größe verglichen. std::string wird Zeichen für Zeichen nach Zeichencode verglichen. Auch dort stehen Großbuchstaben vor Kleinbuchstaben.",
+    "code": "#include <vector>\n#include <string>\n#include <algorithm>\n\nstd::vector<int> zahlen = {42, 7, 13, 99, 1};\nstd::sort(zahlen.begin(), zahlen.end());   // [1, 7, 13, 42, 99]\n\nstd::vector<std::string> dienstgrade = {\"Oberst\", \"gefreiter\", \"Major\"};\nstd::sort(dienstgrade.begin(), dienstgrade.end());"
+   },
+   "vergleich": "Beide Sprachen ordnen Zahlen nach Größe und Text nach Zeichencode. In beiden steht Groß vor Klein. Einheitliche Schreibweise spart Überraschungen.",
+   "merk": "Zahlen nach Größe, Text alphabetisch, Groß vor Klein. Zahlen in Anführungszeichen sind Text."
+  },
+  {
+   "titel": "Typische Listen-Fehler",
+   "python": {
+    "text": "Diese Fehler kosten die meiste Zeit. Die meisten davon melden sich nicht mit einer Fehlermeldung. Sie liefern still ein falsches Ergebnis. Prüfe deshalb nach jedem Schritt die Liste und ihre Länge.",
+    "code": "fahrzeuge = ['lkw', 'jeep', 'transporter', 'bus']\n\n# Falsch: bei eins anfangen\nprint(fahrzeuge[1])   # jeep, nicht lkw\n\n# Falsch: Anzahl als Index\n# print(fahrzeuge[len(fahrzeuge)])  -> IndexError\n\n# Falsch: zwei Texte ohne Komma\nkaputt = ['lkw' 'jeep']\nprint(kaputt, len(kaputt))   # ['lkwjeep'] 1\n\n# Richtig:\nprint(fahrzeuge[0])\nprint(fahrzeuge[-1])\nprint(len(fahrzeuge) - 1)"
+   },
+   "vergleich": "In Python bleiben diese Fehler oft still. In C++ meldet der Compiler falsche Typen, aber nicht einen falschen Index. Auch dort gilt: nach jedem Schritt prüfen.",
+   "merk": "Zähle ab null, prüfe die Länge und lies die Fehlermeldung von unten nach oben.",
+   "checkliste": [
+    "Bei eins anfangen zu zählen: das Programm nimmt still das falsche Element",
+    "Anzahl und größten Index verwechseln: IndexError bei liste[len(liste)]",
+    "Runde Klammern statt eckiger: TypeError, Python ruft die Liste wie eine Funktion auf",
+    "Komma zwischen zwei Texten vergessen: aus zwei Werten wird ein einziger",
+    "Ein Element für etwas Besonderes halten: liste.title() ist ein AttributeError",
+    "In ein Fach schreiben, das es nicht gibt: IndexError beim Zuweisen",
+    "Das Ergebnis von append() oder sort() zuweisen: None, die Liste ist weg",
+    "sorted() ohne Zuweisung aufrufen: es passiert nichts",
+    "remove() für alle Vorkommen halten: nur das erste verschwindet",
+    "Zahlen als Text sortieren: 100 steht vor 2"
+   ]
+  },
+  {
+   "titel": "Übungen",
+   "python": {
+    "text": "Diese Aufgaben kommen aus dem Crashkurs. Schreibe jede Aufgabe in eine eigene Datei und führe sie aus. Die Musterlösung unten baut die Wachliste um: einen Namen über den Wert entfernen, einen vorn einfügen, den letzten als Reserve herausnehmen und hinten einen neuen Namen anhängen. Achte auf die Reihenfolge: Jeder Eingriff verändert die Ausgangslage für den nächsten.",
+    "code": "wache = ['mueller', 'schmidt', 'weber', 'nowak']\n\n# 1. Schmidt fällt aus, seine Position ist nicht bekannt\nwache.remove('schmidt')\n\n# 2. Abel übernimmt und kommt an die erste Stelle\nwache.insert(0, 'abel')\n\n# 3. Der jetzt letzte Name wird als Reserve aufbewahrt\nreserve = wache.pop()\n\n# 4. Zink kommt hinten dazu\nwache.append('zink')\n\nprint(wache)                        # ['abel', 'mueller', 'weber', 'zink']\nprint(f\"Eingeteilt: {len(wache)} Personen\")\nprint(f\"Reserve: {reserve.title()}\")"
+   },
+   "aufgaben": [
+    "Die erste eigene Liste: Lege eine Liste werkzeuge mit vier klein geschriebenen Werkzeugnamen an. Gib die ganze Liste aus und darunter die Anzahl ihrer Elemente. Fertig, wenn zuerst die Liste in eckigen Klammern und darunter die Zahl 4 erscheint.",
+    "Das erste und das dritte Fach: Gib aus einer Liste mit Dienstgraden das erste und das dritte Element aus, jedes mit einem eigenen print. In der Ausgabe soll nur der reine Wert stehen, ohne eckige Klammern.",
+    "Von hinten gezählt: Gib das letzte und das vorletzte Element aus. Benutze dafür keine ausgezählte Zahl, sondern negative Indizes. Die Lösung soll auch dann stimmen, wenn später ein fünfter Eintrag dazukommt.",
+    "Anzahl und größter Index: Eine Liste hat sechs Messwerte. Gib zuerst die Anzahl aus. Berechne daraus den größten gültigen Index, speichere ihn in einer Variablen und gib den Wert an dieser Position aus. Vergleiche ihn mit dem Zugriff über -1.",
+    "Ein Element mitten im Satz: Gib zwei vollständige deutsche Sätze aus. Der erste nennt das erste Fahrzeug, der zweite das letzte. Der Name soll großgeschrieben erscheinen, obwohl er klein in der Liste steht.",
+    "Leer anlegen und füllen: Lege eine leere Liste anwesende an. Gib sie und ihre Länge aus, bevor etwas darin steht. Trage dann drei Nachnamen ein und gib Liste und Länge erneut aus. Fertig, wenn zuerst [] und 0 erscheinen, danach drei Namen und die Zahl 3.",
+    "Die Wachliste umbauen: Entferne schmidt über seinen Namen, setze abel an die erste Stelle, nimm den letzten Namen als Reserve heraus und hänge zink hinten an. Gib die Liste, die Anzahl der Eingeteilten und den großgeschriebenen Namen der Reserve aus.",
+    "Die geordnete Kopie: Gib eine Liste geordnet aus, ohne sie zu verändern. Gib danach die Liste selbst aus und prüfe, dass sie noch in der ursprünglichen Reihenfolge steht. Fange die geordnete Fassung zum Schluss in einer Variablen geordnet auf.",
+    "Umdrehen ist nicht sortieren: Drehe eine Liste mit Meldungen um, sodass die neueste Meldung vorn steht, und gib sie aus. Drehe sie danach noch einmal um. Lege dann eine zweite Liste mit demselben Inhalt an, sortiere sie rückwärts und vergleiche beide Ausgaben.",
+    "Reparatur: Ein Programm soll den Bestand erst als geordnete Kopie zeigen und ihn danach dauerhaft sortieren. Beides misslingt ohne jede Fehlermeldung. Finde beide Fehler und repariere sie, sodass nirgends None erscheint."
+   ]
+  }
+ ]
 }

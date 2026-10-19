@@ -8,7 +8,7 @@
 const DATEN_PFAD = "/daten/";
 // Versionsmarker: erscheint im Footer. LEER = Browser nutzt alte app.js
 // (Cache!) → Strg+F5 / Cache leeren.
-const APP_VERSION = "0.8.4";
+const APP_VERSION = "0.9.0";
 const STUFEN = ["leicht", "mittel", "schwer"];
 const STUFEN_BESCHREIBUNG = {
   leicht: "nur leichte Fragen",
@@ -1317,6 +1317,14 @@ function zeigeKursAbschnitt() {
     if (block.code) html += `<pre class="code">${escapeHtml(block.code)}</pre>`;
   }
   if (a.vergleich) html += `<div class="vergleich">💡 <strong>Vergleich:</strong> ${escapeHtml(a.vergleich)}</div>`;
+  if (Array.isArray(a.checkliste) && a.checkliste.length) {
+    html += `<div class="merk"><strong>✅ Checkliste</strong><ul>` +
+      a.checkliste.map((x) => `<li>${escapeHtml(x)}</li>`).join("") + `</ul></div>`;
+  }
+  if (Array.isArray(a.aufgaben) && a.aufgaben.length) {
+    html += `<div class="aufgaben"><strong>✍️ Übungen</strong><ul>` +
+      a.aufgaben.map((x) => `<li>${escapeHtml(x)}</li>`).join("") + `</ul></div>`;
+  }
   if (a.merk) html += `<div class="merk">📌 ${escapeHtml(a.merk)}</div>`;
   html += `</div>`;
   container.innerHTML = html;

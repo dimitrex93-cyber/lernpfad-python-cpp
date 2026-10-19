@@ -824,6 +824,16 @@ def zeige_abschnitt(abschnitt, index, anzahl):
         print()
         print(c("💡 Vergleich:", "gelb"))
         print(abschnitt["vergleich"])
+    if abschnitt.get("checkliste"):
+        print()
+        print(c("✅ Checkliste:", "gelb"))
+        for punkt in abschnitt["checkliste"]:
+            print(f"  • {punkt}")
+    if abschnitt.get("aufgaben"):
+        print()
+        print(c("✍️  Übungen:", "gelb"))
+        for nummer, aufgabe in enumerate(abschnitt["aufgaben"], start=1):
+            print(f"  {nummer}. {aufgabe}")
     if abschnitt.get("merk"):
         print()
         print(c("📌 Merksatz:", "gelb"))

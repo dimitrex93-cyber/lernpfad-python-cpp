@@ -1,46 +1,188 @@
 {
-  "id": "strings",
-  "titel": "Kapitel 7: Strings – Arbeit mit Text",
-  "einleitung": "Text ist überall: Namen, Dateien, was der Benutzer eintippt. Ein String (eine Zeichenkette) ist Text im Programm. Hier lernst du, wie Strings in Python und C++ funktionieren. Du lernst auch, wie du Text bearbeitest, durchsuchst und zusammenbaust.",
-  "abschnitte": [
-    {
-      "titel": "Was ist ein String?",
-      "python": {
-        "text": "Ein String (der Typ heißt str) ist eine Kette aus Zeichen. Denk an Perlen auf einer Schnur: Jede Perle ist ein Zeichen. Python-Strings sind unveränderlich (immutable). Das heißt: Du kannst einen bestehenden String nicht ändern. Jede Bearbeitung erzeugt einen neuen String. Strings stehen in einfachen ('...') oder doppelten (\"...\") Anführungszeichen. Unicode ist eingebaut (ein Zeichen-Standard für viele Sprachen und Symbole). Deshalb funktionieren Umlaute und Emojis direkt.",
-        "code": "name = \"Lena\"\nprint(name.upper())   # LENA\nprint(name[1:3])      # en  (Slicing)\nprint(len(name))      # 4\n\ns = \"Hallo \" + \"Welt\"   # Verketten\nprint(s * 3)             # Hallo WeltHallo WeltHallo Welt"
-      },
-      "cpp": {
-        "text": "In C++ gibt es zwei Arten von Strings. Die moderne Art heißt std::string. Sie kommt aus der Bibliothek <string>. Eine Bibliothek ist eine Sammlung fertiger Werkzeuge. Die alte Art heißt C-String. Ein C-String ist ein char-Array (eine Liste aus Zeichen). Sein Ende markiert ein Nullzeichen (ein unsichtbares Stopp-Zeichen). std::string ist veränderlich. Das heißt: Er kann wachsen. C-Strings sind starr und fehleranfällig. In diesem Kurs nutzen wir nur std::string.",
-        "code": "#include <iostream>\n#include <string>\n\nstd::string name = \"Lena\";\nstd::cout << name.size() << std::endl;    // 4\nstd::cout << name.substr(1, 2) << std::endl;  // en\n\nstd::string s = \"Hallo \" + std::string(\"Welt\");\nstd::cout << s << std::endl;   // Hallo Welt\n// \"A\" (string) ist nicht 'A' (char)!"
-      },
-      "vergleich": "Python: str ist unveränderlich, Unicode ist eingebaut. C++: std::string ist veränderlich. Er braucht #include <string> und ist etwas anderes als char (ein einzelnes Zeichen).",
-      "merk": "Python-Strings sind unveränderlich, C++-std::string ist veränderlich."
-    },
-    {
-      "titel": "Strings bearbeiten und durchsuchen",
-      "python": {
-        "text": "Python hat viele String-Methoden. Eine Methode ist ein Werkzeug, das am String hängt. .upper() macht alles groß, .lower() macht alles klein. .strip() entfernt Leerzeichen am Anfang und am Ende. .split() zerlegt den String in eine Liste (eine Sammlung von Werten). .replace(alt, neu) ersetzt Text. Mit .find() oder mit in suchst du nach Teilstrings (Textstücken). Strings sind unveränderlich. Weißt du, was die Methoden dann zurückgeben? Genau: einen neuen String. Das Original bleibt unberührt.",
-        "code": "text = \"  Hallo Welt  \"\nprint(text.strip())          # \"Hallo Welt\"\nprint(text.split())          # ['Hallo', 'Welt']\nprint(text.replace(\"Welt\", \"Python\"))\nprint(\"Welt\" in text)        # True\nprint(text.find(\"Welt\"))     # 8 (Index)\nprint(text.lower())          # hallo welt"
-      },
-      "cpp": {
-        "text": "std::string hat ähnliche Werkzeuge. .size() gibt die Länge an. .substr(pos, len) schneidet einen Teilstring heraus. pos ist die Startposition, len ist die Länge. .find(...) sucht nach Text. Findet sie nichts, gibt sie npos zurück. npos heißt: nicht gefunden. Mit .append() oder += hängst du Text an. Mit [] holst du ein einzelnes Zeichen. Das Ergebnis ist ein char! .replace gibt es auch. Es ist aber umständlicher als in Python.",
-        "code": "std::string text = \"  Hallo Welt  \";\nstd::cout << text.size() << std::endl;        // 14\nstd::cout << text.substr(2, 5) << std::endl;  // Hallo\n\nsize_t pos = text.find(\"Welt\");\nif (pos != std::string::npos) {\n    std::cout << pos;   // 8\n}\ntext += \"!\";            // verändern ist erlaubt!\nchar c = text[2];       // 'H'  (ein char!)"
-      },
-      "vergleich": "Python: strip, split und replace arbeiten direkt. C++: find gibt npos zurück, wenn nichts gefunden wurde (nicht -1). Einzelne Zeichen sind chars. Mit += veränderst du den String direkt.",
-      "merk": "Findet die Suche nichts, sagt Python False und C++ npos."
-    },
-    {
-      "titel": "Strings formatieren",
-      "python": {
-        "text": "Python kann Text und Zahlen zusammensetzen. Die moderne Art nutzt f-Strings. Das f steht für format (formatieren). Du schreibst ein f vor den String. Werte kommen in geschweifte Klammern {}. Das ist einfach, lesbar und schnell. Du kannst sogar Rechnungen einbauen: f\"{a} + {b} = {a + b}\". Für Zahlen gibt es Formatangaben. Zum Beispiel :.2f für zwei Nachkommastellen.",
-        "code": "name = \"Anna\"\nalter = 25\nprint(f\"{name} ist {alter} Jahre alt\")\nprint(f\"{name} ist {alter * 12} Monate alt\")\n\npreis = 19.995\nprint(f\"{preis:.2f} €\")     # 20.00 €\nprint(f\"{alter:04d}\")       # 0025"
-      },
-      "cpp": {
-        "text": "In C++ baust du Strings mit += oder std::to_string() zusammen. Das funktioniert, wird aber schnell unübersichtlich. Die moderne Lösung (C++20) heißt std::format. Platzhalter {} werden mit Werten gefüllt. Formatangaben wie {:.2f} kennst du schon aus Python. Alternativ gibt es den klassischen Weg: std::cout << mit mehreren <<.",
-        "code": "#include <iostream>\n#include <string>\n\nstd::string name = \"Anna\";\nint alter = 25;\n\n// Klassisch:\nstd::cout << name << \" ist \" << alter << \" Jahre alt\" << std::endl;\n\n// Modern (C++20):\n// std::cout << std::format(\"{} ist {} Jahre alt\", name, alter);\n\n// Zahlen als Text:\nstd::string s = \"Preis: \" + std::to_string(19.995);"
-      },
-      "vergleich": "Python: f-Strings sind der Goldstandard (die beste Methode). C++: cout << Verkettung oder std::format (C++20). std::to_string macht aus Zahlen Text. Es ist das Gegenstück zu str().",
-      "merk": "Python formatiert mit f\"{wert}\", C++ mit std::to_string() oder std::format."
-    }
-  ]
+ "id": "strings",
+ "titel": "Kapitel 7: Strings – Arbeit mit Text",
+ "einleitung": "Text ist überall: Namen, Dateien, was der Benutzer eintippt. Ein String (eine Zeichenkette) ist Text im Programm. Hier lernst du, wie Strings in Python und C++ funktionieren. Du lernst auch, wie du Text bearbeitest, durchsuchst und zusammenbaust.",
+ "abschnitte": [
+  {
+   "titel": "Was ist ein String?",
+   "python": {
+    "text": "Ein String (der Typ heißt str) ist eine Kette aus Zeichen. Denk an Perlen auf einer Schnur: Jede Perle ist ein Zeichen. Python-Strings sind unveränderlich (immutable). Das heißt: Du kannst einen bestehenden String nicht ändern. Jede Bearbeitung erzeugt einen neuen String. Strings stehen in einfachen ('...') oder doppelten (\"...\") Anführungszeichen. Unicode ist eingebaut (ein Zeichen-Standard für viele Sprachen und Symbole). Deshalb funktionieren Umlaute und Emojis direkt.",
+    "code": "name = \"Lena\"\nprint(name.upper())   # LENA\nprint(name[1:3])      # en  (Slicing)\nprint(len(name))      # 4\n\ns = \"Hallo \" + \"Welt\"   # Verketten\nprint(s * 3)             # Hallo WeltHallo WeltHallo Welt"
+   },
+   "cpp": {
+    "text": "In C++ gibt es zwei Arten von Strings. Die moderne Art heißt std::string. Sie kommt aus der Bibliothek <string>. Eine Bibliothek ist eine Sammlung fertiger Werkzeuge. Die alte Art heißt C-String. Ein C-String ist ein char-Array (eine Liste aus Zeichen). Sein Ende markiert ein Nullzeichen (ein unsichtbares Stopp-Zeichen). std::string ist veränderlich. Das heißt: Er kann wachsen. C-Strings sind starr und fehleranfällig. In diesem Kurs nutzen wir nur std::string.",
+    "code": "#include <iostream>\n#include <string>\n\nstd::string name = \"Lena\";\nstd::cout << name.size() << std::endl;    // 4\nstd::cout << name.substr(1, 2) << std::endl;  // en\n\nstd::string s = \"Hallo \" + std::string(\"Welt\");\nstd::cout << s << std::endl;   // Hallo Welt\n// \"A\" (string) ist nicht 'A' (char)!"
+   },
+   "vergleich": "Python: str ist unveränderlich, Unicode ist eingebaut. C++: std::string ist veränderlich. Er braucht #include <string> und ist etwas anderes als char (ein einzelnes Zeichen).",
+   "merk": "Python-Strings sind unveränderlich, C++-std::string ist veränderlich."
+  },
+  {
+   "titel": "Strings bearbeiten und durchsuchen",
+   "python": {
+    "text": "Python hat viele String-Methoden. Eine Methode ist ein Werkzeug, das am String hängt. .upper() macht alles groß, .lower() macht alles klein. .strip() entfernt Leerzeichen am Anfang und am Ende. .split() zerlegt den String in eine Liste (eine Sammlung von Werten). .replace(alt, neu) ersetzt Text. Mit .find() oder mit in suchst du nach Teilstrings (Textstücken). Strings sind unveränderlich. Weißt du, was die Methoden dann zurückgeben? Genau: einen neuen String. Das Original bleibt unberührt.",
+    "code": "text = \"  Hallo Welt  \"\nprint(text.strip())          # \"Hallo Welt\"\nprint(text.split())          # ['Hallo', 'Welt']\nprint(text.replace(\"Welt\", \"Python\"))\nprint(\"Welt\" in text)        # True\nprint(text.find(\"Welt\"))     # 8 (Index)\nprint(text.lower())          # hallo welt"
+   },
+   "cpp": {
+    "text": "std::string hat ähnliche Werkzeuge. .size() gibt die Länge an. .substr(pos, len) schneidet einen Teilstring heraus. pos ist die Startposition, len ist die Länge. .find(...) sucht nach Text. Findet sie nichts, gibt sie npos zurück. npos heißt: nicht gefunden. Mit .append() oder += hängst du Text an. Mit [] holst du ein einzelnes Zeichen. Das Ergebnis ist ein char! .replace gibt es auch. Es ist aber umständlicher als in Python.",
+    "code": "std::string text = \"  Hallo Welt  \";\nstd::cout << text.size() << std::endl;        // 14\nstd::cout << text.substr(2, 5) << std::endl;  // Hallo\n\nsize_t pos = text.find(\"Welt\");\nif (pos != std::string::npos) {\n    std::cout << pos;   // 8\n}\ntext += \"!\";            // verändern ist erlaubt!\nchar c = text[2];       // 'H'  (ein char!)"
+   },
+   "vergleich": "Python: strip, split und replace arbeiten direkt. C++: find gibt npos zurück, wenn nichts gefunden wurde (nicht -1). Einzelne Zeichen sind chars. Mit += veränderst du den String direkt.",
+   "merk": "Findet die Suche nichts, sagt Python False und C++ npos."
+  },
+  {
+   "titel": "Strings formatieren",
+   "python": {
+    "text": "Python kann Text und Zahlen zusammensetzen. Die moderne Art nutzt f-Strings. Das f steht für format (formatieren). Du schreibst ein f vor den String. Werte kommen in geschweifte Klammern {}. Das ist einfach, lesbar und schnell. Du kannst sogar Rechnungen einbauen: f\"{a} + {b} = {a + b}\". Für Zahlen gibt es Formatangaben. Zum Beispiel :.2f für zwei Nachkommastellen.",
+    "code": "name = \"Anna\"\nalter = 25\nprint(f\"{name} ist {alter} Jahre alt\")\nprint(f\"{name} ist {alter * 12} Monate alt\")\n\npreis = 19.995\nprint(f\"{preis:.2f} €\")     # 20.00 €\nprint(f\"{alter:04d}\")       # 0025"
+   },
+   "cpp": {
+    "text": "In C++ baust du Strings mit += oder std::to_string() zusammen. Das funktioniert, wird aber schnell unübersichtlich. Die moderne Lösung (C++20) heißt std::format. Platzhalter {} werden mit Werten gefüllt. Formatangaben wie {:.2f} kennst du schon aus Python. Alternativ gibt es den klassischen Weg: std::cout << mit mehreren <<.",
+    "code": "#include <iostream>\n#include <string>\n\nstd::string name = \"Anna\";\nint alter = 25;\n\n// Klassisch:\nstd::cout << name << \" ist \" << alter << \" Jahre alt\" << std::endl;\n\n// Modern (C++20):\n// std::cout << std::format(\"{} ist {} Jahre alt\", name, alter);\n\n// Zahlen als Text:\nstd::string s = \"Preis: \" + std::to_string(19.995);"
+   },
+   "vergleich": "Python: f-Strings sind der Goldstandard (die beste Methode). C++: cout << Verkettung oder std::format (C++20). std::to_string macht aus Zahlen Text. Es ist das Gegenstück zu str().",
+   "merk": "Python formatiert mit f\"{wert}\", C++ mit std::to_string() oder std::format."
+  },
+  {
+   "titel": "Text in Anführungszeichen",
+   "python": {
+    "text": "Ein String (Zeichenkette) ist eine Folge von Zeichen, die in Anführungszeichen steht. Die Anführungszeichen gehören nicht zum Wert. Sie sagen Python nur: Was dazwischen steht, ist Text und kein Befehl. Einfache und doppelte Anführungszeichen sind gleichwertig. Es gibt keinen Unterschied in der Bedeutung, nur einen in der Bequemlichkeit. Interessant wird die Wahl erst, wenn im Text selbst ein Anführungszeichen vorkommt, zum Beispiel ein Apostroph. Dann endet der String genau dort, wo Python das nächste gleiche Zeichen sieht. Der Rest der Zeile ergibt keinen Sinn mehr. Python meldet SyntaxError: unterminated string literal. Das passiert, bevor das Programm läuft. Die Lösung ist einfach: außen die andere Sorte verwenden.",
+    "code": "name = 'ada lovelace'\nanderer = \"grace hopper\"\nprint(name)\nprint(anderer)\n\n# Falsch: 'Ich habe's geschafft'  -> SyntaxError\nsatz = \"Ich habe's geschafft\"\nprint(satz)\nprint('Sie sagte: \"Guten Morgen\"')"
+   },
+   "cpp": {
+    "text": "In C++ stehen Strings in doppelten Anführungszeichen. Einfache Anführungszeichen kennzeichnen ein einzelnes Zeichen vom Typ char. \"A\" ist also ein String, 'A' ist ein Zeichen. Ein Apostroph im Text braucht keinen Trick, weil der String ohnehin in doppelten Anführungszeichen steht. Doppelte Anführungszeichen im Text brauchen dagegen einen Rückstrich davor.",
+    "code": "#include <iostream>\n#include <string>\n\nstd::string name = \"ada lovelace\";\nstd::cout << name << std::endl;\n\nchar zeichen = 'A';        // ein Zeichen\nstd::string text = \"A\";    // ein String\nstd::cout << \"Sie sagte: \\\"Guten Morgen\\\"\" << std::endl;"
+   },
+   "vergleich": "Python: einfache und doppelte Anführungszeichen sind gleichwertig, außen steht die Sorte, die im Text fehlt. C++: Strings stehen immer in doppelten Anführungszeichen, einfache Anführungszeichen sind ein char.",
+   "merk": "Außen steht die Sorte Anführungszeichen, die im Text selbst nicht vorkommt."
+  },
+  {
+   "titel": "Escape-Sequenzen: Zeichen, die man nicht tippen kann",
+   "python": {
+    "text": "Ein Zeilenumbruch und ein Tabulator sind Zeichen wie jedes andere. Im Quelltext lassen sie sich aber nicht hinschreiben, denn ein echter Umbruch würde den String beenden. Dafür gibt es die Escape-Sequenzen. Ein Rückstrich und ein Buchstabe stehen zusammen für ein Zeichen. Die Schreibweise \\n ergibt einen Zeilenumbruch. Die Schreibweise \\t ergibt einen Tabulator. Mit \\\" schreibst du ein doppeltes Anführungszeichen, ohne die Sorte außen zu wechseln. Im Quelltext stehen zwei Zeichen, in der Ausgabe steht eines. Aus einer Zeile im Code werden so vier Zeilen auf dem Bildschirm.",
+    "code": "print(\"Sprachen:\\n\\tPython\\n\\tJava\\n\\tC\")\nprint(\"Name\\tAlter\")\nprint(\"Ada\\t36\")"
+   },
+   "cpp": {
+    "text": "Diese Zeichen sind in C++ genauso geschrieben. Der Rückstrich mit n ergibt den Zeilenumbruch, der Rückstrich mit t den Tabulator. Der Rückstrich selbst ist kein Text, sondern der Anfang einer Escape-Sequenz.",
+    "code": "#include <iostream>\n\nstd::cout << \"Sprachen:\\n\\tPython\\n\\tJava\\n\\tC\" << std::endl;\nstd::cout << \"Name\\tAlter\" << std::endl;"
+   },
+   "vergleich": "Die Escape-Sequenzen sind in beiden Sprachen gleich: \\n für den Zeilenumbruch, \\t für den Tabulator.",
+   "merk": "Escape-Sequenzen sind unsichtbare Zeichen mitten im Text, keine Befehle."
+  },
+  {
+   "titel": "Methoden: Werkzeuge, die am Text hängen",
+   "python": {
+    "text": "Jeder String bringt eine Sammlung eingebauter Werkzeuge mit. Sie hängen direkt am Text und werden mit einem Punkt aufgerufen. Eine Methode ist eine Funktion, die zu einer bestimmten Art von Wert gehört. Sie steht hinter dem Wert, mit einem Punkt dazwischen und Klammern dahinter: name.upper(). Die Klammern gehören dazu, auch wenn nichts darin steht. title() beginnt jedes Wort groß, upper() schreibt alles groß, lower() alles klein. strip() entfernt Leerzeichen am Anfang und am Ende. Nach drei Umformungen ist der Name immer noch klein geschrieben. Die Methoden haben den String nicht angefasst. Das liegt daran, dass ein String unveränderbar ist. Eine Methode kann also nur einen neuen String erzeugen und zurückgeben. Wer ihn behalten will, muss ihn zuweisen: name = name.title(). Diese Zeile liest man von rechts nach links.",
+    "code": "name = 'ada lovelace'\nprint(name.title())\nprint(name.upper())\nprint(name.lower())\nprint(name)      # immer noch klein!\n\nname = name.title()\nprint(name)      # Ada Lovelace\n\neingabe = \"   python   \"\nprint(\"[\" + eingabe + \"]\")\nprint(\"[\" + eingabe.strip() + \"]\")"
+   },
+   "cpp": {
+    "text": "std::string kennt nur wenige solcher Werkzeuge. Die Länge liefert die Methode .length() oder .size(). Für Groß- und Kleinschreibung gibt es keine fertige Methode. Dafür braucht man zusätzliche Bibliotheken und eine Schleife über die Zeichen. In C++ schreibt man solche Umformungen deshalb meist selbst.",
+    "code": "#include <iostream>\n#include <string>\n\nstd::string name = \"ada lovelace\";\nstd::cout << name.length() << std::endl;   // 12"
+   },
+   "vergleich": "Python: viele fertige Methoden wie title, upper, lower und strip. C++: nur wenige, zum Beispiel length. Groß- und Kleinschreibung muss man dort selbst bauen.",
+   "merk": "String-Methoden ändern nichts. Sie geben einen neuen Wert zurück, den man zuweisen muss."
+  },
+  {
+   "titel": "Funktion oder Methode?",
+   "python": {
+    "text": "Neben den Methoden gibt es eingebaute Funktionen. Die wichtigste für Strings ist len(). Sie nennt die Anzahl der Zeichen. Der Name steht für length, also Länge. Bei einem Namen aus zwei Wörtern zählt das Leerzeichen mit. Aus zwölf Zeichen werden nicht elf, denn gezählt werden Zeichen und nicht Buchstaben. Der Unterschied ist rein äußerlich leicht zu erkennen. Eine Funktion steht vor dem Wert und nimmt ihn in die Klammer: len(name). Eine Methode steht hinter dem Wert und hängt mit einem Punkt an ihm: name.upper(). Eine Funktion gilt außerdem für viele Typen, eine Methode nur für ihren eigenen Typ. name.len() und upper(name) gibt es nicht. Python meldet dann AttributeError oder NameError.",
+    "code": "print(len(\"Bundeswehr\"))     # 10\nprint(len(\"ada lovelace\"))   # 12, mit Leerzeichen\nprint(len(\"\"))               # 0\n\nname = \"ada\"\nprint(len(name))             # Funktion\nprint(name.upper())          # Methode"
+   },
+   "cpp": {
+    "text": "In C++ ist die Länge eine Methode des Strings: name.length() oder name.size(). Eine freie Funktion wie len() gibt es für Strings nicht. Deshalb steht der Wert dort vor dem Punkt und nicht in der Klammer."
+   },
+   "vergleich": "Python: len(name) ist eine Funktion, name.upper() eine Methode. C++: length() ist eine Methode, eine Funktion wie len() gibt es nicht.",
+   "merk": "Die Funktion steht vor dem Wert, die Methode hinter dem Punkt."
+  },
+  {
+   "titel": "Zwei Texte zusammenfügen mit Plus",
+   "python": {
+    "text": "Strings lassen sich mit dem Pluszeichen aneinanderhängen. Der Fachbegriff dafür ist Verketten. Dabei kommt kein Zeichen von selbst dazu. Vorname plus Nachname ergibt MarieCurie. Wer ein Leerzeichen will, muss es als eigenen String einbauen. Python kann nicht wissen, ob zwischen zwei Teilen ein Leerzeichen, ein Komma oder gar nichts hingehört. Links und rechts vom Pluszeichen muss ein String stehen. Eine Zahl dazwischen ergibt einen TypeError. Ein zweites Rechenzeichen funktioniert bei Strings auch: Text mal Zahl wiederholt den Text. Eine Linie aus dreißig Strichen ist damit schnell geschrieben. Sobald ein ganzer Satz mit drei Werten entsteht, wird die Zeile voller Anführungszeichen und Pluszeichen. Ein f-String ist dann der übliche Weg.",
+    "code": "vorname = \"Marie\"\nnachname = \"Curie\"\nvoller_name = vorname + \" \" + nachname\nprint(voller_name)\nprint(vorname + nachname)\n\nprint(\"-\" * 30)\nprint(\"ab\" * 3)"
+   },
+   "cpp": {
+    "text": "In C++ funktioniert das Pluszeichen für Strings genauso, solange links und rechts ein std::string steht. Ein einzelnes Zeichen in einfachen Anführungszeichen ist kein String und passt nicht dazu. Text mal Zahl gibt es in C++ nicht. Eine Linie aus dreißig Strichen schreibt man dort als std::string(30, '-').",
+    "code": "#include <iostream>\n#include <string>\n\nstd::string vorname = \"Marie\";\nstd::string nachname = \"Curie\";\nstd::string voller_name = vorname + \" \" + nachname;\nstd::cout << voller_name << std::endl;            // Marie Curie\nstd::cout << std::string(30, '-') << std::endl;   // Linie"
+   },
+   "vergleich": "Python: Plus verkettet, Stern wiederholt den Text. C++: Plus verkettet std::string, für die Wiederholung gibt es keinen Operator.",
+   "merk": "Beim Verketten kommt kein Leerzeichen von selbst dazu."
+  },
+  {
+   "titel": "f-Strings: das f ist der Schalter",
+   "python": {
+    "text": "Ein f-String ist ein String mit einem f davor. Dieses f schaltet die geschweiften Klammern scharf. Was darin steht, wird nicht als Text ausgegeben, sondern ausgerechnet und das Ergebnis eingesetzt. In den Klammern darf jeder Ausdruck stehen, also alles, was einen Wert ergibt. Eine Variable, eine Rechnung, ein Methodenaufruf, ein Funktionsaufruf wie len(). Das Leerzeichen zwischen zwei Klammern steht einfach im Text, genau da, wo es hingehört. Man sieht beim Lesen sofort, wie die Ausgabe später aussieht. Wichtig ist, was dabei nicht passiert: Der f-String gibt nur eine schön aussehende Kopie aus. Die Variable selbst bleibt unverändert.",
+    "code": "vorname = \"ada\"\nnachname = \"lovelace\"\nvoller_name = f\"{vorname} {nachname}\"\nprint(voller_name)\n\nalter = 36\nprint(f\"{vorname.title()} ist {alter} Jahre alt.\")\nprint(f\"In 10 Jahren: {alter + 10}\")\nprint(f\"Der Name hat {len(vorname)} Buchstaben.\")\nprint(vorname)      # immer noch klein"
+   },
+   "cpp": {
+    "text": "C++ hat kein f vor dem String. Eine Zahl muss dort erst zu Text werden. Dafür gibt es std::to_string(). Danach hängst du alle Teile mit dem Pluszeichen aneinander. Das funktioniert, ist aber mehr Schreibarbeit als ein f-String. Ab C++20 gibt es zusätzlich std::format mit geschweiften Klammern.",
+    "code": "#include <iostream>\n#include <string>\n\nstd::string vorname = \"ada\";\nint alter = 36;\nstd::string satz = vorname + \" ist \" + std::to_string(alter) + \" Jahre alt.\";\nstd::cout << satz << std::endl;   // ada ist 36 Jahre alt."
+   },
+   "vergleich": "Python: das f schaltet die Klammern scharf, Zahlen werden automatisch Text. C++: std::to_string macht aus der Zahl Text, danach verkettet das Pluszeichen.",
+   "merk": "Das f ist der Schalter, die geschweiften Klammern sind die Fenster."
+  },
+  {
+   "titel": "Die Formatangabe nach dem Doppelpunkt",
+   "python": {
+    "text": "Hinter dem Wert darf in der Klammer ein Doppelpunkt stehen. Danach folgt die Formatangabe. Sie sagt, wie der Wert aussehen soll, nicht was er ist. Die wichtigste im Kursalltag ist .2f: zwei Nachkommastellen, als Kommazahl ausgegeben. Ohne Angabe zeigt Python die Zahl so kurz wie möglich. Aus 4.5 wird dann nicht 4.50, und für einen Preis sieht das falsch aus. Mit .2f erzwingt Python genau zwei Stellen, notfalls mit einer angehängten Null. Gerundet wird nur die Anzeige. Der Wert in der Variablen bleibt, wie er ist. Für diesen Kurs genügt .2f.",
+    "code": "preis = 4.5\nprint(f\"Das kostet {preis} Euro.\")\nprint(f\"Das kostet {preis:.2f} Euro.\")\nprint(f\"Ein Drittel sind {1 / 3:.2f}.\")\nprint(preis)      # 4.5, unverändert"
+   },
+   "cpp": {
+    "text": "In C++ steht dieselbe Angabe in std::format, das seit C++20 zur Standardbibliothek gehört. Dort bedeutet die Angabe .2f ebenfalls zwei Nachkommastellen."
+   },
+   "checkliste": [
+    "Doppelpunkt setzen, dann die Angabe: {betrag:.2f}",
+    ".2f heißt zwei Nachkommastellen, notfalls mit einer Null.",
+    "Ohne Angabe fällt die Null weg: 4.5 statt 4.50.",
+    "Gerundet wird nur die Anzeige, der Wert bleibt gleich.",
+    "Für diesen Kurs genügt .2f."
+   ],
+   "merk": "Nach dem Doppelpunkt steht, wie der Wert aussehen soll."
+  },
+  {
+   "titel": "Der stille Fehler ohne Fehlermeldung",
+   "python": {
+    "text": "Fehlt das f, ist der String ein ganz gewöhnlicher String. Die geschweiften Klammern sind dann normale Zeichen und werden wörtlich ausgegeben. Das Programm läuft durch, nichts bricht ab. Nur die Ausgabe ist falsch. Solche Fehler sind unangenehm, weil niemand auf sie hinweist. Geschweifte Klammern in der Ausgabe bedeuten deshalb fast immer: Das f fehlt. Der zweite stille Fehler ist die vergessene Zuweisung. name.upper() liefert einen neuen String, aber der alte Name bleibt stehen. Erst die Zuweisung name = name.upper() macht das Ergebnis dauerhaft. Beides sieht im Quelltext vollständig aus und beides meldet sich nicht.",
+    "code": "vorname = \"ada\"\nprint(\"Hallo, {vorname}!\")\nprint(f\"Hallo, {vorname}!\")\n\nname = \"ada lovelace\"\nname.title()\nprint(name)          # immer noch klein\n\nname = name.title()\nprint(name)          # Ada Lovelace"
+   },
+   "checkliste": [
+    "Geschweifte Klammern in der Ausgabe: das f fehlt.",
+    "Kein Absturz, keine Meldung, nur falscher Text.",
+    "Eine Methode ohne Zuweisung ändert die Variable nicht.",
+    "Richtig ist name = name.upper().",
+    "Nach jeder Umformung prüfen: Steht der neue Wert in der Variablen?"
+   ],
+   "merk": "Fehlendes f und fehlende Zuweisung melden sich nicht. Nur die Ausgabe ist falsch."
+  },
+  {
+   "titel": "Typische String-Fehler",
+   "python": {
+    "text": "Diese sechs Fehler kommen immer wieder. Zwei davon melden sich gar nicht, einer erst beim Start des Programms, zwei mit einer Fehlermeldung im Betrieb. Lies die Liste einmal durch. Beim nächsten Fehler fällt dir die Ursache dann schneller ein.",
+    "code": "name = \"ada lovelace\"\nprint(name.title())      # sofort ausgeben: geht\nname = name.title()      # behalten: nur mit Zuweisung\nprint(name)"
+   },
+   "checkliste": [
+    "Das f vergessen: Die Platzhalter stehen wörtlich in der Ausgabe, ohne Fehlermeldung. Abhilfe: f direkt vor das Anführungszeichen.",
+    "Ergebnis einer Methode nicht zuweisen: Der alte Wert bleibt stehen. Abhilfe: name = name.title().",
+    "Anführungszeichen mischen: Ein Apostroph beendet den String, es kommt SyntaxError: unterminated string literal. Abhilfe: außen die andere Sorte.",
+    "Leerzeichen beim Verketten vergessen: Aus Marie und Curie wird MarieCurie. Abhilfe: den String mit dem Leerzeichen selbst einbauen.",
+    "Funktion und Methode verwechseln: name.len() und upper(name) gibt es nicht, Python meldet AttributeError oder NameError. Abhilfe: len(name) und name.upper().",
+    "len als Buchstabenzählung lesen: Leerzeichen und Satzzeichen zählen mit. len zählt Zeichen."
+   ],
+   "merk": "Erst die Ausgabe prüfen, dann den Code. Die stillen Fehler sieht man nur am Text."
+  },
+  {
+   "titel": "Übungen",
+   "python": {
+    "text": "Hier sind sieben Übungen aus dem Kurs. Schreibe jede in eine eigene Datei und führe sie aus. Vergleiche erst danach mit der Musterlösung unten. Die Musterlösung zeigt die Übungen eins bis sieben in einem Programm.",
+    "code": "# Musterlösung zu den Übungen dieses Kapitels\n\n# Übung 1: außen die Sorte, die im Text fehlt\nprint(\"Ich habe's geschafft\")\nprint('Sie sagte: \"Guten Morgen\"')\n\n# Übung 2: vier Zeilen aus einem print\nprint(\"Ausrüstung:\\n\\tZelt\\n\\tSchlafsack\\n\\tLampe\")\n\n# Übung 3 und 7: Methoden liefern neue Werte\nname = \"jens hartmann\"\nprint(name.title())\nprint(name.upper())\nprint(name.lower())\nprint(name)              # unverändert\n\nname = name.title()      # Ergebnis zuweisen\nprint(name)              # Jens Hartmann\n\n# Übung 5: Trennlinie und Verketten\nprint(\"-\" * 30)\nprint(\"Logistik\" + \" \" + \"Munster\")\nprint(\"-\" * 30)\n\n# Übung 6: f-String statt Plus\nvorname = \"Jens\"\nnachname = \"Hartmann\"\nsatz = f\"Bewerbung von {vorname} {nachname}\"\nprint(satz)\n\n# Übung 7: Apostroph im f-String\nprint(f\"Das ist {vorname}' Bewerbung\")\n\n# Formatangabe: zwei Nachkommastellen\npreis = 4.5\nprint(f\"Das kostet {preis:.2f} Euro.\")"
+   },
+   "aufgaben": [
+    "Apostroph und Anführungszeichen im Text: Gib zwei Sätze aus. Im ersten steht ein Apostroph mitten im Wort, im zweiten ein Teil des Satzes in doppelten Anführungszeichen. Löse beides nur über die äußere Sorte, ohne Rückstrich. Fertig, wenn: beide Sätze vollständig erscheinen und kein SyntaxError kommt.",
+    "Vier Zeilen aus einem Aufruf: Gib eine Überschrift und darunter drei eingerückte Ausrüstungsgegenstände aus, mit genau einem print(). Die Einrückung ist ein Tabulator, kein getipptes Leerzeichen. Fertig, wenn: vier Zeilen erscheinen, die unteren drei eingerückt sind und im Quelltext nur ein print steht.",
+    "Drei Schreibweisen desselben Namens: Lege einen klein geschriebenen Namen aus Vor- und Nachname ab. Gib ihn mit title(), mit upper() und mit lower() aus, danach die Variable selbst. Fertig, wenn: vier Zeilen erscheinen und die letzte wieder klein geschrieben ist.",
+    "Zeichen zählen: Lass dir die Länge von drei Texten nennen, einem Wort, einem Namen aus zwei Wörtern und einem leeren Text. Überlege vorher, ob das Leerzeichen mitzählt. Fertig, wenn: die drei Zahlen 10, 14 und 0 untereinander stehen.",
+    "Trennlinie und zusammengesetzte Zeile: Gib eine Linie aus 30 Bindestrichen aus, darunter zwei Variablen mit einem Leerzeichen dazwischen, darunter noch einmal die Linie. Die Striche werden nicht einzeln getippt. Fertig, wenn: drei Zeilen erscheinen und in der Mitte Logistik Munster steht.",
+    "Der erste f-String: Lege zwei Variablen für Vor- und Nachnamen an. Baue daraus in einer dritten Variablen einen Satz zusammen, ohne ein einziges Pluszeichen. Fertig, wenn: Bewerbung von Jens Hartmann erscheint und im Quelltext kein Plus vorkommt.",
+    "Drei Fehler in sechs Zeilen: Die Vorgabe soll Bewerbung von Jens Hartmann und Das ist Jens' Bewerbung ausgeben. Repariere zuerst den Fehler, der den Start verhindert, dann die zwei stillen Fehler, einen nach dem anderen. Fertig, wenn: genau diese beiden Zeilen erscheinen, mit großen Anfangsbuchstaben und dem Apostroph hinter Jens."
+   ]
+  }
+ ]
 }

@@ -27,7 +27,7 @@ und **C/C++** (statisch, kompiliert). So versteht man nicht nur *eine* Sprache, 
 | ![Start mit Fortschrittsübersicht](docs/screenshots/start.png) | ![Quiz: Lernfeld wählen, Schwierigkeitsgrad, Notenschlüssel](docs/screenshots/quiz.png) | ![Prüfungstraining: 8 Kapitel Wissen & Taktik](docs/screenshots/pruefung.png) |
 
 Weitere Ansichten liegen in [`docs/screenshots/`](docs/screenshots/):
-Sprachkurs (18 Kapitel), Glossar (durchsuchbar, Python/C++ filterbar), JSON-Kurs.
+Sprachkurs (19 Kapitel, 149 Glossarbegriffe, Übungsaufgaben je Kapitel), Glossar (durchsuchbar, Python/C++ filterbar), JSON-Kurs.
 Die Bilder sind echte Screenshots der Web-App (1400 × 1000), nicht gestellt.
 
 ## Warum Python UND C++?
@@ -80,7 +80,7 @@ Inhalte nutzen und denselben Fortschritt teilen:
 
 ### Sprachkurs (Python & C++)
 
-- **18 Kapitel** in einfacher Sprache ([STIL.md](STIL.md): „Einfach erklärt“)
+- **19 Kapitel** in einfacher Sprache ([STIL.md](STIL.md): „Einfach erklärt“) – Kapitel 1–4, 7 und 8 enthalten zusätzlich Checklisten, typische Fehler und Übungsaufgaben aus dem Python-Crashkurs (Tag 1)
 - Jedes Kapitel führt **Python und C++ parallel**: Erklärung, Code, Vergleich, Merksatz
 - Mit **Glossar** der wichtigsten Begriffe (`tools/sprachkurs/glossar.json`)
 - Lesestatus wird erfasst und fließt in den Gesamtfortschritt ein
