@@ -27,6 +27,10 @@ und **C/C++** (statisch, kompiliert). So versteht man nicht nur *eine* Sprache, 
 |---|---|---|
 | ![Start mit Fortschrittsübersicht](docs/screenshots/start.png) | ![Quiz: Lernfeld wählen, Schwierigkeitsgrad, Notenschlüssel](docs/screenshots/quiz.png) | ![Prüfungstraining: 8 Kapitel Wissen & Taktik](docs/screenshots/pruefung.png) |
 
+Die Oberfläche ist ein dunkles Dashboard im Stil einer Entwickler-Lernplattform:
+Seitenleiste mit Gruppen und aufklappbaren Sprachkursen, Topbar mit Suche, Startseite
+mit Kennzahlen-Karten und Modul-Karten samt Fortschrittsbalken – ohne CDN, alles eigenes CSS.
+
 Weitere Ansichten liegen in [`docs/screenshots/`](docs/screenshots/):
 Python-Kurs ([Übersicht](docs/screenshots/python.png)), C++-Kurs ([Übersicht](docs/screenshots/cpp.png)), [Python-Aufgaben mit Lösungen](docs/screenshots/aufgaben.png), [C++-Aufgaben mit Lösungen](docs/screenshots/aufgaben_cpp.png), Glossar (149 Begriffe, durchsuchbar), JSON-Kurs.
 Die Bilder sind echte Screenshots der Web-App (1400 × 1000), nicht gestellt.

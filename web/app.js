@@ -8,7 +8,7 @@
 const DATEN_PFAD = "/daten/";
 // Versionsmarker: erscheint im Footer. LEER = Browser nutzt alte app.js
 // (Cache!) → Strg+F5 / Cache leeren.
-const APP_VERSION = "1.0.1";
+const APP_VERSION = "2.0.0";
 const STUFEN = ["leicht", "mittel", "schwer"];
 const STUFEN_BESCHREIBUNG = {
   leicht: "nur leichte Fragen",
@@ -600,6 +600,53 @@ function quizTitel(z) {
 }
 
 // ------------------------------------------------------------------
+// Rahmen: Seitenleiste, Topbar, Weiterlernen
+// ------------------------------------------------------------------
+const ANSICHT_TITEL = {
+  start: "Dashboard & Lernfortschritt",
+  ziel: "Ziel & Mission",
+  quiz: "Quiz nach IHK-Standard",
+  python: "🐍 Python-Kurs",
+  cpp: "⚙️ C++-Kurs",
+  json: "JSON-Kurs",
+  pruefung: "Prüfungstraining: Wissen & Taktik",
+  glossar: "Glossar",
+  ki: "KI-Assistent",
+  karten: "Karteikarten",
+  konto: "Konto",
+};
+
+function toggleSidebar() {
+  const leiste = document.getElementById("sidebar");
+  if (leiste) leiste.classList.toggle("open");
+}
+
+function aktualisiereSidebar() {
+  const code = document.getElementById("sidebar-sync-code");
+  if (!code) return;
+  const gespeichert = ladeSyncCode();
+  code.textContent = gespeichert
+    ? gespeichert.slice(0, 8) + "…" + gespeichert.slice(-4)
+    : "kein Sync-Code";
+}
+
+function topbarSuche(wert) {
+  zeigeAnsicht("glossar");
+  const feld = document.getElementById("glossar-suchfeld");
+  if (feld) {
+    feld.value = wert || "";
+    filterGlossar();
+  }
+}
+
+function weiterlernen() {
+  const fortschritt = ladeFortschritt();
+  const py = (fortschritt.python_gelesen || []).length;
+  const cpp = (fortschritt.cpp_gelesen || []).length;
+  zeigeAnsicht(cpp < py ? "cpp" : "python");
+}
+
+// ------------------------------------------------------------------
 // Ansichten wechseln
 // ------------------------------------------------------------------
 function zeigeAnsicht(name) {
@@ -620,6 +667,14 @@ function zeigeAnsicht(name) {
   if (name === "ki") kiBereichOeffnen();
   if (name === "karten") kartenBereichOeffnen();
   if (name === "konto") kontoBereichOeffnen();
+
+  const titel = document.getElementById("topbar-titel");
+  if (titel) titel.textContent = ANSICHT_TITEL[name] || "Lernpfad";
+  aktualisiereSidebar();
+  if (window.innerWidth <= 900) {
+    const leiste = document.getElementById("sidebar");
+    if (leiste) leiste.classList.remove("open");
+  }
 }
 
 // ------------------------------------------------------------------
@@ -735,6 +790,93 @@ function zeigeStart() {
     const note = NOTEN.find(n => gesamt >= n.min);
     pruefungsInfo += `<p><strong>GESAMTNOTE:</strong> ${gesamt.toFixed(1)} % →
       Note ${note.note} (${note.text}) <span class="subtitle">[40 % + 60 %]</span></p>`;
+  }
+
+  // ---- Dashboard: Kennzahlen, Fortschrittsbalken, Modulkarten ----
+  const gelesenGesamt = pyGelesen.length + cppGelesen.length;
+  const gesamtKapitel = 19 * 2;
+  const pct = (a, b) => (b ? Math.round((a / b) * 100) : 0);
+  const ptGesamt = PRUEFUNGSTRAINING.length * STUFEN.length;
+  const testsAbsolviert = PRUEFUNGEN.filter((p) => fortschritt[p.key]).length;
+  let besteNote = null;
+  for (const p of PRUEFUNGEN) {
+    const e = fortschritt[p.key];
+    if (e && e.note && (besteNote === null || e.note < besteNote)) besteNote = e.note;
+  }
+  const pyPct = pct(pyGelesen.length, 19);
+  const cppPct = pct(cppGelesen.length, 19);
+  const ptPct = pct(ptBestanden, ptGesamt);
+  const quizPct = pct(quizBestanden, quizGesamt);
+  const offeneKapitel = gesamtKapitel - gelesenGesamt;
+
+  const modulKarten = [
+    { badges: ["py", "Python"], titel: "🐍 Python-Kurs",
+      text: "19 Kapitel – mit Pflicht- und Vertiefungsaufgaben samt Lösungen.",
+      pct: pyPct, cls: "", ziel: "python", fuss: `${pyGelesen.length} / 19 Kapitel` },
+    { badges: ["cpp", "C++"], titel: "⚙️ C++-Kurs",
+      text: "Typen, Speicher, Pointer und Werkzeuge – getrennt von Python.",
+      pct: cppPct, cls: "gruen", ziel: "cpp", fuss: `${cppGelesen.length} / 19 Kapitel` },
+    { badges: ["pruef", "Training"], titel: "🧠 Prüfungstraining",
+      text: "Wissen und Taktik für Prüfungsteil 1 und 2.",
+      pct: ptPct, cls: "lila", ziel: "pruefung", fuss: `${ptBestanden} / ${ptGesamt} Stufen` },
+  ].map((m) => `
+      <div class="modul-card" onclick="zeigeAnsicht('${m.ziel}')">
+        <div>
+          <div class="modul-kopf">
+            <span class="badge ${m.badges[0]}">${m.badges[1]}</span>
+            <span class="badge">${m.fuss}</span>
+          </div>
+          <h4>${m.titel}</h4>
+          <p>${m.text}</p>
+        </div>
+        <div class="modul-fuss">
+          <div class="bar-zeile"><span>Fortschritt</span><span>${m.pct}%</span></div>
+          <div class="bar"><div class="bar-fill ${m.cls}" style="width:${m.pct}%"></div></div>
+        </div>
+      </div>`).join("");
+
+  const dashboard = document.getElementById("start-dashboard");
+  if (dashboard) {
+    dashboard.innerHTML = `
+      <div class="hero">
+        <div class="chip">✨ ${gelesenGesamt === 0 && quizBestanden === 0 ? "Willkommen" : "Willkommen zurück"}</div>
+        <h3>${gelesenGesamt === 0 ? "Bereit für die erste Lerneinheit?" : "Bereit für die nächste Lerneinheit?"}</h3>
+        <p>${gelesenGesamt} von ${gesamtKapitel} Kapiteln gelesen, ${quizBestanden} von ${quizGesamt} Quiz-Stufen bestanden${besteNote ? `, beste Note ${besteNote}` : ""}. Python und C++ laufen getrennt – du entscheidest, welche Sprache heute dran ist.</p>
+        <div class="hero-aktionen">
+          <button class="btn-primary" onclick="weiterlernen()">▶ Weiterlernen</button>
+          <button class="secondary" onclick="zeigeAnsicht('quiz')">📝 Quiz starten</button>
+        </div>
+        <div class="hero-glow"></div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card"><div>
+          <div class="stat-kopf">Kapitel gelesen</div>
+          <div class="stat-wert">${gelesenGesamt} / ${gesamtKapitel}</div>
+          <div class="stat-fuss">🐍 ${pyGelesen.length} · ⚙️ ${cppGelesen.length}</div>
+        </div><div class="stat-icon">📖</div></div>
+        <div class="stat-card"><div>
+          <div class="stat-kopf">Quiz-Stufen bestanden</div>
+          <div class="stat-wert">${quizBestanden} / ${quizGesamt}</div>
+          <div class="stat-fuss gruen">${quizPct}% der Stufen</div>
+        </div><div class="stat-icon gruen">🏅</div></div>
+        <div class="stat-card"><div>
+          <div class="stat-kopf">Übungstests</div>
+          <div class="stat-wert">${testsAbsolviert} / ${PRUEFUNGEN.length}</div>
+          <div class="stat-fuss gelb">${besteNote ? "beste Note " + besteNote : "noch keiner geschrieben"}</div>
+        </div><div class="stat-icon gelb">🎓</div></div>
+        <div class="stat-card"><div>
+          <div class="stat-kopf">Prüfungstraining</div>
+          <div class="stat-wert">${ptBestanden} / ${ptGesamt}</div>
+          <div class="stat-fuss lila">Wissen &amp; Taktik</div>
+        </div><div class="stat-icon lila">🧠</div></div>
+      </div>
+
+      <div class="abschnitt-titel-zeile">
+        <h3>Empfohlene Module</h3>
+        <span class="subtitle">${offeneKapitel > 0 ? offeneKapitel + " Kapitel offen" : "alle Kapitel gelesen 🎉"}</span>
+      </div>
+      <div class="modul-grid">${modulKarten}</div>`;
   }
 
   document.getElementById("start-fortschritt").innerHTML =

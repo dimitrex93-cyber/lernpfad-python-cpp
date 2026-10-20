@@ -3,44 +3,86 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lernpfad Python & C++ – Web-App</title>
-<link rel="stylesheet" href="style.css?v=1.0.1">
+<title>Lernpfad Python &amp; C++ – Web-App</title>
+<link rel="stylesheet" href="style.css?v=2.0.0">
 </head>
 <body>
-<header>
-  <h1>🐍⚙️ Lernpfad Python &amp; C++</h1>
-  <p class="subtitle">Vom Programmieranfänger zum Senior-Entwickler – im Browser</p>
-  <nav>
-    <div class="nav-gruppe">
-      <span class="nav-label">Lernen</span>
-      <div class="nav-btns">
-        <button id="nav-start" class="nav-btn active" onclick="zeigeAnsicht('start')">🏠 Start</button>
-        <button id="nav-ziel" class="nav-btn" onclick="zeigeAnsicht('ziel')">🎯 Ziel &amp; Mission</button>
-        <button id="nav-quiz" class="nav-btn" onclick="zeigeAnsicht('quiz')">📝 Quiz</button>
-        <button id="nav-python" class="nav-btn" onclick="zeigeAnsicht('python')" title="Python lernen – eigener Kurs ohne C++">🐍 Python</button>
-        <button id="nav-cpp" class="nav-btn" onclick="zeigeAnsicht('cpp')" title="C++ lernen – eigener Kurs ohne Python">⚙️ C++</button>
-        <button id="nav-json" class="nav-btn" onclick="zeigeAnsicht('json')">🧾 JSON-Kurs</button>
-        <button id="nav-pruefung" class="nav-btn" onclick="zeigeAnsicht('pruefung')" title="Wissen &amp; Taktik für die Prüfungsteile 1 und 2">🧠 Prüfungstraining</button>
-        <button id="nav-glossar" class="nav-btn" onclick="zeigeAnsicht('glossar')">📚 Glossar</button>
-      </div>
-    </div>
-    <div class="nav-gruppe">
-      <span class="nav-label">KI &amp; Tools</span>
-      <div class="nav-btns">
-        <button id="nav-ki" class="nav-btn" onclick="zeigeAnsicht('ki')" title="Nur mit abgeschlossenem Abo">🤖 KI-Assistent</button>
-        <button id="nav-karten" class="nav-btn" onclick="zeigeAnsicht('karten')" title="Erstellte Karteikarten – auf dem Server gespeichert">🃏 Karteikarten</button>
-      </div>
-    </div>
-    <div class="nav-gruppe">
-      <span class="nav-label">Konto</span>
-      <div class="nav-btns">
-        <button id="nav-konto" class="nav-btn" onclick="zeigeAnsicht('konto')" title="Konto, Bearbeitungsstand-Key und KI-Freischaltung">👤 Konto</button>
-      </div>
-    </div>
-  </nav>
-</header>
+<div class="app">
 
-<main>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-logo">🛠️</div>
+      <div class="brand-text">
+        <h1>Lernpfad</h1>
+        <span>Python &amp; C++</span>
+      </div>
+      <span class="version-chip">v2.0.0</span>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-group">
+        <div class="nav-group-label">Hauptmenü</div>
+        <button id="nav-start" class="nav-btn nav-item active" onclick="zeigeAnsicht('start')">🏠 Startseite</button>
+        <button id="nav-ziel" class="nav-btn nav-item" onclick="zeigeAnsicht('ziel')">🎯 Ziel &amp; Mission</button>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Lernen</div>
+        <details class="nav-acc" open>
+          <summary>📖 Sprachkurse</summary>
+          <div class="nav-acc-body">
+            <button id="nav-python" class="nav-btn nav-item sub" onclick="zeigeAnsicht('python')" title="Python lernen – eigener Kurs ohne C++">🐍 Python-Kurs</button>
+            <button id="nav-cpp" class="nav-btn nav-item sub" onclick="zeigeAnsicht('cpp')" title="C++ lernen – eigener Kurs ohne Python">⚙️ C++-Kurs</button>
+          </div>
+        </details>
+        <button id="nav-json" class="nav-btn nav-item" onclick="zeigeAnsicht('json')">🧾 JSON-Kurs</button>
+        <button id="nav-glossar" class="nav-btn nav-item" onclick="zeigeAnsicht('glossar')">📚 Glossar</button>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Training</div>
+        <button id="nav-quiz" class="nav-btn nav-item" onclick="zeigeAnsicht('quiz')">📝 Quiz (Lernfelder)</button>
+        <button id="nav-pruefung" class="nav-btn nav-item" onclick="zeigeAnsicht('pruefung')" title="Wissen &amp; Taktik für die Prüfungsteile 1 und 2">🧠 Prüfungstraining</button>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">KI &amp; Tools</div>
+        <button id="nav-ki" class="nav-btn nav-item" onclick="zeigeAnsicht('ki')" title="Nur mit abgeschlossenem Abo">🤖 KI-Assistent</button>
+        <button id="nav-karten" class="nav-btn nav-item" onclick="zeigeAnsicht('karten')" title="Erstellte Karteikarten – auf dem Server gespeichert">🃏 Karteikarten</button>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Konto</div>
+        <button id="nav-konto" class="nav-btn nav-item" onclick="zeigeAnsicht('konto')" title="Konto, Bearbeitungsstand-Key und KI-Freischaltung">👤 Konto</button>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sync-box">
+        <div class="sync-box-kopf">
+          <span class="dot"></span>
+          <span class="sync-title">Fortschritt</span>
+          <button class="icon-btn" onclick="syncJetzt()" title="Jetzt synchronisieren">🔄</button>
+        </div>
+        <code id="sidebar-sync-code">kein Sync-Code</code>
+      </div>
+      <div class="version-line">Version <span id="app-version">(lädt …)</span></div>
+    </div>
+  </aside>
+
+  <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()" aria-label="Menü öffnen">☰</button>
+
+  <div class="main">
+    <header class="topbar">
+      <h2 id="topbar-titel">Dashboard &amp; Lernfortschritt</h2>
+      <div class="topbar-actions">
+        <input type="text" class="topbar-suche" placeholder="Glossar durchsuchen … (Eingabe)" onkeydown="if(event.key==='Enter')topbarSuche(this.value)">
+        <button class="btn-primary" onclick="weiterlernen()">▶ Weiterlernen</button>
+      </div>
+    </header>
+
+    <main class="content">
+
   <!-- ============ ZIEL & MISSION ============ -->
   <section id="ansicht-ziel" class="ansicht" hidden>
     <div class="karte ziel-hero">
@@ -90,7 +132,7 @@
         <li><strong>Abschließen:</strong> Mini-Projekt bauen – und Zwischen-/Abschlusstest ablegen</li>
       </ol>
       <div class="button-reihe">
-        <button class="primary" onclick="zeigeAnsicht('kurs')">📖 Jetzt starten: Sprachkurs</button>
+        <button class="primary" onclick="zeigeAnsicht('python')">🐍 Jetzt starten: Python-Kurs</button>
         <button class="secondary" onclick="zeigeAnsicht('quiz')">📝 Oder direkt testen</button>
       </div>
     </div>
@@ -98,18 +140,9 @@
 
   <!-- ============ START ============ -->
   <section id="ansicht-start" class="ansicht">
+    <div id="start-dashboard"></div>
     <div class="karte">
-      <h2>Willkommen beim Lernpfad!</h2>
-      <p>Dies ist die Web-Version der Terminal-Lern-App. Du kannst <strong>Quiz</strong>
-      (Wissenstests mit Noten und Schwierigkeitsgraden) und den kompletten
-      <strong>Sprachkurs</strong> (Python &amp; C++ im Vergleich) direkt im Browser nutzen.</p>
-      <div class="button-reihe">
-        <button class="primary" onclick="zeigeAnsicht('quiz')">📝 Zum Quiz</button>
-        <button class="primary" onclick="zeigeAnsicht('kurs')">📖 Zum Sprachkurs</button>
-      </div>
-    </div>
-    <div class="karte">
-      <h2>Dein Fortschritt</h2>
+      <h2>Dein Fortschritt im Detail</h2>
       <div id="start-fortschritt">Lade Fortschritt …</div>
     </div>
     <div class="karte">
@@ -383,16 +416,18 @@
       <p id="konto-freischalt-status" class="subtitle"></p>
     </div>
   </section>
-</main>
+    </main>
 
-<footer>
+    <footer>
+
   <p>Lernpfad Python & C++ – Daten werden direkt aus dem Repository geladen · Fortschritt bleibt in deinem Browser (localStorage)</p>
-  <p class="subtitle">Mit Unterstützung von KI-Tools (Hermes Agent) erstellt und gepflegt – in Zusammenarbeit mit menschlichen Autoren.</p>
-  <p class="subtitle">Verbesserungsvorschläge oder Fehler gefunden? <a href="https://github.com/dimitrex93-cyber/lernpfad-python-cpp/issues" target="_blank" rel="noopener">Issue auf GitHub erstellen</a> · <a href="https://github.com/dimitrex93-cyber/lernpfad-python-cpp" target="_blank" rel="noopener">Repository</a> · Version: <span id="app-version">(lädt …)</span></p>
-</footer>
+  <p class="footer-line">Mit Unterstützung von KI-Tools (Hermes Agent) erstellt und gepflegt – in Zusammenarbeit mit menschlichen Autoren.</p>
+  <p class="footer-line">Verbesserungsvorschläge oder Fehler gefunden? <a href="https://github.com/dimitrex93-cyber/lernpfad-python-cpp/issues" target="_blank" rel="noopener">Issue auf GitHub erstellen</a> · <a href="https://github.com/dimitrex93-cyber/lernpfad-python-cpp" target="_blank" rel="noopener">Repository</a> · Version: <span id="app-version">(lädt …)</span></p>
+    </footer>
+  </div>
+</div>
 
 <div id="toast-container" aria-live="polite"></div>
-
-<script src="app.js?v=1.0.1"></script>
+<script src="app.js?v=2.0.0"></script>
 </body>
 </html>
