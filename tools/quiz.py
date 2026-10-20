@@ -838,11 +838,30 @@ def zeige_abschnitt(abschnitt, index, anzahl):
         print(c("✅ Checkliste:", "gelb"))
         for punkt in abschnitt["checkliste"]:
             print(f"  • {punkt}")
-    if abschnitt.get("aufgaben"):
+    for feld, kopf in (("aufgaben_pflicht", "✍️  Pflichtaufgaben:"),
+                       ("aufgaben_vertiefung", "🔥 Vertiefungsaufgaben:"),
+                       ("aufgaben", "✍️  Übungen:")):
+        liste = abschnitt.get(feld)
+        if not liste:
+            continue
         print()
-        print(c("✍️  Übungen:", "gelb"))
-        for nummer, aufgabe in enumerate(abschnitt["aufgaben"], start=1):
-            print(f"  {nummer}. {aufgabe}")
+        print(c(kopf, "gelb"))
+        for nummer, aufgabe in enumerate(liste, start=1):
+            if isinstance(aufgabe, dict):
+                print(f"  {nummer}. {aufgabe.get('titel', 'Aufgabe')}")
+                if aufgabe.get("aufgabe"):
+                    print(f"     {aufgabe['aufgabe']}")
+                if aufgabe.get("stdin"):
+                    print(c("     Eingabe zum Testen: "
+                            + aufgabe["stdin"].replace("\n", " | "), "dunkel"))
+                if aufgabe.get("tipp"):
+                    print(c(f"     Tipp: {aufgabe['tipp']}", "dunkel"))
+                if aufgabe.get("loesung"):
+                    print(c("     Lösung:", "dunkel"))
+                    for zeile in aufgabe["loesung"].splitlines():
+                        print(c("       " + zeile, "cyan"))
+            else:
+                print(f"  {nummer}. {aufgabe}")
     if abschnitt.get("merk"):
         print()
         print(c("📌 Merksatz:", "gelb"))

@@ -56,8 +56,10 @@ Codebeispiel und Merksatz pro Abschnitt.
   Kapitel 2, 3, 4, 7 und 8 enthalten zusätzlich **Pflicht- und
   Vertiefungsaufgaben** aus dem Python-Crashkurs (Tag 1) mit Lösungen
   (`aufgaben_pflicht` / `aufgaben_vertiefung`).
-- **C++-Kurs:** `tools/cpp_kurs/` – 19 Kapitel, 97 Abschnitte. Themen, die nur
-  Python betreffen (f-Strings, Listenmethoden), fehlen hier bewusst.
+- **C++-Kurs:** `tools/cpp_kurs/` – 19 Kapitel, 121 Abschnitte, dazu 71
+  Aufgaben (29 Pflicht-/Vertiefungsblöcke) mit vollständigen, kompilierten
+  Lösungen. Themen, die nur Python betreffen (f-Strings, Listenmethoden),
+  fehlen hier bewusst.
 - **Gemeinsame Quelle:** `tools/sprachkurs/` bleibt der zweisprachige
   Master (je Abschnitt `python`- und `cpp`-Block) plus `glossar.json`. Die
   beiden Kursordner werden daraus abgeleitet; wer Inhalte ändert, ändert sie

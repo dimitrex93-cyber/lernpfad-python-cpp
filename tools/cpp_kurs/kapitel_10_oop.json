@@ -29,6 +29,58 @@
    },
    "vergleich": "Vererbung funktioniert in beiden Sprachen gleich. C++ verlangt virtual und override. Python überschreibt still. Python nutzt super(). C++ ruft die Basisklasse in der Initialisierungsliste auf.",
    "merk": "C++: virtual in der Basis, override beim Überschreiben – sonst keine Polymorphie."
+  },
+  {
+   "titel": "Pflichtaufgaben",
+   "cpp": {
+    "text": "Jetzt baust du eigene Klassen. Jede Aufgabe ist ein vollständiges Programm mit main. Achte darauf, dass die Attribute private sind und der Zugriff nur über Methoden läuft."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Klasse Buch mit Konstruktor",
+     "aufgabe": "Schreibe eine Klasse Buch mit zwei privaten Attributen: titel als Text und seiten als int. Der Konstruktor nimmt beide Werte an und setzt sie in der Initialisierungsliste. Dazu kommt eine public Methode info, die Titel und Seitenzahl in einer Zeile ausgibt. Diese Methode soll const sein. Erzeuge in main ein Buch mit dem Titel C++ lernen und 320 Seiten und rufe info auf. Fertig, wenn: genau die Zeile C++ lernen, 320 Seiten erscheint.",
+     "tipp": "Die Initialisierungsliste steht zwischen der schließenden runden Klammer des Konstruktors und der öffnenden geschweiften Klammer. Davor kommt ein Doppelpunkt. const hinter der Parameterliste einer Methode heißt: Diese Methode ändert das Objekt nicht.",
+     "loesung": "#include <iostream>\n#include <string>\n\nclass Buch {\npublic:\n    Buch(std::string titel, int seiten)\n        : titel(titel), seiten(seiten) {}\n\n    void info() const {\n        std::cout << titel << \", \" << seiten << \" Seiten\\n\";\n    }\n\nprivate:\n    std::string titel;\n    int seiten;\n};\n\nint main() {\n    Buch b(\"C++ lernen\", 320);\n    b.info();\n    return 0;\n}"
+    },
+    {
+     "titel": "Konto mit Regel in der Methode",
+     "aufgabe": "Schreibe eine Klasse Konto mit einem privaten int Attribut stand. Der Konstruktor setzt den Startwert. Die Methode einzahlen nimmt einen Betrag und addiert ihn nur, wenn er größer als 0 ist. Bei einem kleineren Wert gibt sie eine Meldung aus und ändert nichts. getStand ist const und gibt den Stand zurück. Erzeuge ein Konto mit 100, zahle 50 ein, danach minus 20. Fertig, wenn: die Meldung Betrag muss positiv sein erscheint und der Stand am Ende 150 ist.",
+     "tipp": "Die Regel steckt in der Methode, nicht im Attribut. Genau deshalb ist stand private. Von außen kann niemand den Stand direkt verändern, jede Änderung läuft durch einzahlen.",
+     "loesung": "#include <iostream>\n\nclass Konto {\npublic:\n    Konto(int start) : stand(start) {}\n\n    void einzahlen(int betrag) {\n        if (betrag <= 0) {\n            std::cout << \"Betrag muss positiv sein\\n\";\n            return;\n        }\n        stand += betrag;\n    }\n\n    int getStand() const {\n        return stand;\n    }\n\nprivate:\n    int stand;\n};\n\nint main() {\n    Konto k(100);\n    k.einzahlen(50);\n    k.einzahlen(-20);\n    std::cout << \"Stand: \" << k.getStand() << \"\\n\";\n    return 0;\n}"
+    },
+    {
+     "titel": "Vererbung mit virtual und override",
+     "aufgabe": "Schreibe eine Basisklasse Tier mit einem protected Attribut name und einer virtual Methode gib_laut, die drei Punkte zurückgibt. Davon leitest du die Klasse Katze ab. Ihr Konstruktor ruft den Konstruktor der Basisklasse auf. gib_laut wird überschrieben, gibt Miau zurück und trägt override. Erzeuge eine Katze, rufe gib_laut direkt auf und dann noch einmal über eine Referenz auf Tier. Fertig, wenn: zwei Mal Miau erscheint.",
+     "tipp": "Ohne virtual in der Basisklasse würde die Referenz auf Tier die Methode von Tier aufrufen. virtual sorgt dafür, dass zur Laufzeit die Methode des echten Objekts läuft. override ist ein Sicherheitsnetz: Passt die Signatur nicht genau, meldet der Compiler einen Fehler.",
+     "loesung": "#include <iostream>\n#include <string>\n\nclass Tier {\npublic:\n    Tier(std::string name) : name(name) {}\n\n    virtual std::string gib_laut() const {\n        return \"...\";\n    }\n\nprotected:\n    std::string name;\n};\n\nclass Katze : public Tier {\npublic:\n    Katze(std::string name) : Tier(name) {}\n\n    std::string gib_laut() const override {\n        return \"Miau\";\n    }\n};\n\nint main() {\n    Katze k(\"Mimi\");\n    Tier& tier = k;               // Referenz auf die Basisklasse\n    std::cout << k.gib_laut() << \"\\n\";\n    std::cout << tier.gib_laut() << \"\\n\";\n    return 0;\n}"
+    },
+    {
+     "titel": "Rechteck mit rechnenden Methoden",
+     "aufgabe": "Schreibe eine Klasse Rechteck mit den privaten Attributen breite und hoehe. Dazu kommen drei const Methoden: flaeche, umfang und ist_quadrat. ist_quadrat gibt bool zurück und prüft, ob beide Seiten gleich sind. Erzeuge in main ein Rechteck mit 4 und 5. Fertig, wenn: die drei Zeilen Fläche 20, Umfang 18 und Quadrat nein erscheinen.",
+     "tipp": "Eine Methode, die nur rechnet, gibt den Wert mit return zurück und gibt nichts aus. Das Ausgeben machst du in main. So bleibt die Klasse wiederverwendbar.",
+     "loesung": "#include <iostream>\n\nclass Rechteck {\npublic:\n    Rechteck(int breite, int hoehe) : breite(breite), hoehe(hoehe) {}\n\n    int flaeche() const {\n        return breite * hoehe;\n    }\n\n    int umfang() const {\n        return 2 * (breite + hoehe);\n    }\n\n    bool ist_quadrat() const {\n        return breite == hoehe;\n    }\n\nprivate:\n    int breite;\n    int hoehe;\n};\n\nint main() {\n    Rechteck r(4, 5);\n    std::cout << \"Fläche: \" << r.flaeche() << \"\\n\";\n    std::cout << \"Umfang: \" << r.umfang() << \"\\n\";\n    std::cout << \"Quadrat: \" << (r.ist_quadrat() ? \"ja\" : \"nein\") << \"\\n\";\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "titel": "Vertiefungsaufgaben",
+   "cpp": {
+    "text": "Hier wird es etwas größer. Du zählst Objekte über ein Attribut der ganzen Klasse und baust eine Vererbung mit zwei Ebenen und einer eigenen Methode."
+   },
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Wie viele Objekte leben gerade",
+     "aufgabe": "Schreibe eine Klasse Zaehler mit einem static int Attribut anzahl. Der Konstruktor erhöht anzahl um eins, der Destruktor verringert sie um eins. Das Attribut braucht außerhalb der Klasse eine Definition, sonst meldet der Linker einen Fehler. Gib anzahl drei Mal aus: vor einem Block, innerhalb eines Blocks mit zwei Objekten und nach dem Block. Fertig, wenn: die Ausgabe 0, dann 2, dann 0 lautet.",
+     "tipp": "static heißt: Das Attribut gehört zur Klasse, nicht zu einem einzelnen Objekt. Alle Objekte teilen sich denselben Wert. Ein Block in geschweiften Klammern beendet die Lebensdauer seiner Objekte, dort läuft der Destruktor.",
+     "loesung": "#include <iostream>\n\nclass Zaehler {\npublic:\n    Zaehler() { ++anzahl; }\n    ~Zaehler() { --anzahl; }\n\n    static int anzahl;   // gehört zur Klasse, nicht zum Objekt\n};\n\nint Zaehler::anzahl = 0;   // Definition außerhalb der Klasse\n\nint main() {\n    std::cout << Zaehler::anzahl << \"\\n\";\n    {\n        Zaehler a;\n        Zaehler b;\n        std::cout << Zaehler::anzahl << \"\\n\";\n    }\n    std::cout << Zaehler::anzahl << \"\\n\";\n    return 0;\n}"
+    },
+    {
+     "titel": "Auto erbt von Fahrzeug",
+     "aufgabe": "Schreibe eine Klasse Fahrzeug mit den protected Attributen marke und raeder und einer const Methode beschreibung, die beide Werte als Text zurückgibt. Leite Auto davon ab. Der Konstruktor von Auto nimmt Marke und Türen, setzt die Räder fest auf 4 und reicht die Marke an die Basisklasse weiter. Auto bekommt eine eigene Methode beschreibung. Sie holt den Text der Basisklasse über Fahrzeug::beschreibung und hängt die Türen an. Fertig, wenn: die Zeile VW mit 4 Rädern, 5 Türen erscheint.",
+     "tipp": "Der Doppelpunkt in der Initialisierungsliste ruft die Basisklasse auf, hier Fahrzeug(marke, 4). Mit dem Klassennamen und zwei Doppelpunkten davor erreichst du die Methode der Basisklasse, auch wenn Auto eine eigene Methode mit demselben Namen hat.",
+     "loesung": "#include <iostream>\n#include <string>\n\nclass Fahrzeug {\npublic:\n    Fahrzeug(std::string marke, int raeder) : marke(marke), raeder(raeder) {}\n\n    std::string beschreibung() const {\n        return marke + \" mit \" + std::to_string(raeder) + \" Rädern\";\n    }\n\nprotected:\n    std::string marke;\n    int raeder;\n};\n\nclass Auto : public Fahrzeug {\npublic:\n    Auto(std::string marke, int tueren)\n        : Fahrzeug(marke, 4), tueren(tueren) {}\n\n    std::string beschreibung() const {\n        return Fahrzeug::beschreibung() + \", \" + std::to_string(tueren) + \" Türen\";\n    }\n\nprivate:\n    int tueren;\n};\n\nint main() {\n    Auto a(\"VW\", 5);\n    std::cout << a.beschreibung() << \"\\n\";\n    return 0;\n}"
+    }
+   ]
   }
  ]
 }

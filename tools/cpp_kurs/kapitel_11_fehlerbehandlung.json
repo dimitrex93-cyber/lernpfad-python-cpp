@@ -20,6 +20,52 @@
    },
    "vergleich": "Beide Sprachen: Fange gezielt und zeige Meldungen. Verschlucke keine Fehler im Stillen. C++ hat einen Extra-Trick: RAII. Ressourcen räumen sich dabei selbst auf.",
    "merk": "Fange nur Fehler, die du behandeln kannst. Verschlucke nie alles. In C++ räumen RAII-Objekte Ressourcen selbst auf."
+  },
+  {
+   "titel": "Pflichtaufgaben",
+   "cpp": {
+    "text": "Fehler passieren. In diesen Aufgaben fängst du sie ab, statt das Programm abstürzen zu lassen. Wichtig ist dabei: Nach dem catch läuft das Programm weiter. Genau das prüfst du bei jeder Aufgabe."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Text in eine Zahl umwandeln, sicher",
+     "aufgabe": "Schreibe eine Funktion lies_zahl, die einen Text bekommt und int zurückgibt. Sie wandelt den Text mit std::stoi in eine Zahl um. Steht dort keine Zahl, wirft std::stoi eine Exception vom Typ std::invalid_argument. Fange sie in der Funktion, gib eine Meldung aus und gib 0 zurück. Rufe die Funktion mit 42 und mit abc auf. Fertig, wenn: zuerst 42 erscheint, dann die Meldung Keine Zahl: abc und danach 0, und das Programm normal endet.",
+     "tipp": "try und catch stehen um den gefährlichen Aufruf. In den runden Klammern von catch steht der Typ, den du fangen willst, mit const und kaufmännischem Und. Brauchst du die Meldung nicht, kannst du den Namen hinter dem Typ weglassen.",
+     "loesung": "#include <iostream>\n#include <stdexcept>\n#include <string>\n\nint lies_zahl(const std::string& text) {\n    try {\n        return std::stoi(text);\n    } catch (const std::invalid_argument&) {\n        std::cout << \"Keine Zahl: \" << text << \"\\n\";\n        return 0;\n    }\n}\n\nint main() {\n    std::cout << lies_zahl(\"42\") << \"\\n\";\n    std::cout << lies_zahl(\"abc\") << \"\\n\";\n    return 0;\n}"
+    },
+    {
+     "titel": "Selbst werfen und gezielt fangen",
+     "aufgabe": "Schreibe eine Funktion pruefe_alter, die einen int nimmt und nichts zurückgibt. Ist der Wert kleiner als 0 oder größer als 150, wirft sie mit throw std::invalid_argument eine Exception mit dem Text Alter unplausibel. Sonst gibt sie eine Bestätigung aus. Rufe die Funktion für 25 und für minus 3 auf, jeden Aufruf in einem eigenen try Block mit catch. Fertig, wenn: die Meldung Fehler: Alter unplausibel erscheint, der zweite Aufruf behandelt wird und am Ende Programm läuft weiter steht.",
+     "tipp": "throw beendet die Funktion sofort. Die Zeilen danach laufen nicht mehr. Der catch Block ist der einzige Ort, an dem du auf den Fehler reagierst.",
+     "loesung": "#include <iostream>\n#include <stdexcept>\n\nvoid pruefe_alter(int alter) {\n    if (alter < 0 || alter > 150) {\n        throw std::invalid_argument(\"Alter unplausibel\");\n    }\n    std::cout << \"Alter ok: \" << alter << \"\\n\";\n}\n\nint main() {\n    for (int alter : {25, -3}) {\n        try {\n            pruefe_alter(alter);\n        } catch (const std::invalid_argument& e) {\n            std::cout << \"Fehler: \" << e.what() << \"\\n\";\n        }\n    }\n    std::cout << \"Programm läuft weiter\\n\";\n    return 0;\n}"
+    },
+    {
+     "titel": "Grenzen prüfen mit at",
+     "aufgabe": "Lege einen vector mit drei int Werten an. Lies mit at einen Index, den es nicht gibt, und fange die Exception vom Typ std::out_of_range. Gib in deinem catch eine eigene Meldung aus. Lies danach mit at den letzten gültigen Wert und gib ihn aus. Fertig, wenn: deine Fehlermeldung erscheint, danach Letzter Wert: 30 und kein Absturz.",
+     "tipp": "at prüft die Grenzen und wirft std::out_of_range. Der Zugriff mit eckigen Klammern prüft nicht und liefert bei einem falschen Index undefiniertes Verhalten. Nimm at, wenn du dir beim Index nicht sicher bist.",
+     "loesung": "#include <iostream>\n#include <stdexcept>\n#include <vector>\n\nint main() {\n    std::vector<int> werte = {10, 20, 30};\n    try {\n        std::cout << werte.at(5) << \"\\n\";\n    } catch (const std::out_of_range&) {\n        std::cout << \"Index außerhalb des Vektors\\n\";\n    }\n    std::cout << \"Letzter Wert: \" << werte.at(werte.size() - 1) << \"\\n\";\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "titel": "Vertiefungsaufgaben",
+   "cpp": {
+    "text": "Jetzt wird es anspruchsvoller. Du baust eine eigene Fehlerklasse und fängst zwei verschiedene Fehlertypen in der richtigen Reihenfolge."
+   },
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Eigene Fehlerklasse",
+     "aufgabe": "Schreibe eine Klasse BetragFehler, die von std::runtime_error erbt. Der Konstruktor reicht den Text an die Basisklasse weiter. Schreibe eine Funktion buche, die bei einem Betrag kleiner oder gleich 0 ein Objekt dieser Klasse wirft. Fange den Fehler in main mit catch auf std::exception und gib e.what aus. Fertig, wenn: die Zeile Fehler: Betrag muss positiv sein erscheint.",
+     "tipp": "Eine eigene Fehlerklasse erbt am besten von std::runtime_error. Dann liefert e.what den Text, und ein catch auf std::exception fängt sie mit. Der Konstruktor reicht den Text über die Initialisierungsliste weiter: std::runtime_error(text).",
+     "loesung": "#include <iostream>\n#include <stdexcept>\n#include <string>\n\n// Eigene Fehlerklasse: erbt von std::runtime_error.\nclass BetragFehler : public std::runtime_error {\npublic:\n    explicit BetragFehler(const std::string& text)\n        : std::runtime_error(text) {}\n};\n\nvoid buche(int betrag) {\n    if (betrag <= 0) {\n        throw BetragFehler(\"Betrag muss positiv sein\");\n    }\n    std::cout << \"Gebucht: \" << betrag << \"\\n\";\n}\n\nint main() {\n    try {\n        buche(-5);\n    } catch (const std::exception& e) {   // fängt auch die eigene Klasse\n        std::cout << \"Fehler: \" << e.what() << \"\\n\";\n    }\n    return 0;\n}"
+    },
+    {
+     "titel": "Zwei catch Blöcke in der richtigen Reihenfolge",
+     "aufgabe": "Schreibe eine Funktion teile mit zwei double Parametern. Ist der Nenner 0, wirft sie std::domain_error mit dem Text Division durch null. Sonst gibt sie das Ergebnis zurück. Rufe teile mit 10 und 4 auf, danach mit 10 und 0, beide Aufrufe im selben try Block. Fange zuerst std::domain_error und danach std::exception. Fertig, wenn: zuerst 2.5 erscheint, dann Nicht erlaubt: Division durch null und am Ende Weiter geht es.",
+     "tipp": "Nach dem Fehler springt das Programm in den passenden catch Block. Die restlichen Zeilen im try werden nicht mehr ausgeführt. Der spezielle Typ muss vor dem allgemeinen stehen, sonst fängt der allgemeine Block alles ab und der spezielle kommt nie dran.",
+     "loesung": "#include <iostream>\n#include <stdexcept>\n\ndouble teile(double zaehler, double nenner) {\n    if (nenner == 0.0) {\n        throw std::domain_error(\"Division durch null\");\n    }\n    return zaehler / nenner;\n}\n\nint main() {\n    try {\n        std::cout << teile(10.0, 4.0) << \"\\n\";\n        std::cout << teile(10.0, 0.0) << \"\\n\";\n    } catch (const std::domain_error& e) {\n        std::cout << \"Nicht erlaubt: \" << e.what() << \"\\n\";\n    } catch (const std::exception& e) {\n        std::cout << \"Anderer Fehler: \" << e.what() << \"\\n\";\n    }\n    std::cout << \"Weiter geht es\\n\";\n    return 0;\n}"
+    }
+   ]
   }
  ]
 }

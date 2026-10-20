@@ -54,6 +54,59 @@
    },
    "vergleich": "Python regelt Veränderbarkeit über den Typ. C++ regelst du es selbst mit const. In beiden Sprachen gilt: Was nicht verändert werden darf, meldet der Prüfer, in Python der Interpreter, in C++ der Compiler.",
    "merk": "list, dict und set ändern sich selbst. str, int, float, bool und tuple geben einen neuen Wert zurück."
+  },
+  {
+   "titel": "Pflichtaufgaben",
+   "cpp": {
+    "text": "Diese Aufgaben üben die wichtigsten Datentypen und den Unterschied zwischen char und std::string. Lege für jede Aufgabe eine eigene Datei an und übersetze sie mit den Warnungen an."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Fünf Typen, fünf Variablen",
+     "aufgabe": "Lege fünf Variablen mit passendem Typ an: eine ganze Zahl mit dem Wert 42, eine Kommazahl mit dem Wert 3.14, ein einzelnes Zeichen mit dem Wert A, einen Wahrheitswert mit dem Wert wahr und einen Text mit dem Wert Hallo. Gib jede Variable in einer eigenen Zeile aus. Fertig, wenn: die Ausgabe fünf Zeilen hat und darin 42, 3.14, A, 1 und Hallo stehen.",
+     "tipp": "Für ein einzelnes Zeichen nimmst du char mit einfachen Anführungszeichen und für Text std::string mit doppelten, während der Wahrheitswert bool als 1 ausgegeben wird.",
+     "loesung": "#include <iostream>\n#include <string>\n\nint main() {\n    int ganze_zahl = 42;\n    double kommazahl = 3.14;\n    char buchstabe = 'A';\n    bool wahr = true;\n    std::string text = \"Hallo\";\n\n    std::cout << ganze_zahl << std::endl;\n    std::cout << kommazahl << std::endl;\n    std::cout << buchstabe << std::endl;\n    std::cout << wahr << std::endl;\n    std::cout << text << std::endl;\n\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Ein Zeichen ist kein Text",
+     "aufgabe": "Lege zwei Variablen an, die beide den Buchstaben A tragen: eine als char und eine als std::string. Gib beide aus. Danach gibst du das Zeichen als Zahl aus, indem du es mit static_cast in int umwandelst, und zum Schluss die Länge des Textes. Fertig, wenn: beide Ausgaben A zeigen, das Zeichen als Zahl 65 ergibt und die Länge des Textes 1 ist.",
+     "tipp": "Für die Umwandlung schreibst du static_cast<int>(zeichen), weil das Zeichen intern als Zahl gespeichert ist.",
+     "loesung": "#include <iostream>\n#include <string>\n\nint main() {\n    char zeichen = 'A';\n    std::string text = \"A\";\n\n    std::cout << \"Zeichen: \" << zeichen << std::endl;\n    std::cout << \"Text: \" << text << std::endl;\n    std::cout << \"Zeichen als Zahl: \" << static_cast<int>(zeichen) << std::endl;\n    std::cout << \"Laenge des Textes: \" << text.size() << std::endl;\n\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Abschneiden statt runden",
+     "aufgabe": "Nimm eine Kommazahl mit dem Wert 3.99 und wandle sie mit static_cast in eine ganze Zahl um. Rechne außerdem die ganze Zahl 7 durch 2, und zwar so, dass das Ergebnis eine Kommazahl mit Nachkommastellen ist. Gib beide Ergebnisse mit einer Bezeichnung aus. Fertig, wenn: aus 3.99 die Zahl 3 wird und die Rechnung 3.5 ergibt.",
+     "tipp": "static_cast schneidet den Nachkommateil ab und rundet nicht, und damit 7 durch 2 nicht 3 ergibt, muss einer der beiden Werte eine Kommazahl sein.",
+     "loesung": "#include <iostream>\n\nint main() {\n    double komma = 3.99;\n    int abgeschnitten = static_cast<int>(komma);\n\n    int sieben = 7;\n    double haelfte = static_cast<double>(sieben) / 2.0;\n\n    std::cout << \"komma: \" << komma << std::endl;\n    std::cout << \"abgeschnitten: \" << abgeschnitten << std::endl;\n    std::cout << \"sieben halb: \" << haelfte << std::endl;\n\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Text zu Zahl und zurück",
+     "aufgabe": "Ein Text enthält die Zahl 42. Wandle den Text in eine ganze Zahl um, verdopple sie und wandle das Ergebnis wieder in einen Text um. Gib den ursprünglichen Text, das Ergebnis und die Länge des Ergebnis-Textes aus. Fertig, wenn: das Ergebnis 84 lautet und die Länge 2 ist.",
+     "tipp": "std::stoi macht aus Text eine ganze Zahl und std::to_string macht aus einer Zahl wieder Text, und beide stehen in der Bibliothek string.",
+     "loesung": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string eingabe = \"42\";\n    int zahl = std::stoi(eingabe);\n    int doppelt = zahl * 2;\n    std::string ausgabe = std::to_string(doppelt);\n\n    std::cout << \"Eingabe: \" << eingabe << std::endl;\n    std::cout << \"Doppelt: \" << ausgabe << std::endl;\n    std::cout << \"Laenge: \" << ausgabe.size() << std::endl;\n\n    return 0;\n}\n"
+    }
+   ]
+  },
+  {
+   "titel": "Vertiefungsaufgaben",
+   "cpp": {
+    "text": "Hier kommen Eingaben, Rechnungen und const zusammen. Denke vor dem Tippen daran, welchen Typ jede Variable braucht."
+   },
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Rechteck-Rechner",
+     "aufgabe": "Das Programm liest Breite und Höhe eines Rechtecks in Zentimetern als ganze Zahlen ein. Danach gibt es die Fläche und den Umfang aus, jeweils mit einer Bezeichnung und einer Einheit. Fertig, wenn: bei der Eingabe 5 und 3 die Fläche 15 qcm und der Umfang 16 cm erscheinen.",
+     "tipp": "Die Fläche ist Breite mal Höhe und der Umfang ist zwei mal die Summe aus Breite und Höhe, und für beides reicht int, weil die Eingaben ganze Zahlen sind.",
+     "loesung": "#include <iostream>\n\nint main() {\n    int breite = 0;\n    int hoehe = 0;\n\n    std::cout << \"Breite in cm: \";\n    std::cin >> breite;\n    std::cout << \"Hoehe in cm: \";\n    std::cin >> hoehe;\n\n    int flaeche = breite * hoehe;\n    int umfang = 2 * (breite + hoehe);\n\n    std::cout << \"Flaeche: \" << flaeche << \" qcm\" << std::endl;\n    std::cout << \"Umfang: \" << umfang << \" cm\" << std::endl;\n\n    return 0;\n}\n",
+     "stdin": "5\n3\n"
+    },
+    {
+     "titel": "Ein Wert, der sich nicht ändern darf",
+     "aufgabe": "Schreibe ein Programm, das aus einem Nettopreis von 100 Euro und einem Steuersatz von 0.19 den Bruttopreis berechnet. Der Steuersatz soll sich im Programm nicht ändern können. Ein Text mit der Bezeichnung wird danach noch verändert. Fertig, wenn: als Bruttopreis 119 erscheint und der Compiler die Zeile, die den Steuersatz ändern will, ablehnt, sobald du sie aus dem Kommentar holst.",
+     "tipp": "Mit const vor dem Typ verbietet der Compiler jede spätere Zuweisung, während ein std::string ohne const geändert werden darf.",
+     "loesung": "#include <iostream>\n#include <string>\n\nint main() {\n    const double steuersatz = 0.19;\n    double netto = 100.0;\n    double brutto = netto * (1.0 + steuersatz);\n\n    std::string label = \"Brutto\";\n    label = label + \"preis\";\n\n    std::cout << label << \": \" << brutto << \" Euro\" << std::endl;\n\n    // steuersatz = 0.07;   // Fehler: const verbietet die Zuweisung\n    return 0;\n}\n"
+    }
+   ]
   }
  ]
 }

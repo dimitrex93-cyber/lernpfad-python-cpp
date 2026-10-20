@@ -56,6 +56,61 @@
    },
    "vergleich": "Bei Python gibt es zwei Schritte: schreiben und starten. Bei C++ sind es drei: schreiben, kompilieren, starten. Der Editor schreibt in beiden Fällen nur Text.",
    "merk": "Der Editor schreibt, Python führt aus, das Terminal zeigt. Wer weiß, welches der drei gerade meckert, sucht nicht am falschen Ort."
+  },
+  {
+   "titel": "Pflichtaufgaben",
+   "cpp": {
+    "text": "Diese Aufgaben üben den Einstiegspunkt main, die Ausgabe mit std::cout und die Eingabe mit std::cin und std::getline. Schreibe jede Lösung in eine eigene Datei, übersetze sie und starte sie im Terminal."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Drei Zeilen und ein Rückgabewert",
+     "aufgabe": "Schreibe ein Programm, das drei Zeilen ausgibt: Hallo Welt!, Ich lerne C++ und Heute ist ein guter Tag. Danach soll es den Wert 0 an das Betriebssystem zurückgeben. Starte das Programm und prüfe danach mit echo $?, welchen Wert es zurückgegeben hat. Fertig, wenn: die drei Zeilen in dieser Reihenfolge erscheinen und echo $? die Zahl 0 zeigt.",
+     "tipp": "Jede Ausgabe ist eine eigene Anweisung mit std::cout und einem Semikolon am Ende, und die letzte Zeile vor der schließenden Klammer ist return 0.",
+     "loesung": "#include <iostream>\n\nint main() {\n    std::cout << \"Hallo Welt!\" << std::endl;\n    std::cout << \"Ich lerne C++\" << std::endl;\n    std::cout << \"Heute ist ein guter Tag\" << std::endl;\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Name mit Leerzeichen und Alter einlesen",
+     "aufgabe": "Das Programm fragt nach dem Namen und danach nach dem Alter. Der Name darf ein Leerzeichen enthalten, etwa Anna Maria, und muss vollständig ankommen. Das Alter wird als ganze Zahl eingelesen. Danach gibt das Programm eine Begrüßung und das Alter für das nächste Jahr aus. Fertig, wenn: bei der Eingabe Anna Maria und 30 die Begrüßung den vollen Namen enthält und als nächstes Alter 31 erscheint.",
+     "tipp": "Für den Namen brauchst du std::getline(std::cin, name), weil sonst nach dem Leerzeichen nur Anna übrig bleibt, während für das Alter std::cin >> alter reicht, weil cin die Zahl selbst umwandelt.",
+     "loesung": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string name;\n    std::cout << \"Wie heisst du? \";\n    std::getline(std::cin, name);\n\n    int alter = 0;\n    std::cout << \"Wie alt bist du? \";\n    std::cin >> alter;\n\n    std::cout << \"Hallo \" << name << \"!\" << std::endl;\n    std::cout << \"Naechstes Jahr bist du \" << alter + 1 << \" Jahre alt.\" << std::endl;\n\n    return 0;\n}\n",
+     "stdin": "Anna Maria\n30\n"
+    },
+    {
+     "titel": "Leerzeichen selbst setzen",
+     "aufgabe": "Schreibe ein Programm mit vier Ausgabezeilen. Die erste Zeile lautet Mein Name ist Anna, wobei der Name als eigener Wert hinter dem Text stehen soll und das Leerzeichen dazwischen als eigener Text. Die zweite Zeile ist vollständig leer. Die dritte Zeile zeigt das Ergebnis von 7 plus 5, die vierte Zeile zeigt den Text 7 + 5. Fertig, wenn: die zweite Zeile leer ist, die dritte die Zahl 12 zeigt und die vierte den Text 7 + 5.",
+     "tipp": "C++ hängt mehrere Werte mit weiteren Doppelpfeilen aneinander und setzt kein Leerzeichen von allein, während eine leere Zeile mit std::endl ohne Text davor entsteht.",
+     "loesung": "#include <iostream>\n\nint main() {\n    std::cout << \"Mein Name ist\" << \" \" << \"Anna\" << std::endl;\n    std::cout << std::endl;\n    std::cout << 7 + 5 << std::endl;\n    std::cout << \"7 + 5\" << std::endl;\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Ein Programm, das nicht übersetzt",
+     "aufgabe": "Die Vorgabe hat drei Fehler. Ganz oben fehlt die Zeile, die die Bibliothek für die Ausgabe einbindet, deshalb kennt der Compiler std::cout nicht. In der Zeile mit main steht void statt int. Und hinter der Ausgabezeile fehlt das Semikolon. Repariere die drei Stellen, ohne die Ausgabe selbst zu ändern. Fertig, wenn: das Programm ohne Fehlermeldung übersetzt und beim Start die Zeile Mein erstes Programm erscheint.",
+     "tipp": "Lies die Fehlermeldungen von oben nach unten, denn die erste Meldung nennt oft die Zeile, in der etwas fehlt, und manchmal auch die Zeile davor.",
+     "loesung": "#include <iostream>\n\nint main() {\n    std::cout << \"Mein erstes Programm\" << std::endl;\n    return 0;\n}\n"
+    }
+   ]
+  },
+  {
+   "titel": "Vertiefungsaufgaben",
+   "cpp": {
+    "text": "Jetzt kommen mehrere Eingaben zusammen. Achte darauf, in welcher Reihenfolge du liest, denn cin und getline teilen sich denselben Puffer."
+   },
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Steckbrief mit drei Eingaben",
+     "aufgabe": "Das Programm fragt nach Vor- und Nachname, danach nach dem Wohnort und zuletzt nach dem Alter. Aus den Eingaben baut es einen Steckbrief mit drei Zeilen, in denen die Bezeichnung, ein Doppelpunkt und der eingelesene Wert stehen. Fertig, wenn: bei der Eingabe Anna Maria, Bremen und 30 alle drei Angaben vollständig im Steckbrief erscheinen, auch der Name mit Leerzeichen.",
+     "tipp": "Lies zuerst alle Zeilen mit getline und ganz zuletzt die Zahl mit cin, dann bleibt kein Rest im Puffer liegen und du brauchst keine Sonderbehandlung.",
+     "loesung": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string name;\n    std::string wohnort;\n    int alter = 0;\n\n    std::cout << \"Vor- und Nachname: \";\n    std::getline(std::cin, name);\n\n    std::cout << \"Wohnort: \";\n    std::getline(std::cin, wohnort);\n\n    std::cout << \"Alter: \";\n    std::cin >> alter;\n\n    std::cout << std::endl;\n    std::cout << \"Name: \" << name << std::endl;\n    std::cout << \"Wohnort: \" << wohnort << std::endl;\n    std::cout << \"Alter: \" << alter << std::endl;\n\n    return 0;\n}\n",
+     "stdin": "Anna Maria\nBremen\n30\n"
+    },
+    {
+     "titel": "Zwei Zahlen, zwei Rechnungen",
+     "aufgabe": "Das Programm liest zwei ganze Zahlen ein und gibt danach zwei Zeilen aus: eine Addition und eine Multiplikation, jeweils in der Form Zahl plus Zahl gleich Ergebnis. Die Rechnung soll C++ ausführen, die Zahlen in der Ausgabe sollen aus den Variablen kommen. Fertig, wenn: bei der Eingabe 4 und 6 die erste Zeile 4 + 6 = 10 und die zweite Zeile 4 mal 6 = 24 zeigt.",
+     "tipp": "Alles zwischen Doppelpfeilen ohne Anführungszeichen wird berechnet, mit Anführungszeichen erscheint es dagegen wörtlich.",
+     "loesung": "#include <iostream>\n\nint main() {\n    int a = 0;\n    int b = 0;\n\n    std::cout << \"Erste Zahl: \";\n    std::cin >> a;\n    std::cout << \"Zweite Zahl: \";\n    std::cin >> b;\n\n    std::cout << a << \" + \" << b << \" = \" << a + b << std::endl;\n    std::cout << a << \" mal \" << b << \" = \" << a * b << std::endl;\n\n    return 0;\n}\n",
+     "stdin": "4\n6\n"
+    }
+   ]
   }
  ]
 }

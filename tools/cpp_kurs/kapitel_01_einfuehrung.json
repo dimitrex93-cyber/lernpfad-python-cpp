@@ -62,6 +62,58 @@
    },
    "vergleich": "Daten und Verpackung gibt es in beiden Sprachen. Python schreibt nur den Namen hin. C++ verlangt zusätzlich den Typ, etwa string für Text oder vector für eine Liste.",
    "merk": "Variablen und Listen halten die Werte. Funktionen und Klassen verpacken fertige Bausteine. Beides ist Zubehör, kein vierter Baustein."
+  },
+  {
+   "titel": "Pflichtaufgaben",
+   "cpp": {
+    "text": "Diese Aufgaben gehören zu Kapitel 1. Sie üben den Weg vom Quelltext zur laufenden Datei und die drei Bausteine jedes Programms. Schreibe jede Lösung in eine eigene Datei, übersetze sie und starte sie erst danach."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Drei Schritte bis zum laufenden Programm",
+     "aufgabe": "Schreibe ein Programm, das genau eine Zeile ausgibt, nämlich Hallo Welt!. Speichere es als hallo.cpp. Übersetze es danach im Terminal mit g++ -std=c++17 -Wall -Wextra hallo.cpp -o hallo und starte die fertige Datei mit ./hallo. Prüfe zum Schluss mit echo $?, welchen Wert das Programm an das Betriebssystem zurückgegeben hat. Fertig, wenn: im Terminal die Zeile Hallo Welt! steht und echo $? die Zahl 0 zeigt.",
+     "tipp": "Die drei Schritte heißen schreiben, übersetzen und starten, und die Datei hallo entsteht erst beim Übersetzen durch den Compiler.",
+     "loesung": "#include <iostream>\n\nint main() {\n    std::cout << \"Hallo Welt!\" << std::endl;\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Sequenz, Entscheidung und Schleife in einem Programm",
+     "aufgabe": "Schreibe ein Programm mit einer int-Variablen zahl, die den Wert 3 hat. Das Programm gibt zuerst das Wort Start aus. Danach prüft es mit if, ob zahl größer als 2 ist, und gibt in diesem Fall einen Satz mit der Zahl aus. Anschließend läuft eine for-Schleife dreimal und gibt bei jedem Durchlauf die laufende Nummer aus. Zum Schluss folgt das Wort Ende. Fertig, wenn: die Ausgabe sechs Zeilen hat, die zweite Zeile die Zahl 3 enthält und die letzten drei Schleifenzeilen die Nummern 1, 2 und 3 zeigen.",
+     "tipp": "Die drei Bausteine stehen einfach untereinander, nämlich erst der Befehl, dann das if mit geschweiften Klammern und dann die for-Schleife, und jede Anweisung endet mit einem Semikolon.",
+     "loesung": "#include <iostream>\n\nint main() {\n    int zahl = 3;\n\n    std::cout << \"Start\" << std::endl;\n\n    if (zahl > 2) {\n        std::cout << \"Die Zahl \" << zahl << \" ist groesser als 2\" << std::endl;\n    }\n\n    for (int i = 1; i <= 3; ++i) {\n        std::cout << \"Durchlauf \" << i << std::endl;\n    }\n\n    std::cout << \"Ende\" << std::endl;\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Die drei Speicher mit Kommentaren erklären",
+     "aufgabe": "Ein Programm soll die drei Teile des Computers ausgeben: zuerst die CPU, dann den RAM und zuletzt die SSD, jeweils in einer eigenen Zeile. Über jeder Ausgabezeile steht ein Kommentar, der in einem kurzen Satz erklärt, was dieser Teil macht. Fertig, wenn: das Programm drei Zeilen ausgibt, jede Zeile einen der drei Namen enthält und im Quelltext vor jeder Ausgabe ein Kommentar mit zwei Schrägstrichen steht.",
+     "tipp": "Ein Kommentar beginnt mit zwei Schrägstrichen, reicht bis zum Zeilenende und wird vom Compiler übersprungen, weil er nur für Menschen da ist.",
+     "loesung": "#include <iostream>\n\nint main() {\n    // Die CPU ist der Chef, sie rechnet.\n    std::cout << \"CPU rechnet\" << std::endl;\n\n    // Der RAM ist der Schreibtisch, er ist fluechtig.\n    std::cout << \"RAM ist fluechtig\" << std::endl;\n\n    // Die SSD ist der Aktenschrank, sie bleibt.\n    std::cout << \"SSD bleibt\" << std::endl;\n\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Drei Fehler, die der Compiler vorher findet",
+     "aufgabe": "Ein Freund schickt dir ein Programm, das nicht übersetzt werden kann. Es fehlt die Zeile, die die Bibliothek für die Ausgabe einbindet. Hinter der Ausgabezeile fehlt das Semikolon. Und die main-Funktion hat den Rückgabetyp void statt int, obwohl sie eine Zahl zurückgeben soll. Repariere alle drei Stellen und übersetze das Programm neu. Fertig, wenn: g++ das Programm ohne Fehlermeldung übersetzt und beim Start die Zeile Ich bin ein C++-Programm. erscheint.",
+     "tipp": "Weil der Compiler den ganzen Quelltext vor dem Start liest, siehst du alle drei Fehler schon beim Übersetzen und nicht erst beim Ausführen.",
+     "loesung": "#include <iostream>\n\nint main() {\n    std::cout << \"Ich bin ein C++-Programm.\" << std::endl;\n    return 0;\n}\n"
+    }
+   ]
+  },
+  {
+   "titel": "Vertiefungsaufgaben",
+   "cpp": {
+    "text": "Hier kommt Verpackung dazu: eine eigene Funktion und ein vector. Beides ist Zubehör, kein vierter Baustein."
+   },
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Eine eigene Begrüßungsfunktion",
+     "aufgabe": "Schreibe eine Funktion begruesse, die einen Text als Parameter bekommt und daraus eine Begrüßungszeile macht. In main legst du einen vector mit mindestens drei Namen an und rufst die Funktion für jeden Namen einmal auf. Fertig, wenn: das Programm für jeden Namen genau eine Zeile wie Hallo Anna! ausgibt und in main keine einzige Ausgabe steht.",
+     "tipp": "Die Funktion hat den Rückgabetyp void, weil sie selbst ausgibt, und den vector durchläufst du mit for (const auto& n : namen).",
+     "loesung": "#include <iostream>\n#include <string>\n#include <vector>\n\nvoid begruesse(const std::string& wen) {\n    std::cout << \"Hallo \" << wen << \"!\" << std::endl;\n}\n\nint main() {\n    std::vector<std::string> namen = {\"Anna\", \"Ben\", \"Clara\"};\n\n    for (const auto& n : namen) {\n        begruesse(n);\n    }\n\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Steckbrief mit vier Typen",
+     "aufgabe": "Schreibe ein Programm, das einen kleinen Steckbrief ausgibt. Lege dafür vier Variablen an: einen Text für den Namen, eine ganze Zahl für das Alter, eine Kommazahl für die Größe in Metern und einen Wahrheitswert dafür, ob die Person C++ mag. Jede Zeile der Ausgabe besteht aus einer Bezeichnung, einem Doppelpunkt und dem Wert. Fertig, wenn: vier Zeilen erscheinen, die Größe mit Nachkommastellen angezeigt wird und der Wahrheitswert als 1 erscheint.",
+     "tipp": "Ein Wahrheitswert erscheint bei std::cout als 1 für wahr und als 0 für falsch, und für den Text brauchst du die Bibliothek string.",
+     "loesung": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string name = \"Anna\";\n    int alter = 25;\n    double groesse = 1.72;\n    bool mag_cpp = true;\n\n    std::cout << \"Name: \" << name << std::endl;\n    std::cout << \"Alter: \" << alter << std::endl;\n    std::cout << \"Groesse: \" << groesse << \" m\" << std::endl;\n    std::cout << \"Mag C++: \" << mag_cpp << std::endl;\n\n    return 0;\n}\n"
+    }
+   ]
   }
  ]
 }

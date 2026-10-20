@@ -1331,6 +1331,7 @@ function aufgabenHtml(liste, schluessel) {
     const lid = `${schluessel}-${i}`;
     html += `<li><strong>${escapeHtml(a.titel || "Aufgabe " + (i + 1))}</strong>`;
     if (a.aufgabe) html += `<p>${escapeHtml(a.aufgabe)}</p>`;
+    if (a.stdin) html += `<p class="aufgaben-tipp">⌨️ Eingabe zum Testen: ${escapeHtml(a.stdin.replace(/\n/g, " ⏎ "))}</p>`;
     if (a.tipp) html += `<p class="aufgaben-tipp">💡 ${escapeHtml(a.tipp)}</p>`;
     if (a.loesung) {
       html += `<button class="secondary klein" onclick="toggleLoesung('${lid}')">Lösung anzeigen</button>`;

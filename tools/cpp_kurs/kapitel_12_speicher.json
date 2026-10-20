@@ -29,6 +29,58 @@
    },
    "vergleich": "Python: python3 startet sofort. Fehler suchst du mit pdb. C++: Erst kompilieren, dann starten. Fehler suchst du mit gdb. Große Projekte baust du mit CMake. -Wall und -Wextra sind Pflicht.",
    "merk": "C++-Build: g++ -std=c++17 -Wall -Wextra. Fehler suchen: pdb (Python) oder gdb (C++)."
+  },
+  {
+   "titel": "Pflichtaufgaben",
+   "cpp": {
+    "text": "Jetzt übst du Pointer und Referenzen selbst. Die Aufgaben bauen auf den drei Abschnitten oben auf. Jede Lösung ist ein vollständiges Programm mit main. Übersetze jede Lösung mit g++ -std=c++17 -Wall -Wextra. Erst wenn keine Warnung erscheint, ist die Aufgabe fertig."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Adresse und Wert lesen",
+     "aufgabe": "Lege eine ganze Zahl x mit dem Wert 5 an. Lege einen Pointer p an, der auf x zeigt. Gib zuerst den Wert über den Pointer aus. Prüfe dann, ob p und die Adresse von x gleich sind, und gib ja oder nein aus. Ändere zum Schluss den Wert über den Pointer auf 12 und gib x direkt aus. Fertig, wenn: drei Zeilen erscheinen, nämlich Wert 5, dann ja, dann x ist 12.",
+     "tipp": "Der Stern holt den Wert hinter einer Adresse. Das Und-Zeichen holt die Adresse einer Variablen. Zum Vergleichen zweier Adressen reicht das Gleichheitszeichen.",
+     "loesung": "#include <iostream>\n\nint main() {\n    int x = 5;\n    int* p = &x;                      // p zeigt auf x\n\n    std::cout << \"Wert: \" << *p << std::endl;\n\n    bool gleich = (p == &x);\n    std::cout << \"Gleiche Adresse: \" << (gleich ? \"ja\" : \"nein\") << std::endl;\n\n    *p = 12;                          // aendert x selbst\n    std::cout << \"x ist \" << x << std::endl;\n\n    return 0;\n}"
+    },
+    {
+     "titel": "Referenz, const Referenz und Kopie",
+     "aufgabe": "Schreibe drei Funktionen für einen Text. Die erste hängt ein Ausrufezeichen an und bekommt den Text als veränderbare Referenz. Die zweite gibt den Text nur aus und bekommt ihn als const Referenz. Die dritte bekommt eine Kopie und hängt dort ein Fragezeichen an. Rufe alle drei mit dem Text Hallo auf und gib danach den Originaltext aus. Fertig, wenn: vier Zeilen erscheinen und die letzte Zeile Original: Hallo! lautet.",
+     "tipp": "Eine Referenz erkennst du am Und-Zeichen im Parametertyp. Ein const davor verbietet das Ändern. Ohne beides arbeitet die Funktion auf einer eigenen Kopie.",
+     "loesung": "#include <iostream>\n#include <string>\n\nvoid haengt_an(std::string& text) {          // arbeitet am Original\n    text += \"!\";\n}\n\nvoid zeigt(const std::string& text) {        // liest nur, keine Kopie\n    std::cout << \"Gelesen: \" << text << std::endl;\n}\n\nvoid nur_kopie(std::string text) {           // eigene Kopie\n    text += \"?\";\n    std::cout << \"In der Kopie: \" << text << std::endl;\n}\n\nint main() {\n    std::string text = \"Hallo\";\n\n    haengt_an(text);\n    zeigt(text);\n    nur_kopie(text);\n    std::cout << \"Original: \" << text << std::endl;\n\n    return 0;\n}"
+    },
+    {
+     "titel": "Heap mit new und delete",
+     "aufgabe": "Hole mit new eine einzelne ganze Zahl mit dem Wert 42 und gib sie aus. Gib den Speicher danach mit delete frei und setze den Pointer auf nullptr. Hole dann mit new ein Feld aus fünf ganzen Zahlen. Fülle es mit den Quadratzahlen 0, 1, 4, 9 und 16. Summiere das Feld und gib die Summe aus. Gib auch das Feld wieder frei. Fertig, wenn: zwei Zeilen erscheinen, nämlich 42 und 30, und das Programm ohne Absturz endet.",
+     "tipp": "Eine einzelne Zahl bekommt delete. Ein Feld, das du mit eckigen Klammern geholt hast, braucht delete mit eckigen Klammern. Nach dem Freigeben zeigt der Pointer ins Nichts, deshalb setzt du ihn auf nullptr.",
+     "loesung": "#include <iostream>\n\nint main() {\n    int* zahl = new int(42);\n    std::cout << *zahl << std::endl;\n    delete zahl;                 // einzelnes Objekt\n    zahl = nullptr;\n\n    int* feld = new int[5];\n    for (int i = 0; i < 5; ++i) {\n        feld[i] = i * i;\n    }\n\n    int summe = 0;\n    for (int i = 0; i < 5; ++i) {\n        summe += feld[i];\n    }\n    std::cout << summe << std::endl;\n\n    delete[] feld;               // Feld: eckige Klammern nicht vergessen\n    feld = nullptr;\n\n    return 0;\n}"
+    },
+    {
+     "titel": "Aufräumen mit std::unique_ptr",
+     "aufgabe": "Hole eine einzelne Zahl mit dem Wert 7 über std::make_unique und gib sie aus. Hole dann ein Feld aus vier Zahlen über std::make_unique. Fülle es mit 10, 20, 30 und 40. Gib die Summe aus erster und letzter Zahl aus. Rufe im ganzen Programm kein delete auf. Fertig, wenn: zwei Zeilen erscheinen, nämlich 7 und 50, und im Code kein delete steht.",
+     "tipp": "std::make_unique braucht die Include-Zeile memory. Für ein Feld schreibst du eckige Klammern hinter den Typ und die Anzahl dahinter. Der Speicher gehört dem unique_ptr und wird am Blockende frei.",
+     "loesung": "#include <iostream>\n#include <memory>\n\nint main() {\n    auto zahl = std::make_unique<int>(7);\n    std::cout << *zahl << std::endl;\n\n    auto feld = std::make_unique<int[]>(4);\n    for (int i = 0; i < 4; ++i) {\n        feld[i] = (i + 1) * 10;\n    }\n    std::cout << feld[0] + feld[3] << std::endl;\n\n    return 0;                    // kein delete noetig\n}"
+    }
+   ]
+  },
+  {
+   "titel": "Vertiefungsaufgaben",
+   "cpp": {
+    "text": "Diese Aufgaben gehen einen Schritt weiter. Du siehst, wie ein Objekt beim Aufräumen hilft und wer ein Feld auf dem Heap freigeben muss. Beides brauchst du, sobald Programme größer werden."
+   },
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Ein Objekt räumt sich selbst auf",
+     "aufgabe": "Schreibe eine Klasse Waechter mit einem Namen. Der Konstruktor gibt geholt und den Namen aus. Der Destruktor gibt freigegeben und den Namen aus. Lege in main in einem eigenen Block zwei Waechter als std::unique_ptr an, zuerst mit dem Namen erstes, dann mit zweites. Nach dem Block gib den Satz Block zu Ende aus. Fertig, wenn: fünf Zeilen erscheinen, erst zwei mit geholt, dann zwei mit freigegeben in umgekehrter Reihenfolge, zuletzt Block zu Ende.",
+     "tipp": "Der Destruktor läuft, sobald der Block endet. C++ räumt von hinten nach vorne auf. Deshalb wird das zuletzt geholte Objekt zuerst freigegeben.",
+     "loesung": "#include <iostream>\n#include <memory>\n#include <string>\n\nclass Waechter {\npublic:\n    explicit Waechter(const std::string& name) : name_(name) {\n        std::cout << \"geholt: \" << name_ << std::endl;\n    }\n    ~Waechter() {\n        std::cout << \"freigegeben: \" << name_ << std::endl;\n    }\n\nprivate:\n    std::string name_;\n};\n\nint main() {\n    {\n        auto erstes = std::make_unique<Waechter>(\"erstes\");\n        auto zweites = std::make_unique<Waechter>(\"zweites\");\n    }                            // hier laufen beide Destruktoren\n    std::cout << \"Block zu Ende\" << std::endl;\n    return 0;\n}"
+    },
+    {
+     "titel": "Wer gibt das Feld wieder frei",
+     "aufgabe": "Schreibe eine Funktion, die mit new ein Feld aus ganzen Zahlen anlegt. Sie bekommt die Anzahl als Parameter, füllt das Feld mit 1 bis zur Anzahl und gibt den Pointer zurück. In main rufst du sie mit 4 auf, summierst das Feld und gibst die Summe aus. Danach gibst du das Feld frei und setzt den Pointer auf nullptr. Fertig, wenn: eine Zeile mit 10 erscheint und das Programm ohne Absturz endet.",
+     "tipp": "Wer new aufruft, gibt auch frei. Hier gibt die Funktion den Speicher weiter, deshalb muss der Aufrufer freigeben. Schreib das als Kommentar an die Funktion, sonst vergisst es der nächste Leser.",
+     "loesung": "#include <iostream>\n\n// Der Aufrufer wird Eigentuemer und muss delete[] aufrufen.\nint* feld_erzeugen(int anzahl) {\n    int* feld = new int[anzahl];\n    for (int i = 0; i < anzahl; ++i) {\n        feld[i] = i + 1;\n    }\n    return feld;\n}\n\nint main() {\n    const int anzahl = 4;\n    int* feld = feld_erzeugen(anzahl);\n\n    int summe = 0;\n    for (int i = 0; i < anzahl; ++i) {\n        summe += feld[i];\n    }\n    std::cout << summe << std::endl;\n\n    delete[] feld;\n    feld = nullptr;\n\n    return 0;\n}"
+    }
+   ]
   }
  ]
 }

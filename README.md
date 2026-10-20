@@ -21,14 +21,14 @@ und **C/C++** (statisch, kompiliert). So versteht man nicht nur *eine* Sprache, 
 
 ## Ein Blick in die Lern-App
 
-![Rundgang durch die Web-Lern-App: Start, Quiz, Python-Kurs, Prüfungstraining, Glossar](docs/screenshots/rundgang.gif)
+![Rundgang durch die Web-Lern-App: Start, Quiz, Python-Kurs, C++-Kurs, Prüfungstraining](docs/screenshots/rundgang.gif)
 
 | Start, Ziel & Fortschritt | Quiz nach IHK-Standard | Prüfungstraining |
 |---|---|---|
 | ![Start mit Fortschrittsübersicht](docs/screenshots/start.png) | ![Quiz: Lernfeld wählen, Schwierigkeitsgrad, Notenschlüssel](docs/screenshots/quiz.png) | ![Prüfungstraining: 8 Kapitel Wissen & Taktik](docs/screenshots/pruefung.png) |
 
 Weitere Ansichten liegen in [`docs/screenshots/`](docs/screenshots/):
-Python-Kurs ([Übersicht](docs/screenshots/python.png)), C++-Kurs ([Übersicht](docs/screenshots/cpp.png)), [Aufgaben mit Lösungen](docs/screenshots/aufgaben.png), Glossar (149 Begriffe, durchsuchbar), JSON-Kurs.
+Python-Kurs ([Übersicht](docs/screenshots/python.png)), C++-Kurs ([Übersicht](docs/screenshots/cpp.png)), [Python-Aufgaben mit Lösungen](docs/screenshots/aufgaben.png), [C++-Aufgaben mit Lösungen](docs/screenshots/aufgaben_cpp.png), Glossar (149 Begriffe, durchsuchbar), JSON-Kurs.
 Die Bilder sind echte Screenshots der Web-App (1400 × 1000), nicht gestellt.
 
 ## Warum Python UND C++?
@@ -85,7 +85,7 @@ Seit v1.0.0 hat jede Sprache einen **eigenen Reiter** – kein Hin und Her mehr
 zwischen zwei Sprachen in einem Abschnitt.
 
 - **🐍 Python-Kurs** (`tools/python_kurs/`): 19 Kapitel, 129 Abschnitte. Kapitel 2, 3, 4, 7 und 8 enthalten zusätzlich **60 Pflicht- und 13 Vertiefungsaufgaben** aus dem Python-Crashkurs (Tag 1) – mit Tipp und, wo vorhanden, der Lösung zum Aufklappen.
-- **⚙️ C++-Kurs** (`tools/cpp_kurs/`): 19 Kapitel, 97 Abschnitte. Themen, die nur Python betreffen (f-Strings, Listenmethoden), fehlen hier bewusst statt mit einer Notlösung gefüllt zu werden.
+- **⚙️ C++-Kurs** (`tools/cpp_kurs/`): 19 Kapitel, 121 Abschnitte, **49 Pflicht- und 22 Vertiefungsaufgaben** – jede mit vollständiger, unter g++ -std=c++17 -Wall -Wextra warnungsfrei kompilierter Lösung. Themen, die nur Python betreffen (f-Strings, Listenmethoden), fehlen hier bewusst statt mit einer Notlösung gefüllt zu werden.
 - Beide Kurse in einfacher Sprache ([STIL.md](STIL.md): „Einfach erklärt“), je Abschnitt Erklärung, Code und Merksatz; Checklisten und Aufgaben als eigene Kästen.
 - Mit **Glossar** der wichtigsten Begriffe (149 Einträge, `tools/sprachkurs/glossar.json`).
 - Lesestatus wird **je Kurs getrennt** erfasst (`python_gelesen` / `cpp_gelesen`) und fließt in den Gesamtfortschritt ein.

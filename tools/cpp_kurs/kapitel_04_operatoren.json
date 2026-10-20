@@ -74,6 +74,58 @@
    },
    "vergleich": "Python merkt den Typfehler erst beim Ausführen und meldet einen TypeError. C++ merkt ihn beim Übersetzen, dann läuft gar nichts. Die Lösung ist dieselbe Idee: die Zahl ausdrücklich zu Text machen, mit str() oder std::to_string.",
    "merk": "Text und Zahl verbindet kein plus: f-String oder str(), nie plus allein."
+  },
+  {
+   "titel": "Pflichtaufgaben",
+   "cpp": {
+    "text": "Jetzt übst du selbst. Die Aufgaben bauen auf dem Stoff dieses Kapitels auf. Schreibe jede Lösung in eine eigene Datei und übersetze sie mit g++. Wenn etwas nicht klappt, lies zuerst die Fehlermeldung und dann den Tipp. Die Lösung klappt nur, wenn die Ausgabe genau zur Aufgabe passt."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Äpfel gerecht aufteilen",
+     "aufgabe": "Du hast 23 Äpfel und 5 Personen. Jede Person bekommt gleich viele ganze Äpfel. Schreibe ein Programm, das ausrechnet, wie viele Äpfel jede Person bekommt und wie viele übrig bleiben. Nutze dafür die Ganzzahldivision und den Modulo-Operator. Fertig, wenn: Dein Programm zwei Zeilen ausgibt. Die erste Zeile lautet: 23 Äpfel auf 5 Personen: Die zweite Zeile lautet: 4 pro Person, 3 bleiben übrig",
+     "tipp": "Lege zwei int-Variablen an, eine für die Äpfel und eine für die Personen. Die Anzahl pro Person ist aepfel geteilt durch personen. Der Rest ist aepfel Modulo personen. Modulo schreibst du mit dem Prozentzeichen.",
+     "loesung": "#include <iostream>\n\nint main() {\n    int aepfel = 23;\n    int personen = 5;\n\n    int pro_person = aepfel / personen;\n    int rest = aepfel % personen;\n\n    std::cout << aepfel << \" Äpfel auf \" << personen << \" Personen:\" << std::endl;\n    std::cout << pro_person << \" pro Person, \" << rest << \" bleiben übrig\" << std::endl;\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Punkt vor Strich und Klammern",
+     "aufgabe": "Berechne vier Ausdrücke und gib jeden mit seiner Rechnung aus. Die Ausdrücke sind: 7 + 3 * 4, (7 + 3) * 4, 100 - 2 * 3 * 5 und (100 - 2) * 3. Schreibe die Rechnung als Text mit in die Ausgabe, damit man sie vergleichen kann. Fertig, wenn: Dein Programm die vier Zeilen ausgibt: 7 + 3 * 4 = 19 und (7 + 3) * 4 = 40 und 100 - 2 * 3 * 5 = 70 und (100 - 2) * 3 = 294",
+     "tipp": "Du musst nichts von Hand rechnen. Schreibe den Ausdruck direkt hinter die Ausgabe. C++ rechnet zuerst die Klammern, dann Punkt, dann Strich. Achte darauf, dass die Klammern wirklich im Code stehen.",
+     "loesung": "#include <iostream>\n\nint main() {\n    std::cout << \"7 + 3 * 4 = \" << 7 + 3 * 4 << std::endl;\n    std::cout << \"(7 + 3) * 4 = \" << (7 + 3) * 4 << std::endl;\n    std::cout << \"100 - 2 * 3 * 5 = \" << 100 - 2 * 3 * 5 << std::endl;\n    std::cout << \"(100 - 2) * 3 = \" << (100 - 2) * 3 << std::endl;\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Ganzzahldivision gegen Kommazahl",
+     "aufgabe": "Teile 7 durch 2. Einmal sollen beide Zahlen int sein. Einmal soll die 7 eine Kommazahl sein. Gib beide Ergebnisse aus und beschrifte sie. Fertig, wenn: Dein Programm zeigt, dass 7 geteilt durch 2 als int die 3 ergibt und als Kommazahl die 3.5",
+     "tipp": "Bei zwei int schneidet C++ alles nach dem Komma ab. Schreibe die 7 als 7.0, dann ist der Typ double und die Division liefert Nachkommastellen. cout lässt eine angehängte Null weg, deshalb erscheint 3.5.",
+     "loesung": "#include <iostream>\n\nint main() {\n    int a = 7;\n    int b = 2;\n\n    std::cout << \"int geteilt durch int: \" << a / b << std::endl;\n    std::cout << \"double geteilt durch int: \" << 7.0 / b << std::endl;\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Zehner und Einer einer Zahl",
+     "aufgabe": "Nimm die zweistellige Zahl 47. Zerlege sie mit Operatoren in ihre Zehnerstelle und ihre Einerstelle. Gib die Zahl, beide Stellen und die Summe der beiden Stellen aus. Fertig, wenn: Dein Programm vier Zeilen ausgibt: Zahl: 47 und Zehner: 4 und Einer: 7 und Summe der Ziffern: 11",
+     "tipp": "Die Einerstelle ist der Rest bei der Division durch 10, also zahl Modulo 10. Die Zehnerstelle ist die Ganzzahldivision durch 10. Beides sind int-Operationen, deshalb funktioniert es ohne Komma.",
+     "loesung": "#include <iostream>\n\nint main() {\n    int zahl = 47;\n\n    int zehner = zahl / 10;\n    int einer = zahl % 10;\n\n    std::cout << \"Zahl: \" << zahl << std::endl;\n    std::cout << \"Zehner: \" << zehner << std::endl;\n    std::cout << \"Einer: \" << einer << std::endl;\n    std::cout << \"Summe der Ziffern: \" << zehner + einer << std::endl;\n    return 0;\n}\n"
+    }
+   ]
+  },
+  {
+   "titel": "Vertiefungsaufgaben",
+   "cpp": {
+    "text": "Die Vertiefung ist für alle, die mehr wollen. Die Aufgaben sind etwas größer und brauchen mehrere Schritte. Nimm dir Zeit und teste jeden Schritt einzeln. Vergleiche am Ende deine Ausgabe mit der Lösung."
+   },
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Sekunden in Stunden, Minuten und Sekunden",
+     "aufgabe": "5000 Sekunden sollen als Stunden, Minuten und Sekunden ausgegeben werden. Rechne mit Ganzzahldivision und Modulo, ohne selbst etwas einzusetzen. Fertig, wenn: Dein Programm die Zeile ausgibt: 5000 Sekunden sind 1 Stunden, 23 Minuten und 20 Sekunden.",
+     "tipp": "Eine Stunde hat 3600 Sekunden. Die Stunden sind gesamt geteilt durch 3600. Der Rest nach den Stunden ist gesamt Modulo 3600. Aus diesem Rest holst du die Minuten mit geteilt durch 60, die Sekunden mit Modulo 60. Rechne immer mit dem Rest weiter, nicht mit der Ausgangszahl.",
+     "loesung": "#include <iostream>\n\nint main() {\n    int gesamt = 5000;\n\n    int stunden = gesamt / 3600;\n    int rest = gesamt % 3600;\n    int minuten = rest / 60;\n    int sekunden = rest % 60;\n\n    std::cout << gesamt << \" Sekunden sind \" << stunden << \" Stunden, \"\n              << minuten << \" Minuten und \" << sekunden << \" Sekunden.\" << std::endl;\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Durchschnitt mit und ohne Komma",
+     "aufgabe": "Drei Noten sind 2, 1 und 2. Berechne den Durchschnitt auf zwei Arten. Erst speicherst du die Summe geteilt durch 3 direkt in einer double-Variablen. Dann rechnest du noch einmal mit einer Umwandlung nach double. Gib beide Ergebnisse aus. Fertig, wenn: Dein Programm zeigt, dass die erste Rechnung 1 ergibt und die zweite 1.66667",
+     "tipp": "Auch wenn das Ziel eine double-Variable ist, rechnet C++ erst die rechte Seite. Summe geteilt durch 3 sind zwei int, also wird abgeschnitten und erst danach gespeichert. Mit static_cast<double>(summe) wird die Summe vor der Division zur Kommazahl. Danach teilst du durch 3 und bekommst Nachkommastellen.",
+     "loesung": "#include <iostream>\n\nint main() {\n    int note1 = 2;\n    int note2 = 1;\n    int note3 = 2;\n\n    int summe = note1 + note2 + note3;\n\n    double ohne_umwandlung = summe / 3;\n    double mit_umwandlung = static_cast<double>(summe) / 3;\n\n    std::cout << \"Summe: \" << summe << std::endl;\n    std::cout << \"Ohne Umwandlung: \" << ohne_umwandlung << std::endl;\n    std::cout << \"Mit Umwandlung: \" << mit_umwandlung << std::endl;\n    return 0;\n}\n"
+    }
+   ]
   }
  ]
 }

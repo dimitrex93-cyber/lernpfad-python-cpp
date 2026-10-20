@@ -38,6 +38,58 @@
    },
    "vergleich": "Wer beide Fragen-Kataloge beantworten kann, hat das Projekt wirklich verstanden. Er hat es nicht nur nachgebaut. Das ist der Unterschied zwischen Code abtippen und Programmieren lernen.",
    "merk": "Verstanden heißt: erklären können, WARUM etwas so ist – nicht nur WIE."
+  },
+  {
+   "titel": "Pflichtaufgaben",
+   "cpp": {
+    "text": "Jetzt baust du die Bausteine des Taschenrechners einzeln. Jede Aufgabe ist ein kleines Programm mit main. Am Ende hast du alle Teile, die das Projekt braucht. Prüfe jede Lösung mit g++ -std=c++17 -Wall -Wextra."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Vier Rechenarten als Funktionen",
+     "aufgabe": "Schreibe vier Funktionen: addiere, subtrahiere, multipliziere und dividiere. Alle nehmen zwei Kommazahlen und geben eine Kommazahl zurück. Rufe sie in main mit 12 und 4 auf und gib jedes Ergebnis in einer eigenen Zeile aus. Fertig, wenn: vier Zeilen erscheinen, nämlich 16, 8, 48 und 3.",
+     "tipp": "Der Rückgabetyp steht vor dem Funktionsnamen. Zwei Kommazahlen ergeben eine Kommazahl, deshalb nimmst du überall double. Die Reihenfolge der Parameter entspricht der Rechnung: erster Wert, dann zweiter Wert.",
+     "loesung": "#include <iostream>\n\ndouble addiere(double a, double b) {\n    return a + b;\n}\n\ndouble subtrahiere(double a, double b) {\n    return a - b;\n}\n\ndouble multipliziere(double a, double b) {\n    return a * b;\n}\n\ndouble dividiere(double a, double b) {\n    return a / b;\n}\n\nint main() {\n    const double a = 12.0;\n    const double b = 4.0;\n\n    std::cout << addiere(a, b) << std::endl;\n    std::cout << subtrahiere(a, b) << std::endl;\n    std::cout << multipliziere(a, b) << std::endl;\n    std::cout << dividiere(a, b) << std::endl;\n\n    return 0;\n}"
+    },
+    {
+     "titel": "Division durch 0 mit try und catch",
+     "aufgabe": "Schreibe eine Funktion teile, die zwei Kommazahlen dividiert. Ist der zweite Wert 0, wirft sie einen std::runtime_error mit der Meldung Division durch 0 ist nicht erlaubt. In main rufst du die Funktion zweimal auf: mit 10 und 2, danach mit 5 und 0. Beide Aufrufe stehen in einem try-Block, der Fehler wird mit catch gefangen und auf std::cerr ausgegeben. Danach gib aus, dass das Programm weiterläuft. Fertig, wenn: erst 5 erscheint, dann die Fehlermeldung, dann der Satz vom Weiterlaufen.",
+     "tipp": "Ein throw springt sofort aus der Funktion heraus, der Rest wird übersprungen. Deshalb landet die zweite Ausgabe nie im try-Block. catch mit const std::exception und Referenz fängt alle Standard-Fehler.",
+     "loesung": "#include <iostream>\n#include <stdexcept>\n\ndouble teile(double a, double b) {\n    if (b == 0.0) {\n        throw std::runtime_error(\"Division durch 0 ist nicht erlaubt\");\n    }\n    return a / b;\n}\n\nint main() {\n    try {\n        std::cout << teile(10.0, 2.0) << std::endl;\n        std::cout << teile(5.0, 0.0) << std::endl;   // wirft\n    } catch (const std::exception& fehler) {\n        std::cerr << \"Fehler: \" << fehler.what() << std::endl;\n    }\n\n    std::cout << \"Programm laeuft weiter\" << std::endl;\n    return 0;\n}"
+    },
+    {
+     "titel": "Zahleneingabe ohne Absturz",
+     "aufgabe": "Schreibe eine Funktion zahl_einlesen, die eine Frage ausgibt und eine Kommazahl von der Tastatur liest. War die Eingabe keine Zahl, gib den Hinweis Das war keine Zahl aus und frage erneut. In main liest du so zwei Zahlen ein und gibst ihre Summe aus. Fertig, wenn: bei der Eingabe abc, dann 5, dann 7 zuerst der Hinweis erscheint und am Ende Summe: 12 steht.",
+     "tipp": "Nach einem Fehler bleibt cin im Fehlerzustand und liest nichts mehr. clear setzt den Zustand zurück, ignore wirft die kaputte Zeile weg. Beides zusammen bringt die Eingabe wieder ins Lot.",
+     "loesung": "#include <iostream>\n#include <string>\n\ndouble zahl_einlesen(const std::string& frage) {\n    double wert = 0.0;\n    while (true) {\n        std::cout << frage;\n        std::cin >> wert;\n        if (!std::cin.fail()) {\n            return wert;\n        }\n        std::cin.clear();                // Fehlerzustand loeschen\n        std::cin.ignore(10000, '\\n');    // Rest der Zeile verwerfen\n        std::cout << \"Das war keine Zahl\" << std::endl;\n    }\n}\n\nint main() {\n    const double a = zahl_einlesen(\"Erste Zahl: \");\n    const double b = zahl_einlesen(\"Zweite Zahl: \");\n    std::cout << \"Summe: \" << (a + b) << std::endl;\n    return 0;\n}"
+    },
+    {
+     "titel": "Verlauf mit vector und Obergrenze",
+     "aufgabe": "Lege einen Verlauf als std::vector vom Typ std::string an. Fülle ihn in einer Schleife mit 25 Einträgen der Form Rechnung 1 bis Rechnung 25. Ist der Verlauf länger als 20 Einträge, löschst du den ersten mit erase und begin. Gib danach die Anzahl der Einträge, den ältesten und den neuesten Eintrag aus. Fertig, wenn: drei Zeilen erscheinen, nämlich 20, Rechnung 6 und Rechnung 25.",
+     "tipp": "erase mit begin entfernt den vordersten Eintrag, alle anderen rücken nach. Mit front liest du den ersten, mit back den letzten Eintrag. std::to_string macht aus einer Zahl einen Text.",
+     "loesung": "#include <iostream>\n#include <string>\n#include <vector>\n\nint main() {\n    std::vector<std::string> verlauf;\n\n    for (int i = 1; i <= 25; ++i) {\n        verlauf.push_back(\"Rechnung \" + std::to_string(i));\n        if (verlauf.size() > 20) {\n            verlauf.erase(verlauf.begin());   // aeltesten Eintrag loeschen\n        }\n    }\n\n    std::cout << verlauf.size() << std::endl;\n    std::cout << verlauf.front() << std::endl;\n    std::cout << verlauf.back() << std::endl;\n\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "titel": "Vertiefungsaufgaben",
+   "cpp": {
+    "text": "Diese zwei Aufgaben zeigen die Extras aus dem letzten Abschnitt. Einmal formatierst du Kommazahlen. Einmal baust du die Rechenarten als Tabelle mit std::map. Beides ist Bonus-Stoff."
+   },
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Kommazahlen schön ausgeben",
+     "aufgabe": "Gib 10 geteilt durch 3 mit zwei Nachkommastellen aus. Gib danach den Rest von 10,5 geteilt durch 3 mit einer Nachkommastelle aus. Gib zum Schluss den Rest von 10 geteilt durch 4 ohne Nachkommastelle aus. Fertig, wenn: drei Zeilen erscheinen, nämlich 3.33, 1.5 und 2.",
+     "tipp": "std::fixed hält die Ausgabe bei Kommazahlen, setprecision zählt dann die Nachkommastellen. fmod liefert den Rest für Kommazahlen und braucht die Include-Datei cmath.",
+     "loesung": "#include <cmath>\n#include <iomanip>\n#include <iostream>\n\nint main() {\n    std::cout << std::fixed;\n    std::cout << std::setprecision(2) << 10.0 / 3.0 << std::endl;\n    std::cout << std::setprecision(1) << std::fmod(10.5, 3.0) << std::endl;\n    std::cout << std::setprecision(0) << std::fmod(10.0, 4.0) << std::endl;\n    return 0;\n}"
+    },
+    {
+     "titel": "Rechenarten als Tabelle",
+     "aufgabe": "Lege eine std::map an, die einem Zeichen eine Rechenart zuordnet. Der Schlüssel ist ein Text, der Wert eine std::function mit zwei Kommazahlen als Eingabe und einer Kommazahl als Ergebnis. Trage für das Pluszeichen die Funktion addiere und für das Sternchen die Funktion multipliziere ein. Rufe beide mit 6 und 7 auf. Suche danach mit find nach dem Schrägstrich und gib unbekannt aus, wenn es keinen Eintrag gibt. Fertig, wenn: drei Zeilen erscheinen, nämlich 13, 42 und unbekannt.",
+     "tipp": "Eckige Klammern auf einer map legen einen fehlenden Eintrag still an. Zum Suchen nimmst du deshalb find und vergleichst das Ergebnis mit end. Die Include-Dateien heißen map und functional.",
+     "loesung": "#include <functional>\n#include <iostream>\n#include <map>\n#include <string>\n\ndouble addiere(double a, double b) {\n    return a + b;\n}\n\ndouble multipliziere(double a, double b) {\n    return a * b;\n}\n\nint main() {\n    std::map<std::string, std::function<double(double, double)>> ops;\n    ops[\"+\"] = addiere;\n    ops[\"*\"] = multipliziere;\n\n    std::cout << ops[\"+\"](6.0, 7.0) << std::endl;\n    std::cout << ops[\"*\"](6.0, 7.0) << std::endl;\n\n    auto treffer = ops.find(\"/\");\n    if (treffer == ops.end()) {\n        std::cout << \"unbekannt\" << std::endl;\n    }\n\n    return 0;\n}"
+    }
+   ]
   }
  ]
 }

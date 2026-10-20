@@ -38,6 +38,58 @@
    },
    "vergleich": "Der Fahrplan ist in beiden Sprachen gleich: verstehen, planen, bauen, testen. Python: python3 notiz.py. C++: g++ -Wall -Wextra und dann ausführen.",
    "merk": "Erstes Projekt: eine Notiz-App mit Dateien. Sie deckt Lesen, Schreiben, Funktionen, Fehler und den Build ab."
+  },
+  {
+   "titel": "Pflichtaufgaben",
+   "cpp": {
+    "text": "Hier schreibst du echte Dateien. Alle Beispiele schreiben nach /tmp und räumen die Datei am Ende wieder weg. Der Pfad steht als Konstante oben im Code, so siehst du sofort, wohin das Programm schreibt. Übersetze jede Lösung vor dem Start mit g++ -std=c++17 -Wall -Wextra."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Drei Zeilen schreiben und wieder zählen",
+     "aufgabe": "Schreibe drei Zeilen in eine Datei: Zeile eins, Zeile zwei und Zeile drei. Lege den Pfad als Konstante am Anfang an, und zwar /tmp/lernpfad_zeilen.txt. Öffne die Datei danach wieder zum Lesen und zähle die Zeilen mit std::getline. Gib die Anzahl aus und lösche die Datei am Ende mit std::remove. Fertig, wenn: die Ausgabe 3 Zeilen lautet und die Datei danach nicht mehr existiert.",
+     "tipp": "Zum Schreiben nimmst du std::ofstream, zum Lesen std::ifstream. Prüfe nach jedem Öffnen mit if (!datei). std::remove steht in der Include-Datei cstdio.",
+     "loesung": "#include <cstdio>\n#include <fstream>\n#include <iostream>\n#include <string>\n\nconst std::string PFAD = \"/tmp/lernpfad_zeilen.txt\";\n\nint main() {\n    {\n        std::ofstream datei(PFAD);           // ueberschreibt die Datei\n        if (!datei) {\n            std::cerr << \"Kann nicht schreiben!\" << std::endl;\n            return 1;\n        }\n        datei << \"Zeile eins\" << std::endl;\n        datei << \"Zeile zwei\" << std::endl;\n        datei << \"Zeile drei\" << std::endl;\n    }                                        // hier schliesst die Datei\n\n    std::ifstream lesen(PFAD);\n    if (!lesen) {\n        std::cerr << \"Datei fehlt!\" << std::endl;\n        return 1;\n    }\n\n    int anzahl = 0;\n    std::string zeile;\n    while (std::getline(lesen, zeile)) {\n        ++anzahl;\n    }\n    std::cout << anzahl << \" Zeilen\" << std::endl;\n\n    lesen.close();\n    std::remove(PFAD.c_str());\n    return 0;\n}"
+    },
+    {
+     "titel": "Zahlen aus einer Datei summieren",
+     "aufgabe": "Schreibe die drei Zahlen 4, 8 und 15 in die Datei /tmp/lernpfad_zahlen.txt. Lies sie danach mit dem Pfeil-Operator wieder ein, zähle sie und summiere sie. Gib Anzahl und Summe in einer Zeile aus und lösche die Datei am Ende. Fertig, wenn: eine Zeile erscheint, die 3 Zahlen und die Summe 27 nennt.",
+     "tipp": "Der Pfeil-Operator liest Zahl für Zahl und überspringt Leerzeichen von allein. Am Dateiende wird der Strom falsch, damit endet die while-Schleife.",
+     "loesung": "#include <cstdio>\n#include <fstream>\n#include <iostream>\n#include <string>\n\nconst std::string PFAD = \"/tmp/lernpfad_zahlen.txt\";\n\nint main() {\n    {\n        std::ofstream datei(PFAD);\n        if (!datei) {\n            std::cerr << \"Kann nicht schreiben!\" << std::endl;\n            return 1;\n        }\n        datei << 4 << \" \" << 8 << \" \" << 15 << std::endl;\n    }\n\n    std::ifstream lesen(PFAD);\n    if (!lesen) {\n        std::cerr << \"Datei fehlt!\" << std::endl;\n        return 1;\n    }\n\n    int zahl = 0;\n    int anzahl = 0;\n    int summe = 0;\n    while (lesen >> zahl) {\n        ++anzahl;\n        summe += zahl;\n    }\n    std::cout << anzahl << \" Zahlen, Summe \" << summe << std::endl;\n\n    lesen.close();\n    std::remove(PFAD.c_str());\n    return 0;\n}"
+    },
+    {
+     "titel": "Anhängen statt überschreiben",
+     "aufgabe": "Schreibe zuerst die Zeile Erster Eintrag in die Datei /tmp/lernpfad_log.txt. Öffne dieselbe Datei danach noch einmal, diesmal im Anhänge-Modus, und schreibe Zweiter Eintrag hinein. Lies die Datei danach komplett und gib jede Zeile mit laufender Nummer aus. Räume die Datei am Ende weg. Fertig, wenn: zwei Zeilen erscheinen, nummeriert von 1 bis 2, und der erste Eintrag noch da ist.",
+     "tipp": "Der Anhänge-Modus heißt std::ios::app und steht als zweiter Parameter beim Öffnen. Ohne ihn würde der zweite ofstream die Datei sofort leeren.",
+     "loesung": "#include <cstdio>\n#include <fstream>\n#include <iostream>\n#include <string>\n\nconst std::string PFAD = \"/tmp/lernpfad_log.txt\";\n\nint main() {\n    {\n        std::ofstream datei(PFAD);                 // ueberschreibt\n        if (!datei) {\n            std::cerr << \"Kann nicht schreiben!\" << std::endl;\n            return 1;\n        }\n        datei << \"Erster Eintrag\" << std::endl;\n    }\n    {\n        std::ofstream datei(PFAD, std::ios::app);  // haengt an\n        if (!datei) {\n            std::cerr << \"Kann nicht anhaengen!\" << std::endl;\n            return 1;\n        }\n        datei << \"Zweiter Eintrag\" << std::endl;\n    }\n\n    std::ifstream lesen(PFAD);\n    if (!lesen) {\n        std::cerr << \"Datei fehlt!\" << std::endl;\n        return 1;\n    }\n\n    int nummer = 0;\n    std::string zeile;\n    while (std::getline(lesen, zeile)) {\n        ++nummer;\n        std::cout << nummer << \": \" << zeile << std::endl;\n    }\n\n    lesen.close();\n    std::remove(PFAD.c_str());\n    return 0;\n}"
+    },
+    {
+     "titel": "Ein Modul in drei Dateien",
+     "aufgabe": "Teile ein kleines Programm in drei Dateien. Die Header-Datei notizen.h beginnt mit der Anweisung gegen doppeltes Einbinden und enthält den Prototyp einer Funktion zaehle_zeichen. Die Funktion bekommt einen Text als const Referenz und gibt eine ganze Zahl zurück. Die Datei notizen.cpp enthält die Definition und liefert die Länge des Textes. main.cpp bindet den Header ein und gibt die Länge von Lernpfad aus. Fertig, wenn: das Programm 8 ausgibt und mit einer Kommandozeile für beide cpp-Dateien ohne Warnung baut.",
+     "tipp": "Der Header enthält nur die Deklaration, die cpp-Datei die Definition. Beim Bauen nennst du beide cpp-Dateien. Anführungszeichen beim Einbinden bedeuten: eigene Datei.",
+     "loesung": "// datei: notizen.h\n#pragma once\n#include <string>\n\nint zaehle_zeichen(const std::string& text);\n\n// datei: notizen.cpp\n#include \"notizen.h\"\n\nint zaehle_zeichen(const std::string& text) {\n    return static_cast<int>(text.size());\n}\n\n// datei: main.cpp\n#include <iostream>\n#include \"notizen.h\"\n\nint main() {\n    std::cout << zaehle_zeichen(\"Lernpfad\") << std::endl;\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "titel": "Vertiefungsaufgaben",
+   "cpp": {
+    "text": "Diese Aufgaben zeigen die zwei schwierigen Fälle. Einmal fehlt die Datei und das Programm muss sauber abbrechen. Einmal zerlegst du eine Zeile in Wörter. Beide Male prüfst du das Ergebnis im Terminal."
+   },
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Datei fehlt, Programm bricht sauber ab",
+     "aufgabe": "Schreibe ein Programm, das die Datei /tmp/lernpfad_gibt_es_nicht.txt zu lesen versucht. Prüfe nach dem Öffnen, ob es geklappt hat. Wenn nicht, gib eine deutsche Fehlermeldung auf std::cerr aus und beende das Programm mit dem Rückgabewert 1. Wenn doch, gib die erste Zeile aus. Fertig, wenn: genau eine Fehlermeldung erscheint und die Shell danach den Rückgabewert 1 meldet.",
+     "tipp": "Ein ifstream verhält sich nach dem Öffnen wie ein Wahrheitswert. Ist die Datei nicht da, ist er falsch. Den Rückgabewert siehst du in der Shell, wenn du direkt nach dem Start echo dahinter schreibst.",
+     "loesung": "#include <fstream>\n#include <iostream>\n#include <string>\n\nconst std::string PFAD = \"/tmp/lernpfad_gibt_es_nicht.txt\";\n\nint main() {\n    std::ifstream datei(PFAD);\n    if (!datei) {\n        std::cerr << \"Fehler: Die Datei \" << PFAD << \" gibt es nicht.\" << std::endl;\n        return 1;\n    }\n\n    std::string zeile;\n    if (std::getline(datei, zeile)) {\n        std::cout << zeile << std::endl;\n    }\n    return 0;\n}"
+    },
+    {
+     "titel": "Wörter in einer Datei zählen",
+     "aufgabe": "Schreibe drei Zeilen in die Datei /tmp/lernpfad_text.txt: C++ liest Dateien, C++ schreibt Dateien und C++ schliesst Dateien. Lies die Datei danach Zeile für Zeile und zähle die Wörter. Ein Wort ist ein Stück Text zwischen zwei Leerzeichen. Nutze dafür std::istringstream aus der Include-Datei sstream. Gib die Anzahl der Zeilen und der Wörter aus und räume die Datei am Ende weg. Fertig, wenn: die Ausgabe 3 Zeilen und 9 Wörter nennt.",
+     "tipp": "Ein istringstream zerlegt eine Zeile wie cin. Mit dem Pfeil-Operator liest du Wort für Wort, bis der Strom falsch wird. Zähle in der inneren Schleife mit.",
+     "loesung": "#include <cstdio>\n#include <fstream>\n#include <iostream>\n#include <sstream>\n#include <string>\n\nconst std::string PFAD = \"/tmp/lernpfad_text.txt\";\n\nint main() {\n    {\n        std::ofstream datei(PFAD);\n        if (!datei) {\n            std::cerr << \"Kann nicht schreiben!\" << std::endl;\n            return 1;\n        }\n        datei << \"C++ liest Dateien\" << std::endl;\n        datei << \"C++ schreibt Dateien\" << std::endl;\n        datei << \"C++ schliesst Dateien\" << std::endl;\n    }\n\n    std::ifstream lesen(PFAD);\n    if (!lesen) {\n        std::cerr << \"Datei fehlt!\" << std::endl;\n        return 1;\n    }\n\n    int zeilen = 0;\n    int woerter = 0;\n    std::string zeile;\n    while (std::getline(lesen, zeile)) {\n        ++zeilen;\n        std::istringstream strom(zeile);\n        std::string wort;\n        while (strom >> wort) {\n            ++woerter;\n        }\n    }\n    std::cout << zeilen << \" Zeilen, \" << woerter << \" Woerter\" << std::endl;\n\n    lesen.close();\n    std::remove(PFAD.c_str());\n    return 0;\n}"
+    }
+   ]
   }
  ]
 }

@@ -96,6 +96,58 @@
     "Gerundet wird nur die Anzeige, der Wert bleibt gleich.",
     "Für diesen Kurs genügt .2f."
    ]
+  },
+  {
+   "titel": "Pflichtaufgaben",
+   "cpp": {
+    "text": "Jetzt übst du selbst. Die Aufgaben bauen auf dem Stoff dieses Kapitels auf. Schreibe jede Lösung in eine eigene Datei und übersetze sie mit g++. Wenn etwas nicht klappt, lies zuerst die Fehlermeldung und dann den Tipp. Die Lösung klappt nur, wenn die Ausgabe genau zur Aufgabe passt."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Länge und Randzeichen",
+     "aufgabe": "Lege einen std::string mit dem Text Lernpfad an. Gib den Text, seine Länge, das erste Zeichen und das letzte Zeichen aus. Fertig, wenn: Dein Programm vier Zeilen ausgibt: Text: Lernpfad und Länge: 8 und Erstes Zeichen: L und Letztes Zeichen: d",
+     "tipp": "Die Länge liefert die Methode length(). Sie hängt am String, also name.length(). Ein einzelnes Zeichen holst du mit eckigen Klammern. Der Index beginnt bei 0. Das letzte Zeichen hat den Index length() minus 1.",
+     "loesung": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string name = \"Lernpfad\";\n\n    std::cout << \"Text: \" << name << std::endl;\n    std::cout << \"Länge: \" << name.length() << std::endl;\n    std::cout << \"Erstes Zeichen: \" << name[0] << std::endl;\n    std::cout << \"Letztes Zeichen: \" << name[name.length() - 1] << std::endl;\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Teile mit substr herausschneiden",
+     "aufgabe": "Nimm das Wort Programmierung. Schneide drei Teile heraus: die ersten 7 Zeichen, alles ab Position 7 und 5 Zeichen ab Position 3. Gib jeden Teil mit Beschriftung aus. Fertig, wenn: Dein Programm die Teile Program und mierung und gramm zeigt.",
+     "tipp": "substr bekommt zwei Zahlen: die Startposition und die Länge. Lässt du die Länge weg, nimmt substr alles bis zum Ende. Die Zählung startet bei 0, das P von Programmierung hat also die Position 0.",
+     "loesung": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string wort = \"Programmierung\";\n\n    std::cout << \"Ganzes Wort: \" << wort << std::endl;\n    std::cout << \"Erste 7 Zeichen: \" << wort.substr(0, 7) << std::endl;\n    std::cout << \"Ab Position 7: \" << wort.substr(7) << std::endl;\n    std::cout << \"5 Zeichen ab Position 3: \" << wort.substr(3, 5) << std::endl;\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Suchen mit find und npos",
+     "aufgabe": "Nimm den Satz Ich lerne C++ mit Freude. Suche darin nach dem Wort C++ und gib die gefundene Position aus. Suche danach nach dem Wort Java und gib eine Meldung aus, dass es nicht vorkommt. Fertig, wenn: Dein Programm die Position 10 für C++ nennt und für Java meldet, dass das Wort nicht vorkommt.",
+     "tipp": "find gibt die Position als size_t zurück. Wenn nichts gefunden wird, kommt std::string::npos heraus. Vergleiche das Ergebnis mit std::string::npos, bevor du es benutzt. Sonst bekommst du eine riesige Zahl zu sehen, die nur zufällig so aussieht wie eine Position.",
+     "loesung": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string satz = \"Ich lerne C++ mit Freude\";\n\n    std::cout << \"Satz: \" << satz << std::endl;\n\n    std::size_t pos_cpp = satz.find(\"C++\");\n    if (pos_cpp != std::string::npos) {\n        std::cout << \"C++ steht an Position \" << pos_cpp << std::endl;\n    }\n\n    std::size_t pos_java = satz.find(\"Java\");\n    if (pos_java == std::string::npos) {\n        std::cout << \"Java kommt in dem Satz nicht vor.\" << std::endl;\n    }\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Zahl in Text verwandeln",
+     "aufgabe": "Baue aus einem Namen, einem Alter und einer Größe einen Satz zusammen. Der Name ist Ada, das Alter ist 36 und die Größe ist 1.68. Gib zwei Sätze aus, einen mit dem Alter und einen mit der Größe. Fertig, wenn: Dein Programm die Zeilen ausgibt: Ada ist 36 Jahre alt. und Größe: 1.680000 m",
+     "tipp": "Ein std::string und eine Zahl lassen sich nicht mit plus verbinden, das meldet der Compiler. Wandle die Zahl vorher mit std::to_string in Text um. Bei einer Kommazahl hängt to_string immer sechs Nachkommastellen an. Deshalb steht dort 1.680000.",
+     "loesung": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string name = \"Ada\";\n    int alter = 36;\n    double groesse = 1.68;\n\n    std::string satz = name + \" ist \" + std::to_string(alter) + \" Jahre alt.\";\n    std::cout << satz << std::endl;\n\n    std::string satz2 = \"Größe: \" + std::to_string(groesse) + \" m\";\n    std::cout << satz2 << std::endl;\n    return 0;\n}\n"
+    }
+   ]
+  },
+  {
+   "titel": "Vertiefungsaufgaben",
+   "cpp": {
+    "text": "Die Vertiefung ist für alle, die mehr wollen. Die Aufgaben sind etwas größer und brauchen mehrere Schritte. Nimm dir Zeit und teste jeden Schritt einzeln. Vergleiche am Ende deine Ausgabe mit der Lösung."
+   },
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Vorname und Nachname trennen",
+     "aufgabe": "Der String enthält den vollen Namen Ada Lovelace. Zerlege ihn in Vorname und Nachname. Der Trennpunkt ist das Leerzeichen. Gib beide Teile aus und dazu die Länge des Vornamens. Fertig, wenn: Dein Programm Vorname: Ada und Nachname: Lovelace zeigt und dazu die Zeile Der Vorname hat 3 Zeichen.",
+     "tipp": "Suche zuerst die Position des Leerzeichens mit find. Der Vorname beginnt bei 0 und hat so viele Zeichen wie die Position des Leerzeichens. Der Nachname beginnt eine Position hinter dem Leerzeichen und läuft bis zum Ende.",
+     "loesung": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string name = \"Ada Lovelace\";\n\n    std::size_t leerzeichen = name.find(\" \");\n    std::string vorname = name.substr(0, leerzeichen);\n    std::string nachname = name.substr(leerzeichen + 1);\n\n    std::cout << \"Vorname: \" << vorname << std::endl;\n    std::cout << \"Nachname: \" << nachname << std::endl;\n    std::cout << \"Der Vorname hat \" << vorname.length() << \" Zeichen.\" << std::endl;\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Initialen bilden",
+     "aufgabe": "Aus dem Namen Ada Lovelace sollen die Initialen A.L. werden. Ein Punkt gehört jeweils hinter den Buchstaben. Baue das Ergebnis Schritt für Schritt in einem eigenen String auf. Fertig, wenn: Dein Programm die Zeile ausgibt: Ada Lovelace ergibt die Initialen A.L.",
+     "tipp": "Ein char kannst du mit plus gleich an einen std::string anhängen. Der erste Buchstabe steht bei Index 0. Den zweiten findest du, indem du erst das Leerzeichen suchst und dann eine Position weiter gehst. Die Punkte sind normale Textstücke in doppelten Anführungszeichen.",
+     "loesung": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string name = \"Ada Lovelace\";\n    std::size_t leerzeichen = name.find(\" \");\n\n    std::string initialen;\n    initialen += name[0];\n    initialen += \".\";\n    initialen += name[leerzeichen + 1];\n    initialen += \".\";\n\n    std::cout << name << \" ergibt die Initialen \" << initialen << std::endl;\n    return 0;\n}\n"
+    }
+   ]
   }
  ]
 }

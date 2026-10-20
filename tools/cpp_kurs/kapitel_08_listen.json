@@ -152,6 +152,58 @@
    },
    "vergleich": "Beide Sprachen ordnen Zahlen nach Größe und Text nach Zeichencode. In beiden steht Groß vor Klein. Einheitliche Schreibweise spart Überraschungen.",
    "merk": "Zahlen nach Größe, Text alphabetisch, Groß vor Klein. Zahlen in Anführungszeichen sind Text."
+  },
+  {
+   "titel": "Pflichtaufgaben",
+   "cpp": {
+    "text": "Jetzt übst du selbst. Die Aufgaben bauen auf dem Stoff dieses Kapitels auf. Schreibe jede Lösung in eine eigene Datei und übersetze sie mit g++. Wenn etwas nicht klappt, lies zuerst die Fehlermeldung und dann den Tipp. Die Lösung klappt nur, wenn die Ausgabe genau zur Aufgabe passt."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Einkaufsliste aufbauen",
+     "aufgabe": "Lege einen leeren vector für Text an. Fülle ihn mit den drei Einträgen Brot, Milch und Käse. Gib zuerst die Anzahl aus und dann jeden Eintrag in einer eigenen Zeile mit einem Strich davor. Fertig, wenn: Dein Programm Anzahl: 3 zeigt und darunter die drei Zeilen mit den Einträgen.",
+     "tipp": "Ein leerer vector entsteht ohne geschweifte Klammern. Mit push_back hängst du einen Wert hinten an. Die Anzahl liefert size(). Zum Durchlaufen nimmst du eine range-for-Schleife: for und dann in Klammern die Variable, einen Doppelpunkt und den vector.",
+     "loesung": "#include <iostream>\n#include <string>\n#include <vector>\n\nint main() {\n    std::vector<std::string> einkauf;\n\n    einkauf.push_back(\"Brot\");\n    einkauf.push_back(\"Milch\");\n    einkauf.push_back(\"Käse\");\n\n    std::cout << \"Anzahl: \" << einkauf.size() << std::endl;\n\n    for (const std::string& artikel : einkauf) {\n        std::cout << \"- \" << artikel << std::endl;\n    }\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Erstes, drittes und letztes Element",
+     "aufgabe": "Der vector enthält die vier Fahrzeuge lkw, jeep, bus und auto. Gib das erste Element mit eckigen Klammern aus. Gib das dritte Element mit at aus. Gib das letzte Element mit at und size aus, ohne die 3 direkt hinzuschreiben. Fertig, wenn: Dein Programm Erstes: lkw und Drittes: bus und Letztes: auto zeigt.",
+     "tipp": "Die Zählung startet bei 0. Das dritte Element hat also den Index 2. Das letzte Element hat den Index size() minus 1. at prüft die Grenzen und meckert, wenn der Index nicht existiert.",
+     "loesung": "#include <iostream>\n#include <string>\n#include <vector>\n\nint main() {\n    std::vector<std::string> fahrzeuge = {\"lkw\", \"jeep\", \"bus\", \"auto\"};\n\n    std::cout << \"Erstes: \" << fahrzeuge[0] << std::endl;\n    std::cout << \"Drittes: \" << fahrzeuge.at(2) << std::endl;\n    std::cout << \"Letztes: \" << fahrzeuge.at(fahrzeuge.size() - 1) << std::endl;\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Einen Namen aus der Mitte löschen",
+     "aufgabe": "Der vector enthält die vier Namen mueller, schmidt, weber und fischer. Lösche den zweiten Namen, also schmidt. Gib vorher und nachher die Anzahl aus und danach alle restlichen Namen. Fertig, wenn: Dein Programm Vorher: 4 Namen und Nachher: 3 Namen zeigt und darunter mueller, weber und fischer.",
+     "tipp": "erase arbeitet mit einer Position, nicht mit einem Index. Die Position bekommst du mit begin() plus dem Index. Der zweite Eintrag hat den Index 1. Danach rutschen alle hinteren Elemente eine Stelle nach vorn. Deshalb ist die Länge danach um eins kleiner.",
+     "loesung": "#include <iostream>\n#include <string>\n#include <vector>\n\nint main() {\n    std::vector<std::string> namen = {\"mueller\", \"schmidt\", \"weber\", \"fischer\"};\n\n    std::cout << \"Vorher: \" << namen.size() << \" Namen\" << std::endl;\n\n    namen.erase(namen.begin() + 1);\n\n    std::cout << \"Nachher: \" << namen.size() << \" Namen\" << std::endl;\n    for (const std::string& n : namen) {\n        std::cout << n << std::endl;\n    }\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Zahlen der Größe nach sortieren",
+     "aufgabe": "Der vector enthält die Zahlen 42, 7, 13, 99 und 1. Gib ihn zuerst unsortiert aus, dann sortiert. Beide Ausgaben stehen in einer Zeile, getrennt durch Leerzeichen. Fertig, wenn: Dein Programm Unsortiert: 42 7 13 99 1 und Sortiert: 1 7 13 42 99 zeigt.",
+     "tipp": "std::sort steht in der Bibliothek algorithm, die musst du einbinden. sort bekommt Anfang und Ende: zahlen.begin() und zahlen.end(). sort ordnet den vector selbst, eine Kopie bekommst du nicht zurück. Deshalb gibst du vor dem Sortieren aus und danach noch einmal.",
+     "loesung": "#include <algorithm>\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> zahlen = {42, 7, 13, 99, 1};\n\n    std::cout << \"Unsortiert:\";\n    for (int z : zahlen) {\n        std::cout << \" \" << z;\n    }\n    std::cout << std::endl;\n\n    std::sort(zahlen.begin(), zahlen.end());\n\n    std::cout << \"Sortiert:\";\n    for (int z : zahlen) {\n        std::cout << \" \" << z;\n    }\n    std::cout << std::endl;\n    return 0;\n}\n"
+    }
+   ]
+  },
+  {
+   "titel": "Vertiefungsaufgaben",
+   "cpp": {
+    "text": "Die Vertiefung ist für alle, die mehr wollen. Die Aufgaben sind etwas größer und brauchen mehrere Schritte. Nimm dir Zeit und teste jeden Schritt einzeln. Vergleiche am Ende deine Ausgabe mit der Lösung."
+   },
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Summe und Durchschnitt",
+     "aufgabe": "Der vector enthält die fünf Messwerte 42, 38, 51, 47 und 39. Bilde die Summe mit einer range-for-Schleife und daraus den Durchschnitt als Kommazahl. Fertig, wenn: Dein Programm Summe: 217 und Durchschnitt: 43.4 zeigt.",
+     "tipp": "Lege vor der Schleife eine int-Variable mit 0 an und addiere in der Schleife jeden Wert dazu. Für den Durchschnitt brauchst du eine Kommazahl, sonst schneidet C++ ab. Wandle die Summe mit static_cast<double>(summe) um und teile dann durch size(). size() liefert eine vorzeichenlose Zahl, das passt zur Division mit double.",
+     "loesung": "#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> messwerte = {42, 38, 51, 47, 39};\n\n    int summe = 0;\n    for (int wert : messwerte) {\n        summe += wert;\n    }\n\n    double durchschnitt = static_cast<double>(summe) / messwerte.size();\n\n    std::cout << \"Summe: \" << summe << std::endl;\n    std::cout << \"Durchschnitt: \" << durchschnitt << std::endl;\n    return 0;\n}\n"
+    },
+    {
+     "titel": "Sortieren und einen Namen suchen",
+     "aufgabe": "Der vector enthält die Namen weber, mueller, schmidt und fischer, absichtlich nicht sortiert. Sortiere den vector. Suche danach den Namen mueller. Ist er da, lösche ihn und melde das. Zum Schluss gib alle Namen aus, die noch übrig sind. Fertig, wenn: Dein Programm mueller wurde entfernt. meldet und danach fischer, schmidt und weber zeigt.",
+     "tipp": "std::find steht in algorithm. Es sucht einen Wert und gibt eine Position zurück. Vergleiche die Position mit namen.end(). Steht dort end, wurde nichts gefunden. Nur im anderen Fall darfst du erase mit dieser Position aufrufen.",
+     "loesung": "#include <algorithm>\n#include <iostream>\n#include <string>\n#include <vector>\n\nint main() {\n    std::vector<std::string> namen = {\"weber\", \"mueller\", \"schmidt\", \"fischer\"};\n\n    std::sort(namen.begin(), namen.end());\n\n    std::string gesucht = \"mueller\";\n    auto position = std::find(namen.begin(), namen.end(), gesucht);\n\n    if (position != namen.end()) {\n        namen.erase(position);\n        std::cout << gesucht << \" wurde entfernt.\" << std::endl;\n    } else {\n        std::cout << gesucht << \" ist nicht in der Liste.\" << std::endl;\n    }\n\n    for (const std::string& n : namen) {\n        std::cout << n << std::endl;\n    }\n    return 0;\n}\n"
+    }
+   ]
   }
  ]
 }

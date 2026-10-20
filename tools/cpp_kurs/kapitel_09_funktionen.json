@@ -29,6 +29,58 @@
    },
    "vergleich": "Lokale und globale Variablen funktionieren in beiden Sprachen gleich. C++ hat zusätzlich namespaces (std::). So stoßen Namen nicht zusammen.",
    "merk": "Lokale Variablen schlagen globale. C++: std:: = namespace."
+  },
+  {
+   "titel": "Pflichtaufgaben",
+   "cpp": {
+    "text": "Jetzt schreibst du selbst Funktionen. Lege für jede Aufgabe eine neue Datei an und schreibe ein vollständiges Programm mit main. Übersetze es mit dem Compiler. Erst wenn der Compiler keine Warnung zeigt und die Ausgabe stimmt, ist die Aufgabe fertig. Die Lösung ist versteckt. Schau erst nach, wenn du selbst probiert hast."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Fläche und Umfang in zwei Funktionen",
+     "aufgabe": "Schreibe zwei Funktionen. flaeche soll Breite mal Höhe rechnen und das Ergebnis als int zurückgeben. umfang soll zwei Mal die Summe aus Breite und Höhe rechnen. Beide Funktionen bekommen zwei int Parameter. Rufe beide in main mit den Werten 3 und 4 auf und gib jedes Ergebnis mit einer Beschriftung aus. Fertig, wenn: zwei Zeilen erscheinen, die erste mit dem Wert 12, die zweite mit dem Wert 14.",
+     "tipp": "Der Rückgabetyp steht vor dem Namen: int flaeche. Danach folgen die runden Klammern mit den Parametern und dann die geschweiften Klammern. In den Rumpf schreibst du return mit der Rechnung. Setze die Summe beim Umfang in Klammern, sonst rechnet der Computer nur die halbe Breite plus Höhe.",
+     "loesung": "#include <iostream>\n\nint flaeche(int breite, int hoehe) {\n    return breite * hoehe;\n}\n\nint umfang(int breite, int hoehe) {\n    return 2 * (breite + hoehe);\n}\n\nint main() {\n    std::cout << \"Fläche: \" << flaeche(3, 4) << \"\\n\";\n    std::cout << \"Umfang: \" << umfang(3, 4) << \"\\n\";\n    return 0;\n}"
+    },
+    {
+     "titel": "Prototyp oben, Definition unten",
+     "aufgabe": "Schreibe eine Funktion verdopple, die eine int Zahl nimmt und das Doppelte zurückgibt. Die Definition soll unterhalb von main stehen. Damit der Compiler die Funktion trotzdem kennt, schreibst du vor main einen Prototyp. Rufe verdopple in main mit 21 auf und gib das Ergebnis aus. Fertig, wenn: das Programm ohne Fehler übersetzt und 42 ausgibt.",
+     "tipp": "Ein Prototyp ist die Kopfzeile der Funktion ohne Rumpf. Also Rückgabetyp, Name und Parameter, abgeschlossen mit einem Semikolon. Er sagt dem Compiler nur: Diese Funktion gibt es und so sieht sie aus.",
+     "loesung": "#include <iostream>\n\n// Prototyp: sagt dem Compiler, dass es die Funktion gibt.\nint verdopple(int wert);\n\nint main() {\n    std::cout << verdopple(21) << \"\\n\";\n    return 0;\n}\n\n// Definition steht erst hier, nach main.\nint verdopple(int wert) {\n    return wert * 2;\n}"
+    },
+    {
+     "titel": "Referenz verändert das Original",
+     "aufgabe": "Schreibe eine Funktion, die an einen Text ein Ausrufezeichen anhängt. Der Parameter muss eine Referenz sein, sonst arbeitet die Funktion auf einer Kopie. Schreibe zusätzlich eine Funktion, die einen Text nur ausgibt und dafür eine const Referenz nutzt. Rufe die erste Funktion zwei Mal mit demselben Text auf, danach die zweite. Fertig, wenn: die Ausgabe Hallo!! lautet, also beide Ausrufezeichen im Original gelandet sind.",
+     "tipp": "Das kaufmännische Und direkt hinter dem Typ macht aus dem Parameter eine Referenz. const davor heißt: nur lesen, nicht ändern. Ohne das Und bekommt die Funktion eine Kopie, und deine Änderung ist nach dem Aufruf verschwunden.",
+     "loesung": "#include <iostream>\n#include <string>\n\n// Referenz: arbeitet am Original, nicht an einer Kopie.\nvoid haenge_ausrufezeichen(std::string& text) {\n    text += \"!\";\n}\n\n// const-Referenz: lesen ohne Kopie.\nvoid zeige(const std::string& text) {\n    std::cout << text << \"\\n\";\n}\n\nint main() {\n    std::string gruss = \"Hallo\";\n    haenge_ausrufezeichen(gruss);\n    haenge_ausrufezeichen(gruss);\n    zeige(gruss);\n    zeige(\"Fertig\");\n    return 0;\n}"
+    },
+    {
+     "titel": "Default Parameter und zwei Aufrufe",
+     "aufgabe": "Schreibe eine Funktion bestelle mit zwei Parametern: gericht als Text und menge als int. Die Menge soll den Default Wert 1 haben. Rufe die Funktion zwei Mal auf, einmal nur mit dem Gericht, einmal mit Gericht und Menge 2. Fertig, wenn: die erste Zeile 1 x Pizza zeigt und die zweite Zeile 2 x Salat.",
+     "tipp": "Der Default steht in der Parameterliste hinter dem Typ, zum Beispiel int menge = 1. Parameter mit Default gehören nach rechts, hinter alle Parameter ohne Default.",
+     "loesung": "#include <iostream>\n#include <string>\n\nvoid bestelle(std::string gericht, int menge = 1) {\n    std::cout << menge << \" x \" << gericht << \"\\n\";\n}\n\nint main() {\n    bestelle(\"Pizza\");\n    bestelle(\"Salat\", 2);\n    return 0;\n}"
+    }
+   ]
+  },
+  {
+   "titel": "Vertiefungsaufgaben",
+   "cpp": {
+    "text": "Diese Aufgaben sind freiwillig und etwas kniffliger. Du verbindest mehrere Dinge aus dem Kapitel: Schleifen in Funktionen, frühe Rückgabe mitten in der Funktion und const Referenzen auf größere Werte."
+   },
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Primzahlen mit früher Rückgabe",
+     "aufgabe": "Schreibe eine Funktion ist_primzahl, die eine int Zahl prüft und bool zurückgibt. Zahlen kleiner als 2 sind keine Primzahlen. Prüfe dann alle möglichen Teiler. Sobald du einen Teiler findest, gibst du sofort false zurück. Am Ende der Funktion steht return true. Rufe die Funktion für alle Zahlen von 1 bis 20 auf und gib nur die Primzahlen aus. Fertig, wenn: in einer Zeile 2 3 5 7 11 13 17 19 steht.",
+     "tipp": "Du musst nicht bis zur Zahl selbst prüfen. Es reicht, bis teiler mal teiler größer als die Zahl wird. Dann hast du alle möglichen Teiler gesehen, ohne die Wurzel zu berechnen.",
+     "loesung": "#include <iostream>\n\nbool ist_primzahl(int n) {\n    if (n < 2) {\n        return false;\n    }\n    for (int teiler = 2; teiler * teiler <= n; ++teiler) {\n        if (n % teiler == 0) {\n            return false;   // früh abbrechen\n        }\n    }\n    return true;\n}\n\nint main() {\n    for (int n = 1; n <= 20; ++n) {\n        if (ist_primzahl(n)) {\n            std::cout << n << \" \";\n        }\n    }\n    std::cout << \"\\n\";\n    return 0;\n}"
+    },
+    {
+     "titel": "Durchschnitt ohne Kopie",
+     "aufgabe": "Schreibe eine Funktion durchschnitt, die einen vector mit int Werten bekommt und einen double zurückgibt. Der Parameter soll eine const Referenz sein, damit der vector nicht kopiert wird. Ist der vector leer, gib 0.0 zurück. Sonst teilst du die Summe aller Werte durch die Anzahl. Rufe die Funktion mit vier Noten auf und einmal mit einem leeren vector. Fertig, wenn: zuerst 2.5 erscheint und danach 0.",
+     "tipp": "Achte auf die Typen. Eine Summe aus int Werten ist wieder ein int. Teilst du int durch int, verliert C++ die Nachkommastellen. Schreibe static_cast davor, dahinter in spitzen Klammern den Zieltyp double. Dann rechnet C++ mit Komma.",
+     "loesung": "#include <iostream>\n#include <vector>\n\ndouble durchschnitt(const std::vector<int>& noten) {\n    if (noten.empty()) {\n        return 0.0;\n    }\n    int summe = 0;\n    for (std::size_t i = 0; i < noten.size(); ++i) {\n        summe += noten[i];\n    }\n    return static_cast<double>(summe) / static_cast<double>(noten.size());\n}\n\nint main() {\n    std::vector<int> noten = {2, 3, 1, 4};\n    std::cout << durchschnitt(noten) << \"\\n\";\n    std::cout << durchschnitt({}) << \"\\n\";\n    return 0;\n}"
+    }
+   ]
   }
  ]
 }
