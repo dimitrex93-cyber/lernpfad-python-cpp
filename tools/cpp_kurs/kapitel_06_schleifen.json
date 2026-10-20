@@ -1,0 +1,34 @@
+{
+ "id": "schleifen",
+ "titel": "Kapitel 6: Schleifen – Wiederholung automatisiert",
+ "einleitung": "Eine Schleife führt Code immer wieder aus. Schleife heißt übersetzt: Wiederholung. Die Schleife läuft zum Beispiel durch jedes Element einer Liste. Oder sie läuft, solange eine Bedingung gilt. Du lernst for und while in beiden Sprachen. Dazu kommen range(), Zählschleifen und die moderne Range-for-Schleife.",
+ "abschnitte": [
+  {
+   "titel": "for-Schleife über eine Sammlung",
+   "cpp": {
+    "text": "C++ hat seit C++11 die moderne Range-for-Schleife. Sie läuft wie Pythons for über einen Container. Ein Container ist ein Behälter für Daten. Ein vector ist so ein Behälter. Die Schreibweise ist for (auto element : container). auto sagt dem Compiler: Finde den Typ selbst heraus. Der Compiler ist ein Programm. Er übersetzt C++-Code in etwas, das der Computer versteht. const auto& benutzt das Element direkt, ohne Kopie. Kopieren kostet Zeit. Daneben gibt es die klassische Zählschleife. Sie kommt im nächsten Abschnitt.",
+    "code": "#include <iostream>\n#include <vector>\n#include <string>\n\nstd::vector<std::string> namen = {\"Anna\", \"Ben\", \"Clara\"};\nfor (const auto& name : namen) {\n    std::cout << name << std::endl;\n}\n\nfor (char buchstabe : std::string(\"Hallo\")) {\n    std::cout << buchstabe << std::endl;\n}"
+   },
+   "vergleich": "Pythons for x in sammlung und die C++-Range-for-Schleife sind dasselbe Konzept. In C++ musst du noch eine Frage klären. auto kopiert das Element. const auto& benutzt es direkt. In Python musst du das nicht entscheiden.",
+   "merk": "for x in ... heißt in Python: für jedes Element. for (auto x : ...) heißt in C++ dasselbe."
+  },
+  {
+   "titel": "Zählschleifen: range() vs. klassisches for",
+   "cpp": {
+    "text": "Die klassische C++-Zählschleife hat drei Teile in der Klammer. Teil 1 ist der Startwert. Teil 2 ist die Bedingung. Teil 3 ist der Schritt. for (int i = 0; i < 5; i++) zählt i von 0 bis 4. i++ erhöht i um 1. i += 2 erhöht i um 2. C++ prüft die Bedingung vor jedem Durchlauf. Bei i < 5 endet die Schleife also bei i = 4.",
+    "code": "for (int i = 0; i < 5; i++) {\n    std::cout << i;      // 0 1 2 3 4\n}\n\nfor (int i = 0; i < 10; i += 2) {\n    std::cout << i;      // 0 2 4 6 8\n}\n\nstd::vector<int> zahlen = {10, 20, 30};\nfor (int i = 0; i < (int)zahlen.size(); i++) {\n    std::cout << i << \": \" << zahlen[i];\n}"
+   },
+   "vergleich": "Python range(5) und for (int i = 0; i < 5; i++) machen dasselbe. In C++ schreibst du Start, Bedingung und Schritt selbst. Python übernimmt das automatisch.",
+   "merk": "range(anfang, ende, schritt) entspricht den drei Teilen der C++-for-Schleife."
+  },
+  {
+   "titel": "while und die Schleifen-Steuerung",
+   "cpp": {
+    "text": "while (bedingung) funktioniert in C++ wie in Python. Die Schleife läuft, solange die Bedingung wahr ist. break beendet die Schleife sofort. continue springt zur nächsten Runde. Ein klassisches Beispiel ist while (std::cin >> zahl). std::cin ist die Eingabe von der Tastatur. Die Schleife liest Zahlen, bis die Eingabe endet. Pass auf: Mach die Bedingung irgendwann falsch. Sonst entsteht eine Endlosschleife.",
+    "code": "int versuche = 0;\nint eingabe;\nwhile (true) {\n    std::cin >> eingabe;\n    versuche++;\n    if (eingabe == 42) {\n        std::cout << \"Richtig!\";\n        break;\n    }\n    if (versuche >= 3) break;\n}\n\nfor (int i = 0; i < 10; i++) {\n    if (i % 2 == 0) continue;   // nächste Runde\n    std::cout << i;             // ungerade Zahlen\n}"
+   },
+   "vergleich": "while, break und continue arbeiten in beiden Sprachen gleich. Auch die Gefahr ist gleich: eine Endlosschleife. Deshalb muss sich die Bedingung irgendwann ändern.",
+   "merk": "break heißt: raus aus der Schleife. continue heißt: nächste Runde."
+  }
+ ]
+}

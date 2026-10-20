@@ -37,21 +37,31 @@ python3 tools/quiz.py --list
 # Fortschritt eines Lernfelds zurücksetzen (alle Stufen)
 python3 tools/quiz.py --reset 2
 
-# Sprachen-Wissen: Python & C++ erklärt (Kapitelübersicht)
+# Python-Kurs (Kapitelübersicht) bzw. C++-Kurs
 python3 tools/quiz.py --wissen
+python3 tools/quiz.py --wissen --wissen-cpp
 
 # Ein bestimmtes Kapitel direkt öffnen (ID oder Nummer)
 python3 tools/quiz.py --wissen strings
 python3 tools/quiz.py --wissen 7
 ```
 
-### Sprachkurs (Menüpunkt `w`)
+### Sprachkurse (Menüpunkte `w` und `c`)
 
-Der Menüpunkt **`w` – Sprachkurs** ist ein zusammenhängender Kurs, der die
-**Sprachen im ganzen erklärt** – nicht nur einzelne Stichpunkte. Von den
-Grundlagen bis zu Speicher und Werkzeugen wird jedes Konzept **immer im
-direkten Vergleich Python ↔ C++** behandelt: Erklärung, Codebeispiel,
-Vergleich und Merksatz pro Abschnitt.
+Seit v1.0.0 sind die beiden Sprachen getrennt: **`w` öffnet den Python-Kurs**,
+**`c` den C++-Kurs**. Jeder Kurs erklärt eine Sprache für sich – Erklärung,
+Codebeispiel und Merksatz pro Abschnitt.
+
+- **Python-Kurs:** `tools/python_kurs/` – 19 Kapitel, 129 Abschnitte. Die
+  Kapitel 2, 3, 4, 7 und 8 enthalten zusätzlich **Pflicht- und
+  Vertiefungsaufgaben** aus dem Python-Crashkurs (Tag 1) mit Lösungen
+  (`aufgaben_pflicht` / `aufgaben_vertiefung`).
+- **C++-Kurs:** `tools/cpp_kurs/` – 19 Kapitel, 97 Abschnitte. Themen, die nur
+  Python betreffen (f-Strings, Listenmethoden), fehlen hier bewusst.
+- **Gemeinsame Quelle:** `tools/sprachkurs/` bleibt der zweisprachige
+  Master (je Abschnitt `python`- und `cpp`-Block) plus `glossar.json`. Die
+  beiden Kursordner werden daraus abgeleitet; wer Inhalte ändert, ändert sie
+  dort und leitet neu ab, sonst laufen die Kurse auseinander.
 
 | # | Kapitel | Themen |
 |---|---|---|
@@ -77,11 +87,12 @@ Vergleich und Merksatz pro Abschnitt.
 
 Wird ein Kapitel **komplett** durchgeblättert (bis zur Abschlussmeldung),
 speichert die App das als gelesen in `~/.lernpfad/fortschritt.json`
-(`sprachkurs_gelesen`). Brichst du mit `q` ab, wird nichts markiert.
-In der Kapitelübersicht und im `--status` siehst du deinen Stand
-(`✓` = gelesen) inklusive Zähler (`X/15 Kapitel gelesen`).
+(`python_gelesen` bzw. `cpp_gelesen` – je Kurs getrennt). Brichst du mit `q`
+ab, wird nichts markiert. In der Kapitelübersicht und im `--status` siehst du
+deinen Stand (`✓` = gelesen) inklusive Zähler (`X/19 Kapitel gelesen`).
 
-Die Kapitel liegen in `tools/sprachkurs/kapitel_XX_name.json`. Jedes Kapitel
+Die Kapitel liegen in `tools/python_kurs/kapitel_XX_name.json` bzw.
+`tools/cpp_kurs/kapitel_XX_name.json`. Jedes Kapitel
 hat diese Struktur – neue Kapitel sind einfach weitere Dateien im Ordner:
 
 ```json

@@ -83,8 +83,10 @@ def merge(lokal, remote):
         if l is None:
             gemergt[key] = r
             continue
-        if key == "sprachkurs_gelesen":
-            gemergt[key] = sorted(set(l or []) | set(r or []))
+        if key.endswith("_gelesen") and isinstance(l, list) \
+                and isinstance(r, list):
+            # python_gelesen / cpp_gelesen: Vereinigung, nie Verlust
+            gemergt[key] = sorted(set(l) | set(r))
             continue
         if (isinstance(l, dict) and isinstance(r, dict)
                 and l.get("datum") and r.get("datum")):

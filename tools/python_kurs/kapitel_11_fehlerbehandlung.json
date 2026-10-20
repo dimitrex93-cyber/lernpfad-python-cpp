@@ -1,0 +1,25 @@
+{
+ "id": "fehlerbehandlung",
+ "titel": "Kapitel 11: Fehlerbehandlung",
+ "einleitung": "Programme machen manchmal Fehler. Zum Beispiel, wenn jemand Unsinn eintippt. Oder wenn eine Datei fehlt. Ohne Schutz bricht das Programm dann ab. Hier lernst du, wie Python und C++ Fehler melden. Und wie du die Fehler abfängst, bevor das Programm abstürzt.",
+ "abschnitte": [
+  {
+   "titel": "Exceptions: Fehler als Objekte",
+   "python": {
+    "text": "Python meldet Fehler als Exceptions. Eine Exception ist ein Fehler-Objekt. Stell dir ein Ballspiel vor: Python wirft dir den Fehler zu. Du fängst ihn mit try/except. try startet den gefährlichen Code. except fängt den Fehler. Zum Beispiel wirft int(\"abc\") einen ValueError. Ohne Fang bricht das Programm ab. Es zeigt dann einen Traceback. Ein Traceback ist die Fehlerliste von Python. Du kannst bestimmte Fehlertypen fangen. Zum Beispiel ValueError, FileNotFoundError oder TypeError. else läuft nur, wenn kein Fehler kam. finally läuft immer.",
+    "code": "try:\n    zahl = int(input(\"Zahl: \"))\n    print(10 / zahl)\nexcept ValueError:\n    print(\"Das war keine Zahl!\")\nexcept ZeroDivisionError:\n    print(\"Division durch 0!\")\nfinally:\n    print(\"Wird immer ausgeführt.\")\n\n# Fehler bewusst werfen:\nif alter < 0:\n    raise ValueError(\"Alter darf nicht negativ sein\")"
+   },
+   "vergleich": "Beide Sprachen machen es gleich. Gefährlichen Code schreibst du in try. Den Fehler behandelst du in except oder catch. Python hat Fehlertypen wie ValueError. C++ hat Fehlertypen wie std::invalid_argument. Beide werfen Fehler: Python mit raise, C++ mit throw.",
+   "merk": "try/except (Python) ist wie try/catch (C++). throw (C++) ist wie raise (Python)."
+  },
+  {
+   "titel": "Gute Fehlerbehandlung: Dos and Don'ts",
+   "python": {
+    "text": "Gute Praxis: Fange nur Fehler, die du auch behandeln kannst. Ein nacktes except: fängt ALLES. Es verschluckt auch Fehler, die du nicht erwartest. Dann findest du den Fehler nie wieder. Das nennt man Debugging: Fehler suchen. Zeige die Fehlermeldung oder schreibe sie auf. Mach nie einfach weiter, ohne zu reagieren. Python kennt zwei Stile. LBYL heißt: Prüfe erst, dann riskiere. EAFP heißt: Versuche erst, fange Fehler danach. In Python ist EAFP mit try/except oft der bessere Stil.",
+    "code": "import os\n\n# Besser: prüfen statt raten\nif not os.path.exists(\"daten.txt\"):\n    print(\"Datei fehlt\")\n\n# Noch pythonischer (EAFP):\ntry:\n    with open(\"daten.txt\") as f:\n        inhalt = f.read()\nexcept FileNotFoundError:\n    print(\"Datei fehlt\")\n\n# Schlecht: except:  (verschluckt alles!)"
+   },
+   "vergleich": "Beide Sprachen: Fange gezielt und zeige Meldungen. Verschlucke keine Fehler im Stillen. C++ hat einen Extra-Trick: RAII. Ressourcen räumen sich dabei selbst auf.",
+   "merk": "Fange nur Fehler, die du behandeln kannst. Verschlucke nie alles. In C++ räumen RAII-Objekte Ressourcen selbst auf."
+  }
+ ]
+}

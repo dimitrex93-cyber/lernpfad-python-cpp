@@ -1,0 +1,203 @@
+{
+ "id": "einstieg",
+ "titel": "Kapitel 2: Dein erstes Programm",
+ "einleitung": "Jetzt wird programmiert! Wir schreiben unser erstes Programm in Python und in C++. Du lernst den Einstiegspunkt kennen. Das ist die Stelle, wo das Programm startet. Du holst Daten von der Tastatur. So spricht dein Programm mit dem Benutzer.",
+ "abschnitte": [
+  {
+   "titel": "Hallo Welt!",
+   "python": {
+    "text": "Ein Python-Programm läuft einfach von oben nach unten. Es gibt kein Grundgerüst und keinen Pflicht-Baustein. Du schreibst den Code in eine Datei, zum Beispiel hallo.py. Dann startest du sie mit python3 hallo.py. print() gibt Text auf der Konsole aus. Die Konsole ist das schwarze Fenster, in dem du die Ausgabe siehst.",
+    "code": "# hallo.py – dein erstes Python-Programm\nprint(\"Hallo Welt!\")\nprint(\"Ich lerne Python!\")\n\n# Ausführen im Terminal:\n# python3 hallo.py"
+   },
+   "vergleich": "Python braucht kein Grundgerüst. C++ braucht immer main(). Python braucht kein #include. C++ lädt nur das, was du anforderst.",
+   "merk": "Python: Datei schreiben, dann python3 starten. C++: main() ist Pflicht. Erst kompilieren, dann ausführen."
+  },
+  {
+   "titel": "Der Einstiegspunkt im Detail",
+   "python": {
+    "text": "Python braucht keinen besonderen Einstiegspunkt. Ein Interpreter ist ein Programm, das deinen Python-Code ausführt. Der Interpreter arbeitet die Datei von oben nach unten ab. Der Block if __name__ == \"__main__\": ist nur eine Konvention. Eine Konvention ist eine Gewohnheit, an die sich alle halten. Er stellt sicher, dass der Code nur beim direkten Start läuft. Beim Import läuft er nicht. Ein Modul ist eine andere Python-Datei, die du mit import nutzt. Für einfache Skripte brauchst du den Block nicht. Bei größeren Programmen ist er gute Praxis.",
+    "code": "def main():\n    print(\"Programm gestartet\")\n\nif __name__ == \"__main__\":\n    main()   # nur beim direkten Start, nicht bei import"
+   },
+   "vergleich": "Bei C++ findest du den Einstieg immer sofort: main. Bei Python musst du wissen, wo das Programm beginnt. Meist ist das einfach Zeile 1.",
+   "merk": "C++: genau eine int main(). Python: Das Skript läuft von oben nach unten."
+  },
+  {
+   "titel": "Ein- und Ausgabe: mit dem Benutzer sprechen",
+   "python": {
+    "text": "input() liest eine Zeile von der Tastatur. Es liefert IMMER einen String zurück. Ein String ist ein Text. Willst du eine Zahl, musst du umwandeln: int(input(...)). print() gibt Text aus. Mehrere Werte trennst du mit Komma. Python verbindet sie automatisch mit Leerzeichen.",
+    "code": "name = input(\"Wie heißt du? \")\nprint(\"Hallo\", name, \"!\")   # Hallo Anna !\n\nalter_text = input(\"Wie alt bist du? \")\nalter = int(alter_text)      # String -> Zahl\nprint(\"Nächstes Jahr:\", alter + 1)"
+   },
+   "vergleich": "input() liefert immer Text. Du musst selbst umwandeln. std::cin >> wandelt automatisch um. Es passt sich der Variable an. Bei falscher Eingabe gerät es in einen Fehlerzustand. Das heißt: Es meldet einen Fehler und liest nicht weiter.",
+   "merk": "Python: input() liefert immer einen String. C++: getline für ganze Zeilen, cin >> für einzelne Werte."
+  },
+  {
+   "titel": "print() im Detail: Name, Klammern, Argument",
+   "python": {
+    "text": "Die Zeile print(\"Hallo Welt!\") besteht aus vier Teilen, und jeder hat einen Namen. Diese Namen sind keine Begriffshuberei. Fehlermeldungen benutzen sie. print ist der Funktionsname. Eine Funktion ist ein fertiger, benannter Arbeitsschritt, den jemand anderes schon gebaut hat. Die runden Klammern sind das Signal: jetzt ausführen. Der bloße Name print macht noch nichts, so wie das Wort Lichtschalter noch kein Licht macht. Erst die Klammern betätigen die Funktion. Was in den Klammern steht, heißt Argument. Das Argument ist der Wert, mit dem die Funktion arbeitet. Die Anführungszeichen gehören zum Argument, nicht zu print. Sie machen aus den Zeichen dazwischen einen String, also Text. Python nimmt alles zwischen den Anführungszeichen wörtlich und denkt nicht weiter nach. Doppelte und einfache Anführungszeichen sind beide erlaubt. Wichtig ist nur: Dasselbe Zeichen muss öffnen und schließen. Achtung, häufige Falle: Nimm die geraden Anführungszeichen, die der Editor liefert. Typografische Anführungszeichen aus einem Word-Dokument oder aus einer Mail kennt Python nicht.",
+    "code": "print(\"Hallo Welt!\")\nprint('Hallo Welt!')\n\n# Beide Zeilen geben dasselbe aus:\n# Hallo Welt!\n# Hallo Welt!"
+   },
+   "vergleich": "Python ruft eine Funktion mit Namen und runden Klammern auf. C++ schiebt den Text mit dem Operator << in std::cout. Das Argument in Python heißt in C++ der Wert hinter dem Operator.",
+   "merk": "Funktionsname, Klammern, Argument. Erst die Klammern führen aus. Anführungszeichen machen aus Zeichen Text."
+  },
+  {
+   "titel": "Was alles in die Klammern darf",
+   "python": {
+    "text": "print() kann mehr als eine einzelne Zeile Text. Drei Varianten decken fast alles ab, was du in den ersten Tagen brauchst. Erstens: mehrere Werte, getrennt durch ein Komma. Python setzt zwischen die Werte automatisch ein Leerzeichen. Du tippst es nicht. Zweitens: gar nichts. Ein print() mit leeren Klammern gibt eine leere Zeile aus. Das ist der übliche Weg, eine Ausgabe zu gliedern. Drittens: eine Rechnung statt eines Textes. Hier zeigt sich der wichtigste Unterschied. Ohne Anführungszeichen ist 2 + 3 eine Rechenaufgabe. Python rechnet sie aus und gibt 5 aus. Mit Anführungszeichen ist \"2 + 3\" Text. Python nimmt die fünf Zeichen, wie sie dastehen, und gibt sie unverändert weiter. Die Reihenfolge der Ausgabe ist die Reihenfolge der Zeilen. Das Programm arbeitet stur von oben nach unten.",
+    "code": "print(\"Guten Morgen!\")\nprint(\"Heute lernen wir Python.\")\nprint()\nprint(\"Mein Name ist\", \"Sebastian\")\nprint(2 + 3)\nprint(\"2 + 3\")\n\n# Ausgabe:\n# Guten Morgen!\n# Heute lernen wir Python.\n#\n# Mein Name ist Sebastian\n# 5\n# 2 + 3"
+   },
+   "vergleich": "Python trennt mehrere Werte mit einem Komma und setzt das Leerzeichen selbst. C++ verkettet mit << und braucht das Leerzeichen als eigenen Text. In beiden Sprachen entscheiden die Anführungszeichen, ob gerechnet oder wörtlich ausgegeben wird.",
+   "merk": "Innerhalb von Anführungszeichen denkt Python nicht mit. Es reicht die Zeichen durch. Außerhalb rechnet es."
+  },
+  {
+   "titel": "Die drei Werkzeuge: Editor, Terminal, Interpreter",
+   "python": {
+    "text": "Auf deinem Rechner arbeiten drei Dinge zusammen, die gern verwechselt werden. Jedes hat eine andere Aufgabe. Python ist der Interpreter. Ein Interpreter ist ein installiertes Programm, das eine .py-Datei liest und ausführt. Er zeigt selbst nichts an und schreibt nichts. Visual Studio Code ist der Editor. Ein Editor ist ein Programm zum Schreiben von reinem Text. Er speichert, färbt ein und verwaltet Dateien. Ausführen kann er den Code nicht selbst. Er gibt ihn an Python weiter. Das Terminal ist das Eingabefenster für Befehle. Es nimmt Befehle entgegen und zeigt Ergebnisse und Fehlermeldungen an. Es ist nicht selbst Python. Bildlich: Der Editor ist eine komfortable Schreibmaschine. Das Terminal ist der Schalter, an dem du Aufträge abgibst. Python ist der Arbeiter dahinter. In Visual Studio Code ist alles in einem Fenster: oben der Editor, unten das Terminal über das Menü Terminal und dann Neues Terminal. Prüfe zuerst, ob Python da ist. Tippe dazu python3 --version ins Terminal. Erwartet wird eine Zeile wie Python 3.12.4. Die genaue Zahl ist gleichgültig, solange vorn eine 3 steht. Unter macOS und Linux heißt der Befehl python3, nicht python. Dann legst du die Datei an: Datei, Neue Datei, sofort Speichern unter, Name hallo.py. Erst speichern, dann tippen. Die Dateiendung ist der Teil hinter dem letzten Punkt. Bei Python lautet sie .py. An ihr erkennen Editor und Interpreter, dass hier Python-Code steht. Solange die Datei hallo.txt heißt, bleibt der Text grau. Mit .py färbt der Editor print ein. Der Ordnerpfad sollte keine Leerzeichen und keine Umlaute enthalten. Sonst braucht jeder Terminalbefehl Anführungszeichen. Zum Starten gibt es zwei Wege. Der Knopf oben rechts im Editor heißt Run Python File. Oder du tippst im Terminal python3 hallo.py. Der Knopf tippt im Hintergrund denselben Befehl. Es ist also ein Verfahren mit und ohne Abkürzung. Wichtig: Python liest immer den Stand auf der Festplatte, nie das, was gerade auf dem Bildschirm steht.",
+    "code": "# 1. Im Terminal prüfen, ob Python da ist:\n# python3 --version\n# Erwartet: Python 3.12.4\n\n# 2. Diese Datei als hallo.py speichern.\nprint(\"Hallo Welt!\")\n\n# 3. Im Terminal starten:\n# python3 hallo.py\n# Ausgabe: Hallo Welt!"
+   },
+   "vergleich": "Bei Python gibt es zwei Schritte: schreiben und starten. Bei C++ sind es drei: schreiben, kompilieren, starten. Der Editor schreibt in beiden Fällen nur Text.",
+   "merk": "Der Editor schreibt, Python führt aus, das Terminal zeigt. Wer weiß, welches der drei gerade meckert, sucht nicht am falschen Ort."
+  },
+  {
+   "titel": "Eine Fehlermeldung lesen: von unten nach oben",
+   "python": {
+    "text": "Irgendwann bricht jedes Programm mit einer Fehlermeldung ab. Das ist der Normalfall, auch bei Leuten, die seit zwanzig Jahren programmieren. Eine Fehlermeldung ist keine Strafe, sondern eine Wegbeschreibung. Sie nennt die Datei, die Zeile und die Art des Problems. Der mehrzeilige Block im Terminal heißt Traceback, zu Deutsch Rückverfolgung. Er beginnt mit der Zeile Traceback (most recent call last):. Darunter stehen die betroffenen Stellen im Quelltext. Am Ende stehen der Fehlertyp und eine Erklärung. Gelesen wird von unten nach oben. Die letzte Zeile sagt, was kaputt ist. Vor dem Doppelpunkt steht der Fehlertyp, dahinter die Erklärung im Klartext. Die Zeile mit File darüber sagt, wo der Fehler auftrat, mit Dateiname und Zeilennummer. Der Zusatz Did you mean ist ein Vorschlag von Python selbst. Bei Tippfehlern ist er fast immer richtig. Achtung: Die Zeilennummer ist die Stelle, an der Python den Fehler bemerkt hat. Sie ist nicht immer die Stelle, an der du ihn gemacht hast. Bei einer vergessenen Klammer zeigt die Meldung oft auf die Zeile danach. Prüfe deshalb die genannte Zeile und die Zeile darüber. Ab Python 3.11 zeigt eine Zeile aus ^-Zeichen zusätzlich auf die genaue Stelle. Das ist nur eine Hilfe. Die unterste Zeile bleibt die wichtigste. Das Vorgehen hat drei Schritte. Erstens: In welcher Zeile? Zweitens: Welcher Fehlertyp? Drittens: Was ist der nächste Versuch? Dann genau eine Änderung machen und erneut ausführen. Wer drei Dinge gleichzeitig ändert, weiß hinterher nicht, was geholfen hat.",
+    "code": "# Fehlerhaft wäre:\n# nachricht = \"Hallo Welt!\"\n# print(nachrict)\n# Meldung: NameError: name 'nachrict' is not defined\n\n# So ist der Name richtig geschrieben:\nnachricht = \"Hallo Welt!\"\nprint(nachricht)   # Hallo Welt!"
+   },
+   "merk": "Fehlermeldungen liest man von unten nach oben. Die letzte Zeile sagt, was kaputt ist. Die Zeile mit File darüber sagt, wo."
+  },
+  {
+   "titel": "Die fünf häufigen Fehlertypen",
+   "python": {
+    "text": "Python kennt Dutzende Fehlertypen. In den ersten Tagen begegnen dir fast nur fünf davon. Jeder hat eine typische Ursache und eine erste Maßnahme. SyntaxError heißt Satzbaufehler. Hier fehlt eine Klammer, ein Anführungszeichen oder ein Doppelpunkt. Python versteht den Text schon grammatisch nicht. Deshalb erscheint keine Ausgabe aus den Zeilen davor. Wenn gar nichts kommt, war es ein SyntaxError. NameError heißt unbekannter Name. Der Name ist vertippt, noch nicht angelegt oder ohne Anführungszeichen. Python arbeitet stur von oben nach unten. Ein Name muss angelegt sein, bevor du ihn benutzt. TypeError heißt falsche Sorte. Der Satzbau ist in Ordnung, aber die Werte passen nicht zusammen. Der Klassiker ist Text plus Zahl. Die Meldung sagt dann: an einen str lässt sich nur ein str anhängen. Ein Komma statt des Pluszeichens löst den Fall sofort, weil print() mehrere Werte verträgt. IndentationError heißt Einrückungsfehler. Am Zeilenanfang stehen Leerzeichen ohne Grund. In Python ist Einrückung kein Geschmack, sondern Bedeutung. Leerzeichen sagen: Diese Zeile gehört zu der Struktur darüber. Gibt es keine, ist die Einrückung unerklärlich. IndexError heißt, die Position gibt es nicht. Eine Liste ist eine Reihe von Werten in eckigen Klammern. Gezählt wird ab 0. Eine Liste mit drei Einträgen hat die Positionen 0, 1 und 2. Die letzte Position ist also n - 1, nicht n.",
+    "code": "namen = [\"Anna\", \"Ben\", \"Carla\"]\n\nprint(namen[0])   # Anna  – erste Position ist 0\nprint(namen[2])   # Carla – letzte Position ist 2\n\n# namen[3] würde abbrechen:\n# IndexError: list index out of range"
+   },
+   "merk": "Fünf Typen reichen am Anfang: SyntaxError, NameError, TypeError, IndentationError, IndexError. Jeder hat eine typische Ursache.",
+   "checkliste": [
+    "SyntaxError: Der Satzbau stimmt nicht, weil eine Klammer, ein Anführungszeichen oder ein Doppelpunkt fehlt. Es läuft keine einzige Zeile.",
+    "NameError: Python kennt den Namen nicht, weil er vertippt ist, erst weiter unten angelegt wird oder die Anführungszeichen fehlen.",
+    "TypeError: Zwei Sorten passen nicht zusammen, zum Beispiel Text plus Zahl in einer Rechnung.",
+    "IndentationError: Am Zeilenanfang stehen Leerzeichen, ohne dass darüber eine Struktur beginnt, zu der die Zeile gehören könnte.",
+    "IndexError: Die Position in der Liste gibt es nicht, weil ab 0 gezählt wird und die letzte Position n - 1 ist."
+   ]
+  },
+  {
+   "titel": "Fehler ohne Fehlermeldung",
+   "python": {
+    "text": "Die unangenehmere Sorte Fehler bringt das Programm nicht zum Absturz. Es läuft durch, meldet nichts und tut trotzdem etwas anderes als gewollt. Hier hilft keine Lesetechnik. Du musst die Ausgabe tatsächlich anschauen und mit deiner Erwartung vergleichen. Das häufigste Beispiel am ersten Tag sind geschweifte Klammern in einem Text. Python kann Werte mitten in einen Text einsetzen. Dafür muss vor dem öffnenden Anführungszeichen ein f stehen. Fehlt dieses f, gibt es keine Fehlermeldung. Der Text wird einfach wörtlich ausgegeben, mitsamt den Klammern. Gewollt war Hallo Marie. Ausgegeben wird der Text mit den geschweiften Klammern darin. Python hat sich nicht geirrt. Zwischen Anführungszeichen nimmt es jedes Zeichen wörtlich. Das f macht aus dem Text eine Vorlage. Ein zweiter Fall derselben Sorte sind fehlende Leerzeichen beim Aneinanderhängen von Texten. Aus vorname plus nachname wird MarieCurie. Auch hier keine Meldung, nur ein Ergebnis, das niemand haben wollte. Die Arbeitsregel ist deshalb: Nach jedem Lauf die Ausgabe Zeile für Zeile anschauen. Schreibe vorher kurz auf, welche Ausgabe du erwartest. Dann merkst du die Abweichung sofort. Wer nur darauf achtet, ob etwas Rotes erscheint, merkt sie womöglich gar nicht. Bei unklaren Stellen helfen zusätzliche print-Zeilen, die Zwischenstände sichtbar machen. Nach der Klärung entfernst du sie wieder. Ein Vergleich: Ein Rechtschreibprüfer findet Haus in dem Satz Ich gehe nach Haus nicht zu beanstanden, auch dann nicht, wenn Hause gemeint war. Python prüft die Form, nicht die Absicht.",
+    "code": "vorname = \"Marie\"\nprint(f\"Hallo {vorname}!\")   # Hallo Marie!\n\nnachname = \"Curie\"\nprint(vorname + \" \" + nachname)   # Marie Curie"
+   },
+   "merk": "Kein Absturz heißt nicht richtig. Nach jedem Ausführen die Ausgabe lesen und mit der Erwartung vergleichen."
+  },
+  {
+   "titel": "Typische Fehler beim ersten Programm",
+   "python": {
+    "text": "Diese Fehler kosten am ersten Tag die meiste Zeit. Fast alle haben mit den Werkzeugen zu tun, nicht mit der Sprache. Prüfe die Liste einmal durch, bevor du ratlos wirst. Der letzte Punkt ist der wichtigste: Lies die Meldung wirklich, statt wahllos zu ändern.",
+    "code": "print(\"Hallo Welt!\")\n\n# Speichere die Datei als hallo.py, nicht als hallo oder hallo.txt.\n# Starte sie mit: python3 hallo.py"
+   },
+   "merk": "Erst speichern, dann ausführen, und die Endung .py nie vergessen. Python liest immer den Stand auf der Festplatte.",
+   "checkliste": [
+    "Datei ohne die Endung .py gespeichert: Der Editor färbt nichts ein, der Ausführen-Knopf fehlt, und das Terminal findet die Datei nicht.",
+    "Vor dem Speichern ausgeführt: Python führt den alten Stand aus, die Änderung scheint wirkungslos. Ein Punkt neben dem Dateinamen zeigt ungespeicherte Änderungen.",
+    "python statt python3 auf dem Mac benutzt: Es kommt command not found. Auf macOS und Linux heißt der Befehl durchgehend python3.",
+    "Schließende Klammer vergessen: Es kommt SyntaxError: '(' was never closed. Jede geöffnete Klammer braucht eine schließende.",
+    "Anführungszeichen vergessen: Es kommt NameError, weil Python das Wort für einen Namen hält, den es nicht kennt.",
+    "Typografische Anführungszeichen aus kopiertem Text: Es kommt SyntaxError an einer Stelle, die optisch völlig in Ordnung aussieht."
+   ]
+  },
+  {
+   "titel": "Übungen",
+   "python": {
+    "text": "Jetzt übst du das Gelesene in eigenen Dateien. Arbeite die Aufgaben der Reihe nach durch. Bei jeder Aufgabe gilt: erst ausführen, dann die Ausgabe lesen, dann mit dem vergleichen, was gefordert war. Wenn eine Fehlermeldung kommt, liest du sie von unten nach oben und änderst genau eine Sache. Die Musterlösung unten zeigt die ersten drei Aufgaben in einer Datei. Tippe sie nicht blind ab, sondern schreibe deine eigene Fassung.",
+    "code": "# Musterlösung zu den Aufgaben 1 bis 3\n\n# Aufgabe 1: die erste eigene Datei (hallo.py)\nprint(\"Hallo Welt!\")\n\n# Aufgabe 2: Überschrift, leere Zeile, drei Gegenstände\nprint(\"Packliste\")\nprint()\nprint(\"Zelt\")\nprint(\"Schlafsack\")\nprint(\"Lampe\")\n\n# Aufgabe 3: zwei Werte in einem Aufruf, Leerzeichen setzt Python\nprint(\"Dienstgrad:\", \"Hauptmann\")\nprint(\"Standort:\", \"Lager Nord\")"
+   }
+  },
+  {
+   "titel": "Pflichtaufgaben",
+   "python": {
+    "text": "Diese Pflichtaufgaben stammen aus dem Kursnotizbuch und gehören zum Thema dieses Kapitels. Schreibe jede Aufgabe in eine eigene Datei und führe sie aus. Wo eine Lösung vorliegt, kannst du sie nach dem eigenen Versuch aufklappen – erst selbst probieren, dann vergleichen."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Die erste eigene Datei",
+     "aufgabe": "Lege im Kursordner eine neue Datei an, speichere sie sofort unter dem Namen hallo.py und schreibe erst danach etwas hinein. In die Datei kommt genau eine Zeile, die den Satz Hallo Welt! ins Terminal schreibt. Führe die Datei anschließend auf beiden Wegen aus: einmal über den Ausführen-Knopf im Editor und einmal über den Terminalbefehl. Fertig, wenn: im Terminal die Zeile Hallo Welt! steht — beide Male identisch, und der Dateiname im Editor ist farbig hervorgehoben, weil die Endung .py erkannt wurde.",
+     "tipp": "Der Befehl zum Ausgeben heißt print. Dahinter gehören zwei runde Klammern, und der Text darin steht in geraden Anführungszeichen. Der Terminalbefehl lautet python hallo.py, auf macOS und Linux python3 hallo.py.",
+     "loesung": "print(\"Hallo Welt\")"
+    },
+    {
+     "titel": "Packliste mit Leerzeile",
+     "aufgabe": "Schreibe ein Programm, das eine Überschrift ausgibt, danach eine leere Zeile und darunter drei Gegenstände einer Packliste, jeden in einer eigenen Zeile. Die leere Zeile soll nicht durch ein Leerzeichen entstehen, sondern durch einen eigenen Aufruf. Fertig, wenn: die Ausgabe fünf Zeilen hat, von denen die zweite vollständig leer ist.",
+     "tipp": "print() verträgt auch leere Klammern. Was dann passiert, steht im Lerntext unter „Was alles in die Klammern darf\".",
+     "loesung": "überschrift = \"Meine Packliste für den Urlaub\"\nprint(überschrift.title())\nprint()\nPack_liste = [\"Zahnbürste\", \"Handtuch\", \"Badehose\"]\nprint(Pack_liste[0])\nprint(Pack_liste[1])\nprint(Pack_liste[2])"
+    },
+    {
+     "titel": "Zwei Werte in einem Aufruf",
+     "aufgabe": "Gib zwei Angaben aus, jede in einer eigenen Zeile, aber jeweils mit nur einem print()-Aufruf pro Zeile: in der ersten Zeile das Wort Dienstgrad: und dahinter einen Dienstgrad, in der zweiten das Wort Standort: und dahinter einen Ort. Die beiden Teile einer Zeile sollen als zwei getrennte Werte übergeben werden, nicht als ein einziger langer Text. Fertig, wenn: zwischen Dienstgrad: und dem Dienstgrad genau ein Leerzeichen steht, ohne dass du eines getippt hast.",
+     "tipp": "In die Klammern dürfen mehrere Werte, durch Komma getrennt. Das Leerzeichen dazwischen setzt Python selbst.",
+     "loesung": "Dienstgrad = [\"General\", \"Oberst\", \"Hauptmann\", \"Leutnant\"]\nStandort = [\"Berlin\", \"Hamburg\", \"München\", \"Köln\"]\nprint(Dienstgrad[0], Standort[0])\nprint(Dienstgrad[1], Standort[1])\nprint(Dienstgrad[2], Standort[2])\nprint(Dienstgrad[3], Standort[3])"
+    },
+    {
+     "titel": "Vorhersage — die Anführungszeichen entscheiden",
+     "aufgabe": "Unten stehen vier Zeilen. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf, in dem steht, welche vier Ausgabezeilen du erwartest. Erst danach übernimmst du die vier Zeilen aus der Vorgabe darunter und führst das Programm aus. Vergleiche dann deine Vorhersage mit dem, was tatsächlich kommt. Fertig, wenn: deine Vorhersagezeile oben steht und darunter in dieser Reihenfolge 56, 7 8, 99 und 100 - 1 ausgegeben werden.",
+     "tipp": "Frage dich bei jeder Zeile nur eines: Steht der Ausdruck zwischen Anführungszeichen oder nicht? Innerhalb denkt Python nicht mit.",
+     "loesung": "print(7 * 8)\nprint(\"7 * 8\")\nprint(100 - 1)\nprint(\"100 - 1\")"
+    },
+    {
+     "titel": "Zwei kaputte Zeilen reparieren",
+     "aufgabe": "Die Vorgabe soll drei Zeilen ausgeben, bringt aber nicht eine einzige zustande. Führe sie zuerst aus, lies die Fehlermeldung und ändere genau eine Sache. Führe erneut aus — jetzt erscheint eine andere Meldung. Ändere wieder genau eine Sache, bis das Programm durchläuft. Fertig, wenn: nacheinander Das Programm startet., Hallo Welt! und Tschuess ausgegeben werden.",
+     "tipp": "Die erste Meldung lautet SyntaxError: '(' was never closed und nennt Zeile 2. Nach der Reparatur kommt NameError: name 'Tschuess' is not defined aus Zeile 3: Dort fehlt etwas, das aus den Zeichen Text macht.",
+     "loesung": "print(\"Das Programm startet.\")\nprint(\"Hallo Welt!\")\nprint(\"Tschuess\")"
+    },
+    {
+     "titel": "Tippfehler im Namen",
+     "aufgabe": "Führe die Vorgabe aus und lies die Meldung von unten nach oben: Welche Zeile wird genannt, welcher Fehlertyp steht vor dem Doppelpunkt? Python macht in diesem Fall sogar einen Vorschlag, wie der Name richtig heißen müsste. Nimm diesen Vorschlag an und ändere genau eine Sache. Fertig, wenn: statt der Fehlermeldung die Zeile Der Marschbefehl liegt bereit. im Terminal steht.",
+     "tipp": "Die unterste Zeile der Meldung nennt den Fehlertyp und hängt eine Frage an, die mit Did you mean beginnt. Vergleiche den Namen in Zeile 1 Buchstabe für Buchstabe mit dem in Zeile 2.",
+     "loesung": "nachricht = \"Der Marschbefehl liegt bereit.\"\nprint(nachricht)"
+    },
+    {
+     "titel": "Einrückung ohne Grund",
+     "aufgabe": "Die Vorgabe sieht harmlos aus, bricht aber ab. Führe sie aus, benenne für dich Zeile und Fehlertyp und repariere sie mit genau einer Änderung. Fertig, wenn: beide Zeilen untereinander erscheinen und keine Meldung mehr kommt.",
+     "tipp": "Der Fehlertyp heißt IndentationError, zu Deutsch Einrückungsfehler. Schau dir an, womit Zeile 2 beginnt — und womit Zeile 1 beginnt.",
+     "loesung": "print(\"Das Programm startet.\")\nprint(\"Die Pruefung laeuft.\")"
+    },
+    {
+     "titel": "Wenn gar nichts kommt",
+     "aufgabe": "Führe die Vorgabe aus. Auffällig ist nicht nur die Meldung, sondern auch, was nicht passiert: Nicht einmal die erste Zeile wird ausgegeben, obwohl sie völlig in Ordnung ist. Erkläre dir selbst, warum, und repariere das Programm. Fertig, wenn: alle drei Zeilen in der richtigen Reihenfolge erscheinen.",
+     "tipp": "Die Meldung nennt Zeile 2 und den Typ SyntaxError. Zähle in Zeile 2 die öffnenden und die schließenden Klammern.",
+     "loesung": "print(\"Erste Zeile\")\nprint(\"Zweite Zeile\")\nprint(\"Dritte Zeile\")"
+    },
+    {
+     "titel": "Text und Zahl in einer Zeile",
+     "aufgabe": "Die Vorgabe will einen Satz mit einer Zahl darin ausgeben und bricht mit einem TypeError ab. Lies die Meldung wörtlich — sie sagt genau, was mit was nicht zusammengeht. Repariere die Zeile so, dass der Satz erscheint, und benutze dafür das Werkzeug, das print() bereits mitbringt. Fertig, wenn: die Zeile Ich war 12 Jahre dabei ausgegeben wird, mit Leerzeichen an beiden Seiten der Zahl.",
+     "tipp": "print() verträgt mehrere Werte, wenn man sie mit Komma trennt — und das Komma stört sich nicht daran, dass einer davon eine Zahl ist.",
+     "loesung": "dienstjahre = 12\nprint(\"Ich war \" + str(dienstjahre) + \" Jahre dabei\")\nprint(f\"Ich war {dienstjahre} Jahre dabei\")"
+    },
+    {
+     "titel": "Vorhersage — zählen ab null",
+     "aufgabe": "Unten steht ein Programm, das eine Liste mit drei Namen anlegt und darauf zugreift. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf, in dem steht, was du erwartest — auch, ob und wo es abbricht. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile Anna und Carla erscheinen und das Programm danach mit IndexError: list index out of range abbricht.",
+     "tipp": "Gezählt wird ab 0. Eine Liste mit drei Einträgen hat deshalb die Positionen 0, 1 und 2 — mehr nicht.",
+     "loesung": "namen = [\"Anna\", \"Ben\", \"Carla\"]\nprint(namen[0])\nprint(namen[1])\nprint(namen[2])"
+    }
+   ]
+  },
+  {
+   "titel": "Vertiefungsaufgaben",
+   "python": {
+    "text": "Diese Vertiefungsaufgaben stammen aus dem Kursnotizbuch und gehören zum Thema dieses Kapitels. Schreibe jede Aufgabe in eine eigene Datei und führe sie aus. Wo eine Lösung vorliegt, kannst du sie nach dem eigenen Versuch aufklappen – erst selbst probieren, dann vergleichen."
+   },
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Der Ausrüstungszettel",
+     "aufgabe": "Baue ein Programm, das einen kleinen Zettel ausgibt: zuerst eine Überschrift, dann eine leere Zeile, dann zwei Zeilen mit je einer Bezeichnung und einer Stückzahl als zwei getrennten Werten, und zum Schluss zweimal dieselbe Addition der beiden Stückzahlen — einmal so, dass Python rechnet, und einmal so, dass die Rechnung wörtlich dasteht. Fertig, wenn: die Ausgabe sechs Zeilen hat, die vorletzte das Ergebnis 15 zeigt und die letzte den Text 12 + 3.",
+     "tipp": "Die letzten beiden Zeilen unterscheiden sich nur durch zwei Zeichen. Für die leere Zeile brauchst du einen Aufruf ohne Argument, für die Stückzahlen das Komma.",
+     "loesung": "Überschrift = \"Meine Packliste\"\nprint(überschrift)\nprint(\"9 * 9\")\nprint(\"=\")\nprint(9 * 9)"
+    },
+    {
+     "titel": "Der Fehler ohne Fehlermeldung",
+     "aufgabe": "Die Vorgabe läuft fehlerfrei durch und ist trotzdem falsch. Gewollt sind die beiden Zeilen Hallo Marie! und Marie Curie. Führe die Vorgabe aus, vergleiche jede Ausgabezeile mit dem, was dort stehen sollte, und repariere beide Abweichungen. Fertig, wenn: genau Hallo Marie! und darunter Marie Curie ausgegeben wird — ohne geschweifte Klammern und mit Leerzeichen zwischen den Namen.",
+     "tipp": "Geschweifte Klammern in der Ausgabe bedeuten immer dasselbe: Vor dem öffnenden Anführungszeichen fehlt ein Buchstabe. Und beim Zusammenhängen von Texten kommt kein Leerzeichen von allein dazu — es muss als eigener Text dastehen.",
+     "loesung": "vorname = \"Marie\"\nnachname = \"Curie\"\nprint(f\"Hallo , {vorname}!\")\nprint(vorname ,nachname)"
+    }
+   ]
+  }
+ ]
+}

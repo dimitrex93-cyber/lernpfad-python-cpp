@@ -1,0 +1,34 @@
+{
+ "id": "schleifen",
+ "titel": "Kapitel 6: Schleifen – Wiederholung automatisiert",
+ "einleitung": "Eine Schleife führt Code immer wieder aus. Schleife heißt übersetzt: Wiederholung. Die Schleife läuft zum Beispiel durch jedes Element einer Liste. Oder sie läuft, solange eine Bedingung gilt. Du lernst for und while in beiden Sprachen. Dazu kommen range(), Zählschleifen und die moderne Range-for-Schleife.",
+ "abschnitte": [
+  {
+   "titel": "for-Schleife über eine Sammlung",
+   "python": {
+    "text": "Pythons for ist eine for-each-Schleife. For-each heißt: für jedes einzelne Element. Die Schleife geht durch jedes Element einer Sammlung. Eine Sammlung ist zum Beispiel eine Liste, ein String oder ein Bereich (range). Du brauchst keinen Index. Der Index ist die Nummer einer Stelle in der Liste. Python gibt dir direkt das Element. So gehst du am einfachsten durch eine Sammlung.",
+    "code": "namen = [\"Anna\", \"Ben\", \"Clara\"]\nfor name in namen:\n    print(name)\n\nfor buchstabe in \"Hallo\":\n    print(buchstabe)   # H a l l o (je Zeile)"
+   },
+   "vergleich": "Pythons for x in sammlung und die C++-Range-for-Schleife sind dasselbe Konzept. In C++ musst du noch eine Frage klären. auto kopiert das Element. const auto& benutzt es direkt. In Python musst du das nicht entscheiden.",
+   "merk": "for x in ... heißt in Python: für jedes Element. for (auto x : ...) heißt in C++ dasselbe."
+  },
+  {
+   "titel": "Zählschleifen: range() vs. klassisches for",
+   "python": {
+    "text": "Willst du eine bestimmte Anzahl an Wiederholungen? Dann hilft dir range(). range heißt übersetzt Bereich. range(5) liefert die Zahlen 0 bis 4. range(2, 5) liefert 2 bis 4. range(0, 10, 2) liefert die geraden Zahlen 0 bis 8. len(liste) gibt die Länge einer Liste an. Mit range(len(liste)) bekommst du auch die Indizes. Ein Index ist die Nummer einer Stelle in der Liste.",
+    "code": "for i in range(5):\n    print(i)          # 0 1 2 3 4\n\nfor i in range(2, 5):\n    print(i)          # 2 3 4\n\nfor i in range(0, 10, 2):\n    print(i)          # 0 2 4 6 8\n\nzahlen = [10, 20, 30]\nfor i in range(len(zahlen)):\n    print(i, zahlen[i])   # Index UND Wert"
+   },
+   "vergleich": "Python range(5) und for (int i = 0; i < 5; i++) machen dasselbe. In C++ schreibst du Start, Bedingung und Schritt selbst. Python übernimmt das automatisch.",
+   "merk": "range(anfang, ende, schritt) entspricht den drei Teilen der C++-for-Schleife."
+  },
+  {
+   "titel": "while und die Schleifen-Steuerung",
+   "python": {
+    "text": "while heißt übersetzt solange. Die while-Schleife läuft, solange eine Bedingung wahr ist. Eine Bedingung ist wahr, wenn sie stimmt. Du nutzt while, wenn du die Anzahl der Durchläufe nicht kennst. Zum Beispiel: Frage so lange, bis die Eingabe richtig ist. break bricht die Schleife sofort ab. continue überspringt den Rest der Runde. Dann startet direkt die nächste Runde. Achtung: Änderst du die Bedingung nie, läuft die Schleife ewig. Das nennt man Endlosschleife.",
+    "code": "versuche = 0\nwhile True:\n    eingabe = input(\"Zahl? \")\n    versuche += 1\n    if eingabe == \"42\":\n        print(\"Richtig!\")\n        break            # Schleife beenden\n    if versuche >= 3:\n        print(\"Zu viele Versuche\")\n        break\n\nfor i in range(10):\n    if i % 2 == 0:\n        continue         # nächste Runde\n    print(i)             # nur ungerade Zahlen"
+   },
+   "vergleich": "while, break und continue arbeiten in beiden Sprachen gleich. Auch die Gefahr ist gleich: eine Endlosschleife. Deshalb muss sich die Bedingung irgendwann ändern.",
+   "merk": "break heißt: raus aus der Schleife. continue heißt: nächste Runde."
+  }
+ ]
+}

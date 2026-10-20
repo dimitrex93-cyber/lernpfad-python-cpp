@@ -1,0 +1,59 @@
+{
+ "id": "variablen",
+ "titel": "Kapitel 3: Variablen und Datentypen",
+ "einleitung": "Variablen sind die Bausteine jedes Programms. Eine Variable ist ein Name für einen Wert. Diesen Wert legst du im Speicher ab. Hier lernst du die wichtigsten Datentypen kennen. Datentypen sagen, ob ein Wert eine Zahl oder Text ist. Python erkennt den Typ automatisch. Bei C++ musst du den Typ selbst festlegen.",
+ "abschnitte": [
+  {
+   "titel": "Was ist eine Variable?",
+   "cpp": {
+    "text": "In C++ musst du den Typ ansagen. Das machst du, bevor du die Variable benutzt. So: int alter = 25. Der Typ ist int, das heißt ganze Zahl. C++ ist statisch typisiert. Statisch heißt: Der Typ steht fest und bleibt so. Eine int-Variable bleibt für immer int. Der Compiler prüft die Typen. Der Compiler ist das Werkzeug, das dein Programm übersetzt. Er findet Fehler, bevor das Programm startet. Legst du Text in eine int-Variable, lehnt er das ab.",
+    "code": "std::string name = \"Anna\";   // Text (aus <string>)\nint alter = 25;              // ganze Zahl\n double groesse = 1.72;      // Kommazahl\nbool ist_student = true;     // Wahrheitswert\n\nint x = 5;\nx = \"fünf\";   // Fehler! Compiler lehnt das ab"
+   },
+   "vergleich": "Python entscheidet erst beim Ausführen. C++ entscheidet schon beim Übersetzen. Deshalb ist C++ strenger. Dafür findet C++ Typfehler früher. C++ läuft auch schneller. Der Compiler kennt nämlich jeden Typ genau.",
+   "merk": "Python erkennt den Typ selbst, C++ legt ihn fest und dann bleibt er."
+  },
+  {
+   "titel": "Die wichtigsten Datentypen im Überblick",
+   "cpp": {
+    "text": "C++ unterscheidet strenger. int ist für ganze Zahlen. double ist für Kommazahlen. Es braucht 8 Byte. Ein Byte ist eine Speicher-Einheit. float ist für kleinere Kommazahlen. char ist für genau EIN Zeichen. Du schreibst es so: 'A'. Das sind einfache Anführungszeichen. bool ist für wahr oder falsch. std::string ist für Text. Du schreibst ihn so: \"Hallo\". Das sind doppelte Anführungszeichen. char und std::string sind verschiedene Typen. Meistens braucht int 4 Byte, double 8, float 4 und char 1.",
+    "code": "int ganze_zahl = 42;      // 4 Byte\n double kommazahl = 3.14;   // 8 Byte, doppelte Genauigkeit\nchar buchstabe = 'A';      // 1 Byte, EIN Zeichen\nbool wahr = true;          // 1 Byte\nstd::string text = \"Hallo\"; // Text, aus <string>\n// 'A' und \"A\" sind NICHT dasselbe!"
+   },
+   "vergleich": "Python ist einfacher. str übernimmt auch die Arbeit von char. float übernimmt die Arbeit von double. C++ gibt dir mehr Kontrolle. Du wählst Größe und Genauigkeit selbst. Dafür musst du den passenden Typ kennen.",
+   "merk": "char ist ein Zeichen, string ist Text, und Python kennt nur str."
+  },
+  {
+   "titel": "Typumwandlung (Cast)",
+   "cpp": {
+    "text": "In C++ gibt es mehrere Arten der Umwandlung. Die sichere Variante ist static_cast<Typ>(wert). Damit wandelst du zum Beispiel Zahlen um. Für Zahlen-zu-Text nutzt du std::to_string(zahl). Für Text-zu-Zahl nutzt du std::stoi(text). stoi heißt string to int. Bei ungültigem Text wirft std::stoi eine Exception. Das ist eine Fehler-Meldung. Sie heißt std::invalid_argument. Mit try/catch fängst du sie ab.",
+    "code": "#include <string>\n\nint zahl = std::stoi(\"42\");      // Text -> int\nstd::string text = std::to_string(42);  // int -> Text\ndouble komma = std::stod(\"3.14\");      // Text -> double\n\n// Moderne Umwandlung zwischen Zahlen:\ndouble d = 3.99;\nint n = static_cast<int>(d);   // 3 (Nachkommateil wird abgeschnitten)"
+   },
+   "vergleich": "Python nutzt int(), str() und float(). Bei Fehlern gibt es einen ValueError. C++ nutzt std::stoi, std::to_string und std::stod. Bei Fehlern gibt es Exceptions. Für Zahlen-Umwandlung nutzt C++ static_cast.",
+   "merk": "Text zu Zahl und zurück: Python nutzt int() und str(), C++ nutzt std::stoi() und std::to_string()."
+  },
+  {
+   "titel": "Erlaubte und verbotene Namen",
+   "cpp": {
+    "text": "In C++ gelten für Namen dieselben Regeln. Erlaubt sind Buchstaben, Ziffern und der Unterstrich. Auch hier darf keine Ziffer am Anfang stehen und kein Leerzeichen im Namen sein. Schlüsselwörter wie int, double, if, for oder class sind gesperrt. Groß- und Kleinschreibung wird unterschieden. Ein Verstoß fällt schon beim Übersetzen auf. Der Compiler lehnt das Programm ab, bevor es startet.",
+    "code": "int alter = 30;\nint alter2 = 31;\nint mein_alter = 32;\n\n// 2alter = 30;     -> Fehler beim Übersetzen\n// int class = 1;   // Fehler, class ist ein Schlüsselwort"
+   },
+   "merk": "Buchstaben, Ziffern und Unterstrich sind erlaubt, aber keine Ziffer am Anfang und kein Leerzeichen.",
+   "checkliste": [
+    "Erlaubt: Buchstaben, Ziffern und der Unterstrich, etwa alter, alter2, mein_alter, _intern",
+    "Verboten: eine Ziffer am Anfang, etwa 2alter, das ergibt einen SyntaxError",
+    "Verboten: ein Leerzeichen im Namen, etwa mein alter, Python sieht zwei Wörter",
+    "Verboten: Minus und Punkt im Namen, etwa mein-alter oder preis.netto",
+    "Verboten: Schlüsselwörter wie if, else, for, while, def, class, import, True, False und None",
+    "Groß und klein zählen als Unterschied: alter, Alter und ALTER sind drei Namen"
+   ]
+  },
+  {
+   "titel": "Veränderbar oder nicht",
+   "cpp": {
+    "text": "In C++ entscheidest du selbst, ob sich ein Wert ändern darf. Mit const vor dem Typ verbietet der Compiler jede spätere Zuweisung. Ein std::string ohne const darf geändert werden. Willst du eine const-Variable ändern, lehnt der Compiler das Programm ab.",
+    "code": "#include <string>\n#include <iostream>\n\nint main() {\n    std::string text = \"abc\";\n    text = \"xyz\";            // erlaubt, std::string ist veränderbar\n\n    const int maximum = 10;\n    // maximum = 12;         // Fehler, const verbietet die Zuweisung\n\n    std::cout << text << \" \" << maximum << std::endl;   // xyz 10\n}"
+   },
+   "vergleich": "Python regelt Veränderbarkeit über den Typ. C++ regelst du es selbst mit const. In beiden Sprachen gilt: Was nicht verändert werden darf, meldet der Prüfer, in Python der Interpreter, in C++ der Compiler.",
+   "merk": "list, dict und set ändern sich selbst. str, int, float, bool und tuple geben einen neuen Wert zurück."
+  }
+ ]
+}

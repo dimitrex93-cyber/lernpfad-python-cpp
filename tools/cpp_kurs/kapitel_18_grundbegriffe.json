@@ -1,0 +1,79 @@
+{
+ "id": "grundbegriffe",
+ "titel": "Kapitel 18: Grundbegriffe – die wichtigsten Begriffe auf einen Blick",
+ "einleitung": "Dieses Kapitel erklärt die wichtigsten Begriffe von Python und C++. Du lernst Datentypen und den Einstiegspunkt kennen. Auch die Ein- und Ausgabe und das Einbinden von fremdem Code kommen vor. Dazu siehst du die Bausteine jedes Programms. Das Kapitel ist dein Nachschlagewerk. Hier steht, was int, main und include bedeuten.",
+ "abschnitte": [
+  {
+   "titel": "Datentypen: int, float, double, char, bool",
+   "cpp": {
+    "text": "In C++ musst du den Typ jeder Variable selbst ansagen. int passt für ganze Zahlen. double ist eine Kommazahl mit 8 Byte. float ist eine kleinere Kommazahl mit 4 Byte. char speichert genau ein Zeichen. bool speichert wahr oder falsch. Ein Byte ist eine kleine Speicher-Einheit. int braucht typisch 4 Byte, char und bool je 1 Byte. Das nennt man statische Typisierung. Eine int-Variable bleibt für immer int. Der Compiler (Übersetzungs-Programm) prüft das schon beim Übersetzen.",
+    "code": "int alter = 25;            // ganze Zahl (4 Byte)\ndouble groesse = 1.72;     // Kommazahl (8 Byte)\nchar buchstabe = 'A';      // EIN Zeichen (1 Byte)\nbool ist_student = true;   // Wahrheitswert (1 Byte)"
+   },
+   "vergleich": "Python hat einen int für alle Größen. Python vergibt den Typ automatisch. C++ hat mehrere Zahlentypen mit fester Größe. Du wählst den passenden Typ und sagst ihn an.",
+   "merk": "Datentyp = welche Art von Wert eine Variable speichert. Python: dynamisch. C++: statisch und deklariert."
+  },
+  {
+   "titel": "Der Einstiegspunkt: main() und __name__",
+   "cpp": {
+    "text": "In C++ ist main() Pflicht. Beim Start ruft das Betriebssystem genau diese Funktion auf. Eine Funktion ist ein Code-Block mit Namen. Ohne main meldet der Linker einen Fehler. Der Linker setzt die Bausteine deines Programms zusammen. Ohne main lässt sich das Programm nicht bauen. Der Rückgabetyp ist immer int. Der Rückgabetyp sagt, welche Art von Wert die Funktion zurückgibt. return 0 meldet dem Betriebssystem „alles gut“. Jeder andere Wert ist ein Fehlercode.",
+    "code": "int main() {          // Einstiegspunkt – Pflicht!\n    std::cout << \"Hallo Welt!\" << std::endl;\n    return 0;         // 0 = alles gut\n}"
+   },
+   "vergleich": "main() und der __name__-Guard sind beides Startmarken. In C++ ist main() Pflicht. In Python ist der Guard nur Konvention.",
+   "merk": "C++: genau eine int main(). Python: Skript läuft von oben nach unten, __name__-Guard schützt Module."
+  },
+  {
+   "titel": "#include und import: fremden Code einbinden",
+   "cpp": {
+    "text": "#include fügt den Inhalt einer Header-Datei in deinen Code ein. Das passiert noch vor dem Übersetzen. Eine Header-Datei enthält Bekanntmachungen für den Compiler. #include <iostream> macht die Ein- und Ausgabe bekannt. #include <string> macht den Datentyp std::string bekannt. Ohne #include kennt der Compiler std::cout nicht. Eigene Header bindest du mit Anführungszeichen ein: #include \"mein_modul.h\".",
+    "code": "#include <iostream>   // Bibliothek bekannt machen\n#include <string>      // für std::string\n\nint main() {\n    std::cout << \"Hallo\";\n    return 0;\n}"
+   },
+   "vergleich": "import lädt zur Laufzeit, also während das Programm läuft. #include fügt Text zur Compile-Zeit ein, also beim Übersetzen. Beides macht fremde Funktionen nutzbar.",
+   "merk": "import = Modul zur Laufzeit laden. #include = Header zur Compile-Zeit einfügen."
+  },
+  {
+   "titel": "Ein- und Ausgabe: print, input, cout, cin",
+   "cpp": {
+    "text": "std::cout gibt Werte aus. Der Operator << hängt Werte nacheinander an die Ausgabe. Ein Operator ist ein Zeichen für eine Operation. std::cin liest Werte ein. std::cin >> wert liest bis zum nächsten Leerzeichen. std::getline(std::cin, text) liest eine ganze Zeile. Auch mit Leerzeichen. Das ist die sichere Variante.",
+    "code": "std::string name;\nstd::cout << \"Wie heißt du? \";\nstd::getline(std::cin, name);\nstd::cout << \"Hallo \" << name << \"!\" << std::endl;"
+   },
+   "vergleich": "print() und input() in Python entsprechen std::cout und std::cin in C++. input() liefert immer Text. Du musst selbst umwandeln. cin >> wandelt automatisch. Dabei kann es in einen Fehlerzustand geraten.",
+   "merk": "Ausgabe: print() / std::cout <<. Eingabe: input() / std::getline (ganze Zeile) oder cin >> (ein Wert)."
+  },
+  {
+   "titel": "Die Grundbausteine: Variable, Funktion, Klasse",
+   "cpp": {
+    "text": "C++ hat dieselben drei Bausteine. Aber hier hat alles einen Typ. Eine Variable hat einen festen Typ: int alter = 25;. Eine Funktion hat einen Rückgabetyp: int verdopple(int x). Eine Klasse hat Sichtbarkeitsbereiche: private: und public:. Die Sichtbarkeit sagt, wer auf die Teile zugreifen darf. Der Konstruktor (die Bau-Funktion) heißt wie die Klasse. Der Konstruktor baut ein neues Objekt.",
+    "code": "int verdopple(int x) {\n    return x * 2;\n}\n\nclass Hund {\nprivate:\n    std::string name;\npublic:\n    Hund(std::string n) : name(n) {}\n    void bellen() const {\n        std::cout << name << \" sagt Wuff!\";\n    }\n};"
+   },
+   "vergleich": "Variable, Funktion und Klasse gibt es in beiden Sprachen. Python braucht keine Typdeklarationen. self ist der Verweis auf das eigene Objekt. C++ schreibt Typen überall hin. private und public stehen explizit da.",
+   "merk": "Variable = Name für Wert. Funktion = Code unter einem Namen. Klasse = Bauplan für Objekte."
+  },
+  {
+   "titel": "Ablaufsteuerung: if, Schleifen, Operatoren",
+   "cpp": {
+    "text": "if prüft eine Bedingung: if (bedingung) { ... }. else if und else folgen danach. Schleifen heißen for und while. Beispiel: for (int i = 0; i < 5; i++). Logische Operatoren sind Symbole. && bedeutet und, || bedeutet oder, ! bedeutet nicht. Der Block steht in geschweiften Klammern. Jede Anweisung endet mit einem Semikolon.",
+    "code": "int note = 2;\nif (note <= 2) {\n    std::cout << \"Sehr gut!\";\n} else if (note <= 4) {\n    std::cout << \"Bestanden.\";\n} else {\n    std::cout << \"Nicht bestanden.\";\n}\n\nfor (int i = 0; i < 3; i++) {\n    std::cout << i;   // 012\n}"
+   },
+   "vergleich": "Die Logik ist gleich, die Syntax anders. Python nutzt Einrückung und Wörter wie and, or, not. C++ nutzt Klammern, Semikolon und Symbole wie &&, ||, !.",
+   "merk": "Entscheidungen: if/elif/else (Python) = if/else if/else (C++). Schleifen: for/while in beiden. == vergleicht, = weist zu!"
+  },
+  {
+   "titel": "Vom Code zum Programm: Compiler, Interpreter, Build",
+   "cpp": {
+    "text": "C++ ist kompiliert. Der Compiler heißt hier g++. Er übersetzt den gesamten Code vor dem Ausführen. Das Ergebnis ist Maschinensprache. Maschinensprache versteht der Computer direkt. Das Übersetzen heißt Build. Erst wenn alles fehlerfrei ist, entsteht eine ausführbare Datei. Diese Datei startest du dann. Compiler-Fehler zeigen Datei und Zeile. Viele Fehler fallen so schon vor dem Start auf.",
+    "code": "# Übersetzen (Build) und dann starten:\n# g++ -std=c++17 -Wall -Wextra datei.cpp -o datei\n# ./datei"
+   },
+   "vergleich": "Python übersetzt während des Laufens. Das macht der Interpreter. C++ übersetzt vorher. Das macht der Compiler. Python startet schneller. C++ läuft am Ende schneller. C++ findet Fehler früher.",
+   "merk": "Interpreter: Zeile für Zeile zur Laufzeit. Compiler: einmal komplett vorab – der Build ist der Übersetzungsschritt."
+  },
+  {
+   "titel": "Container: list, vector, dict, map",
+   "cpp": {
+    "text": "In C++ heißt die dynamische Liste std::vector<int>. Er enthält nur einen Typ. Schlüssel-Wert-Paare legst du mit std::map an. std::map ist sortiert. std::unordered_map nutzt eine Hashtabelle und ist schneller. Achtung, Falle: preise[\"apfel\"] legt einen fehlenden Schlüssel einfach an. Er bekommt einen Standardwert. Zum Nachschlagen nutze .find() oder .at().",
+    "code": "std::vector<int> zahlen = {3, 1, 2};\nzahlen.push_back(4);      // {3,1,2,4}\nstd::cout << zahlen[0];   // 3\n\nstd::map<std::string, double> preise;\npreise[\"apfel\"] = 0.50;\n// preise[\"fehlt\"] legt den Schlüssel AN!"
+   },
+   "vergleich": "Die Python-Liste entspricht std::vector. Das Python-dict entspricht std::map oder std::unordered_map. Python kann Typen mischen und slicen. Slicen heißt: einen Teil der Liste holen. C++ ist streng typisiert. Dafür gibt es .at() mit Grenzprüfung.",
+   "merk": "Container = Sammlungen von Werten. list/vector für Reihen, dict/map für Schlüssel-Wert-Paare."
+  }
+ ]
+}

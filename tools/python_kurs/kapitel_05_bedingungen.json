@@ -1,0 +1,34 @@
+{
+ "id": "bedingungen",
+ "titel": "Kapitel 5: Bedingungen – Entscheidungen im Code",
+ "einleitung": "Programme treffen Entscheidungen. Sie fragen: Stimmt das? Dann machen sie das eine. Stimmt es nicht, machen sie das andere. Das ist wie bei einer Ampel. Bei Rot stoppst du, bei Grün fährst du. Hier lernst du if und else. So reagiert dein Programm auf verschiedene Eingaben.",
+ "abschnitte": [
+  {
+   "titel": "if / else – die Grundform",
+   "python": {
+    "text": "if heißt auf Deutsch „wenn“. Python prüft die Bedingung. Stimmt sie? Dann führt Python den Block aus. Ein Block ist eine Gruppe von Code-Zeilen, die zusammengehören. Die Einrückung zeigt den Block an. Einrückung heißt: Leerzeichen am Zeilenanfang. Meist sind es vier Leerzeichen. Sie sind Pflicht. Ohne sie weiß Python nicht, was zusammengehört. elif ist die Kurzform von „sonst wenn“. Der Doppelpunkt am Zeilenende gehört dazu.",
+    "code": "note = 2\nif note <= 2:\n    print(\"Sehr gut!\")\nelif note <= 4:\n    print(\"Bestanden.\")\nelse:\n    print(\"Leider nicht bestanden.\")\n# Einrückung = Block, Doppelpunkt = Beginn"
+   },
+   "vergleich": "Python: Einrückung und Doppelpunkt zeigen den Block. C++: runde Klammern für die Bedingung, geschweifte für den Block. Die Logik ist gleich, nur die Schreibweise ist anders.",
+   "merk": "Python: Die Einrückung ist der Block. C++: Die geschweiften Klammern sind der Block."
+  },
+  {
+   "titel": "Verschachtelte Bedingungen",
+   "python": {
+    "text": "Du kannst Bedingungen verschachteln. Das heißt: eine if sitzt in einer anderen if. Wie eine Schachtel in einer Schachtel. Manchmal ist das nötig. Oft wird es aber unübersichtlich. Besser: Kombiniere die Bedingungen mit and oder or. Oder nutze early return. Early return heißt: Beende die Funktion sofort, wenn die Bedingung stimmt. Zu tief verschachtelter Code ist schwer zu lesen. Das ist ein Zeichen: Bau den Code um.",
+    "code": "alter = 20\nif alter >= 18:\n    if hat_fuehrerschein():\n        print(\"Darf fahren\")\n    else:\n        print(\"Kein Führerschein\")\nelse:\n    print(\"Noch zu jung\")\n# Flacher wäre: if alter >= 18 and hat_fuehrerschein():"
+   },
+   "vergleich": "Verschachteln geht in beiden Sprachen gleich. In beiden gilt: Halte es flach. Flach heißt: nicht zu tief verschachteln.",
+   "merk": "Tiefe Verschachtelung ist ein schlechtes Zeichen. Kombiniere Bedingungen. Oder nutze early return."
+  },
+  {
+   "titel": "Mehrfach-Auswahl: viele Fälle",
+   "python": {
+    "text": "Kennst du viele feste Fälle? Dann nimm in Python eine if/elif-Kette. Das ist eine Reihe von if und elif. Seit Python 3.10 gibt es auch match/case. Fachleute nennen das strukturelles Pattern Matching. match heißt: Python vergleicht einen Wert mit mehreren Fällen. Passt ein Fall, führt Python ihn aus. Für einfache Vergleiche reicht aber die if/elif-Kette. Auch ein Wörterbuch (dict) hilft oft.",
+    "code": "wochentag = 3\nif wochentag == 1:\n    print(\"Montag\")\nelif wochentag == 2:\n    print(\"Dienstag\")\nelse:\n    print(\"Unter der Woche\")\n\n# Moderner (Python 3.10+):\n# match wochentag:\n#     case 1: print(\"Montag\")\n#     case 2: print(\"Dienstag\")"
+   },
+   "vergleich": "C++ switch ist schnell und kurz. Es geht aber nur mit ganzen Zahlen. Python if/elif ist flexibler. Es vergleicht auch Strings (Text). match/case ist die moderne Alternative.",
+   "merk": "C++ switch: Vergiss break nicht! Python: nimm if/elif oder match/case."
+  }
+ ]
+}

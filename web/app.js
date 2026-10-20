@@ -8,7 +8,7 @@
 const DATEN_PFAD = "/daten/";
 // Versionsmarker: erscheint im Footer. LEER = Browser nutzt alte app.js
 // (Cache!) → Strg+F5 / Cache leeren.
-const APP_VERSION = "0.9.0";
+const APP_VERSION = "1.0.0";
 const STUFEN = ["leicht", "mittel", "schwer"];
 const STUFEN_BESCHREIBUNG = {
   leicht: "nur leichte Fragen",
@@ -603,16 +603,17 @@ function quizTitel(z) {
 // Ansichten wechseln
 // ------------------------------------------------------------------
 function zeigeAnsicht(name) {
-  for (const id of ["start", "ziel", "quiz", "kurs", "json", "pruefung", "glossar", "ki", "karten", "konto"]) {
+  for (const id of ["start", "ziel", "quiz", "python", "cpp", "json", "pruefung", "glossar", "ki", "karten", "konto"]) {
     document.getElementById("ansicht-" + id).hidden = id !== name;
   }
-  for (const id of ["start", "ziel", "quiz", "kurs", "json", "pruefung", "glossar", "ki", "karten", "konto"]) {
+  for (const id of ["start", "ziel", "quiz", "python", "cpp", "json", "pruefung", "glossar", "ki", "karten", "konto"]) {
     document.getElementById("nav-" + id).classList.toggle("active", id === name);
   }
   if (name === "start") zeigeStart();
   if (name === "ziel") zeigeZiel();
   if (name === "quiz") zeigeQuizAuswahl();
-  if (name === "kurs") zeigeKursUebersicht();
+  if (name === "python") zeigeSprachkurs("python");
+  if (name === "cpp") zeigeSprachkurs("cpp");
   if (name === "json") zeigeJsonUebersicht();
   if (name === "pruefung") zeigePruefungUebersicht();
   if (name === "glossar") zeigeGlossar();
@@ -672,7 +673,7 @@ function zeigeZiel() {
 // ------------------------------------------------------------------
 function zeigeStart() {
   const fortschritt = ladeFortschritt();
-  const gelesen = fortschritt.sprachkurs_gelesen || [];
+  const pyGelesen = fortschritt.python_gelesen || [];
   let html = "";
   let quizGesamt = 0, quizBestanden = 0;
   for (const lf of LERN_FELDER) {
@@ -685,9 +686,11 @@ function zeigeStart() {
         <span class="lf-titel">LF${lf.nr}: ${lf.titel}</span>
       </div>`;
   }
-  const kursInfo = gelesen.length
-    ? `<p><strong>${gelesen.length} Kapitel gelesen</strong> – mach weiter! 📚</p>`
-    : `<p>Noch kein Kapitel gelesen – der Sprachkurs wartet auf dich! 📖</p>`;
+  const gelesen = pyGelesen;
+  const cppGelesen = fortschritt.cpp_gelesen || [];
+  const kursInfo = (pyGelesen.length || cppGelesen.length)
+    ? `<p>🐍 Python: <strong>${pyGelesen.length}</strong> Kapitel gelesen · ⚙️ C++: <strong>${cppGelesen.length}</strong> Kapitel gelesen – mach weiter! 📚</p>`
+    : `<p>Noch kein Kapitel gelesen – der Python- und der C++-Kurs warten auf dich! 📖</p>`;
 
   // Übungstests nach IHK-Standard
   let pruefungsInfo = "";
@@ -739,7 +742,7 @@ function zeigeStart() {
      <p><strong>${quizBestanden}/${quizGesamt}</strong> Lernfeld-Stufen bestanden</p>
      <h3>Übungstests nach IHK-Standard</h3>${pruefungsInfo}
      <h3>Prüfungstraining (Wissen &amp; Taktik)</h3>${ptInfo}
-     <h3>Sprachkurs</h3>${kursInfo}`;
+     <h3>Sprachkurse (Python &amp; C++)</h3>${kursInfo}`;
 
   // Sync-Status und gespeicherten Code anzeigen
   const codeFeld = document.getElementById("sync-code-input");
@@ -1247,67 +1250,115 @@ function zeigeGesamtnote(fortschritt) {
 }
 
 // ------------------------------------------------------------------
-// SPRACHKURS
+// SPRACHKURSE – zwei getrennte Reiter (Python / C++).
+// Daten: tools/python_kurs/ und tools/cpp_kurs/ (aus tools/sprachkurs/ abgeleitet).
+// Abschnittsfelder: python|cpp {text, code}, vergleich, merk, checkliste,
+// aufgaben_pflicht[] / aufgaben_vertiefung[] (je {titel, aufgabe, tipp, loesung}).
 // ------------------------------------------------------------------
-let kursZustand = null;
+const SPRACHKURSE = {
+  python: {
+    ordner: "python_kurs",
+    name: "Python-Kurs",
+    gelesenKey: "python_gelesen",
+    sprache: "python",
+  },
+  cpp: {
+    ordner: "cpp_kurs",
+    name: "C++-Kurs",
+    gelesenKey: "cpp_gelesen",
+    sprache: "cpp",
+  },
+};
 
-async function zeigeKursUebersicht() {
+const sprachZustand = { python: null, cpp: null };
+
+async function zeigeSprachkurs(id) {
+  const kurs = SPRACHKURSE[id];
   const fortschritt = ladeFortschritt();
-  const gelesen = new Set(fortschritt.sprachkurs_gelesen || []);
-  const liste = document.getElementById("kurs-liste");
+  const gelesen = new Set(fortschritt[kurs.gelesenKey] || []);
+  const liste = document.getElementById(id + "-liste");
+  if (!liste) return;
   liste.innerHTML = '<p class="subtitle">Kapitel werden geladen …</p>';
   try {
-    const kapitel = await ladeAlleKapitel();
-    kursZustand = { kapitel };
+    const kapitel = await ladeSprachKapitel(id);
+    sprachZustand[id] = { kapitel, aktuellesKapitel: 0, abschnittIndex: 0 };
     let html = "";
     kapitel.forEach((k, i) => {
       const klasse = gelesen.has(k.id) ? "kurs-eintrag gelesen" : "kurs-eintrag";
-      html += `<div class="${klasse}" onclick="oeffneKapitel(${i})">
-          <strong>${i + 1}. ${k.titel}</strong><br>
-          <span class="subtitle">${(k.abschnitte || []).length} Abschnitte</span>
+      const aufgaben = (k.abschnitte || []).reduce((n, a) =>
+        n + ((a.aufgaben_pflicht || []).length + (a.aufgaben_vertiefung || []).length), 0);
+      html += `<div class="${klasse}" onclick="oeffneSprachKapitel('${id}', ${i})">
+          <strong>${i + 1}. ${escapeHtml(k.titel)}</strong><br>
+          <span class="subtitle">${(k.abschnitte || []).length} Abschnitte${aufgaben ? ` · ${aufgaben} Aufgaben` : ""}</span>
         </div>`;
     });
     liste.innerHTML = html;
   } catch (e) {
-    liste.innerHTML = `<p class="nicht-bestanden">Kapitel konnten nicht geladen werden: ${e.message}</p>`;
+    liste.innerHTML = `<p class="nicht-bestanden">${kurs.name} konnte nicht geladen werden: ${e.message}</p>`;
   }
 }
 
-async function ladeAlleKapitel() {
-  // Kapiteldateien stehen im Manifest (tools/sprachkurs/manifest.json),
-  // damit der Browser sie ohne Wildcard-Fetch laden kann.
-  const manifestResp = await fetch(`${DATEN_PFAD}tools/sprachkurs/manifest.json`);
-  if (!manifestResp.ok) {
-    throw new Error("Kapitel-Manifest nicht gefunden");
-  }
+async function ladeSprachKapitel(id) {
+  const kurs = SPRACHKURSE[id];
+  const manifestResp = await fetch(`${DATEN_PFAD}tools/${kurs.ordner}/manifest.json`);
+  if (!manifestResp.ok) throw new Error(`${kurs.name}-Manifest nicht gefunden`);
   const namen = await manifestResp.json();
   const kapitel = [];
   for (const name of namen) {
-    const resp = await fetch(`${DATEN_PFAD}tools/sprachkurs/${name}`);
+    const resp = await fetch(`${DATEN_PFAD}tools/${kurs.ordner}/${name}`);
     if (resp.ok) kapitel.push(await resp.json());
   }
-  if (!kapitel.length) throw new Error("Keine Kapitel geladen");
+  if (!kapitel.length) throw new Error(`Keine ${kurs.name}-Kapitel geladen`);
   return kapitel;
 }
 
-function oeffneKapitel(index) {
-  const k = kursZustand.kapitel[index];
-  kursZustand.aktuellesKapitel = index;
-  kursZustand.abschnittIndex = 0;
-  document.getElementById("kurs-uebersicht").hidden = true;
-  document.getElementById("kurs-kapitel").hidden = false;
-  document.getElementById("kurs-kapitel-titel").textContent = k.titel;
-  document.getElementById("kurs-kapitel-einleitung").textContent = k.einleitung || "";
-  zeigeKursAbschnitt();
+function oeffneSprachKapitel(id, index) {
+  const z = sprachZustand[id];
+  const k = z.kapitel[index];
+  z.aktuellesKapitel = index;
+  z.abschnittIndex = 0;
+  document.getElementById(id + "-uebersicht").hidden = true;
+  document.getElementById(id + "-kapitel").hidden = false;
+  document.getElementById(id + "-kapitel-titel").textContent = k.titel;
+  document.getElementById(id + "-kapitel-einleitung").textContent = k.einleitung || "";
+  zeigeSprachAbschnitt(id);
 }
 
-function zeigeKursAbschnitt() {
-  const z = kursZustand;
+function aufgabenHtml(liste, schluessel) {
+  if (!Array.isArray(liste) || !liste.length) return "";
+  let html = '<ol class="aufgaben-liste">';
+  liste.forEach((a, i) => {
+    const lid = `${schluessel}-${i}`;
+    html += `<li><strong>${escapeHtml(a.titel || "Aufgabe " + (i + 1))}</strong>`;
+    if (a.aufgabe) html += `<p>${escapeHtml(a.aufgabe)}</p>`;
+    if (a.tipp) html += `<p class="aufgaben-tipp">💡 ${escapeHtml(a.tipp)}</p>`;
+    if (a.loesung) {
+      html += `<button class="secondary klein" onclick="toggleLoesung('${lid}')">Lösung anzeigen</button>`;
+      html += `<pre class="code" id="${lid}" hidden>${escapeHtml(a.loesung)}</pre>`;
+    }
+    html += "</li>";
+  });
+  return html + "</ol>";
+}
+
+function toggleLoesung(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.hidden = !el.hidden;
+  const btn = el.previousElementSibling;
+  if (btn && btn.tagName === "BUTTON") {
+    btn.textContent = el.hidden ? "Lösung anzeigen" : "Lösung verbergen";
+  }
+}
+
+function zeigeSprachAbschnitt(id) {
+  const z = sprachZustand[id];
+  const kurs = SPRACHKURSE[id];
   const k = z.kapitel[z.aktuellesKapitel];
   const a = k.abschnitte[z.abschnittIndex];
-  const container = document.getElementById("kurs-abschnitte");
+  const container = document.getElementById(id + "-abschnitte");
   let html = `<div class="abschnitt">
-    <h3>${z.abschnittIndex + 1}/${k.abschnitte.length}: ${a.titel}</h3>`;
+    <h3>${z.abschnittIndex + 1}/${k.abschnitte.length}: ${escapeHtml(a.titel)}</h3>`;
   for (const sprache of ["python", "cpp"]) {
     const block = a[sprache];
     if (!block) continue;
@@ -1321,41 +1372,46 @@ function zeigeKursAbschnitt() {
     html += `<div class="merk"><strong>✅ Checkliste</strong><ul>` +
       a.checkliste.map((x) => `<li>${escapeHtml(x)}</li>`).join("") + `</ul></div>`;
   }
-  if (Array.isArray(a.aufgaben) && a.aufgaben.length) {
-    html += `<div class="aufgaben"><strong>✍️ Übungen</strong><ul>` +
-      a.aufgaben.map((x) => `<li>${escapeHtml(x)}</li>`).join("") + `</ul></div>`;
+  if (Array.isArray(a.aufgaben_pflicht) && a.aufgaben_pflicht.length) {
+    html += `<div class="aufgaben"><strong>✍️ Pflichtaufgaben</strong>` +
+      aufgabenHtml(a.aufgaben_pflicht, `${id}-p-${z.aktuellesKapitel}-${z.abschnittIndex}`) + `</div>`;
+  }
+  if (Array.isArray(a.aufgaben_vertiefung) && a.aufgaben_vertiefung.length) {
+    html += `<div class="aufgaben"><strong>🔥 Vertiefungsaufgaben</strong>` +
+      aufgabenHtml(a.aufgaben_vertiefung, `${id}-v-${z.aktuellesKapitel}-${z.abschnittIndex}`) + `</div>`;
   }
   if (a.merk) html += `<div class="merk">📌 ${escapeHtml(a.merk)}</div>`;
   html += `</div>`;
   container.innerHTML = html;
 
-  const weiter = document.getElementById("kurs-weiter-btn");
+  const weiter = document.getElementById(id + "-weiter-btn");
   const letzter = z.abschnittIndex >= k.abschnitte.length - 1;
   weiter.textContent = letzter ? "Kapitel abschließen ✓" : "Weiter →";
 }
 
-function kursNaechsterAbschnitt() {
-  const z = kursZustand;
+function sprachNaechsterAbschnitt(id) {
+  const z = sprachZustand[id];
+  const kurs = SPRACHKURSE[id];
   const k = z.kapitel[z.aktuellesKapitel];
   if (z.abschnittIndex < k.abschnitte.length - 1) {
     z.abschnittIndex++;
-    zeigeKursAbschnitt();
+    zeigeSprachAbschnitt(id);
   } else {
-    // Kapitel abgeschlossen → als gelesen markieren
     const fortschritt = ladeFortschritt();
-    const gelesen = new Set(fortschritt.sprachkurs_gelesen || []);
+    const gelesen = new Set(fortschritt[kurs.gelesenKey] || []);
     gelesen.add(k.id);
-    fortschritt.sprachkurs_gelesen = [...gelesen].sort();
+    fortschritt[kurs.gelesenKey] = [...gelesen].sort();
     speichereFortschritt(fortschritt);
-    zeigeToast("Kapitel abgeschlossen – als gelesen markiert! 📖", "erfolg");
-    kursZurueck();
+    const emoji = id === "python" ? "🐍" : "⚙️";
+    zeigeToast(`${kurs.name}-Kapitel abgeschlossen ${emoji}`, "erfolg");
+    sprachZurueck(id);
   }
 }
 
-function kursZurueck() {
-  document.getElementById("kurs-kapitel").hidden = true;
-  document.getElementById("kurs-uebersicht").hidden = false;
-  zeigeKursUebersicht();
+function sprachZurueck(id) {
+  document.getElementById(id + "-kapitel").hidden = true;
+  document.getElementById(id + "-uebersicht").hidden = false;
+  zeigeSprachkurs(id);
 }
 
 // ------------------------------------------------------------------
@@ -1627,7 +1683,7 @@ async function pusheRemoteProgress(code, fortschritt) {
 // Merge-Regeln (identisch mit tools/sync.py):
 //  - Test-Einträge (lf…, zwischenpruefung, abschlusspruefung): neueres
 //    datum gewinnt, bei gleichem datum mehr punkte
-//  - sprachkurs_gelesen: Vereinigung (additiv, nie Verlust)
+//  - *_gelesen (python_gelesen, cpp_gelesen): Vereinigung (additiv, nie Verlust)
 //  - alles andere: lokal, falls vorhanden
 function mergeFortschritt(lokal, remote) {
   const gemergt = {};
@@ -1638,8 +1694,8 @@ function mergeFortschritt(lokal, remote) {
     const r = remote[key];
     if (l === undefined) { gemergt[key] = r; continue; }
     if (r === undefined) { gemergt[key] = l; continue; }
-    if (key === "sprachkurs_gelesen") {
-      gemergt[key] = [...new Set([...(l || []), ...(r || [])])].sort();
+    if (/_(gelesen)$/.test(key) && Array.isArray(l) && Array.isArray(r)) {
+      gemergt[key] = [...new Set([...l, ...r])].sort();
       continue;
     }
     if (l && r && typeof l === "object" && typeof r === "object" &&

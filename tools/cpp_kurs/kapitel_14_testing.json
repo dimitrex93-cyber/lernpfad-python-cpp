@@ -1,0 +1,34 @@
+{
+ "id": "testing",
+ "titel": "Kapitel 14: Testing und Debugging",
+ "einleitung": "Guter Code ist getesteter Code. Ein Test prüft dein Programm automatisch. Du lernst, wie Unit-Tests (Tests für eine einzelne Funktion) in Python und C++ funktionieren. Du lernst, was TDD bedeutet. Und du lernst, wie du Fehler systematisch findest.",
+ "abschnitte": [
+  {
+   "titel": "Unit-Tests: Code automatisch prüfen",
+   "cpp": {
+    "text": "In C++ gibt es kein eingebautes Test-Werkzeug. Aber assert() aus <cassert> ist der erste Baustein. Assert heißt: Ich behaupte, das stimmt. Stimmt die Behauptung nicht, bricht das Programm ab. Es zeigt dann eine Meldung mit Datei und Zeile. Das passiert in der Debug-Version (einer Version zum Fehlersuchen). Für echte Test-Suiten (Sammlungen aus vielen Tests) nutzt du Werkzeuge wie doctest, Catch2 oder GoogleTest. Sie zeigen die Ergebnisse übersichtlich – ohne Absturz.",
+    "code": "#include <cassert>\n\ndouble celsius_zu_fahrenheit(double c) {\n    return c * 9.0 / 5.0 + 32;\n}\n\nint main() {\n    assert(celsius_zu_fahrenheit(0) == 32);\n    assert(celsius_zu_fahrenheit(100) == 212);\n    // Fehlschlag -> Abbruch mit Datei/Zeile\n    return 0;\n}\n\n// Mit doctest: TEST_CASE(\"Celsius\") { CHECK(...); }"
+   },
+   "vergleich": "Python nutzt pytest. C++ nutzt assert oder doctest. Beide prüfen, ob die Behauptungen stimmen. Python meldet alle Fehler am Ende. C++-assert stoppt beim ersten Fehler.",
+   "merk": "Ein Test braucht drei Dinge: Eingabe, erwartete Ausgabe und assert. Python nutzt pytest. C++ nutzt doctest oder Catch2."
+  },
+  {
+   "titel": "TDD: Red-Green-Refactor",
+   "cpp": {
+    "text": "TDD funktioniert in C++ genauso. Du schreibst zuerst eine Test-Datei mit einem Framework (einem Test-Werkzeug), zum Beispiel doctest. Der Test ist rot. Dann baust du die Implementierung (den echten Code). Jetzt wird der Test grün. C++ hat einen Vorteil: Der Compiler (der Übersetzer) findet zusätzlich Typfehler. Wichtig: Kompiliere mit -Wall -Wextra. Nimm alle Warnungen ernst.",
+    "code": "// 1. RED: test_mwst.cpp mit doctest\n// TEST_CASE(\"MwSt\") {\n//     CHECK(mwst(100) == 19);\n// }\n\n// 2. GREEN: Implementierung\ndouble mwst(double betrag) {\n    return betrag * 0.19;\n}\n\n// 3. REFACTOR + kompilieren mit:\n// g++ -std=c++17 -Wall -Wextra test_mwst.cpp -o test\n// ./test"
+   },
+   "vergleich": "Der Red-Green-Refactor-Zyklus funktioniert in beiden Sprachen gleich. Python nutzt pytest. C++ nutzt doctest plus -Wall -Wextra.",
+   "merk": "Red: Der Test schlägt fehl. Green: Der Code wird minimal grün. Refactor: Du räumst auf."
+  },
+  {
+   "titel": "Debuggen: Fehler systematisch finden",
+   "cpp": {
+    "text": "gdb ist der Debugger (das Fehlersuche-Werkzeug) für C++. Er macht dasselbe wie pdb. Kompiliere mit -g. Das fügt Debug-Infos (Infos zum Fehlersuchen) hinzu. Starte gdb ./programm. Setze breakpoints (Haltepunkte), zum Beispiel break main. Starte mit run. Steuere mit next, step und print. Ein Stacktrace (die Aufruf-Kette) zeigt dir den Weg bis zum Absturz. Alternativ: printf-Debugging (Fehlersuche per Ausgabe) mit std::cerr. Das ist schnell. Aber vergiss das Aufräumen nicht!",
+    "code": "# Kompilieren mit Debug-Infos:\n# g++ -std=c++17 -g datei.cpp -o datei\n# gdb ./datei\n\n# (gdb) break main          Haltepunkt setzen\n# (gdb) run                 Programm starten\n# (gdb) next                nächste Zeile\n# (gdb) print a             Variable anzeigen\n# (gdb) bt                  Backtrace (Aufruf-Kette)\n# (gdb) quit                beenden"
+   },
+   "vergleich": "Traceback und Stacktrace zeigen die Fehlerkette. Python nutzt pdb mit set_trace(). C++ nutzt gdb mit -g. Dort hilft bt für den Backtrace (die Aufruf-Kette).",
+   "merk": "Beim Debuggen setzt du einen Haltepunkt. Dann gehst du Schritt für Schritt und prüfst Variablen. Python: pdb. C++: gdb."
+  }
+ ]
+}

@@ -1,0 +1,34 @@
+{
+ "id": "oop",
+ "titel": "Kapitel 10: Klassen und Objekte (OOP)",
+ "einleitung": "Objektorientierte Programmierung (OOP) arbeitet mit Objekten. Ein Objekt hat Daten und Verhalten. Ein Hund-Objekt hat einen Namen und kann bellen. Du lernst Klassen, Konstruktoren, Kapselung und Vererbung. Und du siehst: Python und C++ lösen dieselben Ideen unterschiedlich.",
+ "abschnitte": [
+  {
+   "titel": "Klassen: Bauplan für Objekte",
+   "python": {
+    "text": "Eine Klasse ist ein Bauplan. Aus einem Bauplan entstehen viele Objekte. Ein Objekt heißt auch Instanz. Du erzeugst ein Objekt durch Aufruf der Klasse: Hund(\"Rex\"). __init__ ist der Konstruktor. Er baut das Objekt auf. self ist der Verweis auf das eigene Objekt. self steht immer als erster Parameter. Methoden sind Funktionen in der Klasse. In Python ist alles standardmäßig öffentlich. Kapselung regelt man per Konvention. Ein Unterstrich (_name) sagt: bitte nicht anfassen.",
+    "code": "class Hund:\n    def __init__(self, name):\n        self.name = name        # Attribut\n\n    def bellen(self):\n        print(f\"{self.name} sagt Wuff!\")\n\nh = Hund(\"Rex\")    # Objekt erzeugen\nh.bellen()          # Rex sagt Wuff!\nprint(h.name)       # Rex"
+   },
+   "vergleich": "Python: self und __init__, alles ist öffentlich. C++: Der Konstruktor heißt wie die Klasse. Die Sichtbarkeit gibst du explizit an. private ist der Standard.",
+   "merk": "C++: private ist Standard! Ohne public: kein Zugriff von außen."
+  },
+  {
+   "titel": "Kapselung: Daten schützen",
+   "python": {
+    "text": "Kapselung schützt Daten. Die Attribute sind privat. Nur Methoden der Klasse dürfen sie ändern. So bleiben die Daten konsistent. In Python ist das eine Konvention. _name sagt: privat, bitte nicht anfassen. Zwei Unterstriche (__name) schützen stärker. Das nennt man Name Mangling. @property erlaubt Getter und Setter. Ein Getter liest einen Wert. Ein Setter ändert ihn. Du nutzt sie wie normale Attribute.",
+    "code": "class Konto:\n    def __init__(self, start):\n        self._stand = start     # Konvention: privat\n\n    def einzahlen(self, betrag):\n        if betrag > 0:\n            self._stand += betrag\n\n    @property\n    def stand(self):            # Getter\n        return self._stand\n\nk = Konto(100)\nk.einzahlen(50)\nprint(k.stand)   # 150 (lesen via Getter)"
+   },
+   "vergleich": "Python: Unterstrich als Konvention, @property für Getter. C++: echte private-Bereiche, Getter und Setter als Methoden. const heißt: nichts ändern.",
+   "merk": "Kapselung = private Daten + öffentliche Methoden. C++ erzwingt, Python vertraut."
+  },
+  {
+   "titel": "Vererbung: Klassen erweitern",
+   "python": {
+    "text": "Vererbung heißt: Eine Klasse übernimmt von einer anderen. Sie erbt Attribute und Methoden. class Hund(Tier): bedeutet: Hund erbt von Tier. Tier ist die Elternklasse. super() ruft den Konstruktor der Elternklasse auf. Du kannst Methoden überschreiben. Das nennt man Polymorphie. Hund implementiert gib_laut anders als Tier. Python erlaubt Mehrfachvererbung. Eine Klasse erbt dann von mehreren Klassen. Nutze das mit Bedacht.",
+    "code": "class Tier:\n    def __init__(self, name):\n        self.name = name\n    def gib_laut(self):\n        return \"...\"\n\nclass Hund(Tier):\n    def __init__(self, name):\n        super().__init__(name)\n    def gib_laut(self):        # überschreiben\n        return \"Wuff\"\n\nh = Hund(\"Rex\")\nprint(h.gib_laut())   # Wuff\nprint(isinstance(h, Tier))   # True"
+   },
+   "vergleich": "Vererbung funktioniert in beiden Sprachen gleich. C++ verlangt virtual und override. Python überschreibt still. Python nutzt super(). C++ ruft die Basisklasse in der Initialisierungsliste auf.",
+   "merk": "C++: virtual in der Basis, override beim Überschreiben – sonst keine Polymorphie."
+  }
+ ]
+}

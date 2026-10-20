@@ -1,0 +1,34 @@
+{
+ "id": "funktionen",
+ "titel": "Kapitel 9: Funktionen – Code wiederverwenden",
+ "einleitung": "Eine Funktion ist wie ein Rezept mit Namen. Du schreibst sie einmal auf und rufst sie beliebig oft auf. Du lernst Parameter (Eingaben), Rückgabewerte (Ergebnisse) und Default-Parameter. Außerdem siehst du die Unterschiede zwischen Python und C++.",
+ "abschnitte": [
+  {
+   "titel": "Funktionen definieren und aufrufen",
+   "python": {
+    "text": "Eine Funktion legst du mit def an. Beispiel: def quadrat(x):. Danach kommt der Funktionskörper. Die Zeilen darin rückst du ein. Typen gibst du nicht an. Python prüft sie erst, wenn das Programm läuft. Ohne return liefert die Funktion None. None heißt: nichts. Aufrufen tust du die Funktion so: quadrat(4).",
+    "code": "def quadrat(x):\n    return x * x\n\ndef begruesse(name):\n    print(f\"Hallo {name}!\")\n\nprint(quadrat(4))      # 16\nbegruesse(\"Anna\")     # Hallo Anna!\n\nprint(begruesse(\"Ben\"))  # None (kein return)"
+   },
+   "vergleich": "Python: def, Einrückung, keine Typen. C++: Rückgabetyp, Parametertypen und geschweifte Klammern. Prototypen gibt es nur in C++.",
+   "merk": "Python: def f(x):  C++: int f(int x) { }"
+  },
+  {
+   "titel": "Parameter und Argumente",
+   "python": {
+    "text": "Python kennt zwei Arten von Argumenten. Positionsargumente kommen in fester Reihenfolge: name(1, 2). Schlüsselwortargumente haben einen Namen: name(x=1, y=2). Ein Default-Wert macht einen Parameter optional. Beispiel: def f(x, y=10). Dann darfst du y weglassen. Achtung, Falle: Nimm nie eine Liste als Default. Die Liste bleibt über alle Aufrufe erhalten. Das nennt man Anti-Pattern – also eine schlechte Idee.",
+    "code": "def beschreibe(name, alter, stadt=\"unbekannt\"):\n    print(f\"{name}, {alter}, aus {stadt}\")\n\nbeschreibe(\"Anna\", 25)                    # Positionsargumente\nbeschreibe(\"Ben\", stadt=\"Bonn\", alter=30) # Schlüsselwort\n\n# Anti-Pattern: def f(x=[]):  -> geteilte Liste!\ndef addiere(ziel, *werte):\n    return ziel + sum(werte)\nprint(addiere(1, 2, 3, 4))   # 10 (*werte sammelt)"
+   },
+   "vergleich": "Beide Sprachen kennen Default-Parameter. Python hat Schlüsselwortargumente und *args. C++ hat Referenzen (&) gegen teure Kopien.",
+   "merk": "Python: Schlüsselwortargumente, C++: Referenzen. Beide: Default-Parameter."
+  },
+  {
+   "titel": "Gültigkeitsbereiche (Scopes)",
+   "python": {
+    "text": "Ein Gültigkeitsbereich sagt: Wo ist die Variable sichtbar? Variablen aus einer Funktion sind lokal. Außerhalb der Funktion gibt es sie nicht. Eine globale Variable darf die Funktion lesen. Aber eine Zuweisung erzeugt eine NEUE lokale Variable. Nur mit dem Schlüsselwort global änderst du die globale. Faustregel: Funktionen kommunizieren nur über Parameter und Rückgabewerte. Globale Variablen sind ein Anti-Pattern – also eine schlechte Idee.",
+    "code": "x = 10   # global\n\ndef f():\n    x = 5          # NEUE lokale Variable!\n    print(x)       # 5\n\nf()\nprint(x)           # 10 (global unverändert)\n\n# Mit 'global' (Vorsicht, Anti-Pattern):\ndef g():\n    global x\n    x = 99"
+   },
+   "vergleich": "Lokale und globale Variablen funktionieren in beiden Sprachen gleich. C++ hat zusätzlich namespaces (std::). So stoßen Namen nicht zusammen.",
+   "merk": "Lokale Variablen schlagen globale. C++: std:: = namespace."
+  }
+ ]
+}

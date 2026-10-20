@@ -1,0 +1,157 @@
+{
+ "id": "listen",
+ "titel": "Kapitel 8: Listen, Vektoren und Maps",
+ "einleitung": "Einzelne Werte sind langweilig. Sammlungen machen Programme stark. Du lernst die Liste aus Python kennen. Du lernst den vector aus C++ kennen. Das sind Behälter für viele Werte. Am Ende lernst du dict und map kennen. Das sind Nachschlagewerke wie ein Wörterbuch.",
+ "abschnitte": [
+  {
+   "titel": "Listen: mehrere Werte in einer Variable",
+   "cpp": {
+    "text": "In C++ heißt die dynamische Liste vector. Der ganze Name ist std::vector. Er kommt aus der Bibliothek <vector>. Eine Bibliothek ist eine Sammlung fertiger Bausteine. Der vector wächst, wenn er Platz braucht. Du greifst mit [] oder .at() zu. .at() prüft vorher die Grenzen. Ein vector<int> enthält nur ints. Mischen ist nicht erlaubt. In C++ hat jeder Wert einen festen Typ. Das nennt man statische Typisierung. push_back() hängt einen Wert ans Ende. size() zählt die Werte. insert() und erase() arbeiten in der Mitte. Das kostet Zeit. sort() sortiert. Es kommt aus <algorithm>.",
+    "code": "#include <vector>\n#include <algorithm>\n\nstd::vector<int> zahlen = {3, 1, 2};\nzahlen.push_back(4);              // {3,1,2,4}\nzahlen.insert(zahlen.begin(), 0); // {0,3,1,2,4}\nstd::sort(zahlen.begin(), zahlen.end());  // {0,1,2,3}\nstd::cout << zahlen.size();       // 4\nstd::cout << zahlen[0];           // 0\nstd::cout << zahlen.at(1);        // 1 (prüft Grenzen)"
+   },
+   "vergleich": "list (Python) und std::vector (C++) sind Geschwister. Python mischt Typen und kann slicen. C++ erlaubt nur einen Typ. .at() schützt vor falschen Zugriffen. [] macht das nicht.",
+   "merk": "append (Python) ist wie push_back (C++). len ist wie size. Python mischt Typen, C++ nicht."
+  },
+  {
+   "titel": "Vorsicht: Zugriffe und Grenzen",
+   "cpp": {
+    "text": "In C++ prüft [] die Grenzen nicht. v[10] auf einem Vektor mit 5 Werten? Das ist gefährlich. Das Programm kann abstürzen. Es kann auch Müll liefern. Das nennt man undefiniertes Verhalten. .at() prüft die Grenzen. Passt der Index nicht, meldet .at() einen Fehler. Der Fehler heißt std::out_of_range. Du kannst ihn abfangen. Dann läuft das Programm weiter. Faustregel: Bist du nicht sicher, nimm .at(). Oder prüfe mit size().",
+    "code": "std::vector<int> v = {1, 2, 3, 4, 5};\n// std::cout << v[10];   // UB! Absturz oder Müll\n// Besser:\ntry {\n    std::cout << v.at(10);\n} catch (const std::out_of_range&) {\n    std::cout << \"Index außerhalb!\";\n}\nif (10 < v.size()) std::cout << v[10];"
+   },
+   "vergleich": "Python stoppt immer bei einem Fehler. Es zeigt den IndexError. Das ist sicher, aber das Programm endet. C++ mit [] ist schnell und gefährlich. C++ mit .at() ist sicher.",
+   "merk": "Python zeigt IndexError. C++: [] ist schnell, aber gefährlich. .at() ist sicher."
+  },
+  {
+   "titel": "Maps: Schlüssel-Wert-Paare",
+   "cpp": {
+    "text": "Das Gegenstück in C++ heißt std::map. Es kommt aus <map>. Die map sortiert ihre Schlüssel. Sortieren kostet Zeit. Deshalb ist sie langsamer. std::unordered_map ist schneller. Sie nutzt eine Hashtabelle. Nimm meist die unordered_map. Jetzt kommt die berühmte Falle. preise['apfel'] sucht mit [] den Schlüssel. Gibt es ihn nicht, legt [] ihn einfach an. Mit einem Standardwert. Beim Nachschlagen willst du das nicht. Nutze dann .find() oder .at().",
+    "code": "#include <map>\n#include <string>\n\nstd::map<std::string, double> preise;\npreise[\"apfel\"] = 0.50;      // eintragen\npreise[\"kirsche\"] = 1.20;\n\n// Achtung: [] legt fehlende Schlüssel AN!\nauto it = preise.find(\"birne\");\nif (it != preise.end()) {\n    std::cout << it->second;\n}\n// Oder: preise.at(\"birne\") wirft out_of_range"
+   },
+   "vergleich": "dict (Python) und std::unordered_map (C++) sind Geschwister. Beide sind schnelle Nachschlagewerke. .get() ist in Python bequem. In C++ legt [] fehlende Schlüssel heimlich an. Das ist die Falle. .find() und .at() sind sicherer.",
+   "merk": "C++ map: [] legt fehlende Schlüssel an. Zum Nachschlagen: find() oder at()."
+  },
+  {
+   "titel": "Eine Liste anlegen",
+   "cpp": {
+    "text": "In C++ heißt die Sammlung vector. Der volle Name ist std::vector. Er steht in der Bibliothek vector. Ein vector<int> hält nur ganze Zahlen. Ein vector<string> hält nur Text. Mischen geht nicht, weil jeder vector einen festen Typ hat. Die Werte stehen in geschweiften Klammern. Ein leerer vector hat keine Werte. size() zählt sie.",
+    "code": "#include <vector>\n#include <string>\n#include <iostream>\n\nstd::vector<std::string> fahrzeuge = {\"lkw\", \"jeep\", \"bus\"};\nstd::vector<int> zahlen = {42, 7, 13};\nstd::vector<std::string> leer;\n\nstd::cout << fahrzeuge.size();   // 3\nstd::cout << leer.size();        // 0"
+   },
+   "vergleich": "Python schreibt eckige Klammern und darf Typen mischen. C++ schreibt geschweifte Klammern und erlaubt nur einen Typ pro vector. size() in C++ ist das len() aus Python.",
+   "merk": "Eckige Klammern, Kommas, Name im Plural: fertig ist die Liste."
+  },
+  {
+   "titel": "Der Index zählt die Schritte",
+   "cpp": {
+    "text": "In C++ gilt dieselbe Zählung ab null. size() ist das len() aus Python. Der größte gültige Index ist also size() minus eins. [] prüft die Grenzen nicht. at() prüft sie und meldet std::out_of_range.",
+    "code": "#include <vector>\n#include <string>\n#include <iostream>\n\nstd::vector<std::string> fahrzeuge = {\"lkw\", \"jeep\", \"transporter\", \"bus\"};\n\nstd::cout << fahrzeuge[0];                     // lkw\nstd::cout << fahrzeuge.at(2);                  // transporter\nstd::cout << fahrzeuge[fahrzeuge.size() - 1];  // bus"
+   },
+   "vergleich": "Beide Sprachen zählen ab null. In Python ist der größte Index len(liste) minus 1. In C++ ist er size() minus 1. Python prüft bei jedem Zugriff, C++ mit [] nicht.",
+   "merk": "Der Index zählt Schritte vom Anfang, nicht Elemente. Null Schritte, erstes Element.",
+   "checkliste": [
+    "Erstes Element: Index 0",
+    "Letztes Element: Index -1",
+    "Größter gültiger Index: len(liste) minus 1",
+    "Index als Kommazahl: TypeError",
+    "Zugriff daneben: IndexError, list index out of range"
+   ]
+  },
+  {
+   "titel": "Ein Element ist ein ganz normaler Wert",
+   "cpp": {
+    "text": "In C++ ist ein Element genauso ein normaler Wert. v[0] ist ein int, damit rechnest du wie mit jeder Zahl. Textfunktionen wie title() gibt es bei std::string nicht als Methode. Dafür nutzt du freie Funktionen aus der Bibliothek.",
+    "code": "#include <vector>\n#include <string>\n#include <iostream>\n\nstd::vector<int> mengen = {12, 30, 5};\nstd::cout << mengen[0] + mengen[1];   // 42\n\nint gesamt = mengen[0] + mengen[1] + mengen[2];\nstd::cout << \"Gesamt: \" << gesamt << \" Stück\";"
+   },
+   "vergleich": "In Python ist ein Element ein normaler Wert mit allen Methoden seines Typs. In C++ ist es genauso, nur kommen Textfunktionen nicht als Methode, sondern als freie Funktion.",
+   "merk": "Erst das Fach öffnen, dann mit dem Inhalt arbeiten: liste[index].methode()."
+  },
+  {
+   "titel": "Ein Element ersetzen",
+   "cpp": {
+    "text": "In C++ ersetzt du genauso über den Index. v[0] = wert schreibt in ein vorhandenes Fach. Ein neues Fach entsteht dabei nicht. at() prüft vorher die Grenzen und meldet sonst std::out_of_range. Ein vector wächst nur mit push_back() oder insert().",
+    "code": "#include <vector>\n#include <string>\n\nstd::vector<std::string> fahrzeuge = {\"lkw\", \"jeep\"};\nfahrzeuge[0] = \"panzer\";      // ersetzt\nfahrzeuge.at(1) = \"bus\";      // ersetzt, mit Prüfung\n// fahrzeuge.at(2) = \"auto\";  // std::out_of_range"
+   },
+   "vergleich": "Ersetzen ist in beiden Sprachen eine Zuweisung an ein vorhandenes Fach. Keine der beiden Sprachen verlängert die Liste dabei.",
+   "merk": "liste[i] = wert tauscht aus und verlängert nie."
+  },
+  {
+   "titel": "append() und das Muster leer anlegen und füllen",
+   "cpp": {
+    "text": "In C++ heißt das Anhängen push_back(). Der vector darf vorher leer sein. back() liefert das letzte Element. push_back() gibt nichts zurück.",
+    "code": "#include <vector>\n#include <string>\n#include <iostream>\n\nstd::vector<std::string> namen;   // leer\nnamen.push_back(\"mueller\");\nnamen.push_back(\"schmidt\");\n\nstd::cout << namen.size();        // 2\nstd::cout << namen.back();        // schmidt"
+   },
+   "vergleich": "append() in Python und push_back() in C++ tun dasselbe: hinten anfügen. back() in C++ ist das [-1] aus Python.",
+   "merk": "Leer anlegen, dann mit append() füllen: so sammelt ein Programm Daten, deren Menge es noch nicht kennt."
+  },
+  {
+   "titel": "insert() an beliebiger Stelle",
+   "cpp": {
+    "text": "In C++ fügt insert() an einer Position ein. Statt einer Zahl brauchst du einen Zeiger auf die Stelle: begin() plus Position. Alles ab dort rückt nach hinten.",
+    "code": "#include <vector>\n#include <string>\n\nstd::vector<std::string> namen = {\"mueller\", \"schmidt\"};\nnamen.insert(namen.begin(), \"abel\");       // vorn\nnamen.insert(namen.begin() + 1, \"nowak\");  // an Position 1"
+   },
+   "vergleich": "C++ braucht statt der Zahl einen Zeiger auf die Stelle: begin() plus Position. Python nimmt die Zahl direkt.",
+   "merk": "insert erst wohin, dann was. Alles dahinter rückt nach hinten."
+  },
+  {
+   "titel": "Entfernen: del, pop() und remove()",
+   "cpp": {
+    "text": "In C++ entfernt erase() über eine Position. pop_back() entfernt das letzte Element. Beide geben nichts zurück. Für remove() über den Wert suchst du erst mit std::find und löschst dann mit erase.",
+    "code": "#include <vector>\n#include <string>\n\nstd::vector<std::string> namen = {\"mueller\", \"schmidt\", \"weber\"};\nnamen.erase(namen.begin());   // erstes Element weg\nnamen.pop_back();             // letztes Element weg"
+   },
+   "vergleich": "Pythons pop() gibt das Element zurück, C++ pop_back() nicht. del und erase arbeiten beide über die Position.",
+   "merk": "del wirft weg, pop() reicht heraus, remove() sucht nach dem Wert.",
+   "checkliste": [
+    "Position bekannt, Wert egal: del liste[i]",
+    "Letztes Element, Wert wird gebraucht: liste.pop()",
+    "Bestimmte Position, Wert wird gebraucht: liste.pop(i)",
+    "Nur der Wert bekannt: liste.remove(wert), trifft das erste Vorkommen",
+    "Wert nicht in der Liste: remove() bricht mit ValueError ab",
+    "Liste ist leer: pop() bricht mit IndexError ab"
+   ]
+  },
+  {
+   "titel": "Was diese Befehle zurückgeben",
+   "cpp": {
+    "text": "In C++ ist es genauso. push_back() und erase() geben nichts zurück. Wer sie einer Variablen zuweist, bekommt einen Compilerfehler. Das ist der Vorteil: C++ meldet den Fehler sofort.",
+    "code": "#include <vector>\n#include <string>\n\nstd::vector<std::string> namen = {\"mueller\"};\nnamen.push_back(\"schmidt\");        // richtig\n// namen = namen.push_back(\"x\");   // Compilerfehler"
+   },
+   "vergleich": "Python meldet den stillen Fehler erst beim Ausführen, mit None. C++ verweigert die Zuweisung schon beim Übersetzen.",
+   "merk": "Verändernde Befehle stehen allein in der Zeile. Nur pop() wird zugewiesen.",
+   "checkliste": [
+    "append() gibt None zurück",
+    "insert() gibt None zurück",
+    "remove() gibt None zurück",
+    "sort() gibt None zurück",
+    "reverse() gibt None zurück",
+    "pop() gibt das entfernte Element zurück",
+    "len() gibt eine Zahl zurück"
+   ]
+  },
+  {
+   "titel": "sorted() gegen .sort()",
+   "cpp": {
+    "text": "In C++ gibt es kein sorted(), das eine Kopie liefert. std::sort ordnet den vector selbst. Wer eine Kopie will, kopiert ihn vorher und sortiert die Kopie. std::sort bekommt zwei Grenzen: Anfang und Ende.",
+    "code": "#include <vector>\n#include <string>\n#include <algorithm>\n\nstd::vector<std::string> autos = {\"bmw\", \"audi\", \"toyota\"};\nstd::vector<std::string> kopie = autos;\n\nstd::sort(kopie.begin(), kopie.end());   // Kopie sortiert\nstd::sort(autos.begin(), autos.end());   // Original sortiert"
+   },
+   "vergleich": "Python hat beide Wege: sorted() für die Kopie und .sort() für das Original. C++ hat nur std::sort und arbeitet an Ort und Stelle. Eine Kopie machst du selbst.",
+   "merk": "In der Klammer heißt anschauen, davor heißt verändern."
+  },
+  {
+   "titel": ".reverse() ist nicht sortieren",
+   "cpp": {
+    "text": "In C++ dreht std::reverse die Reihenfolge. Es kommt aus algorithm. Für rückwärts sortiert nimmst du std::sort mit std::greater. Das sind zwei verschiedene Bausteine, genau wie in Python.",
+    "code": "#include <vector>\n#include <string>\n#include <algorithm>\n#include <functional>\n\nstd::vector<std::string> autos = {\"bmw\", \"audi\", \"toyota\"};\nstd::reverse(autos.begin(), autos.end());\nstd::sort(autos.begin(), autos.end(), std::greater<std::string>());"
+   },
+   "vergleich": "reverse() dreht um, sort(reverse=True) ordnet rückwärts. In C++ heißen die Bausteine std::reverse und std::sort mit std::greater.",
+   "merk": "reverse() dreht um. Nur sort(reverse=True) ordnet."
+  },
+  {
+   "titel": "Wonach Python sortiert",
+   "cpp": {
+    "text": "In C++ sortiert std::sort nach dem kleiner-Operator des Typs. Zahlen werden nach Größe verglichen. std::string wird Zeichen für Zeichen nach Zeichencode verglichen. Auch dort stehen Großbuchstaben vor Kleinbuchstaben.",
+    "code": "#include <vector>\n#include <string>\n#include <algorithm>\n\nstd::vector<int> zahlen = {42, 7, 13, 99, 1};\nstd::sort(zahlen.begin(), zahlen.end());   // [1, 7, 13, 42, 99]\n\nstd::vector<std::string> dienstgrade = {\"Oberst\", \"gefreiter\", \"Major\"};\nstd::sort(dienstgrade.begin(), dienstgrade.end());"
+   },
+   "vergleich": "Beide Sprachen ordnen Zahlen nach Größe und Text nach Zeichencode. In beiden steht Groß vor Klein. Einheitliche Schreibweise spart Überraschungen.",
+   "merk": "Zahlen nach Größe, Text alphabetisch, Groß vor Klein. Zahlen in Anführungszeichen sind Text."
+  }
+ ]
+}

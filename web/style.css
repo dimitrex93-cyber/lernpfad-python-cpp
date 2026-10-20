@@ -293,6 +293,11 @@ pre.code {
 .vergleich { margin-top: 0.8rem; padding: 0.6rem 0.9rem; background: rgba(255, 183, 77, 0.08); border-left: 3px solid var(--akzent-2); border-radius: 0 6px 6px 0; }
 .aufgaben { margin-top: 0.8rem; padding: 0.6rem 0.9rem; background: rgba(100, 181, 246, 0.08); border-left: 3px solid #64b5f6; border-radius: 0 6px 6px 0; }
 .aufgaben ul { margin: 0.4rem 0 0 1.2rem; font-weight: 400; }
+.aufgaben-liste { margin: 0.5rem 0 0 1.2rem; padding: 0; font-weight: 400; }
+.aufgaben-liste li { margin-bottom: 0.9rem; }
+.aufgaben-liste p { margin: 0.25rem 0; }
+.aufgaben-tipp { color: var(--muted, #9aa4b2); font-size: 0.92rem; }
+button.klein { padding: 0.25rem 0.6rem; font-size: 0.82rem; margin-top: 0.3rem; }
 .merk ul { margin: 0.4rem 0 0 1.2rem; font-weight: 400; }
 
 .merk { margin-top: 0.6rem; padding: 0.6rem 0.9rem; background: rgba(76, 175, 80, 0.08); border-left: 3px solid var(--gruen); border-radius: 0 6px 6px 0; font-weight: 600; }

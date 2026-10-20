@@ -1,0 +1,101 @@
+{
+ "id": "strings",
+ "titel": "Kapitel 7: Strings – Arbeit mit Text",
+ "einleitung": "Text ist überall: Namen, Dateien, was der Benutzer eintippt. Ein String (eine Zeichenkette) ist Text im Programm. Hier lernst du, wie Strings in Python und C++ funktionieren. Du lernst auch, wie du Text bearbeitest, durchsuchst und zusammenbaust.",
+ "abschnitte": [
+  {
+   "titel": "Was ist ein String?",
+   "cpp": {
+    "text": "In C++ gibt es zwei Arten von Strings. Die moderne Art heißt std::string. Sie kommt aus der Bibliothek <string>. Eine Bibliothek ist eine Sammlung fertiger Werkzeuge. Die alte Art heißt C-String. Ein C-String ist ein char-Array (eine Liste aus Zeichen). Sein Ende markiert ein Nullzeichen (ein unsichtbares Stopp-Zeichen). std::string ist veränderlich. Das heißt: Er kann wachsen. C-Strings sind starr und fehleranfällig. In diesem Kurs nutzen wir nur std::string.",
+    "code": "#include <iostream>\n#include <string>\n\nstd::string name = \"Lena\";\nstd::cout << name.size() << std::endl;    // 4\nstd::cout << name.substr(1, 2) << std::endl;  // en\n\nstd::string s = \"Hallo \" + std::string(\"Welt\");\nstd::cout << s << std::endl;   // Hallo Welt\n// \"A\" (string) ist nicht 'A' (char)!"
+   },
+   "vergleich": "Python: str ist unveränderlich, Unicode ist eingebaut. C++: std::string ist veränderlich. Er braucht #include <string> und ist etwas anderes als char (ein einzelnes Zeichen).",
+   "merk": "Python-Strings sind unveränderlich, C++-std::string ist veränderlich."
+  },
+  {
+   "titel": "Strings bearbeiten und durchsuchen",
+   "cpp": {
+    "text": "std::string hat ähnliche Werkzeuge. .size() gibt die Länge an. .substr(pos, len) schneidet einen Teilstring heraus. pos ist die Startposition, len ist die Länge. .find(...) sucht nach Text. Findet sie nichts, gibt sie npos zurück. npos heißt: nicht gefunden. Mit .append() oder += hängst du Text an. Mit [] holst du ein einzelnes Zeichen. Das Ergebnis ist ein char! .replace gibt es auch. Es ist aber umständlicher als in Python.",
+    "code": "std::string text = \"  Hallo Welt  \";\nstd::cout << text.size() << std::endl;        // 14\nstd::cout << text.substr(2, 5) << std::endl;  // Hallo\n\nsize_t pos = text.find(\"Welt\");\nif (pos != std::string::npos) {\n    std::cout << pos;   // 8\n}\ntext += \"!\";            // verändern ist erlaubt!\nchar c = text[2];       // 'H'  (ein char!)"
+   },
+   "vergleich": "Python: strip, split und replace arbeiten direkt. C++: find gibt npos zurück, wenn nichts gefunden wurde (nicht -1). Einzelne Zeichen sind chars. Mit += veränderst du den String direkt.",
+   "merk": "Findet die Suche nichts, sagt Python False und C++ npos."
+  },
+  {
+   "titel": "Strings formatieren",
+   "cpp": {
+    "text": "In C++ baust du Strings mit += oder std::to_string() zusammen. Das funktioniert, wird aber schnell unübersichtlich. Die moderne Lösung (C++20) heißt std::format. Platzhalter {} werden mit Werten gefüllt. Formatangaben wie {:.2f} kennst du schon aus Python. Alternativ gibt es den klassischen Weg: std::cout << mit mehreren <<.",
+    "code": "#include <iostream>\n#include <string>\n\nstd::string name = \"Anna\";\nint alter = 25;\n\n// Klassisch:\nstd::cout << name << \" ist \" << alter << \" Jahre alt\" << std::endl;\n\n// Modern (C++20):\n// std::cout << std::format(\"{} ist {} Jahre alt\", name, alter);\n\n// Zahlen als Text:\nstd::string s = \"Preis: \" + std::to_string(19.995);"
+   },
+   "vergleich": "Python: f-Strings sind der Goldstandard (die beste Methode). C++: cout << Verkettung oder std::format (C++20). std::to_string macht aus Zahlen Text. Es ist das Gegenstück zu str().",
+   "merk": "Python formatiert mit f\"{wert}\", C++ mit std::to_string() oder std::format."
+  },
+  {
+   "titel": "Text in Anführungszeichen",
+   "cpp": {
+    "text": "In C++ stehen Strings in doppelten Anführungszeichen. Einfache Anführungszeichen kennzeichnen ein einzelnes Zeichen vom Typ char. \"A\" ist also ein String, 'A' ist ein Zeichen. Ein Apostroph im Text braucht keinen Trick, weil der String ohnehin in doppelten Anführungszeichen steht. Doppelte Anführungszeichen im Text brauchen dagegen einen Rückstrich davor.",
+    "code": "#include <iostream>\n#include <string>\n\nstd::string name = \"ada lovelace\";\nstd::cout << name << std::endl;\n\nchar zeichen = 'A';        // ein Zeichen\nstd::string text = \"A\";    // ein String\nstd::cout << \"Sie sagte: \\\"Guten Morgen\\\"\" << std::endl;"
+   },
+   "vergleich": "Python: einfache und doppelte Anführungszeichen sind gleichwertig, außen steht die Sorte, die im Text fehlt. C++: Strings stehen immer in doppelten Anführungszeichen, einfache Anführungszeichen sind ein char.",
+   "merk": "Außen steht die Sorte Anführungszeichen, die im Text selbst nicht vorkommt."
+  },
+  {
+   "titel": "Escape-Sequenzen: Zeichen, die man nicht tippen kann",
+   "cpp": {
+    "text": "Diese Zeichen sind in C++ genauso geschrieben. Der Rückstrich mit n ergibt den Zeilenumbruch, der Rückstrich mit t den Tabulator. Der Rückstrich selbst ist kein Text, sondern der Anfang einer Escape-Sequenz.",
+    "code": "#include <iostream>\n\nstd::cout << \"Sprachen:\\n\\tPython\\n\\tJava\\n\\tC\" << std::endl;\nstd::cout << \"Name\\tAlter\" << std::endl;"
+   },
+   "vergleich": "Die Escape-Sequenzen sind in beiden Sprachen gleich: \\n für den Zeilenumbruch, \\t für den Tabulator.",
+   "merk": "Escape-Sequenzen sind unsichtbare Zeichen mitten im Text, keine Befehle."
+  },
+  {
+   "titel": "Methoden: Werkzeuge, die am Text hängen",
+   "cpp": {
+    "text": "std::string kennt nur wenige solcher Werkzeuge. Die Länge liefert die Methode .length() oder .size(). Für Groß- und Kleinschreibung gibt es keine fertige Methode. Dafür braucht man zusätzliche Bibliotheken und eine Schleife über die Zeichen. In C++ schreibt man solche Umformungen deshalb meist selbst.",
+    "code": "#include <iostream>\n#include <string>\n\nstd::string name = \"ada lovelace\";\nstd::cout << name.length() << std::endl;   // 12"
+   },
+   "vergleich": "Python: viele fertige Methoden wie title, upper, lower und strip. C++: nur wenige, zum Beispiel length. Groß- und Kleinschreibung muss man dort selbst bauen.",
+   "merk": "String-Methoden ändern nichts. Sie geben einen neuen Wert zurück, den man zuweisen muss."
+  },
+  {
+   "titel": "Funktion oder Methode?",
+   "cpp": {
+    "text": "In C++ ist die Länge eine Methode des Strings: name.length() oder name.size(). Eine freie Funktion wie len() gibt es für Strings nicht. Deshalb steht der Wert dort vor dem Punkt und nicht in der Klammer."
+   },
+   "vergleich": "Python: len(name) ist eine Funktion, name.upper() eine Methode. C++: length() ist eine Methode, eine Funktion wie len() gibt es nicht.",
+   "merk": "Die Funktion steht vor dem Wert, die Methode hinter dem Punkt."
+  },
+  {
+   "titel": "Zwei Texte zusammenfügen mit Plus",
+   "cpp": {
+    "text": "In C++ funktioniert das Pluszeichen für Strings genauso, solange links und rechts ein std::string steht. Ein einzelnes Zeichen in einfachen Anführungszeichen ist kein String und passt nicht dazu. Text mal Zahl gibt es in C++ nicht. Eine Linie aus dreißig Strichen schreibt man dort als std::string(30, '-').",
+    "code": "#include <iostream>\n#include <string>\n\nstd::string vorname = \"Marie\";\nstd::string nachname = \"Curie\";\nstd::string voller_name = vorname + \" \" + nachname;\nstd::cout << voller_name << std::endl;            // Marie Curie\nstd::cout << std::string(30, '-') << std::endl;   // Linie"
+   },
+   "vergleich": "Python: Plus verkettet, Stern wiederholt den Text. C++: Plus verkettet std::string, für die Wiederholung gibt es keinen Operator.",
+   "merk": "Beim Verketten kommt kein Leerzeichen von selbst dazu."
+  },
+  {
+   "titel": "f-Strings: das f ist der Schalter",
+   "cpp": {
+    "text": "C++ hat kein f vor dem String. Eine Zahl muss dort erst zu Text werden. Dafür gibt es std::to_string(). Danach hängst du alle Teile mit dem Pluszeichen aneinander. Das funktioniert, ist aber mehr Schreibarbeit als ein f-String. Ab C++20 gibt es zusätzlich std::format mit geschweiften Klammern.",
+    "code": "#include <iostream>\n#include <string>\n\nstd::string vorname = \"ada\";\nint alter = 36;\nstd::string satz = vorname + \" ist \" + std::to_string(alter) + \" Jahre alt.\";\nstd::cout << satz << std::endl;   // ada ist 36 Jahre alt."
+   },
+   "vergleich": "Python: das f schaltet die Klammern scharf, Zahlen werden automatisch Text. C++: std::to_string macht aus der Zahl Text, danach verkettet das Pluszeichen.",
+   "merk": "Das f ist der Schalter, die geschweiften Klammern sind die Fenster."
+  },
+  {
+   "titel": "Die Formatangabe nach dem Doppelpunkt",
+   "cpp": {
+    "text": "In C++ steht dieselbe Angabe in std::format, das seit C++20 zur Standardbibliothek gehört. Dort bedeutet die Angabe .2f ebenfalls zwei Nachkommastellen."
+   },
+   "merk": "Nach dem Doppelpunkt steht, wie der Wert aussehen soll.",
+   "checkliste": [
+    "Doppelpunkt setzen, dann die Angabe: {betrag:.2f}",
+    ".2f heißt zwei Nachkommastellen, notfalls mit einer Null.",
+    "Ohne Angabe fällt die Null weg: 4.5 statt 4.50.",
+    "Gerundet wird nur die Anzeige, der Wert bleibt gleich.",
+    "Für diesen Kurs genügt .2f."
+   ]
+  }
+ ]
+}

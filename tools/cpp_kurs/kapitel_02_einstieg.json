@@ -1,0 +1,61 @@
+{
+ "id": "einstieg",
+ "titel": "Kapitel 2: Dein erstes Programm",
+ "einleitung": "Jetzt wird programmiert! Wir schreiben unser erstes Programm in Python und in C++. Du lernst den Einstiegspunkt kennen. Das ist die Stelle, wo das Programm startet. Du holst Daten von der Tastatur. So spricht dein Programm mit dem Benutzer.",
+ "abschnitte": [
+  {
+   "titel": "Hallo Welt!",
+   "cpp": {
+    "text": "Jedes C++-Programm braucht genau eine main-Funktion. Hier beginnt die Ausführung. main ist der Pflicht-Einstiegspunkt. #include <iostream> lädt die Ein-/Ausgabe-Bibliothek. Eine Bibliothek ist eine Sammlung fertiger Bausteine. Ohne sie kennt der Compiler std::cout nicht. Der Compiler übersetzt deinen Code in ein Programm, das der Computer versteht. Das nennt man kompilieren. Jede Anweisung endet mit einem Semikolon. return 0 meldet dem Betriebssystem: Alles gut. Das Betriebssystem ist das Programm, das deinen Computer verwaltet.",
+    "code": "#include <iostream>   // Ein-/Ausgabe bekannt machen\n\nint main() {          // Einstiegspunkt – Pflicht!\n    std::cout << \"Hallo Welt!\" << std::endl;\n    return 0;         // 0 = alles gut\n}\n\n// Kompilieren und starten:\n// g++ -std=c++17 -Wall -Wextra hallo.cpp -o hallo\n// ./hallo"
+   },
+   "vergleich": "Python braucht kein Grundgerüst. C++ braucht immer main(). Python braucht kein #include. C++ lädt nur das, was du anforderst.",
+   "merk": "Python: Datei schreiben, dann python3 starten. C++: main() ist Pflicht. Erst kompilieren, dann ausführen."
+  },
+  {
+   "titel": "Der Einstiegspunkt im Detail",
+   "cpp": {
+    "text": "main ist in C++ die Funktion, die das Betriebssystem aufruft. Der Rückgabetyp ist immer int. Der Rückgabewert geht an das Betriebssystem. 0 bedeutet Erfolg, alles andere ist ein Fehlercode. Ohne main meldet der Linker einen Fehler. Der Linker setzt die Bausteine des Programms zusammen. Dann lässt sich das Programm nicht bauen. main darf es nur EINMAL geben.",
+    "code": "int main() {           // Rückgabetyp int ist Pflicht\n    // ... dein Code ...\n    return 0;           // an das Betriebssystem\n}\n// int main() ist die EINZIGE Stelle, an der ein\n// C++-Programm startet – egal wie groß das Projekt ist."
+   },
+   "vergleich": "Bei C++ findest du den Einstieg immer sofort: main. Bei Python musst du wissen, wo das Programm beginnt. Meist ist das einfach Zeile 1.",
+   "merk": "C++: genau eine int main(). Python: Das Skript läuft von oben nach unten."
+  },
+  {
+   "titel": "Ein- und Ausgabe: mit dem Benutzer sprechen",
+   "cpp": {
+    "text": "std::cout gibt etwas aus. Dafür nutzt es den Operator <<. std::cin liest etwas ein. Dafür nutzt es den Operator >>. Ein Operator ist ein Zeichen, das eine Aktion auslöst. Achtung, Falle: std::cin >> liest nur bis zum nächsten Leerzeichen. Bei Namen mit Leerzeichen bleibt der Rest im Puffer. Der Puffer ist ein Zwischenspeicher. Für ganze Zeilen nimmst du std::getline(std::cin, text).",
+    "code": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string name;\n    std::cout << \"Wie heißt du? \";\n    std::getline(std::cin, name);   // ganze Zeile lesen\n    std::cout << \"Hallo \" << name << \"!\" << std::endl;\n\n    int alter;\n    std::cout << \"Wie alt bist du? \";\n    std::cin >> alter;\n    std::cout << \"Nächstes Jahr: \" << alter + 1 << std::endl;\n    return 0;\n}"
+   },
+   "vergleich": "input() liefert immer Text. Du musst selbst umwandeln. std::cin >> wandelt automatisch um. Es passt sich der Variable an. Bei falscher Eingabe gerät es in einen Fehlerzustand. Das heißt: Es meldet einen Fehler und liest nicht weiter.",
+   "merk": "Python: input() liefert immer einen String. C++: getline für ganze Zeilen, cin >> für einzelne Werte."
+  },
+  {
+   "titel": "print() im Detail: Name, Klammern, Argument",
+   "cpp": {
+    "text": "In C++ gibt std::cout den Text aus. Der Operator << schiebt den Wert in den Ausgabestrom. Den Ausgabestrom kannst du dir wie ein Fließband zum Terminal vorstellen. std::endl setzt einen Zeilenumbruch und leert den Puffer. Der Puffer ist ein Zwischenspeicher. Auch in C++ machen Anführungszeichen aus Zeichen einen Text. Jede Anweisung endet mit einem Semikolon.",
+    "code": "#include <iostream>\n\nint main() {\n    std::cout << \"Hallo Welt!\" << std::endl;\n    return 0;\n}"
+   },
+   "vergleich": "Python ruft eine Funktion mit Namen und runden Klammern auf. C++ schiebt den Text mit dem Operator << in std::cout. Das Argument in Python heißt in C++ der Wert hinter dem Operator.",
+   "merk": "Funktionsname, Klammern, Argument. Erst die Klammern führen aus. Anführungszeichen machen aus Zeichen Text."
+  },
+  {
+   "titel": "Was alles in die Klammern darf",
+   "cpp": {
+    "text": "In C++ hängst du mehrere Werte mit weiteren << aneinander. Ein Leerzeichen kommt dabei nicht von allein. Du musst es als eigenen Text schreiben, also \" \". Eine leere Zeile entsteht mit std::endl ohne Text davor. Eine Rechnung schreibst du ohne Anführungszeichen, dann rechnet C++ sie aus. Mit Anführungszeichen ist es Text und wird wörtlich ausgegeben.",
+    "code": "#include <iostream>\n\nint main() {\n    std::cout << \"Mein Name ist\" << \" \" << \"Sebastian\" << std::endl;\n    std::cout << std::endl;\n    std::cout << 2 + 3 << std::endl;\n    std::cout << \"2 + 3\" << std::endl;\n    return 0;\n}"
+   },
+   "vergleich": "Python trennt mehrere Werte mit einem Komma und setzt das Leerzeichen selbst. C++ verkettet mit << und braucht das Leerzeichen als eigenen Text. In beiden Sprachen entscheiden die Anführungszeichen, ob gerechnet oder wörtlich ausgegeben wird.",
+   "merk": "Innerhalb von Anführungszeichen denkt Python nicht mit. Es reicht die Zeichen durch. Außerhalb rechnet es."
+  },
+  {
+   "titel": "Die drei Werkzeuge: Editor, Terminal, Interpreter",
+   "cpp": {
+    "text": "In C++ kommt ein vierter Schritt dazu. Der Compiler übersetzt den Quelltext in ein Programm. Das nennt man kompilieren. Erst danach kannst du das Programm starten. Der Editor schreibt also hallo.cpp, der Compiler baut daraus die Datei hallo, und das Terminal startet sie mit ./hallo.",
+    "code": "#include <iostream>\n\nint main() {\n    std::cout << \"Hallo Welt!\" << std::endl;\n    return 0;\n}\n\n// Speichern als hallo.cpp, dann im Terminal:\n// g++ -std=c++17 -Wall -Wextra hallo.cpp -o hallo\n// ./hallo"
+   },
+   "vergleich": "Bei Python gibt es zwei Schritte: schreiben und starten. Bei C++ sind es drei: schreiben, kompilieren, starten. Der Editor schreibt in beiden Fällen nur Text.",
+   "merk": "Der Editor schreibt, Python führt aus, das Terminal zeigt. Wer weiß, welches der drei gerade meckert, sucht nicht am falschen Ort."
+  }
+ ]
+}

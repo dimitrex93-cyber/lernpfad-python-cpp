@@ -1,0 +1,34 @@
+{
+ "id": "speicher",
+ "titel": "Kapitel 12: Speicher und Pointer (C++)",
+ "einleitung": "Hier lernst du den größten Unterschied zwischen C++ und Python kennen. Wer verwaltet den Speicher? Python macht das für dich. C++ gibt dir die Kontrolle. Dafür trägst du die Verantwortung. So schaust du dem Computer unter die Haube.",
+ "abschnitte": [
+  {
+   "titel": "Automatische Speicherverwaltung in Python",
+   "python": {
+    "text": "Python verwaltet den Speicher für dich. Ein Garbage Collector (der Aufräum-Roboter von Python) löscht Objekte, die du nicht mehr brauchst. Du musst keinen Speicher reservieren und keinen freigeben. Python zählt unsichtbar mit, wie viele Variablen ein Objekt benutzen. Pointer (Zeiger auf Adressen im Speicher) gibt es in Python nicht. Das ist ein großer Komfort-Vorteil.",
+    "code": "def erstelle_liste():\n    liste = [1, 2, 3]   # Speicher wird reserviert\n    return liste        # lebt weiter\n\ndaten = erstelle_liste()\n# Wenn 'daten' nicht mehr gebraucht wird,\n# räumt der Garbage Collector automatisch auf.\n# Kein free(), kein delete – das macht Python."
+   },
+   "vergleich": "Python: Der Aufräum-Roboter erledigt alles. Keine Pointer, keine Lecks. C++: Der Stack räumt sich selbst auf. Den Heap verwaltest du selbst. Oder du nimmst smart pointer (intelligente Zeiger) – die räumen automatisch auf.",
+   "merk": "new = delete: Wer Speicher mit new holt, gibt ihn mit delete zurück. Besser: std::unique_ptr. Python macht alles automatisch."
+  },
+  {
+   "titel": "Referenzen und const – die sichere C++-Seite",
+   "python": {
+    "text": "In Python sind alle Werte Referenzen auf Objekte. Eine Referenz ist ein Hinweis auf ein Objekt. Du merkst es kaum, denn unveränderliche Typen (int, str) verhalten sich wie Werte. Funktionen bekommen große Objekte ganz leicht übergeben. Referenzen musst du in Python nicht aktiv lernen.",
+    "code": "def aendern(liste):\n    liste.append(99)   # verändert das Original!\n\ndaten = [1, 2]\naendern(daten)\nprint(daten)          # [1, 2, 99]\n\n# Unveränderliche Typen verhalten sich wie Werte:\ndef plus_eins(x):\n    x += 1\n    return x\nn = 5\nplus_eins(n)\nprint(n)              # 5 (unverändert)"
+   },
+   "vergleich": "Python: Referenzen passieren unsichtbar. Unveränderliche Typen schützen dich vor Fehlern. C++: Du entscheidest selbst zwischen Kopie, & und const&. Dafür arbeitet C++ schneller.",
+   "merk": "C++-Faustregel: const& liest, & ändert, Kopie nur für kleine Werte."
+  },
+  {
+   "titel": "Kompilieren, Debuggen und Werkzeuge",
+   "python": {
+    "text": "Python startest du direkt: python3 datei.py. Für große Projekte gibt es virtuelle Umgebungen (venv). Sie halten Pakete getrennt. Pakete installierst du mit pip. Debuggen (Fehler suchen) geht mit print(). Besser ist der Debugger pdb: import pdb; pdb.set_trace(). Python zeigt Syntaxfehler (Schreibfehler) sofort beim Start. Laufzeitfehler (Fehler beim Ausführen) erscheinen erst an der betroffenen Zeile.",
+    "code": "# Starten\n# python3 datei.py\n\n# Interaktiv testen (REPL):\n# python3\n# >>> 2 + 2\n# 4\n\n# Debuggen mit pdb:\nimport pdb\npdb.set_trace()   # Halt – jetzt Schritt für Schritt"
+   },
+   "vergleich": "Python: python3 startet sofort. Fehler suchst du mit pdb. C++: Erst kompilieren, dann starten. Fehler suchst du mit gdb. Große Projekte baust du mit CMake. -Wall und -Wextra sind Pflicht.",
+   "merk": "C++-Build: g++ -std=c++17 -Wall -Wextra. Fehler suchen: pdb (Python) oder gdb (C++)."
+  }
+ ]
+}

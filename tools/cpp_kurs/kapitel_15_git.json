@@ -1,0 +1,34 @@
+{
+ "id": "git",
+ "titel": "Kapitel 15: Git, Projektmanagement und CI",
+ "einleitung": "Programmieren ist Teamarbeit. Auch mit deinem zukünftigen Ich! Git ist das Standard-Werkzeug für Versionsverwaltung (das Verwalten von Code-Ständen). Du lernst die wichtigsten Befehle und Branches (Arbeitslinien). Dazu kommen Scrum und CI. CI (Continuous Integration) heißt: Nach jedem Push (Hochladen auf den Server) laufen die Tests automatisch.",
+ "abschnitte": [
+  {
+   "titel": "Git-Grundlagen: Commits und Repositories",
+   "cpp": {
+    "text": "Für C++-Projekte gelten dieselben Git-Befehle. Aber es gibt zwei Besonderheiten. Erstens: Kompilierte Dateien (die ausführbare .exe) und Build-Ordner gehören NICHT ins Repository. Sie landen in der .gitignore (einer Liste von Dateien, die Git ignoriert). Zweitens: Ein sauberer Commit-Stand ist Gold wert. Sauber heißt: Alles kompiliert ohne Fehler. Ein Build (Kompilieren + Linken) sollte reproduzierbar sein. Das heißt: gleicher Stand, gleiche Warnungen, gleiches Ergebnis.",
+    "code": "# .gitignore – kompilierte Artefakte ausschließen:\nbuild/\n*.o\n*.exe\nprojektname\n\n# Übliche C++-Arbeitsschleife:\ngit add main.cpp vergleich.md CMakeLists.txt\ngit commit -m \"feat: Funktion hinzugefügt\"\n# Erst bei sauberem Build committen!"
+   },
+   "vergleich": "Die Git-Befehle sind identisch. C++-Projekte ignorieren Build-Artefakte (Dateien aus dem Kompilieren wie .o und Binaries). Python-Projekte ignorieren zum Beispiel __pycache__/ und .venv/.",
+   "merk": "add → commit → push. .gitignore hält Build-Dateien aus dem Repo."
+  },
+  {
+   "titel": "Branches: paralleles Arbeiten",
+   "cpp": {
+    "text": "In C++-Projekten sind Branches besonders wichtig. Ein großes Refactoring (z. B. eine Klasse umbauen) kann das Projekt lange nicht baubar machen. Baubar heißt: Es lässt sich kompilieren (übersetzen). Auf einem Feature-Branch darf der Build zwischendurch kaputt sein. Auf main nicht! Deshalb: Entwickle das Feature auf einem Branch. Merge erst, wenn der Build sauber und die Tests grün sind.",
+    "code": "# Feature-Branch für großes Refactoring:\ngit switch -c refactor/klasse\n# ... umbauen, zwischendurch ruhig kaputt ...\n# ... am Ende: kompilieren + Tests laufen lassen ...\n\ngit switch main\ngit merge refactor/klasse\n# main bleibt immer baubar!\n\n# Bei Merge-Konflikten in .cpp-Dateien:\n# <<<<<<< und >>>>>>> markieren die Konfliktstellen"
+   },
+   "vergleich": "Branches funktionieren in beiden Sprachen gleich. Faustregel: main bleibt immer baubar (kompilierbar). Experimente laufen auf Feature-Branches.",
+   "merk": "Feature-Branch anlegen, arbeiten, erst mergen, wenn alles grün ist."
+  },
+  {
+   "titel": "Scrum und Continuous Integration (CI)",
+   "cpp": {
+    "text": "Scrum und CI funktionieren in C++-Projekten genauso. Nur der CI-Build ist aufwendiger. Erst kompilieren (g++ -Wall -Wextra oder CMake). Dann die Tests ausführen. Wichtig: CI läuft auf einem frischen System (einem sauberen Rechner ohne alte Dateien). So spielen Build-Artefakte von deinem Rechner keine Rolle. Ein klassischer Anfängerfehler: Der Build ist auf deinem Rechner grün (alles gut). In CI ist er rot (Fehler).",
+    "code": "# .github/workflows/build.yml (GitHub Actions, C++)\nname: Build & Test\non: [push]\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - run: g++ -std=c++17 -Wall -Wextra \\\n              main.cpp -o programm\n      - run: ./programm\n\n# Frisches System -> reproduzierbarer Build"
+   },
+   "vergleich": "Scrum und CI funktionieren mit jeder Sprache. Python-CI: pytest (ein Test-Werkzeug) nach jedem Push. C++-CI: kompilieren und testen auf frischem System.",
+   "merk": "Scrum: Product Owner, Scrum Master, Team. CI: jeder Push → automatischer Build + Tests."
+  }
+ ]
+}

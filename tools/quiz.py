@@ -19,8 +19,9 @@ Verwendung:
     python3 tools/quiz.py --status        # Fortschritt aller Lernfelder
     python3 tools/quiz.py --reset 2       # Fortschritt von Lernfeld 2 löschen
     python3 tools/quiz.py --list          # Lernfelder auflisten
-    python3 tools/quiz.py --wissen        # Sprachkurs: Python & C++ erklärt
-    python3 tools/quiz.py --wissen strings # ein Kapitel direkt öffnen
+    python3 tools/quiz.py --wissen        # Python-Kurs: Kapitelübersicht
+    python3 tools/quiz.py --wissen strings # ein Python-Kapitel direkt öffnen
+    python3 tools/quiz.py --wissen --wissen-cpp  # C++-Kurs anzeigen
 
 Punkte & Noten:
     - Vor jedem Test wählst du einen Schwierigkeitsgrad:
@@ -317,24 +318,25 @@ def zeige_status(fortschritt):
         print("Tipp: 'python3 tools/quiz.py <Nr>' startet den Test eines "
               "Lernfelds (Stufe wird abgefragt).")
 
-    # Sprachkurs-Fortschritt
-    kapitel = lade_kapitel_sicher()
-    if kapitel:
-        gelesen = set(fortschritt.get("sprachkurs_gelesen", []))
-        anzahl = len(kapitel)
+    # Kurs-Fortschritt (Python und C++ getrennt)
+    for sprache, kursname in (("python", "Python-Kurs"), ("cpp", "C++-Kurs")):
+        kapitel = lade_kapitel_sicher(sprache)
+        if not kapitel:
+            continue
+        gelesen = set(fortschritt.get(f"{sprache}_gelesen", []))
         print()
-        print(c("=== Sprachkurs: Python & C++ im ganzen erklärt ===", "fett"))
+        print(c(f"=== {kursname} ===", "fett"))
         if gelesen:
             for k in kapitel:
                 marker = c("✓", "gruen") if k["id"] in gelesen \
                     else c("·", "dunkel")
                 print(f"  {marker} {k['titel']}")
-            print(c(f"{len(gelesen)}/{anzahl} Kapitel gelesen", "cyan"))
-            if len(gelesen) == anzahl:
-                print(c("📚 Kompletter Sprachkurs gelesen – stark!", "gruen"))
+            print(c(f"{len(gelesen)}/{len(kapitel)} Kapitel gelesen", "cyan"))
+            if len(gelesen) == len(kapitel):
+                print(c(f"📚 Kompletter {kursname} gelesen – stark!", "gruen"))
         else:
-            print(c("Noch kein Kapitel gelesen – öffne den Sprachkurs mit "
-                    "'w'.", "dunkel"))
+            print(c(f"Noch kein Kapitel gelesen – 'w' öffnet den Python-Kurs, "
+                    f"'c' den C++-Kurs.", "dunkel"))
 
     # Prüfungstraining (Wissen & Taktik): Lesekurs + je Themenblock eine Fragenbank
     print()
@@ -770,31 +772,38 @@ def run_pruefung(pruefung, fortschritt):
 # ---------------------------------------------------------------------------
 
 SPRACHKURS_ORDNER = os.path.join(PROJEKT_ROOT, "tools", "sprachkurs")
+# Seit v1.0.0 ist der Sprachkurs in zwei getrennte Kurse aufgeteilt.
+# tools/sprachkurs/ bleibt die gemeinsame Quelle (inkl. glossar.json).
+KURS_ORDNER = {
+    "python": os.path.join(PROJEKT_ROOT, "tools", "python_kurs"),
+    "cpp": os.path.join(PROJEKT_ROOT, "tools", "cpp_kurs"),
+}
+KURS_NAME = {"python": "Python-Kurs", "cpp": "C++-Kurs"}
 
 
-def lade_kapitel():
-    """Lädt alle Kapitel aus tools/sprachkurs/ (sortiert nach Dateiname)."""
-    if not os.path.isdir(SPRACHKURS_ORDNER):
-        sys.exit(c(f"Kein Sprachkurs-Ordner gefunden: {SPRACHKURS_ORDNER}",
-                   "rot"))
+def lade_kapitel(sprache="python"):
+    """Lädt alle Kapitel eines Kurses (python oder cpp), sortiert nach Name."""
+    ordner = KURS_ORDNER.get(sprache)
+    if not ordner or not os.path.isdir(ordner):
+        sys.exit(c(f"Kein Kurs-Ordner gefunden: {ordner} ({sprache})", "rot"))
     kapitel = []
-    for datei in sorted(os.listdir(SPRACHKURS_ORDNER)):
+    for datei in sorted(os.listdir(ordner)):
         if not datei.endswith(".json"):
             continue
         if datei in ("manifest.json", "glossar.json"):  # keine Kapiteldatei
             continue
-        with open(os.path.join(SPRACHKURS_ORDNER, datei),
-                  encoding="utf-8") as f:
+        with open(os.path.join(ordner, datei), encoding="utf-8") as f:
             kapitel.append(json.load(f))
     if not kapitel:
-        sys.exit(c("Keine Kapitel im Sprachkurs-Ordner gefunden.", "rot"))
+        sys.exit(c(f"Keine Kapitel im {KURS_NAME.get(sprache, sprache)} "
+                   "gefunden.", "rot"))
     return kapitel
 
 
-def lade_kapitel_sicher():
+def lade_kapitel_sicher(sprache="python"):
     """Wie lade_kapitel(), aber gibt [] zurück statt abzubrechen."""
     try:
-        return lade_kapitel()
+        return lade_kapitel(sprache)
     except SystemExit:
         return []
 
@@ -841,7 +850,7 @@ def zeige_abschnitt(abschnitt, index, anzahl):
     print()
 
 
-def zeige_kapitel(kapitel, fortschritt=None):
+def zeige_kapitel(kapitel, fortschritt=None, sprache="python"):
     """Zeigt ein ganzes Kapitel: Einleitung, dann Abschnitte nacheinander.
 
     Wird das Kapitel komplett durchgeblättert (kein q), wird es im
@@ -865,24 +874,28 @@ def zeige_kapitel(kapitel, fortschritt=None):
 
     # Kapitel als gelesen markieren
     if fortschritt is not None:
-        gelesen = set(fortschritt.get("sprachkurs_gelesen", []))
+        schluessel = f"{sprache}_gelesen"
+        gelesen = set(fortschritt.get(schluessel, []))
         if kapitel["id"] not in gelesen:
             gelesen.add(kapitel["id"])
-            fortschritt["sprachkurs_gelesen"] = sorted(gelesen)
+            fortschritt[schluessel] = sorted(gelesen)
             speichere_fortschritt(fortschritt)
             print(c("✓ Kapitel als gelesen markiert.", "gruen"))
 
 
-def zeige_wissen(auswahl=None, fortschritt=None):
-    """Sprachkurs-Menü: Kapitelübersicht, dann Kapitel auswählen.
+def zeige_wissen(auswahl=None, fortschritt=None, sprache="python"):
+    """Kurs-Menü (Python oder C++): Kapitelübersicht, dann Kapitel auswählen.
 
     auswahl: optional eine Kapitel-ID (z. B. 'strings') oder Nummer,
     um direkt ein Kapitel zu öffnen.
+    sprache: 'python' (Standard) oder 'cpp'.
     """
-    kapitel = lade_kapitel()
+    kapitel = lade_kapitel(sprache)
+    kursname = KURS_NAME.get(sprache, sprache)
+    schluessel = f"{sprache}_gelesen"
 
     def gelesene_ids():
-        return set(fortschritt.get("sprachkurs_gelesen", [])) \
+        return set(fortschritt.get(schluessel, [])) \
             if fortschritt else set()
 
     def finde_kapitel(auswahl):
@@ -899,7 +912,7 @@ def zeige_wissen(auswahl=None, fortschritt=None):
 
     ziel = finde_kapitel(auswahl)
     if ziel is not None:
-        zeige_kapitel(ziel, fortschritt)
+        zeige_kapitel(ziel, fortschritt, sprache)
         return
 
     # Explizite, aber unbekannte Auswahl → Hinweis statt Menü
@@ -911,10 +924,11 @@ def zeige_wissen(auswahl=None, fortschritt=None):
 
     gelesen = gelesene_ids()
     print(c("\n" + "═" * 62, "fett"))
-    print(c("  Sprachkurs: Python & C++ im ganzen erklärt", "fett"))
+    print(c(f"  {kursname}", "fett"))
     print(c("═" * 62, "fett"))
-    print(c("Von den Grundlagen bis zu Speicher und Werkzeugen –", "dunkel"))
-    print(c("jedes Konzept direkt im Vergleich beider Sprachen.", "dunkel"))
+    print(c("Jedes Kapitel erklärt genau eine Sprache.", "dunkel"))
+    print(c("Der andere Kurs läuft im eigenen Reiter (Web) bzw. per "
+            "--wissen-cpp.", "dunkel"))
     print()
     for i, k in enumerate(kapitel, start=1):
         marker = c("✓", "gruen") if k["id"] in gelesen else c(" ", "dunkel")
@@ -927,10 +941,10 @@ def zeige_wissen(auswahl=None, fortschritt=None):
             return
         ziel = finde_kapitel(eingabe)
         if ziel is not None:
-            zeige_kapitel(ziel, fortschritt)
+            zeige_kapitel(ziel, fortschritt, sprache)
             gelesen = gelesene_ids()
             print(c("\n" + "═" * 62, "fett"))
-            print(c("  Sprachkurs: Python & C++ im ganzen erklärt", "fett"))
+            print(c(f"  {kursname}", "fett"))
             print(c("═" * 62, "fett"))
             print()
             for j, k in enumerate(kapitel, start=1):
@@ -1060,9 +1074,13 @@ def main():
     parser.add_argument("--list", action="store_true",
                         help="Verfügbare Lernfelder auflisten (✓ je Stufe)")
     parser.add_argument("--wissen", nargs="?", const="", metavar="KAPITEL",
-                        help="Sprachkurs anzeigen (Python & C++ erklärt); "
-                             "ohne KAPITEL: Kapitelübersicht, mit KAPITEL: "
-                             "Kapitel direkt (ID oder Nummer, z. B. --wissen strings)")
+                        help="Python-Kurs anzeigen (C++ läuft getrennt "
+                             "über --wissen-cpp); ohne KAPITEL: "
+                             "Kapitelübersicht, mit KAPITEL: Kapitel direkt "
+                             "(ID oder Nummer, z. B. --wissen strings)")
+    parser.add_argument("--wissen-cpp", action="store_true",
+                        help="Mit --wissen den C++-Kurs statt des "
+                             "Python-Kurses anzeigen")
     parser.add_argument("--glossar", nargs="?", const="", metavar="BEGRIFF",
                         help="Glossar der Grundbegriffe anzeigen; mit BEGRIFF: "
                              "nur passende Einträge (z. B. --glossar int)")
@@ -1159,7 +1177,8 @@ def main():
         return
 
     if args.wissen is not None:
-        zeige_wissen(args.wissen or None, fortschritt)
+        zeige_wissen(args.wissen or None, fortschritt,
+                     "cpp" if args.wissen_cpp else "python")
         return
 
     if args.glossar is not None:
@@ -1175,12 +1194,15 @@ def main():
     zeige_menue(fortschritt)
     while True:
         eingabe = input("Auswahl (1–6, 7/8 = Übungstests, p1–p4 = "
-                        "Prüfungstraining, w = Wissen, g = Glossar, q = Ende): ")
+                        "Prüfungstraining, w = Python-Kurs, c = C++-Kurs, g = Glossar, q = Ende): ")
         if eingabe.lower() in ("q", "quit", "exit"):
             print("Bis bald!")
             return
         if eingabe.lower() in ("w", "wissen"):
-            zeige_wissen(None, fortschritt)
+            zeige_wissen(None, fortschritt, "python")
+            continue
+        if eingabe.lower() in ("c", "cpp"):
+            zeige_wissen(None, fortschritt, "cpp")
             # nach dem Sprachkurs zurück zum Menü
             zeige_menue(fortschritt)
             continue

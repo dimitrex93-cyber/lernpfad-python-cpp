@@ -1,0 +1,34 @@
+{
+ "id": "oop",
+ "titel": "Kapitel 10: Klassen und Objekte (OOP)",
+ "einleitung": "Objektorientierte Programmierung (OOP) arbeitet mit Objekten. Ein Objekt hat Daten und Verhalten. Ein Hund-Objekt hat einen Namen und kann bellen. Du lernst Klassen, Konstruktoren, Kapselung und Vererbung. Und du siehst: Python und C++ lösen dieselben Ideen unterschiedlich.",
+ "abschnitte": [
+  {
+   "titel": "Klassen: Bauplan für Objekte",
+   "cpp": {
+    "text": "In C++ gibt es Sichtbarkeitsbereiche. Sichtbarkeit heißt: Wer darf zugreifen? Es gibt private, protected und public. private ist der Standard. Der Konstruktor heißt wie die Klasse. Er hat keinen Rückgabetyp. Member-Variablen sind die Attribute der Klasse. Member-Methoden sind ihre Funktionen. Beide stehen im Klassenrumpf. Ohne public: ist alles privat. Dann kann main() nicht zugreifen.",
+    "code": "class Hund {\nprivate:\n    std::string name;      // privat: nur Methoden\npublic:\n    Hund(std::string n) {  // Konstruktor (wie die Klasse)\n        name = n;\n    }\n    void bellen() const {\n        std::cout << name << \" sagt Wuff!\";\n    }\n};\n\nHund h(\"Rex\");   // Objekt erzeugen\nh.bellen();       // Rex sagt Wuff!\n// h.name;        // Fehler: private!"
+   },
+   "vergleich": "Python: self und __init__, alles ist öffentlich. C++: Der Konstruktor heißt wie die Klasse. Die Sichtbarkeit gibst du explizit an. private ist der Standard.",
+   "merk": "C++: private ist Standard! Ohne public: kein Zugriff von außen."
+  },
+  {
+   "titel": "Kapselung: Daten schützen",
+   "cpp": {
+    "text": "In C++ ist Kapselung Teil der Sprache. private-Attribute sind wirklich unzugänglich. Von außen kommst du nicht daran. Der Zugriff läuft über öffentliche Getter und Setter. So erzwingst du Regeln. Zum Beispiel: kein negativer Kontostand. const-Methoden ändern das Objekt nicht. const heißt: unveränderlich. Das ist typischer C++-Stil.",
+    "code": "class Konto {\nprivate:\n    int stand;\npublic:\n    Konto(int start) : stand(start) {}\n\n    void einzahlen(int betrag) {\n        if (betrag > 0) stand += betrag;\n    }\n\n    int getStand() const {   // const: ändert nichts\n        return stand;\n    }\n};\n\nKonto k(100);\nk.einzahlen(50);\nstd::cout << k.getStand();   // 150"
+   },
+   "vergleich": "Python: Unterstrich als Konvention, @property für Getter. C++: echte private-Bereiche, Getter und Setter als Methoden. const heißt: nichts ändern.",
+   "merk": "Kapselung = private Daten + öffentliche Methoden. C++ erzwingt, Python vertraut."
+  },
+  {
+   "titel": "Vererbung: Klassen erweitern",
+   "cpp": {
+    "text": "In C++ schreibst du: class Hund : public Tier { ... }; public heißt: Die Vererbung übernimmt die Sichtbarkeiten. Der Konstruktor der Basisklasse läuft in der Initialisierungsliste: Hund(std::string n) : Tier(n) {}. Basisklasse heißt: die Elternklasse. Zum Überschreiben brauchst du virtual in der Basisklasse. Beim Überschreiben schreibst du override. So prüft der Compiler mit. C++ kann Mehrfachvererbung. Sie wird aber selten genutzt.",
+    "code": "class Tier {\npublic:\n    Tier(std::string n) : name(n) {}\n    virtual std::string gib_laut() { return \"...\"; }\nprotected:\n    std::string name;\n};\n\nclass Hund : public Tier {\npublic:\n    Hund(std::string n) : Tier(n) {}\n    std::string gib_laut() override { return \"Wuff\"; }\n};\n\nHund h(\"Rex\");\nstd::cout << h.gib_laut();   // Wuff"
+   },
+   "vergleich": "Vererbung funktioniert in beiden Sprachen gleich. C++ verlangt virtual und override. Python überschreibt still. Python nutzt super(). C++ ruft die Basisklasse in der Initialisierungsliste auf.",
+   "merk": "C++: virtual in der Basis, override beim Überschreiben – sonst keine Polymorphie."
+  }
+ ]
+}

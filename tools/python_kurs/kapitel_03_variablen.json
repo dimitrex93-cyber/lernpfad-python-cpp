@@ -1,0 +1,246 @@
+{
+ "id": "variablen",
+ "titel": "Kapitel 3: Variablen und Datentypen",
+ "einleitung": "Variablen sind die Bausteine jedes Programms. Eine Variable ist ein Name für einen Wert. Diesen Wert legst du im Speicher ab. Hier lernst du die wichtigsten Datentypen kennen. Datentypen sagen, ob ein Wert eine Zahl oder Text ist. Python erkennt den Typ automatisch. Bei C++ musst du den Typ selbst festlegen.",
+ "abschnitte": [
+  {
+   "titel": "Was ist eine Variable?",
+   "python": {
+    "text": "Eine Variable ist ein Name für einen Wert. Den Wert legst du im Speicher ab. Stell dir eine Schublade mit Etikett vor. Auf dem Etikett steht der Name. In der Schublade liegt der Wert. In Python erzeugt die erste Zuweisung die Variable automatisch. Zuweisung heißt: Name = Wert. Du musst nichts anmelden. Python erkennt den Typ von selbst. Das nennt man dynamische Typisierung. Deine Variable darf sogar den Typ wechseln. Mit type() kannst du den Typ prüfen.",
+    "code": "name = \"Anna\"        # str (Zeichenkette)\nalter = 25           # int (ganze Zahl)\ngroesse = 1.72       # float (Kommazahl)\nist_student = True   # bool (Wahrheitswert)\n\nprint(type(alter))   # <class 'int'>\n\nalter = \"fünfundzwanzig\"  # erlaubt! Typwechsel\nprint(type(alter))        # <class 'str'>"
+   },
+   "vergleich": "Python entscheidet erst beim Ausführen. C++ entscheidet schon beim Übersetzen. Deshalb ist C++ strenger. Dafür findet C++ Typfehler früher. C++ läuft auch schneller. Der Compiler kennt nämlich jeden Typ genau.",
+   "merk": "Python erkennt den Typ selbst, C++ legt ihn fest und dann bleibt er."
+  },
+  {
+   "titel": "Die wichtigsten Datentypen im Überblick",
+   "python": {
+    "text": "Python hat wenige Grundtypen. Sie sind trotzdem sehr flexibel. int ist für ganze Zahlen. Sie dürfen beliebig groß sein. float ist für Kommazahlen. str ist für Text. bool ist für wahr oder falsch. list ist für Sammlungen. dict ist für Schlüssel-Wert-Paare. Schlüssel-Wert-Paare sind wie ein Wörterbuch: Zu jedem Wort gehört eine Bedeutung. Python kennt kein char. Ein einzelnes Zeichen ist einfach ein str mit Länge 1. Python kennt auch kein double. Eine Kommazahl ist einfach ein float.",
+    "code": "ganze_zahl = 42        # int\nkommazahl = 3.14      # float\nzeichenkette = \"A\"    # str (auch einzelne Zeichen)\ntext = \"Hallo\"        # str\nliste = [1, 2, 3]     # list\nwoerterbuch = {\"a\": 1}  # dict"
+   },
+   "vergleich": "Python ist einfacher. str übernimmt auch die Arbeit von char. float übernimmt die Arbeit von double. C++ gibt dir mehr Kontrolle. Du wählst Größe und Genauigkeit selbst. Dafür musst du den passenden Typ kennen.",
+   "merk": "char ist ein Zeichen, string ist Text, und Python kennt nur str."
+  },
+  {
+   "titel": "Typumwandlung (Cast)",
+   "python": {
+    "text": "Mit Funktionen wandelst du Typen um. Das nennt man Cast. int(\"42\") macht aus Text eine Zahl. str(42) macht aus einer Zahl Text. float(\"3.14\") macht eine Kommazahl. Manchmal schlägt die Umwandlung fehl. Zum Beispiel bei int(\"abc\"). Das ist kein Text mit einer Zahl. Dann wirft Python einen ValueError. Werfen heißt: Python meldet einen Fehler. Mit try/except fängst du den Fehler ab.",
+    "code": "zahl_text = \"42\"\nzahl = int(zahl_text)     # 42 (int)\nprint(zahl + 8)           # 50\n\ntext = str(42)            # \"42\" (str)\nkomma = float(\"3.14\")     # 3.14 (float)\n\n# Fehlerfall:\n# int(\"abc\")  -> ValueError"
+   },
+   "vergleich": "Python nutzt int(), str() und float(). Bei Fehlern gibt es einen ValueError. C++ nutzt std::stoi, std::to_string und std::stod. Bei Fehlern gibt es Exceptions. Für Zahlen-Umwandlung nutzt C++ static_cast.",
+   "merk": "Text zu Zahl und zurück: Python nutzt int() und str(), C++ nutzt std::stoi() und std::to_string()."
+  },
+  {
+   "titel": "Die Variable als Namensschild",
+   "python": {
+    "text": "Das Wort Variable klingt nach Schulmathematik. Dort heißt x = 5: x ist gleich fünf. In Python ist das keine Behauptung, sondern ein Befehl. Lies das Gleichheitszeichen als bekommt den Wert. Links steht der Name, rechts steht der Wert. Diese Richtung ist Vorschrift. Drehst du sie um, bricht Python sofort ab. Ein besseres Bild als die Schublade ist ein Namensschild. Das Schild hängt an einem Wert. Das Schild ist nicht der Wert, es hängt nur daran. Bei einer Neuzuweisung nimmst du das Schild ab und hängst es an einen anderen Wert. Der alte Wert bleibt dabei unverändert. Niemand benennt ihn mehr, deshalb räumt Python ihn weg.",
+    "code": "nachricht = \"Hallo Welt!\"\nprint(nachricht)          # Hallo Welt!\n\n# Falsche Richtung:\n# 12 = anzahl_teilnehmer  -> SyntaxError: cannot assign to literal\n\n# Name vor der Zuweisung benutzen:\n# print(anzahl)           -> NameError"
+   },
+   "merk": "Das Gleichheitszeichen heißt bekommt den Wert. Links der Name, rechts der Wert."
+  },
+  {
+   "titel": "Neu zuweisen und aufeinander aufbauen",
+   "python": {
+    "text": "Ein Name ist nicht für immer vergeben. Dieselbe Variable darf jederzeit einen neuen Wert bekommen. Die Zuweisung sieht genauso aus wie beim ersten Mal. Entscheidend ist der Zeitpunkt. print gibt immer den Wert aus, der gerade am Schild hängt. Steht die Ausgabe vor der zweiten Zuweisung, kommt noch der alte Wert. Variablen dürfen aufeinander aufbauen. Rechts vom Gleichheitszeichen darf stehen, was schon bekannt ist, auch eine andere Variable. Bei Texten hängt das Pluszeichen die Stücke aneinander. Das Leerzeichen dazwischen musst du selbst schreiben. Fehlt es, gibt es keine Fehlermeldung, nur MarieCurie. Für Text und Zahl zusammen nimmst du besser das Komma in print. Mit dem Pluszeichen gäbe es einen TypeError. Eine Rechnung wird genau an ihrer Zeile ausgeführt. Gespeichert wird das Ergebnis, nicht die Rechnung. Ändert sich später eine Zutat, bleibt das alte Ergebnis stehen.",
+    "code": "vorname = \"Marie\"\nnachname = \"Curie\"\nvoller_name = vorname + \" \" + nachname\nprint(voller_name)      # Marie Curie\n\nanzahl_teilnehmer = 12\nprint(\"Teilnehmer:\", anzahl_teilnehmer)   # Teilnehmer: 12\n\nnachricht = \"Hallo Welt!\"\nprint(nachricht)        # Hallo Welt!\nnachricht = \"Hallo Python!\"\nprint(nachricht)        # Hallo Python!\n\ngesamt = 10\nprint(gesamt)           # 10\ngesamt = 5\nprint(gesamt)           # 5"
+   },
+   "vergleich": "Bei Python steht das Ergebnis im Speicher, sobald die Zeile gelaufen ist. Eine spätere Änderung an einer Zutat wirkt nicht rückwirkend.",
+   "merk": "print zeigt den Wert, der beim Aufruf am Namensschild hängt. Zuerst zuweisen, dann benutzen."
+  },
+  {
+   "titel": "Erlaubte und verbotene Namen",
+   "python": {
+    "text": "Ein Variablenname heißt in der Sprachreferenz Bezeichner. Er darf nicht beliebig aussehen. Erlaubt sind Buchstaben, Ziffern und der Unterstrich. Eine Ziffer darf aber nie am Anfang stehen. Ein Leerzeichen im Namen trennt zwei Dinge, Python sieht dann zwei Wörter. Minus und Punkt haben in Python eine eigene Bedeutung. Deshalb sind sie im Namen verboten. Schlüsselwörter gehören der Sprache selbst. Sie sind als Name gesperrt. Ein Verstoß ergibt einen SyntaxError. Der fällt auf, bevor überhaupt etwas läuft. Groß- und Kleinschreibung zählen als Unterschied. alter, Alter und ALTER sind drei verschiedene Namen. Umlaute sind technisch erlaubt, im Kurs aber unerwünscht.",
+    "code": "alter = 30\nalter2 = 31\nmein_alter = 32\n_intern = 33\n\n# 2alter = 30       -> SyntaxError: invalid decimal literal\n# mein alter = 30   -> SyntaxError: invalid syntax\n# mein-alter = 30   -> SyntaxError\n# class = 1         -> SyntaxError, class ist ein Schlüsselwort"
+   },
+   "merk": "Buchstaben, Ziffern und Unterstrich sind erlaubt, aber keine Ziffer am Anfang und kein Leerzeichen.",
+   "checkliste": [
+    "Erlaubt: Buchstaben, Ziffern und der Unterstrich, etwa alter, alter2, mein_alter, _intern",
+    "Verboten: eine Ziffer am Anfang, etwa 2alter, das ergibt einen SyntaxError",
+    "Verboten: ein Leerzeichen im Namen, etwa mein alter, Python sieht zwei Wörter",
+    "Verboten: Minus und Punkt im Namen, etwa mein-alter oder preis.netto",
+    "Verboten: Schlüsselwörter wie if, else, for, while, def, class, import, True, False und None",
+    "Groß und klein zählen als Unterschied: alter, Alter und ALTER sind drei Namen"
+   ]
+  },
+  {
+   "titel": "Gute Namen wählen",
+   "python": {
+    "text": "Erlaubt ist nicht dasselbe wie sinnvoll. a = 12 ist nach den Regeln einwandfrei. Nach zwei Tagen weiß trotzdem niemand mehr, was a bedeuten sollte. Namen sind die billigste Dokumentation, die es gibt. Eine besondere Gruppe sind die eingebauten Namen. print, list, str, type, sum und input gibt es in Python schon. Sie sind keine Schlüsselwörter, deshalb verbietet Python sie nicht. Es passiert genau das, was dasteht. Das Schild wird vom alten Wert abgenommen und an den neuen gehängt. Danach ist die eingebaute Funktion weg. Der Fehler erscheint dann an einer ganz anderen Stelle. Editoren färben eingebaute Namen ein. Wer print als Variable tippt, sieht die Farbe sofort.",
+    "code": "anzahl_teilnehmer = 12\nprint(\"Teilnehmer:\", anzahl_teilnehmer)\n\ndauer_minuten = 45\n\n# Eingebauten Namen überschreiben:\n# print = \"Hallo\"\n# print(\"Und jetzt?\")   -> TypeError: 'str' object is not callable"
+   },
+   "merk": "Ein Name wird einmal getippt und viele Male gelesen.",
+   "checkliste": [
+    "alles klein schreiben: anzahl_teilnehmer statt AnzahlTeilnehmer",
+    "Wörter mit dem Unterstrich trennen: preis_netto statt preisnetto",
+    "beschreibend benennen: anzahl_teilnehmer statt a, x1 oder temp",
+    "ausschreiben statt abkürzen: nachricht statt nchrcht oder msg2",
+    "die Einheit mitnennen, wenn es eine gibt: dauer_minuten statt dauer",
+    "eingebaute Namen wie print, list, str, type, sum und input nie als Variable benutzen"
+   ]
+  },
+  {
+   "titel": "Was ein Datentyp festlegt",
+   "python": {
+    "text": "In Python ist jeder Wert ein Objekt, auch eine Zahl. Jedes Objekt hat einen Typ. Der Typ legt zwei Dinge fest. Erstens: welche Werte möglich sind. Zweitens: was man mit ihnen tun darf. Genau darin liegt der Unterschied zwischen 3 und dem Text 3. Der eine Wert lässt sich verdoppeln, der andere großschreiben. Dasselbe Sternchen bedeutet bei Text etwas anderes als bei Zahlen. Bei Text wiederholt es, bei Zahlen multipliziert es. Was der eine Typ kann, kann der andere nicht. Ein Text lässt sich großschreiben, eine Zahl nicht. Wer es trotzdem versucht, bekommt einen AttributeError. Die Meldung nennt den Typ und das, was er nicht hat.",
+    "code": "print(type(42))         # <class 'int'>\nprint(type(4.2))        # <class 'float'>\nprint(type(\"42\"))       # <class 'str'>\nprint(type(True))       # <class 'bool'>\nprint(type([1, 2, 3]))  # <class 'list'>\n\nprint(\"3\" * 4)          # 3333\nprint(3 * 4)            # 12\n\nprint(\"hallo\".upper())     # HALLO\nprint((42).bit_length())   # 6\n\n# \"hallo\".bit_length()   -> AttributeError: 'str' object has no attribute 'bit_length'"
+   },
+   "vergleich": "Der Typ ist nicht daran zu erkennen, wie ein Wert aussieht, sondern wie er geschrieben wurde. 42 und der Text 42 sehen fast gleich aus und verhalten sich ganz verschieden. Im Zweifel fragst du type().",
+   "merk": "Der Typ legt fest, welche Werte möglich sind und was man mit ihnen tun darf."
+  },
+  {
+   "titel": "Welchen Typ nimmt man wofür",
+   "python": {
+    "text": "Die Frage ist nicht, welcher Typ der beste ist. Die Frage ist, welche Form dein Problem hat. Kommt der Wert einzeln vor, nimm str, int oder float. Sind es mehrere gleichartige Dinge in einer Reihenfolge, nimm eine list. Gehören immer zwei Dinge zusammen, nimm ein dict. Gibt es nur ja oder nein, nimm bool. Eine Postleitzahl gehört in einen str, obwohl sie wie eine Zahl aussieht. Mit ihr rechnet niemand. Und 01067 muss die führende Null behalten. Als int wäre die Null weg. Die Leitfrage lautet also nicht: sieht es aus wie eine Zahl? Sie lautet: was tue ich mit diesem Wert?",
+    "code": "name = \"Mueller\"              # str, Text\nanzahl = 42                   # int, etwas zählen\npreis = 4.5                   # float, etwas messen\nbezahlt = True                # bool, ja oder nein\nteilnehmer = [\"Anna\", \"Ben\"]  # list, mehrere in Reihenfolge\neinstellung = {\"farbe\": \"rot\"}  # dict, Schlüssel und Wert\nplz = \"01067\"                 # str, sieht nur aus wie eine Zahl"
+   },
+   "merk": "Gezählt wird mit int, gemessen mit float, geschrieben mit str. Mehreres hält die list, Zuordnungen das dict.",
+   "checkliste": [
+    "Einzelner Wert: str für Text, int zum Zählen, float zum Messen",
+    "Mehrere gleichartige Dinge in einer Reihenfolge: list, etwa alle Teilnehmer oder alle Messwerte",
+    "Zwei Dinge gehören immer zusammen: dict, etwa Artikelnummer und Bestand",
+    "Nur ja oder nein: bool, etwa bezahlt, anwesend, bestanden",
+    "Postleitzahl oder Artikelnummer: str, weil damit nicht gerechnet wird und die führende Null bleiben muss",
+    "tuple für mehrere Werte, die unveränderbar bleiben, set für jeden Wert höchstens einmal, None für hier ist nichts"
+   ]
+  },
+  {
+   "titel": "Veränderbar oder nicht",
+   "python": {
+    "text": "Manche Typen lassen sich nach dem Erzeugen ändern, andere nicht. Veränderbar sind list, dict und set. Unveränderbar sind str, int, float, bool und tuple. Die Sprachreferenz nennt das mutable und immutable. Bei einer Liste darfst du einen Eintrag ersetzen. Der Text lässt sich nicht ändern. upper() liefert einen neuen Text. Der alte steht unverändert da. Wer das Ergebnis behalten will, muss es zuweisen. Deshalb ändert name.title() den Namen nicht, liste.sort() aber die Liste. Das ist keine Inkonsequenz, sondern folgt aus dem Typ.",
+    "code": "liste = [\"a\", \"b\", \"c\"]\nliste[0] = \"x\"\nprint(liste)          # ['x', 'b', 'c']\n\ntext = \"abc\"\nprint(text.upper())   # ABC\nprint(text)           # abc\n\n# Ergebnis behalten:\ntext = text.upper()\nprint(text)           # ABC"
+   },
+   "vergleich": "Python regelt Veränderbarkeit über den Typ. C++ regelst du es selbst mit const. In beiden Sprachen gilt: Was nicht verändert werden darf, meldet der Prüfer, in Python der Interpreter, in C++ der Compiler.",
+   "merk": "list, dict und set ändern sich selbst. str, int, float, bool und tuple geben einen neuen Wert zurück."
+  },
+  {
+   "titel": "Typische Fehler zu Variablen und Typen",
+   "python": {
+    "text": "Diese Fehler kommen bei fast allen Anfängern vor. Wer sie kennt, findet sie schneller. Die meisten entstehen aus einer falschen Vorstellung, nicht aus Unwissen. Beim Gleichheitszeichen ist es die Schulmathematik. Beim Namen in Anführungszeichen ist es die Verwechslung von Name und Text. Beim NameError ist es die Reihenfolge im Kopf statt auf dem Papier. Beim überschriebenen print ist es ein naheliegendes Wort. Wichtig ist: Lies die Meldung. Sie nennt meist Typ und Zeile, und damit die halbe Lösung.",
+    "code": "# Name und Text sind nicht dasselbe:\nnachricht = \"Der Lehrgang beginnt.\"\nprint(nachricht)     # Der Lehrgang beginnt.\nprint(\"nachricht\")   # nachricht\n\n# Zahl und Text mit dem Pluszeichen:\n# print(\"5\" + 3)     -> TypeError\nprint(\"5\" + str(3))  # 53\nprint(int(\"5\") + 3)  # 8"
+   },
+   "merk": "Lies die Meldung: Sie nennt Typ und Zeile, und damit die halbe Lösung.",
+   "checkliste": [
+    "Das Gleichheitszeichen als ist gleich lesen: 12 = anzahl_teilnehmer ergibt einen SyntaxError, links gehört immer der Name",
+    "Den Namen in Anführungszeichen setzen: print(\"nachricht\") gibt das Wort aus statt des Werts",
+    "Eine Variable vor der Zuweisung benutzen: das ergibt einen NameError, Python kennt nur, was oberhalb steht",
+    "Tippfehler im Namen: ergibt einen NameError, oft mit dem Hinweis Did you mean und dem richtigen Namen",
+    "Eine Ziffer oder ein Leerzeichen im Namen: ergibt einen SyntaxError, noch bevor etwas läuft",
+    "Eingebaute Namen wie print oder list überschreiben: die Funktion ist danach weg, der Fehler erscheint an anderer Stelle",
+    "Nichtssagende Namen wie a oder x1: der eigene Code ist nach einem Tag fremd",
+    "Zahl und Text mit dem Pluszeichen verbinden: TypeError, Abhilfe sind str() oder ein f-String",
+    "Mit einer eingetippten Zahl rechnen, ohne sie umzuwandeln: input liefert immer Text, aus 5 und 3 wird dann 53",
+    "Dezimalkomma statt Dezimalpunkt: 5,0 ist in Python kein float, sondern zwei getrennte Werte",
+    "Eine Postleitzahl als int speichern: die führende Null verschwindet",
+    "Erwarten, dass text.upper() den Text ändert: das Ergebnis geht verloren, wenn es nicht zugewiesen wird"
+   ]
+  },
+  {
+   "titel": "Übungen",
+   "python": {
+    "text": "Hier übst du die Themen dieses Kapitels. Nimm dir eine Aufgabe nach der anderen vor. Wichtig ist nicht das Tempo, sondern dass du jede Meldung liest. Die Musterlösung unten zeigt zwei der Aufgaben. Tippe sie einmal selbst ab und ändere dann eine Zeile. So siehst du sofort, was passiert.",
+    "code": "vorname = \"Marie\"\nnachname = \"Curie\"\nvoller_name = vorname + \" \" + nachname\nprint(voller_name)          # Marie Curie\n\nstandort = \"München\"\nprint(standort)             # München\nstandort = \"Hamburg\"\nprint(standort)             # Hamburg\n\nanzahl_teilnehmer = 12\ndauer_tage = 5\nprint(\"Teilnehmer:\", anzahl_teilnehmer)   # Teilnehmer: 12\nprint(\"Dauer:\", dauer_tage)               # Dauer: 5"
+   },
+   "merk": "Erst tippen, dann ändern, dann die Meldung lesen."
+  },
+  {
+   "titel": "Pflichtaufgaben",
+   "python": {
+    "text": "Diese Pflichtaufgaben stammen aus dem Kursnotizbuch und gehören zum Thema dieses Kapitels. Schreibe jede Aufgabe in eine eigene Datei und führe sie aus. Wo eine Lösung vorliegt, kannst du sie nach dem eigenen Versuch aufklappen – erst selbst probieren, dann vergleichen."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Der erste Name für einen Wert",
+     "aufgabe": "Lege eine Variable an, die einen Satz enthält, und gib sie anschließend aus. Der Satz selbst darf nur an einer einzigen Stelle im Programm stehen. Achte darauf, dass in der print()-Zeile keine Anführungszeichen mehr vorkommen. Fertig, wenn: die Zeile Der Lehrgang beginnt. im Terminal steht — und nicht das Wort nachricht.",
+     "tipp": "Links vom = steht der Name, rechts der Wert. In der print()-Zeile wird der Name ohne Anführungszeichen benutzt, denn ausgegeben werden soll der Wert dahinter, nicht das Wort.",
+     "loesung": "nachricht = \"Der Lehrgang beginnt heute.\"\nprint(nachricht)"
+    },
+    {
+     "titel": "Derselbe Name, ein neuer Wert",
+     "aufgabe": "Lege eine Variable standort mit einem Ort an und gib sie aus. Weise derselben Variablen danach einen anderen Ort zu und gib sie erneut aus. Benutze für beide Ausgaben denselben Variablennamen. Fertig, wenn: zwei verschiedene Orte untereinander stehen, obwohl in beiden print()-Zeilen dasselbe Wort steht.",
+     "tipp": "Eine Neuzuweisung sieht genauso aus wie die erste Zuweisung. Entscheidend ist, dass die Ausgabe dazwischen steht, nicht danach.",
+     "loesung": "stantort = \"Berlin\"\nprint(\"Der Standort ist \" + stantort)\n\nstandort = \"Wilhelmshaven\"\nprint(\"Der Standort ist \" + standort)"
+    },
+    {
+     "titel": "Aus zwei Namen wird einer",
+     "aufgabe": "Lege zwei Variablen an, eine für einen Vornamen und eine für einen Nachnamen. Setze beide in einer dritten Variablen zu einem vollständigen Namen zusammen und gib nur diese dritte Variable aus. Zwischen Vor- und Nachname gehört genau ein Leerzeichen. Fertig, wenn: Marie Curie in einer Zeile steht — mit Lücke, nicht MarieCurie.",
+     "tipp": "Rechts vom = darf stehen, was bereits bekannt ist, auch andere Variablen. Das Pluszeichen hängt Texte aneinander, fügt aber nichts hinzu, was nicht dasteht.",
+     "loesung": "vorname = \"marie\"\nNachname = \"curie\"\nganzer_name = f\"{vorname} {Nachname}\"\nprint(\"Hallo , \" + vorname + \" \" + nachname + \"!\")\nprint(ganzer_name.title())"
+    },
+    {
+     "titel": "Zahlen in Variablen",
+     "aufgabe": "Lege zwei Variablen für Zahlen an: die Teilnehmerzahl eines Lehrgangs und seine Dauer in Tagen. Gib beide jeweils mit einer Beschriftung davor aus, und zwar so, dass Beschriftung und Zahl als zwei getrennte Werte in einem print()-Aufruf stehen. Halte dich bei den Namen an den Stil des Kurses. Fertig, wenn: zwei Zeilen erscheinen, in denen hinter dem Doppelpunkt jeweils eine Zahl steht, und beide Variablennamen klein geschrieben sind und ihre Bedeutung nennen.",
+     "tipp": "Zahlen stehen ohne Anführungszeichen. Das Komma in print() verträgt Text und Zahl nebeneinander, das Pluszeichen nicht.",
+     "loesung": "Teilnehmer_zahl = 6\ndauer_in_Tagen = 5\nprint(\"Die Teilnehmerzahl beträgt:\" + str(Teilnehmer_zahl))\nprint(\"und die Dauer des Lehrgangs beträgt:\" + str(dauer_in_Tagen) + \" Tage.\")"
+    },
+    {
+     "titel": "Verbotene Namen reparieren",
+     "aufgabe": "Die Vorgabe bricht ab, bevor überhaupt etwas ausgeführt wird. Führe sie aus, lies die Meldung und repariere die Namen so, dass sie den Regeln entsprechen und zugleich dem Benennungsstil des Kurses folgen. Die Werte sollen unverändert bleiben. Fertig, wenn: nacheinander 30 und Feldwebel ausgegeben werden und kein Name mehr mit einer Ziffer beginnt oder ein Leerzeichen enthält.",
+     "tipp": "Erlaubt sind Buchstaben, Ziffern und Unterstrich — aber niemals eine Ziffer am Anfang und niemals ein Leerzeichen mittendrin. Der Unterstrich ersetzt das Leerzeichen.",
+     "loesung": "alter = 30\ndienstgrad = \"Feldwebel\"\nprint(alter)\nprint(dienstgrad)"
+    },
+    {
+     "titel": "Vorhersage — wann der Wert eingefroren wird",
+     "aufgabe": "Unten steht ein Programm mit einer Neuzuweisung in der Mitte. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf, in dem steht, welche zwei Zahlen du erwartest. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile zuerst 10 und dann 5 ausgegeben wird.",
+     "tipp": "Die Zeile mit gesamt wird genau einmal ausgeführt, und zwar an ihrer Position. Sie merkt sich das Ergebnis, nicht die Rechnung.",
+     "loesung": "anzahl_kartons = 3\ngesamt = anzahl_kartons + 2\nanzahl_kartons = 10\nprint(anzahl_kartons)\nprint(gesamt)"
+    },
+    {
+     "titel": "Fünf Werte, fünf Typen",
+     "aufgabe": "Lass dir für fünf verschiedene Werte den Typ nennen: für eine ganze Zahl, eine Kommazahl, eine Ziffernfolge in Anführungszeichen, einen Wahrheitswert und eine Liste. Schreibe die fünf Werte direkt in die Klammern, ohne vorher Variablen anzulegen. Fertig, wenn: fünf Zeilen erscheinen, die mit <class ' beginnen, und die dritte davon str nennt, obwohl dort Ziffern stehen.",
+     "tipp": "Die eingebaute Funktion, die den Typ nennt, heißt type(). Sie muss in print() hineingereicht werden, sonst sieht man nichts.",
+     "loesung": "print(type(\"a\"))\nprint(type(5))\nprint(type(3.141))\nprint(type(True))\nprint(type([1, 2, 3]))"
+    },
+    {
+     "titel": "Den passenden Typ wählen",
+     "aufgabe": "Lege drei Variablen an: eine Postleitzahl, eine Anzahl Umzugskartons und ein Gewicht in Kilogramm mit einer Nachkommastelle. Wähle für jede den Typ, der zur Sache passt, und gib danach die Postleitzahl selbst sowie die Typen aller drei Variablen aus. Die Postleitzahl soll eine führende Null behalten. Fertig, wenn: die Postleitzahl mit ihrer führenden Null ausgegeben wird und die drei Typzeilen str, int und float nennen.",
+     "tipp": "Die Leitfrage lautet nicht „sieht es aus wie eine Zahl\", sondern „rechne ich damit\". Mit einer Postleitzahl rechnet niemand.",
+     "loesung": "postleitzahl = 26419\numzugskatons = 12\ngewicht = 25.5\nprint(f\"Die Postleitzahl ist {postleitzahl}, es gibt {umzugskatons} Umzugskartons und das Gewicht beträgt {gewicht} kg.\")"
+    },
+    {
+     "titel": "Wie lang ist das?",
+     "aufgabe": "Lass dir die Länge von drei verschiedenen Sammlungen nennen: von einem Wort, von einer Liste mit drei Namen und von einer Zuordnung mit zwei Einträgen. Benutze für alle drei dieselbe Funktion. Fertig, wenn: drei Zahlen untereinander stehen: 12, 3 und 2.",
+     "tipp": "Alles, was mehrere Werte enthält, beantwortet dieselbe Frage nach der Länge — egal ob Text, Liste oder Zuordnung. Die Funktion heißt len().",
+     "loesung": "liste = [\"12\", \"34\", \"56\"]\nprint(liste)\nlen(liste)"
+    },
+    {
+     "titel": "Vorhersage — dasselbe Sternchen, zwei Bedeutungen",
+     "aufgabe": "Unten stehen vier Zeilen, in denen zweimal ein Sternchen vorkommt. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für alle vier Ausgabezeilen. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile 3333, 12, und erscheinen.",
+     "tipp": "Der Typ legt fest, welche Operationen erlaubt sind und was sie bedeuten. Bei Text wiederholt das Sternchen, bei Zahlen multipliziert es.",
+     "loesung": "print(\"3\" * 4)\nprint(3 * 4)\nprint(type(\"3\"))\nprint(type(3))"
+    },
+    {
+     "titel": "Von Text zu Zahl und zurück",
+     "aufgabe": "Lege eine Variable an, die eine Zahl als Text enthält. Wandle sie in eine echte Zahl um, lege das Ergebnis unter einem eigenen Namen ab und addiere darauf 5. Gib anschließend zusätzlich einen Satz aus, der die ursprüngliche Zahl enthält, indem du sie wieder in Text umwandelst und mit + anhängst. Fertig, wenn: zuerst 30 und darunter Alter: 25 ausgegeben wird.",
+     "tipp": "Die Funktionen für die Umwandlung heißen genauso wie die Zieltypen. Eine davon macht aus Text eine Ganzzahl, die andere macht aus einer Zahl Text."
+    },
+    {
+     "titel": "Der Typ passt nicht",
+     "aufgabe": "Die Vorgabe soll die Summe aus zwei Angaben ausgeben und bricht ab. Führe sie aus, lies die Meldung und bestimme für jeden der beiden Werte den Typ — zur Not mit einer zusätzlichen print(type(...))-Zeile. Repariere das Programm so, dass tatsächlich gerechnet wird. Fertig, wenn: die Zahl 8 ausgegeben wird, nicht 53 und keine Fehlermeldung.",
+     "tipp": "Die Meldung nennt beide beteiligten Typen. Einer von beiden muss umgewandelt werden, bevor + etwas Sinnvolles tun kann — und zwar in die Richtung, in der am Ende gerechnet wird.",
+     "loesung": "anzahl_kartons = \"5\"\nzusatz = 3\nprint(anzahl_kartons + zusatz)"
+    }
+   ]
+  },
+  {
+   "titel": "Vertiefungsaufgaben",
+   "python": {
+    "text": "Diese Vertiefungsaufgaben stammen aus dem Kursnotizbuch und gehören zum Thema dieses Kapitels. Schreibe jede Aufgabe in eine eigene Datei und führe sie aus. Wo eine Lösung vorliegt, kannst du sie nach dem eigenen Versuch aufklappen – erst selbst probieren, dann vergleichen."
+   },
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Ein eingebauter Name wurde überschrieben",
+     "aufgabe": "Die Vorgabe bricht in Zeile 3 ab, obwohl diese Zeile völlig harmlos aussieht. Führe sie aus, lies den Fehlertyp und finde die Zeile, in der der Fehler tatsächlich gemacht wurde. Repariere das Programm, indem du dem Text einen passenden eigenen Namen gibst, und gib anschließend Überschrift und Anzahl aus. Fertig, wenn: zuerst Teilnehmerliste und darunter Teilnehmer: 12 erscheint und kein eingebauter Name mehr als Variable verwendet wird.",
+     "tipp": "Die Meldung lautet TypeError: 'str' object is not callable — ein Text lässt sich nicht aufrufen. Frage dich, was in Zeile 1 mit dem Schild print passiert ist. Der Editor färbt eingebaute Namen ein; die Farbe verrät den Fehler sofort.",
+     "loesung": "Liste = \" Teilnehmerliste\"\nanzahl_teilnehmer = 12\n\nprint(Liste + \": \" + str(anzahl_teilnehmer))"
+    },
+    {
+     "titel": "Veränderbar oder nicht",
+     "aufgabe": "Die Vorgabe soll zwei Dinge ändern: den ersten Eintrag einer Ausrüstungsliste und die Schreibweise einer Kennung. Einer der beiden Versuche wirkt, der andere nicht. Führe die Vorgabe aus, finde heraus, welcher der beiden wirkungslos bleibt, und repariere ihn. Fertig, wenn: die Liste ['Muetze', 'Weste', 'Stiefel'] ausgibt und die Kennung in Großbuchstaben erscheint.",
+     "tipp": "list ist veränderbar, str nicht. Was eine Methode bei einem unveränderbaren Wert liefert, ist ein neuer Wert — und der geht verloren, wenn ihn niemand auffängt.",
+     "loesung": "ausruestung = ['Helm', 'Weste', 'Stiefel']\nausruestung[0] = 'Muetze'\nkennung = \"nato-code\"\nkennung.upper()\nprint(ausruestung)\nprint(kennung)"
+    }
+   ]
+  }
+ ]
+}

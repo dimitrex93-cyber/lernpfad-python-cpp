@@ -1,0 +1,79 @@
+{
+ "id": "operatoren",
+ "titel": "Kapitel 4: Operatoren und Ausdrücke",
+ "einleitung": "Ein Operator ist ein Zeichen wie + oder -. Er macht aus Werten ein Ergebnis: Aus 7 + 2 wird 13. Mit Operatoren rechnest du, vergleichst du und verknüpfst du Bedingungen. In diesem Kapitel lernst du die wichtigsten Operatoren von Python und C++. Mitten drin wartet eine berühmte Falle bei der Division.",
+ "abschnitte": [
+  {
+   "titel": "Arithmetik: Rechnen mit Zahlen",
+   "cpp": {
+    "text": "C++ kennt +, -, *, / und %. Ein ** gibt es nicht. Für Potenzen nutzt du die Funktion std::pow. Jetzt die berühmte Falle: Wenn beide Zahlen ganze Zahlen sind, schneidet / den Rest ab. 10 / 3 ist also 3, nicht 3.333. Es reicht, wenn einer der Operanden eine Kommazahl ist. Operanden sind die Zahlen, mit denen das Zeichen rechnet. Dann kommt eine Kommazahl heraus. % heißt Modulo und gibt den Rest.",
+    "code": "#include <iostream>\n\nint main() {\n    std::cout << 10 / 3 << std::endl;    // 3  (int / int!)\n    std::cout << 10.0 / 3 << std::endl;  // 3.33333\n    std::cout << 10 % 3 << std::endl;    // 1\n    std::cout << 7 + 2 * 3 << std::endl; // 13\n    return 0;\n}"
+   },
+   "vergleich": "Teilst du 10 durch 3, schreibt Python 3.333... hin. C++ schreibt 3 hin. Der Grund: Bei zwei ganzen Zahlen (int) schneidet C++ den Rest ab. In Python sagst du dafür //. In C++ setzt du eine Kommazahl ein.",
+   "merk": "Python: / ergibt eine Kommazahl, // eine ganze Zahl. C++: int geteilt durch int ergibt eine ganze Zahl."
+  },
+  {
+   "titel": "Vergleichsoperatoren",
+   "cpp": {
+    "text": "C++ kennt dieselben Zeichen: ==, !=, <, >, <= und >=. Das Ergebnis ist auch hier ein bool, also wahr oder falsch. Merke dir: == vergleicht, = weist zu. Eine Zuweisung gibt einer Variable einen Wert. Ein berühmter C++-Fehler ist if (x = 5). Das weist x den Wert 5 zu. Die Bedingung ist dann immer wahr. Gute Compiler warnen davor, wenn du -Wall einschaltest.",
+    "code": "int alter = 18;\nbool a = (alter == 18);   // true\nbool b = (alter != 21);   // true\nbool c = (alter >= 18);   // true\n// if (alter = 18)  -> Zuweisung! Fehler (immer wahr)"
+   },
+   "vergleich": "Beide Sprachen haben dieselben Zeichen und dieselbe Falle: == vergleicht, = weist zu. In C++ lässt der Compiler if (x = 5) einfach durch. Python verbietet das und meldet einen Fehler.",
+   "merk": "== vergleicht, = weist zu. Bei Bedingungen immer doppelt prüfen!"
+  },
+  {
+   "titel": "Logische Operatoren: und / oder / nicht",
+   "cpp": {
+    "text": "C++ nutzt Symbole statt Wörter: && für und, || für oder, ! für nicht. In Bedingungen zählt: 0 ist falsch, alles andere ist wahr. && und || arbeiten mit Kurzschluss. Kurzschluss heißt: Sie rechnen nur so lange, wie nötig. Ist der linke Teil von && schon falsch, prüft C++ den rechten Teil gar nicht mehr.",
+    "code": "int alter = 20;\nbool hat_fuehrerschein = true;\n\nif (alter >= 18 && hat_fuehrerschein) {\n    std::cout << \"Darf Auto fahren\";\n}\nif (alter < 18 || alter > 65) {\n    std::cout << \"Sondertarif\";\n}\nif (!hat_fuehrerschein) {\n    std::cout << \"Kein Führerschein\";\n}"
+   },
+   "vergleich": "Python schreibt and, or, not. C++ schreibt &&, ||, !. Die Logik ist dieselbe, nur die Schreibweise anders. Beide Sprachen stoppen bei && und ||, sobald das Ergebnis feststeht.",
+   "merk": "Python: and, or, not. C++: &&, ||, !. Das heißt: und, oder, nicht."
+  },
+  {
+   "titel": "Warum / auch bei aufgehender Division eine Kommazahl liefert",
+   "cpp": {
+    "text": "C++ rechnet an dieser Stelle anders. Bei zwei ganzen Zahlen ist / schon die Ganzzahldivision. 10 / 2 ergibt dort 5, und der Typ bleibt int. Eine Kommazahl bekommst du nur, wenn einer der beiden Werte eine Kommazahl ist. Aus 10.0 / 2 wird ein double. Ein // gibt es in C++ nicht.",
+    "code": "#include <iostream>\n\nint main() {\n    std::cout << 10 / 2 << std::endl;    // 5  (int / int)\n    std::cout << 10.0 / 2 << std::endl;  // 5  (double, cout lässt die .0 weg)\n    return 0;\n}"
+   },
+   "vergleich": "Python liefert bei / immer einen float, auch bei 10 / 2. Für eine ganze Zahl gibt es //. C++ hat kein //: Dort ist / bei zwei int automatisch ganzzahlig, und für eine Kommazahl braucht einer der Werte einen Punkt.",
+   "merk": "Python: / liefert immer float, // die ganze Zahl. C++: int geteilt durch int ist schon ganzzahlig."
+  },
+  {
+   "titel": "// und %: zwei Fragen an dieselbe Division",
+   "cpp": {
+    "text": "In C++ übernimmt / die Rolle von //, solange beide Zahlen int sind. Das Prozentzeichen heißt auch hier Modulo und liefert den Rest. 17 / 5 ergibt 3, 17 % 5 ergibt 2. Für die vollen Portionen brauchst du also kein eigenes Zeichen.",
+    "code": "#include <iostream>\n\nint main() {\n    int gesamt = 17;\n    int personen = 5;\n    std::cout << gesamt / personen << std::endl;  // 3\n    std::cout << gesamt % personen << std::endl;  // 2\n    return 0;\n}"
+   },
+   "vergleich": "Python trennt die zwei Fragen mit // und %. C++ nutzt für beides / und %. Bei zwei int ist / dort automatisch die Ganzzahldivision, deshalb gibt es kein //.",
+   "merk": "// nennt die vollen Portionen, % den Rest. Beide gehören zur selben Division."
+  },
+  {
+   "titel": "Punkt vor Strich und Klammern",
+   "cpp": {
+    "text": "C++ hält sich an dieselbe Rangfolge: Klammern, dann Punkt, dann Strich. Eine Potenz gibt es als Zeichen nicht, dafür nimmt man std::pow. 2 + 3 * 4 ergibt auch hier 14, und (2 + 3) * 4 ergibt 20.",
+    "code": "#include <iostream>\n#include <cmath>\n\nint main() {\n    std::cout << 2 + 3 * 4 << std::endl;            // 14\n    std::cout << (2 + 3) * 4 << std::endl;          // 20\n    std::cout << 10 - std::pow(2, 3) << std::endl;  // 2\n    std::cout << 7 * (60 + 30) << std::endl;        // 630\n    return 0;\n}"
+   },
+   "vergleich": "Die Rangfolge ist in beiden Sprachen gleich: Klammern, Potenz, Punkt, Strich. Nur die Potenz schreibt sich anders, in Python mit zwei Sternen und in C++ als std::pow.",
+   "merk": "Potenz zuerst, dann Punkt, dann Strich. Klammern schlagen alles."
+  },
+  {
+   "titel": "Warum Kommazahlen nicht genau rechnen",
+   "cpp": {
+    "text": "C++ hat dasselbe Problem, weil auch dort Kommazahlen binär gespeichert werden. Man sieht es nur seltener. cout zeigt standardmäßig sechs Stellen und verbirgt die Abweichung. Erst mit setprecision(17) wird sie sichtbar. Mit fixed und setprecision(2) erscheinen genau zwei Nachkommastellen.",
+    "code": "#include <iostream>\n#include <iomanip>\n\nint main() {\n    double summe = 0.1 + 0.2;\n    std::cout << summe << std::endl;                           // 0.3\n    std::cout << std::setprecision(17) << summe << std::endl;  // 0.30000000000000004\n    std::cout << std::fixed << std::setprecision(2) << summe << std::endl;  // 0.30\n    return 0;\n}"
+   },
+   "vergleich": "Die Abweichung steckt im Rechner, nicht in der Sprache. Python gibt den Wert so genau aus, wie er gespeichert ist, und zeigt sie sofort. C++ rundet die Ausgabe standardmäßig auf sechs Stellen und verbirgt sie. Mit setprecision wird sie auch dort sichtbar.",
+   "merk": "Kommazahlen sind Näherungen. Nicht auf Gleichheit prüfen, für die Anzeige .2f benutzen."
+  },
+  {
+   "titel": "Zahl und Text zusammenbringen",
+   "cpp": {
+    "text": "In C++ gibt es diesen Laufzeitfehler nicht, weil die Sache schon beim Übersetzen auffällt. Ein std::string und eine int lassen sich nicht mit plus verbinden. Der Compiler bricht mit einer Fehlermeldung ab. Die Umwandlung machst du ausdrücklich mit std::to_string.",
+    "code": "#include <iostream>\n#include <string>\n\nint main() {\n    int alter = 25;\n    // std::cout << \"Ich bin \" + alter;          // Compilerfehler\n    std::cout << \"Ich bin \" + std::to_string(alter) << std::endl;\n    return 0;\n}"
+   },
+   "vergleich": "Python merkt den Typfehler erst beim Ausführen und meldet einen TypeError. C++ merkt ihn beim Übersetzen, dann läuft gar nichts. Die Lösung ist dieselbe Idee: die Zahl ausdrücklich zu Text machen, mit str() oder std::to_string.",
+   "merk": "Text und Zahl verbindet kein plus: f-String oder str(), nie plus allein."
+  }
+ ]
+}

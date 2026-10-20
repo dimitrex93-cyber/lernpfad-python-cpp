@@ -1,0 +1,34 @@
+{
+ "id": "netzwerke",
+ "titel": "Kapitel 13: Netzwerke und Sockets",
+ "einleitung": "Programme reden miteinander. Sie schicken Nachrichten über ein Netzwerk. Ein Netzwerk ist eine Verbindung zwischen Computern. Du lernst TCP und UDP kennen – die zwei Transportwege. Du baust Sockets (Netzwerk-Anschlüsse) in Python und C++. Du erfährst auch, was hinter HTTP steckt. HTTP ist die Sprache des Internets. Darauf laufen Webserver, Clients (Programme, die anfragen) und Chat-Programme.",
+ "abschnitte": [
+  {
+   "titel": "TCP und UDP – die zwei Transportwege",
+   "cpp": {
+    "text": "C++ hat kein eingebautes Socket-Modul. Die Socket-Befehle kommen aus dem Betriebssystem. Diese Schnittstelle heißt POSIX. Du brauchst die Header <sys/socket.h>, <netinet/in.h> und <unistd.h>. Ein Header ist eine Datei mit fertigen Bausteinen. Das funktioniert nur auf Linux und macOS. Unter Windows nutzt C++ stattdessen Winsock. Das Grundmuster ist wie in Python. socket() erzeugt einen Socket. SOCK_STREAM bedeutet TCP. SOCK_DGRAM bedeutet UDP.",
+    "code": "#include <sys/socket.h>\n#include <netinet/in.h>\n\n// TCP-Socket erzeugen (AF_INET = IPv4, SOCK_STREAM = TCP)\nint s = socket(AF_INET, SOCK_STREAM, 0);\nif (s < 0) {\n    // Fehler beim Erzeugen\n}\n\n// UDP wäre: socket(AF_INET, SOCK_DGRAM, 0);"
+   },
+   "vergleich": "Python und C++ nutzen dieselben Socket-Grundlagen. Python versteckt die Details im socket-Modul. C++ spricht direkt mit dem Betriebssystem. Die Idee ist gleich. C++ braucht nur mehr Schreibarbeit.",
+   "merk": "TCP ist zuverlässig und geordnet. UDP ist schnell, aber unzuverlässig. SOCK_STREAM bedeutet TCP. SOCK_DGRAM bedeutet UDP."
+  },
+  {
+   "titel": "Ein TCP-Server und sein Client",
+   "cpp": {
+    "text": "In C++ läuft derselbe Ablauf ab. Nur brauchst du mehr Zeilen. socket() erzeugt den Socket. bind() braucht eine Struktur namens sockaddr_in. Dort stehen Adresse und Port. Dann kommen listen() und accept(). send() und recv() übertragen Bytes. recv() liefert die Anzahl der empfangenen Bytes. Kommt 0 zurück, ist die Verbindung zu Ende. Bei jedem Schritt prüfst du den Rückgabewert (die Antwort der Funktion). Ein Fehler zeigt sich als negativer Wert oder -1.",
+    "code": "#include <sys/socket.h>\n#include <netinet/in.h>\n#include <unistd.h>\n#include <cstring>\n\nint server = socket(AF_INET, SOCK_STREAM, 0);\nsockaddr_in adresse{};\nadresse.sin_family = AF_INET;\nadresse.sin_port = htons(50000);\nadresse.sin_addr.s_addr = INADDR_ANY;\n\nbind(server, (sockaddr*)&adresse, sizeof(adresse));\nlisten(server, 1);\n\nint client = accept(server, nullptr, nullptr);\nchar puffer[1024];\nint n = recv(client, puffer, sizeof(puffer), 0);\nsend(client, puffer, n, 0);\nclose(client);\nclose(server);"
+   },
+   "vergleich": "Der Ablauf ist in beiden Sprachen gleich: socket, bind, listen, accept. Python braucht nur wenige Zeilen. C++ verlangt mehr Details, zum Beispiel sockaddr, htons und die Prüfung des Rückgabewerts.",
+   "merk": "Server: socket → bind → listen → accept. Client: socket → connect. Danach send() und recv()."
+  },
+  {
+   "titel": "HTTP und Webserver",
+   "cpp": {
+    "text": "In C++ baust du den Webserver von Hand mit Sockets. Oder du nutzt eine Bibliothek wie Boost.Asio. Eine Bibliothek ist eine Sammlung fertiger Funktionen. Sie spart dir Arbeit. Das Grundprinzip bleibt gleich. Zuerst liest du die HTTP-Anfrage, also die Request-Line und die Header. Dann schickst du die Statuszeile und die Header zurück. Zum Schluss kommt der Body (der Inhalt). Eine erfolgreiche Antwort beginnt mit der Statuszeile 'HTTP/1.1 200 OK'.",
+    "code": "// Minimaler HTTP-Response (aus einem Socket-Programm):\nconst char* antwort =\n    \"HTTP/1.1 200 OK\\r\\n\"\n    \"Content-Type: text/html; charset=utf-8\\r\\n\"\n    \"Content-Length: 11\\r\\n\"\n    \"Connection: close\\r\\n\"\n    \"\\r\\n\"\n    \"Hallo Welt\";\n\n// send(client, antwort, strlen(antwort), 0);\n// Statuszeile: HTTP/1.1 200 OK"
+   },
+   "vergleich": "Python hat http.server für schnelle Prototypen (erste Test-Versionen). C++ braucht Sockets von Hand oder Bibliotheken wie Boost.Asio. Das HTTP-Format ist in beiden gleich: Statuszeile, Header, Body.",
+   "merk": "Eine HTTP-Antwort besteht aus Statuszeile, Header, Leerzeile und Body. Content-Type mit charset=utf-8 sorgt für Umlaute."
+  }
+ ]
+}

@@ -11,7 +11,8 @@ und **C/C++** (statisch, kompiliert). So versteht man nicht nur *eine* Sprache, 
 > 🎯 Zielgruppe: Programmieranfänger\*innen, Fachinformatiker-Azubis, Quereinsteiger\*innen
 > und alle, die ihren Lernfortschritt strukturiert dokumentieren wollen.
 >
-> 💻 **Lern-App inklusive:** Quiz nach IHK-Standard, Sprachkurs (Python & C++),
+> 💻 **Lern-App inklusive:** Quiz nach IHK-Standard, zwei getrennte Lernkurse
+> (🐍 Python und ⚙️ C++),
 > Prüfungstraining (Wissen & Taktik) und KI-Assistent – im **Terminal**
 > (`tools/quiz.py`) oder im **Browser** (Web-Frontend).
 > Details weiter unten.
@@ -20,14 +21,14 @@ und **C/C++** (statisch, kompiliert). So versteht man nicht nur *eine* Sprache, 
 
 ## Ein Blick in die Lern-App
 
-![Rundgang durch die Web-Lern-App: Start, Quiz, Sprachkurs, Prüfungstraining, Glossar](docs/screenshots/rundgang.gif)
+![Rundgang durch die Web-Lern-App: Start, Quiz, Python-Kurs, Prüfungstraining, Glossar](docs/screenshots/rundgang.gif)
 
 | Start, Ziel & Fortschritt | Quiz nach IHK-Standard | Prüfungstraining |
 |---|---|---|
 | ![Start mit Fortschrittsübersicht](docs/screenshots/start.png) | ![Quiz: Lernfeld wählen, Schwierigkeitsgrad, Notenschlüssel](docs/screenshots/quiz.png) | ![Prüfungstraining: 8 Kapitel Wissen & Taktik](docs/screenshots/pruefung.png) |
 
 Weitere Ansichten liegen in [`docs/screenshots/`](docs/screenshots/):
-Sprachkurs (19 Kapitel, 149 Glossarbegriffe, Übungsaufgaben je Kapitel), Glossar (durchsuchbar, Python/C++ filterbar), JSON-Kurs.
+Python-Kurs ([Übersicht](docs/screenshots/python.png)), C++-Kurs ([Übersicht](docs/screenshots/cpp.png)), [Aufgaben mit Lösungen](docs/screenshots/aufgaben.png), Glossar (149 Begriffe, durchsuchbar), JSON-Kurs.
 Die Bilder sind echte Screenshots der Web-App (1400 × 1000), nicht gestellt.
 
 ## Warum Python UND C++?
@@ -78,12 +79,17 @@ Inhalte nutzen und denselben Fortschritt teilen:
 - Der Fortschritt wird lokal gespeichert (`~/.lernpfad/fortschritt.json`),
   Übersicht mit `python3 tools/quiz.py --status`
 
-### Sprachkurs (Python & C++)
+### Zwei Lernkurse: Python und C++ getrennt
 
-- **19 Kapitel** in einfacher Sprache ([STIL.md](STIL.md): „Einfach erklärt“) – Kapitel 1–4, 7 und 8 enthalten zusätzlich Checklisten, typische Fehler und Übungsaufgaben aus dem Python-Crashkurs (Tag 1)
-- Jedes Kapitel führt **Python und C++ parallel**: Erklärung, Code, Vergleich, Merksatz
-- Mit **Glossar** der wichtigsten Begriffe (`tools/sprachkurs/glossar.json`)
-- Lesestatus wird erfasst und fließt in den Gesamtfortschritt ein
+Seit v1.0.0 hat jede Sprache einen **eigenen Reiter** – kein Hin und Her mehr
+zwischen zwei Sprachen in einem Abschnitt.
+
+- **🐍 Python-Kurs** (`tools/python_kurs/`): 19 Kapitel, 129 Abschnitte. Kapitel 2, 3, 4, 7 und 8 enthalten zusätzlich **60 Pflicht- und 13 Vertiefungsaufgaben** aus dem Python-Crashkurs (Tag 1) – mit Tipp und, wo vorhanden, der Lösung zum Aufklappen.
+- **⚙️ C++-Kurs** (`tools/cpp_kurs/`): 19 Kapitel, 97 Abschnitte. Themen, die nur Python betreffen (f-Strings, Listenmethoden), fehlen hier bewusst statt mit einer Notlösung gefüllt zu werden.
+- Beide Kurse in einfacher Sprache ([STIL.md](STIL.md): „Einfach erklärt“), je Abschnitt Erklärung, Code und Merksatz; Checklisten und Aufgaben als eigene Kästen.
+- Mit **Glossar** der wichtigsten Begriffe (149 Einträge, `tools/sprachkurs/glossar.json`).
+- Lesestatus wird **je Kurs getrennt** erfasst (`python_gelesen` / `cpp_gelesen`) und fließt in den Gesamtfortschritt ein.
+- `tools/sprachkurs/` bleibt die gemeinsame Quelle (zweisprachiger Master), aus der beide Kurse abgeleitet werden.
 
 ### Prüfungstraining (Wissen & Taktik)
 
@@ -121,7 +127,7 @@ Der KI-Assistent läuft **lokal** (Ollama, Modell `qwen3.5:2b`) – keine extern
 - **Sync-Code** (32-stellige Hex-Zeichenfolge) verbindet alle deine Geräte:
   Terminal (`~/.lernpfad/sync_code`), Browser (localStorage) und die Sync-API
 - Der Fortschritt wird **gemerged**: Test-Ergebnisse – das neuere Datum gewinnt,
-  bei Gleichstand die höhere Punktzahl; gelesene Sprachkurs-Kapitel werden vereinigt
+  bei Gleichstand die höhere Punktzahl; gelesene Kapitel beider Kurse werden vereinigt
 - **Konto** (E-Mail + Passwort): Bei der Registrierung wird automatisch ein Sync-Code
   erzeugt und dem Konto zugeordnet – so ist dein Fortschritt auf jedem Gerät
   wiederherstellbar. Einen bestehenden Sync-Code kannst du beim Registrieren angeben (Umzug)
@@ -140,9 +146,11 @@ lernpfad-python-cpp/
 ├── LICENSE                    ← MIT
 ├── docs/screenshots/          ← Screenshots der Web-App + Rundgang-GIF (README)
 ├── tools/
-│   ├── quiz.py                ← Terminal-Lern-App (Quiz + Sprachkurs)
+│   ├── quiz.py                ← Terminal-Lern-App (Quiz + beide Lernkurse)
 │   ├── sync.py                ← Fortschritts-Sync (Sync-Code)
-│   ├── sprachkurs/            ← 18 Sprachkurs-Kapitel + Glossar (JSON)
+│   ├── python_kurs/           ← Python-Kurs: 19 Kapitel + Manifest (JSON)
+│   ├── cpp_kurs/              ← C++-Kurs: 19 Kapitel + Manifest (JSON)
+│   ├── sprachkurs/            ← gemeinsame Quelle beider Kurse + Glossar
 │   ├── jsonkurs/              ← JSON-Kurs (Kapitel + Manifest)
 │   ├── pruefungstraining/     ← Prüfungstraining: 8 Kapitel + Manifest
 │   └── README.md              ← Benutzung von quiz.py

@@ -1,0 +1,43 @@
+{
+ "id": "dateien_module",
+ "titel": "Kapitel 16: Dateien, Module und erste eigene Projekte",
+ "einleitung": "Jetzt wird es richtig praktisch. Echte Programme lesen und schreiben Dateien. Sie nutzen Module – das sind fertige Bausteine aus Code. Und sie wachsen zu kleinen Projekten. Am Ende baust du dein erstes eigenes Skript. Ein Skript ist ein kleines Programm. Du schaffst das – in Python und in C++.",
+ "abschnitte": [
+  {
+   "titel": "Dateien lesen",
+   "cpp": {
+    "text": "In C++ liest du Dateien mit std::ifstream. Das ist ein Eingabe-Strom aus der Datei. Stell dir einen Wasserhahn vor: C++ zapft Zeichen für Zeichen an. Du brauchst die Bibliothek <fstream>. Nach dem Öffnen prüfst du, ob es geklappt hat. Fehlt die Datei, benimmt sich ifstream wie false. Zeilen liest du mit std::getline. Am Dateiende liefert der Strom false. Perfekt für die while-Schleife: Sie läuft bis zum Ende. Zahlen liest du mit >>. C++ wandelt sie automatisch um.",
+    "code": "#include <fstream>\n#include <iostream>\n#include <string>\n\nstd::ifstream datei(\"daten.txt\");\nif (!datei) {                  // Öffnen fehlgeschlagen?\n    std::cerr << \"Datei fehlt!\" << std::endl;\n    return 1;\n}\n\nstd::string zeile;\nwhile (std::getline(datei, zeile)) {  // bis Dateiende\n    std::cout << zeile << std::endl;\n}\n\n// Zahlen lesen:\nint zahl;\nwhile (datei >> zahl) {\n    std::cout << zahl * 2 << std::endl;\n}\n// datei schließt sich selbst (RAII)!"
+   },
+   "vergleich": "Python: with open() mit read oder readlines. Die Datei schließt sich automatisch. C++: ifstream mit getline. Prüfe mit if (!datei). RAII schließt die Datei selbst. RAII heißt: Das Objekt räumt von allein auf.",
+   "merk": "Immer prüfen, ob die Datei da ist. Python: try/except FileNotFoundError. C++: if (!datei)."
+  },
+  {
+   "titel": "Dateien schreiben",
+   "cpp": {
+    "text": "Zum Schreiben nutzt du std::ofstream. Das ist der Ausgabe-Strom für Dateien. ofstream datei(\"ausgabe.txt\") überschreibt die Datei. Mit std::ios::app hängst du an. Der Operator << ist der Schreib-Pfeil. Er funktioniert wie bei std::cout – du kannst alles schreiben. Prüfe auch hier nach dem Öffnen: if (!datei). Existiert der Ordner nicht, schlägt das Schreiben fehl. Am Ende: close() – oder RAII macht es für dich.",
+    "code": "#include <fstream>\n#include <iostream>\n\n// Schreiben (überschreibt!)\nstd::ofstream datei(\"ausgabe.txt\");\nif (!datei) {\n    std::cerr << \"Kann nicht schreiben!\" << std::endl;\n    return 1;\n}\ndatei << \"Zeile 1\" << std::endl;\ndatei << \"Summe: \" << (3 + 4) << std::endl;\ndatei.close();\n\n// Anhängen:\nstd::ofstream log(\"log.txt\", std::ios::app);\nlog << \"Neuer Eintrag\" << std::endl;\n// RAII: log schließt sich am Ende des Blocks"
+   },
+   "vergleich": "Python: \"w\" überschreibt, \"a\" hängt an. C++: ofstream überschreibt, mit ios::app hängt es an. Beide Sprachen: Nach dem Öffnen prüfen!",
+   "merk": "\"w\" und ofstream überschreiben sofort. Bei wichtigen Daten: erst sichern!"
+  },
+  {
+   "titel": "Module und Imports – Code teilen",
+   "cpp": {
+    "text": "In C++ teilst du Code über Header-Dateien. Eine .h-Datei ist wie ein Inhaltsverzeichnis. Sie enthält die Deklarationen – die Prototypen. Eine Deklaration sagt: Diese Funktion gibt es. Die .cpp-Datei enthält die Definition. Die Definition zeigt, wie die Funktion arbeitet. #include \"mein_modul.h\" bindet die Datei ein. Anführungszeichen: eigene Datei. <...>: Standard-Bibliothek. #pragma once verhindert doppeltes Einbinden. Es ist wie ein Schild: Schon drin gewesen! So bleibt das Programm ordentlich – keine Monster-Datei.",
+    "code": "// mein_modul.h\n#pragma once            // nur einmal einbinden\nint verdopple(int x);   // Deklaration (Prototyp)\n\n// mein_modul.cpp\n#include \"mein_modul.h\"\nint verdopple(int x) {  // Definition\n    return x * 2;\n}\n\n// main.cpp\n#include <iostream>\n#include \"mein_modul.h\"\n\nint main() {\n    std::cout << verdopple(5);   // 10\n    return 0;\n}\n// Kompilieren: g++ main.cpp mein_modul.cpp -o programm"
+   },
+   "vergleich": "Python: import Modul oder from Modul import name. Dazu der __name__-Guard. C++: #include mit Header-Dateien und #pragma once. Deklaration und Definition sind getrennt.",
+   "merk": "Python: der __name__-Guard. C++: #pragma once und Prototypen im Header."
+  },
+  {
+   "titel": "Dein erstes eigenes Projekt – der Fahrplan",
+   "cpp": {
+    "text": "In C++ ist der Fahrplan derselbe. Dazu kommt der Build-Schritt. Build heißt: Code in ein Programm übersetzen. 1. Verstehe das Problem. 2. Plane die Struktur: main, Funktionen, Header. 3. Schreibe den Code. 4. Übersetze ihn mit -Wall -Wextra. Keine Warnungen? Fertig! 5. Teste das Programm. Ein gutes erstes Projekt: ein Notiz-Programm mit Dateien. Teile es auf: main.cpp, notizen.h, notizen.cpp. So übst du Header, Funktionen, Datei-I/O und den ganzen Build-Prozess. Datei-I/O heißt: Dateien lesen und schreiben.",
+    "code": "// main.cpp – dein erstes kleines Projekt\n#include <iostream>\n#include <fstream>\n\nvoid zeige_notizen() {\n    std::ifstream datei(\"notizen.txt\");\n    if (!datei) { std::cout << \"(noch keine Notizen)\"; return; }\n    std::string zeile;\n    while (std::getline(datei, zeile))\n        std::cout << zeile << std::endl;\n}\n\nint main(int argc, char* argv[]) {\n    if (argc > 1) {\n        std::ofstream datei(\"notizen.txt\", std::ios::app);\n        datei << argv[1] << std::endl;\n        std::cout << \"Gespeichert!\" << std::endl;\n    } else {\n        zeige_notizen();\n    }\n    return 0;\n}\n// g++ -std=c++17 -Wall -Wextra main.cpp -o notiz && ./notiz"
+   },
+   "vergleich": "Der Fahrplan ist in beiden Sprachen gleich: verstehen, planen, bauen, testen. Python: python3 notiz.py. C++: g++ -Wall -Wextra und dann ausführen.",
+   "merk": "Erstes Projekt: eine Notiz-App mit Dateien. Sie deckt Lesen, Schreiben, Funktionen, Fehler und den Build ab."
+  }
+ ]
+}

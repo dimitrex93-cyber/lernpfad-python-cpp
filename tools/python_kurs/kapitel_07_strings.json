@@ -1,0 +1,210 @@
+{
+ "id": "strings",
+ "titel": "Kapitel 7: Strings – Arbeit mit Text",
+ "einleitung": "Text ist überall: Namen, Dateien, was der Benutzer eintippt. Ein String (eine Zeichenkette) ist Text im Programm. Hier lernst du, wie Strings in Python und C++ funktionieren. Du lernst auch, wie du Text bearbeitest, durchsuchst und zusammenbaust.",
+ "abschnitte": [
+  {
+   "titel": "Was ist ein String?",
+   "python": {
+    "text": "Ein String (der Typ heißt str) ist eine Kette aus Zeichen. Denk an Perlen auf einer Schnur: Jede Perle ist ein Zeichen. Python-Strings sind unveränderlich (immutable). Das heißt: Du kannst einen bestehenden String nicht ändern. Jede Bearbeitung erzeugt einen neuen String. Strings stehen in einfachen ('...') oder doppelten (\"...\") Anführungszeichen. Unicode ist eingebaut (ein Zeichen-Standard für viele Sprachen und Symbole). Deshalb funktionieren Umlaute und Emojis direkt.",
+    "code": "name = \"Lena\"\nprint(name.upper())   # LENA\nprint(name[1:3])      # en  (Slicing)\nprint(len(name))      # 4\n\ns = \"Hallo \" + \"Welt\"   # Verketten\nprint(s * 3)             # Hallo WeltHallo WeltHallo Welt"
+   },
+   "vergleich": "Python: str ist unveränderlich, Unicode ist eingebaut. C++: std::string ist veränderlich. Er braucht #include <string> und ist etwas anderes als char (ein einzelnes Zeichen).",
+   "merk": "Python-Strings sind unveränderlich, C++-std::string ist veränderlich."
+  },
+  {
+   "titel": "Strings bearbeiten und durchsuchen",
+   "python": {
+    "text": "Python hat viele String-Methoden. Eine Methode ist ein Werkzeug, das am String hängt. .upper() macht alles groß, .lower() macht alles klein. .strip() entfernt Leerzeichen am Anfang und am Ende. .split() zerlegt den String in eine Liste (eine Sammlung von Werten). .replace(alt, neu) ersetzt Text. Mit .find() oder mit in suchst du nach Teilstrings (Textstücken). Strings sind unveränderlich. Weißt du, was die Methoden dann zurückgeben? Genau: einen neuen String. Das Original bleibt unberührt.",
+    "code": "text = \"  Hallo Welt  \"\nprint(text.strip())          # \"Hallo Welt\"\nprint(text.split())          # ['Hallo', 'Welt']\nprint(text.replace(\"Welt\", \"Python\"))\nprint(\"Welt\" in text)        # True\nprint(text.find(\"Welt\"))     # 8 (Index)\nprint(text.lower())          # hallo welt"
+   },
+   "vergleich": "Python: strip, split und replace arbeiten direkt. C++: find gibt npos zurück, wenn nichts gefunden wurde (nicht -1). Einzelne Zeichen sind chars. Mit += veränderst du den String direkt.",
+   "merk": "Findet die Suche nichts, sagt Python False und C++ npos."
+  },
+  {
+   "titel": "Strings formatieren",
+   "python": {
+    "text": "Python kann Text und Zahlen zusammensetzen. Die moderne Art nutzt f-Strings. Das f steht für format (formatieren). Du schreibst ein f vor den String. Werte kommen in geschweifte Klammern {}. Das ist einfach, lesbar und schnell. Du kannst sogar Rechnungen einbauen: f\"{a} + {b} = {a + b}\". Für Zahlen gibt es Formatangaben. Zum Beispiel :.2f für zwei Nachkommastellen.",
+    "code": "name = \"Anna\"\nalter = 25\nprint(f\"{name} ist {alter} Jahre alt\")\nprint(f\"{name} ist {alter * 12} Monate alt\")\n\npreis = 19.995\nprint(f\"{preis:.2f} €\")     # 20.00 €\nprint(f\"{alter:04d}\")       # 0025"
+   },
+   "vergleich": "Python: f-Strings sind der Goldstandard (die beste Methode). C++: cout << Verkettung oder std::format (C++20). std::to_string macht aus Zahlen Text. Es ist das Gegenstück zu str().",
+   "merk": "Python formatiert mit f\"{wert}\", C++ mit std::to_string() oder std::format."
+  },
+  {
+   "titel": "Text in Anführungszeichen",
+   "python": {
+    "text": "Ein String (Zeichenkette) ist eine Folge von Zeichen, die in Anführungszeichen steht. Die Anführungszeichen gehören nicht zum Wert. Sie sagen Python nur: Was dazwischen steht, ist Text und kein Befehl. Einfache und doppelte Anführungszeichen sind gleichwertig. Es gibt keinen Unterschied in der Bedeutung, nur einen in der Bequemlichkeit. Interessant wird die Wahl erst, wenn im Text selbst ein Anführungszeichen vorkommt, zum Beispiel ein Apostroph. Dann endet der String genau dort, wo Python das nächste gleiche Zeichen sieht. Der Rest der Zeile ergibt keinen Sinn mehr. Python meldet SyntaxError: unterminated string literal. Das passiert, bevor das Programm läuft. Die Lösung ist einfach: außen die andere Sorte verwenden.",
+    "code": "name = 'ada lovelace'\nanderer = \"grace hopper\"\nprint(name)\nprint(anderer)\n\n# Falsch: 'Ich habe's geschafft'  -> SyntaxError\nsatz = \"Ich habe's geschafft\"\nprint(satz)\nprint('Sie sagte: \"Guten Morgen\"')"
+   },
+   "vergleich": "Python: einfache und doppelte Anführungszeichen sind gleichwertig, außen steht die Sorte, die im Text fehlt. C++: Strings stehen immer in doppelten Anführungszeichen, einfache Anführungszeichen sind ein char.",
+   "merk": "Außen steht die Sorte Anführungszeichen, die im Text selbst nicht vorkommt."
+  },
+  {
+   "titel": "Escape-Sequenzen: Zeichen, die man nicht tippen kann",
+   "python": {
+    "text": "Ein Zeilenumbruch und ein Tabulator sind Zeichen wie jedes andere. Im Quelltext lassen sie sich aber nicht hinschreiben, denn ein echter Umbruch würde den String beenden. Dafür gibt es die Escape-Sequenzen. Ein Rückstrich und ein Buchstabe stehen zusammen für ein Zeichen. Die Schreibweise \\n ergibt einen Zeilenumbruch. Die Schreibweise \\t ergibt einen Tabulator. Mit \\\" schreibst du ein doppeltes Anführungszeichen, ohne die Sorte außen zu wechseln. Im Quelltext stehen zwei Zeichen, in der Ausgabe steht eines. Aus einer Zeile im Code werden so vier Zeilen auf dem Bildschirm.",
+    "code": "print(\"Sprachen:\\n\\tPython\\n\\tJava\\n\\tC\")\nprint(\"Name\\tAlter\")\nprint(\"Ada\\t36\")"
+   },
+   "vergleich": "Die Escape-Sequenzen sind in beiden Sprachen gleich: \\n für den Zeilenumbruch, \\t für den Tabulator.",
+   "merk": "Escape-Sequenzen sind unsichtbare Zeichen mitten im Text, keine Befehle."
+  },
+  {
+   "titel": "Methoden: Werkzeuge, die am Text hängen",
+   "python": {
+    "text": "Jeder String bringt eine Sammlung eingebauter Werkzeuge mit. Sie hängen direkt am Text und werden mit einem Punkt aufgerufen. Eine Methode ist eine Funktion, die zu einer bestimmten Art von Wert gehört. Sie steht hinter dem Wert, mit einem Punkt dazwischen und Klammern dahinter: name.upper(). Die Klammern gehören dazu, auch wenn nichts darin steht. title() beginnt jedes Wort groß, upper() schreibt alles groß, lower() alles klein. strip() entfernt Leerzeichen am Anfang und am Ende. Nach drei Umformungen ist der Name immer noch klein geschrieben. Die Methoden haben den String nicht angefasst. Das liegt daran, dass ein String unveränderbar ist. Eine Methode kann also nur einen neuen String erzeugen und zurückgeben. Wer ihn behalten will, muss ihn zuweisen: name = name.title(). Diese Zeile liest man von rechts nach links.",
+    "code": "name = 'ada lovelace'\nprint(name.title())\nprint(name.upper())\nprint(name.lower())\nprint(name)      # immer noch klein!\n\nname = name.title()\nprint(name)      # Ada Lovelace\n\neingabe = \"   python   \"\nprint(\"[\" + eingabe + \"]\")\nprint(\"[\" + eingabe.strip() + \"]\")"
+   },
+   "vergleich": "Python: viele fertige Methoden wie title, upper, lower und strip. C++: nur wenige, zum Beispiel length. Groß- und Kleinschreibung muss man dort selbst bauen.",
+   "merk": "String-Methoden ändern nichts. Sie geben einen neuen Wert zurück, den man zuweisen muss."
+  },
+  {
+   "titel": "Funktion oder Methode?",
+   "python": {
+    "text": "Neben den Methoden gibt es eingebaute Funktionen. Die wichtigste für Strings ist len(). Sie nennt die Anzahl der Zeichen. Der Name steht für length, also Länge. Bei einem Namen aus zwei Wörtern zählt das Leerzeichen mit. Aus zwölf Zeichen werden nicht elf, denn gezählt werden Zeichen und nicht Buchstaben. Der Unterschied ist rein äußerlich leicht zu erkennen. Eine Funktion steht vor dem Wert und nimmt ihn in die Klammer: len(name). Eine Methode steht hinter dem Wert und hängt mit einem Punkt an ihm: name.upper(). Eine Funktion gilt außerdem für viele Typen, eine Methode nur für ihren eigenen Typ. name.len() und upper(name) gibt es nicht. Python meldet dann AttributeError oder NameError.",
+    "code": "print(len(\"Bundeswehr\"))     # 10\nprint(len(\"ada lovelace\"))   # 12, mit Leerzeichen\nprint(len(\"\"))               # 0\n\nname = \"ada\"\nprint(len(name))             # Funktion\nprint(name.upper())          # Methode"
+   },
+   "vergleich": "Python: len(name) ist eine Funktion, name.upper() eine Methode. C++: length() ist eine Methode, eine Funktion wie len() gibt es nicht.",
+   "merk": "Die Funktion steht vor dem Wert, die Methode hinter dem Punkt."
+  },
+  {
+   "titel": "Zwei Texte zusammenfügen mit Plus",
+   "python": {
+    "text": "Strings lassen sich mit dem Pluszeichen aneinanderhängen. Der Fachbegriff dafür ist Verketten. Dabei kommt kein Zeichen von selbst dazu. Vorname plus Nachname ergibt MarieCurie. Wer ein Leerzeichen will, muss es als eigenen String einbauen. Python kann nicht wissen, ob zwischen zwei Teilen ein Leerzeichen, ein Komma oder gar nichts hingehört. Links und rechts vom Pluszeichen muss ein String stehen. Eine Zahl dazwischen ergibt einen TypeError. Ein zweites Rechenzeichen funktioniert bei Strings auch: Text mal Zahl wiederholt den Text. Eine Linie aus dreißig Strichen ist damit schnell geschrieben. Sobald ein ganzer Satz mit drei Werten entsteht, wird die Zeile voller Anführungszeichen und Pluszeichen. Ein f-String ist dann der übliche Weg.",
+    "code": "vorname = \"Marie\"\nnachname = \"Curie\"\nvoller_name = vorname + \" \" + nachname\nprint(voller_name)\nprint(vorname + nachname)\n\nprint(\"-\" * 30)\nprint(\"ab\" * 3)"
+   },
+   "vergleich": "Python: Plus verkettet, Stern wiederholt den Text. C++: Plus verkettet std::string, für die Wiederholung gibt es keinen Operator.",
+   "merk": "Beim Verketten kommt kein Leerzeichen von selbst dazu."
+  },
+  {
+   "titel": "f-Strings: das f ist der Schalter",
+   "python": {
+    "text": "Ein f-String ist ein String mit einem f davor. Dieses f schaltet die geschweiften Klammern scharf. Was darin steht, wird nicht als Text ausgegeben, sondern ausgerechnet und das Ergebnis eingesetzt. In den Klammern darf jeder Ausdruck stehen, also alles, was einen Wert ergibt. Eine Variable, eine Rechnung, ein Methodenaufruf, ein Funktionsaufruf wie len(). Das Leerzeichen zwischen zwei Klammern steht einfach im Text, genau da, wo es hingehört. Man sieht beim Lesen sofort, wie die Ausgabe später aussieht. Wichtig ist, was dabei nicht passiert: Der f-String gibt nur eine schön aussehende Kopie aus. Die Variable selbst bleibt unverändert.",
+    "code": "vorname = \"ada\"\nnachname = \"lovelace\"\nvoller_name = f\"{vorname} {nachname}\"\nprint(voller_name)\n\nalter = 36\nprint(f\"{vorname.title()} ist {alter} Jahre alt.\")\nprint(f\"In 10 Jahren: {alter + 10}\")\nprint(f\"Der Name hat {len(vorname)} Buchstaben.\")\nprint(vorname)      # immer noch klein"
+   },
+   "vergleich": "Python: das f schaltet die Klammern scharf, Zahlen werden automatisch Text. C++: std::to_string macht aus der Zahl Text, danach verkettet das Pluszeichen.",
+   "merk": "Das f ist der Schalter, die geschweiften Klammern sind die Fenster."
+  },
+  {
+   "titel": "Die Formatangabe nach dem Doppelpunkt",
+   "python": {
+    "text": "Hinter dem Wert darf in der Klammer ein Doppelpunkt stehen. Danach folgt die Formatangabe. Sie sagt, wie der Wert aussehen soll, nicht was er ist. Die wichtigste im Kursalltag ist .2f: zwei Nachkommastellen, als Kommazahl ausgegeben. Ohne Angabe zeigt Python die Zahl so kurz wie möglich. Aus 4.5 wird dann nicht 4.50, und für einen Preis sieht das falsch aus. Mit .2f erzwingt Python genau zwei Stellen, notfalls mit einer angehängten Null. Gerundet wird nur die Anzeige. Der Wert in der Variablen bleibt, wie er ist. Für diesen Kurs genügt .2f.",
+    "code": "preis = 4.5\nprint(f\"Das kostet {preis} Euro.\")\nprint(f\"Das kostet {preis:.2f} Euro.\")\nprint(f\"Ein Drittel sind {1 / 3:.2f}.\")\nprint(preis)      # 4.5, unverändert"
+   },
+   "merk": "Nach dem Doppelpunkt steht, wie der Wert aussehen soll.",
+   "checkliste": [
+    "Doppelpunkt setzen, dann die Angabe: {betrag:.2f}",
+    ".2f heißt zwei Nachkommastellen, notfalls mit einer Null.",
+    "Ohne Angabe fällt die Null weg: 4.5 statt 4.50.",
+    "Gerundet wird nur die Anzeige, der Wert bleibt gleich.",
+    "Für diesen Kurs genügt .2f."
+   ]
+  },
+  {
+   "titel": "Der stille Fehler ohne Fehlermeldung",
+   "python": {
+    "text": "Fehlt das f, ist der String ein ganz gewöhnlicher String. Die geschweiften Klammern sind dann normale Zeichen und werden wörtlich ausgegeben. Das Programm läuft durch, nichts bricht ab. Nur die Ausgabe ist falsch. Solche Fehler sind unangenehm, weil niemand auf sie hinweist. Geschweifte Klammern in der Ausgabe bedeuten deshalb fast immer: Das f fehlt. Der zweite stille Fehler ist die vergessene Zuweisung. name.upper() liefert einen neuen String, aber der alte Name bleibt stehen. Erst die Zuweisung name = name.upper() macht das Ergebnis dauerhaft. Beides sieht im Quelltext vollständig aus und beides meldet sich nicht.",
+    "code": "vorname = \"ada\"\nprint(\"Hallo, {vorname}!\")\nprint(f\"Hallo, {vorname}!\")\n\nname = \"ada lovelace\"\nname.title()\nprint(name)          # immer noch klein\n\nname = name.title()\nprint(name)          # Ada Lovelace"
+   },
+   "merk": "Fehlendes f und fehlende Zuweisung melden sich nicht. Nur die Ausgabe ist falsch.",
+   "checkliste": [
+    "Geschweifte Klammern in der Ausgabe: das f fehlt.",
+    "Kein Absturz, keine Meldung, nur falscher Text.",
+    "Eine Methode ohne Zuweisung ändert die Variable nicht.",
+    "Richtig ist name = name.upper().",
+    "Nach jeder Umformung prüfen: Steht der neue Wert in der Variablen?"
+   ]
+  },
+  {
+   "titel": "Typische String-Fehler",
+   "python": {
+    "text": "Diese sechs Fehler kommen immer wieder. Zwei davon melden sich gar nicht, einer erst beim Start des Programms, zwei mit einer Fehlermeldung im Betrieb. Lies die Liste einmal durch. Beim nächsten Fehler fällt dir die Ursache dann schneller ein.",
+    "code": "name = \"ada lovelace\"\nprint(name.title())      # sofort ausgeben: geht\nname = name.title()      # behalten: nur mit Zuweisung\nprint(name)"
+   },
+   "merk": "Erst die Ausgabe prüfen, dann den Code. Die stillen Fehler sieht man nur am Text.",
+   "checkliste": [
+    "Das f vergessen: Die Platzhalter stehen wörtlich in der Ausgabe, ohne Fehlermeldung. Abhilfe: f direkt vor das Anführungszeichen.",
+    "Ergebnis einer Methode nicht zuweisen: Der alte Wert bleibt stehen. Abhilfe: name = name.title().",
+    "Anführungszeichen mischen: Ein Apostroph beendet den String, es kommt SyntaxError: unterminated string literal. Abhilfe: außen die andere Sorte.",
+    "Leerzeichen beim Verketten vergessen: Aus Marie und Curie wird MarieCurie. Abhilfe: den String mit dem Leerzeichen selbst einbauen.",
+    "Funktion und Methode verwechseln: name.len() und upper(name) gibt es nicht, Python meldet AttributeError oder NameError. Abhilfe: len(name) und name.upper().",
+    "len als Buchstabenzählung lesen: Leerzeichen und Satzzeichen zählen mit. len zählt Zeichen."
+   ]
+  },
+  {
+   "titel": "Übungen",
+   "python": {
+    "text": "Hier sind sieben Übungen aus dem Kurs. Schreibe jede in eine eigene Datei und führe sie aus. Vergleiche erst danach mit der Musterlösung unten. Die Musterlösung zeigt die Übungen eins bis sieben in einem Programm.",
+    "code": "# Musterlösung zu den Übungen dieses Kapitels\n\n# Übung 1: außen die Sorte, die im Text fehlt\nprint(\"Ich habe's geschafft\")\nprint('Sie sagte: \"Guten Morgen\"')\n\n# Übung 2: vier Zeilen aus einem print\nprint(\"Ausrüstung:\\n\\tZelt\\n\\tSchlafsack\\n\\tLampe\")\n\n# Übung 3 und 7: Methoden liefern neue Werte\nname = \"jens hartmann\"\nprint(name.title())\nprint(name.upper())\nprint(name.lower())\nprint(name)              # unverändert\n\nname = name.title()      # Ergebnis zuweisen\nprint(name)              # Jens Hartmann\n\n# Übung 5: Trennlinie und Verketten\nprint(\"-\" * 30)\nprint(\"Logistik\" + \" \" + \"Munster\")\nprint(\"-\" * 30)\n\n# Übung 6: f-String statt Plus\nvorname = \"Jens\"\nnachname = \"Hartmann\"\nsatz = f\"Bewerbung von {vorname} {nachname}\"\nprint(satz)\n\n# Übung 7: Apostroph im f-String\nprint(f\"Das ist {vorname}' Bewerbung\")\n\n# Formatangabe: zwei Nachkommastellen\npreis = 4.5\nprint(f\"Das kostet {preis:.2f} Euro.\")"
+   }
+  },
+  {
+   "titel": "Pflichtaufgaben",
+   "python": {
+    "text": "Diese Pflichtaufgaben stammen aus dem Kursnotizbuch und gehören zum Thema dieses Kapitels. Schreibe jede Aufgabe in eine eigene Datei und führe sie aus. Wo eine Lösung vorliegt, kannst du sie nach dem eigenen Versuch aufklappen – erst selbst probieren, dann vergleichen."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Apostroph und Anführungszeichen im Text",
+     "aufgabe": "Gib zwei Sätze aus. Im ersten kommt ein Apostroph mitten im Wort vor, im zweiten steht ein Teil des Satzes in doppelten Anführungszeichen. Löse beides allein über die Wahl der äußeren Anführungszeichen, ohne Rückstriche. Fertig, wenn: beide Sätze vollständig und unverändert erscheinen und kein SyntaxError kommt.",
+     "tipp": "Einfache und doppelte Anführungszeichen sind gleichwertig. Außen gehört die Sorte, die im Text selbst nicht vorkommt."
+    },
+    {
+     "titel": "Vier Zeilen aus einem einzigen Aufruf",
+     "aufgabe": "Gib eine Überschrift und darunter drei eingerückte Ausrüstungsgegenstände aus — insgesamt vier Zeilen, aber mit genau einem print()-Aufruf. Die Einrückung soll kein getipptes Leerzeichen sein, sondern ein Tabulator. Fertig, wenn: vier Zeilen erscheinen, von denen die unteren drei eingerückt sind, und im Quelltext nur ein einziges print steht.",
+     "tipp": "Zeilenumbruch und Tabulator lassen sich im Quelltext nicht hinschreiben, dafür gibt es die Escape-Sequenzen: ein Rückstrich und ein Buchstabe stehen gemeinsam für ein Zeichen."
+    },
+    {
+     "titel": "Drei Schreibweisen desselben Namens",
+     "aufgabe": "Lege einen klein geschriebenen Namen aus Vor- und Nachname in einer Variablen ab. Gib ihn danach in drei Schreibweisen aus — jedes Wort groß begonnen, alles groß und alles klein — und gib zum Schluss die Variable selbst noch einmal aus. Fertig, wenn: vier Zeilen erscheinen und die letzte wieder klein geschrieben ist wie die ursprüngliche Zuweisung.",
+     "tipp": "Die drei Werkzeuge hängen mit einem Punkt am Text und heißen title(), upper() und lower(). Die Klammern gehören dazu, auch wenn nichts darin steht."
+    },
+    {
+     "titel": "Zeichen zählen",
+     "aufgabe": "Lass dir die Länge von drei Texten nennen: einem Wort ohne Leerzeichen, einem Namen aus zwei Wörtern und einem Text ohne jeden Inhalt. Überlege vorher, ob das Leerzeichen im zweiten Text mitzählt. Fertig, wenn: die drei Zahlen 10, 14 und 0 untereinander stehen.",
+     "tipp": "Die Funktion steht vor dem Wert und nimmt ihn in die Klammer — anders als eine Methode, die hinter dem Wert steht."
+    },
+    {
+     "titel": "Trennlinie und zusammengesetzte Zeile",
+     "aufgabe": "Gib eine Zeile aus 30 Bindestrichen aus, darunter eine Zeile, in der zwei Variablen mit einem Leerzeichen dazwischen zusammengehängt sind, und darunter noch einmal dieselbe Trennlinie. Die Bindestriche sollen nicht einzeln getippt werden. Fertig, wenn: drei Zeilen erscheinen, die erste und die dritte identisch lang, und in der Mitte Logistik Munster steht.",
+     "tipp": "Text mal Zahl wiederholt den Text. Beim Zusammenhängen mit + kommt kein Zeichen von selbst dazu — das Leerzeichen ist ein eigener Text."
+    },
+    {
+     "titel": "Der erste f-String",
+     "aufgabe": "Lege zwei Variablen für Vor- und Nachnamen an. Baue daraus in einer dritten Variablen einen vollständigen Satz zusammen, ohne ein einziges Pluszeichen zu benutzen, und gib diese dritte Variable aus. Fertig, wenn: die Zeile Bewerbung von Jens Hartmann erscheint und im Quelltext kein + vorkommt.",
+     "tipp": "Ein f direkt vor dem öffnenden Anführungszeichen schaltet die geschweiften Klammern scharf. Was darin steht, wird ausgewertet und eingesetzt."
+    },
+    {
+     "titel": "Warum sich nichts ändert",
+     "aufgabe": "Die Vorgabe soll einen klein geschriebenen Namen in ordentlicher Schreibweise ausgeben und tut es nicht. Es kommt keine Fehlermeldung, die Ausgabe ist nur falsch. Finde die Ursache und repariere die Zeile. Fertig, wenn: Jens Hartmann ausgegeben wird, mit großen Anfangsbuchstaben in beiden Wörtern.",
+     "tipp": "Die Methode liefert ein Ergebnis zurück, anstatt den Text zu ändern. Ein Ergebnis, das niemand auffängt, ist verloren.",
+     "loesung": "name = \"jens hartmann\"\nname.title()\nprint(name)"
+    },
+    {
+     "titel": "Leerzeichen am Rand entfernen",
+     "aufgabe": "Eine Angabe ist mit überflüssigen Leerzeichen am Anfang und am Ende angekommen. Gib sie zuerst unverändert aus, dann bereinigt — jeweils in eckige Klammern eingefasst, damit die Leerzeichen sichtbar werden. Das bereinigte Ergebnis soll in derselben Variablen stehen. Fertig, wenn: zwei Zeilen erscheinen: oben [ munster ] und darunter [munster].",
+     "tipp": "Die Methode heißt strip(). Wie bei title() gilt: Sie ändert den Text nicht, sie gibt einen neuen zurück — der muss aufgefangen werden."
+    }
+   ]
+  },
+  {
+   "titel": "Vertiefungsaufgaben",
+   "python": {
+    "text": "Diese Vertiefungsaufgaben stammen aus dem Kursnotizbuch und gehören zum Thema dieses Kapitels. Schreibe jede Aufgabe in eine eigene Datei und führe sie aus. Wo eine Lösung vorliegt, kannst du sie nach dem eigenen Versuch aufklappen – erst selbst probieren, dann vergleichen."
+   },
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Vorhersage — was in den Fenstern passiert",
+     "aufgabe": "Unten steht ein Programm mit sechs Ausgabezeilen, von denen eine absichtlich das f vermissen lässt. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für alle sechs Zeilen. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Achte besonders auf die letzte Zeile. Fertig, wenn: nach deiner Vorhersagezeile sechs Zeilen folgen, die zweite davon geschweifte Klammern enthält und die letzte wieder klein geschrieben ist.",
+     "tipp": "In den geschweiften Klammern darf alles stehen, was einen Wert ergibt — eine Rechnung, ein Methodenaufruf, ein Funktionsaufruf. Und für die letzte Zeile gilt wieder: Eine Methode im f-String ändert die Variable nicht.",
+     "loesung": "vorname = \"jens\"\nalter = 41\nprint(\"Hallo, {vorname}!\")\nprint(f\"Hallo, {vorname}!\")\nprint(f\"{vorname.title()} ist {alter} Jahre alt.\")\nprint(f\"In 10 Jahren: {alter + 10}\")\nprint(f\"Der Name hat {len(vorname)} Buchstaben.\")\nprint(vorname)"
+    },
+    {
+     "titel": "Drei Fehler in sechs Zeilen",
+     "aufgabe": "Die Vorgabe soll zwei Zeilen ausgeben: Bewerbung von Jens Hartmann und Das ist Jens' Bewerbung. Sie enthält drei verschiedene Fehler aus diesem Thema — einen, der das Programm gar nicht erst starten lässt, und zwei, die stillschweigend das Falsche tun. Repariere alle drei, und zwar einen nach dem anderen mit jeweils einem Lauf dazwischen. Fertig, wenn: genau die beiden genannten Zeilen erscheinen, mit großen Anfangsbuchstaben in beiden Namen und mit dem Apostroph hinter Jens.",
+     "tipp": "Fang mit dem Fehler an, der die Ausführung verhindert — er steht in der letzten Zeile und hat mit der Sorte der äußeren Anführungszeichen zu tun. Danach bleiben zwei stille Fehler: einer in den beiden Zeilen mit title(), einer am öffnenden Anführungszeichen der vorletzten Zeile.",
+     "loesung": "vorname = 'jens'\nnachname = 'hartmann'\nvorname.title()\nnachname.title()\nprint(\"Bewerbung von {vorname} {nachname}\")\nprint('Das ist Jens' Bewerbung')"
+    }
+   ]
+  }
+ ]
+}

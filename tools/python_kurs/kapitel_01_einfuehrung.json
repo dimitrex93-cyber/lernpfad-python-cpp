@@ -1,0 +1,89 @@
+{
+ "id": "einfuehrung",
+ "titel": "Kapitel 1: Wie Computer und Programme arbeiten",
+ "einleitung": "Bevor wir programmieren, schauen wir uns an, woraus ein Computer besteht und was ein Programm ist. Alles wird ganz einfach erklärt – so verstehst du die Grundlagen, auf denen alles Weitere aufbaut.",
+ "abschnitte": [
+  {
+   "titel": "Woraus besteht ein Computer?",
+   "python": {
+    "text": "Stell dir einen Computer wie ein Büro mit drei wichtigen Möbeln vor. Die CPU (der Prozessor – das Gehirn) ist der Chef: Er rechnet, vergleicht und entscheidet. Alles, was im Computer passiert, macht der Chef. Der RAM (der Arbeitsspeicher) ist der Schreibtisch: Dort liegen die Sachen, mit denen gerade gearbeitet wird. Aber Achtung: Fällt der Strom aus, fegt die Putzkolonne den Schreibtisch leer – alles ist weg. Die SSD (die Festplatte) ist der Aktenschrank: Dort bleibt alles dauerhaft liegen, auch wenn der Computer aus ist. Ein Programm ist eine lange Liste von Anweisungen für den Chef. Der Chef versteht aber nur seine eigene Geheimsprache aus Nullen und Einsen. Damit Menschen die Anweisungen schreiben können, gibt es Programmiersprachen wie Python und C++. Sie übersetzen unsere Worte in die Sprache des Chefs.",
+    "code": "# Ein Programm ist eine Befehlsliste für die CPU.\n# Programmiersprachen machen diese Befehle lesbar:\nprint(\"Hallo\")   # ein Befehl, den du verstehst"
+   },
+   "vergleich": "Beide Sprachen sind für Menschen da. Der Unterschied ist nur, WER den Code in die Sprache des Chefs übersetzt: bei Python ein Interpreter während des Laufens, bei C++ ein Compiler vorher.",
+   "merk": "CPU = Chef (rechnet), RAM = Schreibtisch (flüchtig), SSD = Aktenschrank (bleibt). Programmiersprachen übersetzen deine Gedanken für den Chef."
+  },
+  {
+   "titel": "Interpretiert vs. kompiliert – der zentrale Unterschied",
+   "python": {
+    "text": "Python ist wie ein Vorleser, der ein Buch Wort für Wort vorliest und die Geschichte sofort erzählt. Er liest deinen Code Zeile für Zeile und führt jede Zeile direkt aus. Übersetzen und Ausführen passieren gleichzeitig. Vorteil: Du kannst sofort ausprobieren, was du schreibst. Nachteil: Findet der Vorleser in einer Zeile einen Fehler, hört er auf – die Zeilen danach liest er nie vor.",
+    "code": "print(\"Zeile 1\")\nprint(1 / 0)      # Fehler fällt ERST HIER auf,\nprint(\"Zeile 3\")  # diese Zeile wird nie erreicht"
+   },
+   "vergleich": "Merksatz: Python übersetzt, WÄHREND es läuft. C++ übersetzt VORHER alles. Deshalb startet Python schneller – aber C++ ist am Ende schneller.",
+   "merk": "Python: Zeile für Zeile beim Laufen. C++: alles vorher per Compiler."
+  },
+  {
+   "titel": "Warum beide Sprachen lernen?",
+   "python": {
+    "text": "Python ist wie ein Fahrrad mit Automatik: Du kommst schnell ans Ziel, ohne viel nachdenken zu müssen. Die Befehle sind kurz und lesbar, du musst keine Typen hinschreiben, und die Standard-Bibliothek bringt schon viele fertige Werkzeuge mit. In wenigen Minuten steht dein erstes Programm. Deshalb nutzt man Python für Scripting, Daten, Web-Server und KI.",
+    "code": "# Python: Wenige Zeilen, sofortiges Ergebnis\nnamen = [\"Anna\", \"Ben\"]\nfor n in namen:\n    print(n.upper())"
+   },
+   "vergleich": "Wer beide Sprachen lernt, versteht, WARUM Programmiersprachen so sind, wie sie sind – und kann später für jede Aufgabe die richtige wählen.",
+   "merk": "Python: schnell ans Ziel. C++: mehr Arbeit, dafür volles Verständnis und Tempo."
+  },
+  {
+   "titel": "Wozu programmieren? Einmal schreiben, immer wieder nutzen",
+   "python": {
+    "text": "Der Nutzen liegt nicht im Programmieren selbst. Er liegt in der Arbeit, die dadurch verschwindet. Vier Beispiele aus dem IT-Alltag: 400 Dateien umbenennen und in Ordner sortieren dauert von Hand einen halben Arbeitstag. Als Programm dauert es 15 Sekunden, und du kannst es beliebig oft wiederholen. Eine Tabelle mit 8000 Zeilen auswerten kostet Stunden, jeden Monat neu. Als Programm ist es ein Aufruf, jeden Monat derselbe. Prüfen, ob 200 Server antworten, ist von Hand praktisch unmöglich. Ein Programm schafft es in einer Minute und meldet sich per Mail. Aus einer Mitarbeiterliste Benutzerkonten anlegen ist fehleranfällige Tipparbeit. Mit einem Programm geht eine Liste hinein und fertige Konten kommen heraus.\n\nDas Muster ist immer gleich: Programmiert wird, was gleichartig und oft passiert. Eine einmalige Aufgabe programmierst du nicht. Du erledigst sie einfach. Eine Aufgabe, die jede Woche wiederkommt, programmierst du einmal und erledigst sie danach nie wieder selbst.\n\nDer zweite Nutzen wird oft übersehen: Verlässlichkeit. Wer zum vierhundertsten Mal denselben Dateinamen abtippt, verschreibt sich irgendwann. Ein Programm nicht. Es macht entweder immer denselben Fehler, dann fällt er auf und wird einmal behoben, oder gar keinen. In der IT-Administration ist das oft wichtiger als die gesparte Zeit.\n\nDer dritte Nutzen ist die Nachvollziehbarkeit. Wer eine Auswertung von Hand zusammenklickt, kann hinterher selten erklären, wie die Zahl zustande kam. Wer sie programmiert, hat die Antwort schriftlich. Der Quelltext ist die Dokumentation des eigenen Vorgehens, und ein Kollege kann ihn nachlesen.",
+    "code": "# Einmal geschrieben, beliebig oft wiederholt:\nnamen = [\"bericht_1.txt\", \"bericht_2.txt\", \"bericht_3.txt\"]\n\nfor name in namen:\n    print(\"umbenennen:\", name)"
+   },
+   "merk": "Programmiert wird, was gleichartig und oft passiert. Einmaliges erledigt man von Hand."
+  },
+  {
+   "titel": "Maschinensprache: Warum der Prozessor einen Übersetzer braucht",
+   "python": {
+    "text": "Der Prozessor ist das Rechenwerk im Computer. Er versteht keine Wörter und keine Sätze. Er versteht nur Maschinensprache. Das sind Zahlenfolgen. Jede Zahl steht für einen winzigen Schritt: Lade diesen Wert. Addiere. Vergleiche. Springe dorthin. Von Hand kann das kein Mensch schreiben.\n\nDarum gibt es Hochsprachen. Das sind Programmiersprachen, die ein Mensch lesen und schreiben kann. Python ist eine davon. Java, C, C++ und JavaScript sind auch Hochsprachen. Zwischen der Hochsprache und dem Prozessor muss also jemand übersetzen. Dafür gibt es zwei Verfahren.\n\nEin Compiler übersetzt den ganzen Quelltext vorab in eine eigenständige, ausführbare Datei. Ein Interpreter übersetzt den Quelltext erst, während das Programm läuft, Zeile für Zeile. Der Quelltext ist der Text, den du schreibst. Bei Python ist das eine Datei mit der Endung .py.\n\nJetzt die häufige Frage: Warum muss Python dann installiert werden? Installiert wird nicht die Sprache, sondern der Übersetzer. Deine .py-Datei ist reiner Text. Sie liegt auf der Festplatte wie ein Brief in einer Sprache, die im Haus niemand spricht. Python ist der Dolmetscher, der ihn vorliest. Ohne Dolmetscher passiert nichts. Du kannst die Datei öffnen und lesen, aber es geschieht nichts.\n\nDeshalb läuft dieselbe .py-Datei unverändert unter Windows, macOS und Linux. Überall dort, wo Python installiert ist. Weitergegeben wird der Brief, nicht die Übersetzung. Bei einer kompilierten Sprache ist es umgekehrt. Dort gibst du die fertige Übersetzung weiter, und die passt nur auf ein Betriebssystem.\n\nNebenbei: Python übersetzt intern zuerst in einen Zwischencode, den Bytecode, und führt diesen aus. Sichtbar wird das nur an einem Ordner namens __pycache__. Der erscheint beim zweiten Start von selbst. Für deine Arbeit ändert das nichts.",
+    "code": "print(\"Hallo\")\n# Diese Datei ist nur Text.\n# Der Interpreter liest sie Zeile für Zeile und führt sie aus."
+   },
+   "vergleich": "Python übersetzt beim Laufen, C++ übersetzt vorher. Deshalb läuft dieselbe .py-Datei überall, während eine fertige C++-Datei nur für ein Betriebssystem passt.",
+   "merk": "Du installierst nicht die Sprache. Du installierst den Übersetzer."
+  },
+  {
+   "titel": "Die drei Bausteine: Sequenz, Entscheidung, Schleife",
+   "python": {
+    "text": "Es gibt hunderte Programmiersprachen. Sie sehen verschieden aus. Aber in jeder passiert dasselbe. Jedes Programm besteht aus genau drei Bausteinen.\n\nDer erste Baustein ist die Sequenz. Befehle laufen nacheinander, von oben nach unten. In Python schreibst du sie einfach untereinander.\n\nDer zweite Baustein ist die Entscheidung. Das Programm wählt einen von zwei Wegen. Es schaut auf eine Bedingung. In Python nimmst du dafür if, elif und else.\n\nDer dritte Baustein ist die Schleife. Etwas wird wiederholt. In Python nimmst du dafür for oder while.\n\nMehr Bausteine gibt es nicht. Wer diese drei versteht, lernt jede weitere Sprache in Tagen statt in Monaten. Andere Sprachen schreiben dieselben drei Dinge nur anders hin.",
+    "code": "zahl = 3\n\nprint(\"Sequenz: erst diese Zeile\")\nif zahl > 2:\n    print(\"Entscheidung: die Zahl ist groß.\")\nfor i in range(3):\n    print(\"Schleife:\", i)"
+   },
+   "vergleich": "Die drei Bausteine sind in beiden Sprachen dieselben. Python schreibt sie kurz hin. C++ verlangt Klammern und Semikolons.",
+   "merk": "Jedes Programm in jeder Sprache besteht aus Sequenz, Entscheidung und Schleife. Alles Weitere ist Zubehör.",
+   "checkliste": [
+    "Sequenz: Befehle laufen von oben nach unten.",
+    "Entscheidung: if, elif und else wählen einen Weg.",
+    "Schleife: for und while wiederholen etwas.",
+    "Alles Weitere ist Zubehör, kein vierter Baustein."
+   ]
+  },
+  {
+   "titel": "Daten und Verpackung: Variablen, Listen, Funktionen, Klassen",
+   "python": {
+    "text": "Variablen, Listen, Funktionen und Klassen sind keine weiteren Bausteine. Sie sind Zubehör. Es gibt zwei Arten.\n\nDie erste Art ist ein Platz für Daten. Variablen, Listen und Dictionaries halten die Werte fest, mit denen die drei Bausteine arbeiten. Ohne sie hätten die Bausteine nichts zu tun.\n\nDie zweite Art ist Verpackung. Funktionen, Module und Klassen fassen fertig gebaute Bausteine zusammen. Sie geben ihnen einen Namen. Dann kannst du sie wiederverwenden, ohne sie neu zu bauen.\n\nEin Vergleich aus der Küche: Ein Rezept hat Arbeitsschritte (Sequenz). Es hat Entscheidungen, etwa falls der Teig zu fest ist, gib Wasser dazu. Es hat Wiederholungen, etwa rühre so lange, bis der Teig glatt ist. Die Zutatenliste sind die Daten. Der Satz Bereite Béchamel zu, der auf ein anderes Rezept verweist, ist die Verpackung.",
+    "code": "name = \"Anna\"              # Variable: ein Platz für einen Wert\nzahlen = [3, 8, 1]         # Liste: viele Werte zusammen\n\ndef begruesse(wen):        # Funktion: Verpackung mit Namen\n    print(\"Hallo\", wen)\n\nbegruesse(name)"
+   },
+   "vergleich": "Daten und Verpackung gibt es in beiden Sprachen. Python schreibt nur den Namen hin. C++ verlangt zusätzlich den Typ, etwa string für Text oder vector für eine Liste.",
+   "merk": "Variablen und Listen halten die Werte. Funktionen und Klassen verpacken fertige Bausteine. Beides ist Zubehör, kein vierter Baustein."
+  },
+  {
+   "titel": "Typische Anfängerfehler",
+   "python": {
+    "text": "Fehler macht am Anfang jeder. Diese vier kosten die meiste Zeit.\n\nDer erste Fehler: Du erwartest, dass der Computer mitdenkt. Das kommt aus der Gewohnheit im Umgang mit Menschen. Der Computer tut aber immer genau das, was dasteht. Wenn etwas falsch läuft, steckt der Fehler im Plan und nicht in der Maschine.\n\nDer zweite Fehler: Du hältst Programmieren für Mathematik. Für alles in diesem Kurs reicht Grundschulrechnen. Du brauchst Genauigkeit und Geduld, keine Formeln. Die Hemmung ist unnötig.\n\nDer dritte Fehler: Du hältst die Installation für Nebensache. Dann suchst du stundenlang, obwohl nicht Python fehlt, sondern der Eintrag im Suchpfad. Wer weiß, dass Python der Übersetzer ist, versteht die Meldung Befehl nicht gefunden sofort.\n\nDer vierte Fehler: Du hältst jede Sprache für eine eigene Welt. Dann fängst du bei jeder neuen Sprache wieder bei null an. Dabei sitzen die drei Bausteine längst.",
+    "code": "print(\"Ich denke nicht mit.\")\nprint(\"Ich arbeite nur meinen Plan ab.\")"
+   },
+   "merk": "Wenn ein Programm etwas Falsches tut, hat es sich nicht geirrt. Es hat genau das getan, was dastand.",
+   "checkliste": [
+    "Der Computer denkt nicht mit. Er tut genau das, was dasteht.",
+    "Programmieren ist kein Mathematik-Fach. Grundschulrechnen reicht.",
+    "Die Installation ist wichtig. Fehlt Python im Suchpfad, kommt Befehl nicht gefunden.",
+    "Jede Sprache nutzt dieselben drei Bausteine. Du fängst nicht bei null an."
+   ]
+  }
+ ]
+}

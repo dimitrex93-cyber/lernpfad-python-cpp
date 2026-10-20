@@ -1,0 +1,79 @@
+{
+ "id": "grundbegriffe",
+ "titel": "Kapitel 18: Grundbegriffe – die wichtigsten Begriffe auf einen Blick",
+ "einleitung": "Dieses Kapitel erklärt die wichtigsten Begriffe von Python und C++. Du lernst Datentypen und den Einstiegspunkt kennen. Auch die Ein- und Ausgabe und das Einbinden von fremdem Code kommen vor. Dazu siehst du die Bausteine jedes Programms. Das Kapitel ist dein Nachschlagewerk. Hier steht, was int, main und include bedeuten.",
+ "abschnitte": [
+  {
+   "titel": "Datentypen: int, float, double, char, bool",
+   "python": {
+    "text": "Ein Datentyp sagt, welche Art von Wert in einer Variable steckt. Eine Variable ist ein Behälter mit Namen. int speichert ganze Zahlen, float speichert Kommazahlen. str speichert Text, bool speichert wahr oder falsch. Python hat wenige Grundtypen. Sie sind aber flexibel. Ein int darf beliebig groß sein. Ein Zeichen ist ein str mit einem Buchstaben. Python wählt den Typ selbst. Das nennt man dynamische Typisierung. Du musst den Typ nicht ansagen (deklarieren).",
+    "code": "alter = 25          # int – beliebig groß\ngroesse = 1.72      # float – Kommazahl\nname = \"Anna\"       # str  – Text\nist_student = True  # bool – Wahrheitswert\n\nprint(type(alter))  # <class 'int'>"
+   },
+   "vergleich": "Python hat einen int für alle Größen. Python vergibt den Typ automatisch. C++ hat mehrere Zahlentypen mit fester Größe. Du wählst den passenden Typ und sagst ihn an.",
+   "merk": "Datentyp = welche Art von Wert eine Variable speichert. Python: dynamisch. C++: statisch und deklariert."
+  },
+  {
+   "titel": "Der Einstiegspunkt: main() und __name__",
+   "python": {
+    "text": "Der Einstiegspunkt ist die Stelle, an der dein Programm startet. Python hat keinen Pflicht-Einstiegspunkt. Der Interpreter ist das Programm, das Python-Code ausführt. Er liest die Datei von oben nach unten. Der Block if __name__ == \"__main__\": ist nur eine Konvention. Eine Konvention ist eine Gewohnheit, an die sich Programmierer halten. Dieser Guard (Schutz-Block) sorgt dafür, dass Code nur beim direkten Start läuft. Wird die Datei als Modul importiert, startet der Code nicht. Bei kleinen Skripten ist das optional. Bei größeren Programmen ist es gute Praxis.",
+    "code": "def main():\n    print(\"Programm gestartet\")\n\nif __name__ == \"__main__\":\n    main()   # nur beim direkten Start"
+   },
+   "vergleich": "main() und der __name__-Guard sind beides Startmarken. In C++ ist main() Pflicht. In Python ist der Guard nur Konvention.",
+   "merk": "C++: genau eine int main(). Python: Skript läuft von oben nach unten, __name__-Guard schützt Module."
+  },
+  {
+   "titel": "#include und import: fremden Code einbinden",
+   "python": {
+    "text": "import lädt ein Modul. Ein Modul ist eine andere Python-Datei mit fertigen Funktionen. Auch die Standardbibliothek ist eine Sammlung solcher Module. import math lädt das Mathematik-Modul. from datetime import datetime holt gezielt einen Namen. Ohne import kennt Python nur eingebaute Funktionen wie print().",
+    "code": "import math\nprint(math.sqrt(16))        # 4.0\n\nfrom datetime import datetime\nprint(datetime.now())"
+   },
+   "vergleich": "import lädt zur Laufzeit, also während das Programm läuft. #include fügt Text zur Compile-Zeit ein, also beim Übersetzen. Beides macht fremde Funktionen nutzbar.",
+   "merk": "import = Modul zur Laufzeit laden. #include = Header zur Compile-Zeit einfügen."
+  },
+  {
+   "titel": "Ein- und Ausgabe: print, input, cout, cin",
+   "python": {
+    "text": "print() gibt Text auf der Konsole aus. Die Konsole ist das Text-Fenster deines Programms. Mehrere Werte trennst du mit Komma. input() liest eine Zeile von der Tastatur. Es liefert immer einen String zurück. Ein String ist Text. Willst du eine Zahl, wandelst du sie um: int(input(...)). Das sind die eingebauten Funktionen für Ein- und Ausgabe.",
+    "code": "name = input(\"Wie heißt du? \")\nprint(\"Hallo\", name, \"!\")   # Hallo Anna !\n\nalter = int(input(\"Wie alt bist du? \"))\nalter = alter + 1\nprint(\"Nächstes Jahr:\", alter)"
+   },
+   "vergleich": "print() und input() in Python entsprechen std::cout und std::cin in C++. input() liefert immer Text. Du musst selbst umwandeln. cin >> wandelt automatisch. Dabei kann es in einen Fehlerzustand geraten.",
+   "merk": "Ausgabe: print() / std::cout <<. Eingabe: input() / std::getline (ganze Zeile) oder cin >> (ein Wert)."
+  },
+  {
+   "titel": "Die Grundbausteine: Variable, Funktion, Klasse",
+   "python": {
+    "text": "Eine Variable ist ein Name für einen Wert im Speicher. Eine Funktion bündelt Code unter einem Namen. Diesen Code kannst du mehrfach aufrufen. In Python schreibst du dafür def. Eine Klasse ist ein Bauplan für Objekte. Nach dem Bauplan entstehen echte Objekte. Sie kombiniert Daten (Attribute) und Verhalten (Methoden). Das sind die drei Grundbausteine jedes Programms.",
+    "code": "def verdopple(x):\n    return x * 2\n\nclass Hund:\n    def __init__(self, name):\n        self.name = name\n    def bellen(self):\n        print(f\"{self.name} sagt Wuff!\")"
+   },
+   "vergleich": "Variable, Funktion und Klasse gibt es in beiden Sprachen. Python braucht keine Typdeklarationen. self ist der Verweis auf das eigene Objekt. C++ schreibt Typen überall hin. private und public stehen explizit da.",
+   "merk": "Variable = Name für Wert. Funktion = Code unter einem Namen. Klasse = Bauplan für Objekte."
+  },
+  {
+   "titel": "Ablaufsteuerung: if, Schleifen, Operatoren",
+   "python": {
+    "text": "if, elif und else treffen Entscheidungen. for und while wiederholen Code. Logische Operatoren heißen and, or und not. Ein Block ist eine Gruppe von Code-Zeilen. Die Einrückung bildet den Block. Sie ist Pflicht und Teil der Syntax. Syntax ist die Grammatik einer Sprache. == prüft, ob Werte gleich sind. != prüft, ob Werte ungleich sind. Auch <, >, <= und >= gibt es.",
+    "code": "note = 2\nif note <= 2:\n    print(\"Sehr gut!\")\nelif note <= 4:\n    print(\"Bestanden.\")\nelse:\n    print(\"Nicht bestanden.\")\n\nfor i in range(3):\n    print(i)          # 0 1 2"
+   },
+   "vergleich": "Die Logik ist gleich, die Syntax anders. Python nutzt Einrückung und Wörter wie and, or, not. C++ nutzt Klammern, Semikolon und Symbole wie &&, ||, !.",
+   "merk": "Entscheidungen: if/elif/else (Python) = if/else if/else (C++). Schleifen: for/while in beiden. == vergleicht, = weist zu!"
+  },
+  {
+   "titel": "Vom Code zum Programm: Compiler, Interpreter, Build",
+   "python": {
+    "text": "Python ist interpretiert. Das Programm python3 liest deinen Code Zeile für Zeile. Es führt jede Zeile sofort aus. Das passiert zur Laufzeit. Es gibt keinen extra Übersetzungsschritt. Du startest die Datei direkt: python3 datei.py. Ein Fehler fällt erst auf, wenn diese Zeile erreicht wird.",
+    "code": "# Direkt starten – kein Übersetzungsschritt:\n# python3 datei.py"
+   },
+   "vergleich": "Python übersetzt während des Laufens. Das macht der Interpreter. C++ übersetzt vorher. Das macht der Compiler. Python startet schneller. C++ läuft am Ende schneller. C++ findet Fehler früher.",
+   "merk": "Interpreter: Zeile für Zeile zur Laufzeit. Compiler: einmal komplett vorab – der Build ist der Übersetzungsschritt."
+  },
+  {
+   "titel": "Container: list, vector, dict, map",
+   "python": {
+    "text": "Container sammeln mehrere Werte. Eine Liste ist ein solcher Container. Sie ist dynamisch und darf Typen mischen: [1, \"a\", 2.5]. Ein dict ordnet Schlüsseln Werte zu: {\"apfel\": 0.50}. Ein Schlüssel ist ein Name für einen Wert. Der Zugriff ist extrem schnell. Dafür sorgt eine Hashtabelle. len() gibt die Größe an. Der Zugriff ist 0-basiert. Das heißt: Die erste Stelle hat den Index 0.",
+    "code": "zahlen = [3, 1, 2]\nzahlen.append(4)          # [3, 1, 2, 4]\nprint(zahlen[0])          # 3\n\npreise = {\"apfel\": 0.50}\nprint(preise[\"apfel\"])    # 0.5\npreise[\"kirsche\"] = 1.20  # neu eintragen"
+   },
+   "vergleich": "Die Python-Liste entspricht std::vector. Das Python-dict entspricht std::map oder std::unordered_map. Python kann Typen mischen und slicen. Slicen heißt: einen Teil der Liste holen. C++ ist streng typisiert. Dafür gibt es .at() mit Grenzprüfung.",
+   "merk": "Container = Sammlungen von Werten. list/vector für Reihen, dict/map für Schlüssel-Wert-Paare."
+  }
+ ]
+}

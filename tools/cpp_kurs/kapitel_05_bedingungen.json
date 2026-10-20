@@ -1,0 +1,34 @@
+{
+ "id": "bedingungen",
+ "titel": "Kapitel 5: Bedingungen – Entscheidungen im Code",
+ "einleitung": "Programme treffen Entscheidungen. Sie fragen: Stimmt das? Dann machen sie das eine. Stimmt es nicht, machen sie das andere. Das ist wie bei einer Ampel. Bei Rot stoppst du, bei Grün fährst du. Hier lernst du if und else. So reagiert dein Programm auf verschiedene Eingaben.",
+ "abschnitte": [
+  {
+   "titel": "if / else – die Grundform",
+   "cpp": {
+    "text": "In C++ steht die Bedingung in runden Klammern. Zum Beispiel: if (note <= 2). Der Block steht in geschweiften Klammern. So: { }. Die geschweiften Klammern zeigen: Diese Zeilen gehören zusammen. else if prüft die nächste Bedingung. Achtung, ein klassischer Fehler! Ein Semikolon direkt nach der Bedingung. Also: if (note <= 2); – das beendet die Bedingung sofort. Der Block läuft dann immer. Das willst du nicht.",
+    "code": "int note = 2;\nif (note <= 2) {\n    std::cout << \"Sehr gut!\";\n} else if (note <= 4) {\n    std::cout << \"Bestanden.\";\n} else {\n    std::cout << \"Leider nicht bestanden.\";\n}\n// Klammern = Block, Semikolon NUR am Ende jeder Anweisung"
+   },
+   "vergleich": "Python: Einrückung und Doppelpunkt zeigen den Block. C++: runde Klammern für die Bedingung, geschweifte für den Block. Die Logik ist gleich, nur die Schreibweise ist anders.",
+   "merk": "Python: Die Einrückung ist der Block. C++: Die geschweiften Klammern sind der Block."
+  },
+  {
+   "titel": "Verschachtelte Bedingungen",
+   "cpp": {
+    "text": "In C++ verschachtelst du genauso. Du schreibst eine if in die geschweiften Klammern einer anderen if. Auch hier gilt: Je tiefer die Verschachtelung, desto schwerer liest sich der Code. Kombiniere Bedingungen mit &&. Das heißt „und“. Oder nutze early return. Dann bleibt der Code flach und übersichtlich.",
+    "code": "int alter = 20;\nif (alter >= 18) {\n    if (hat_fuehrerschein()) {\n        std::cout << \"Darf fahren\";\n    } else {\n        std::cout << \"Kein Führerschein\";\n    }\n} else {\n    std::cout << \"Noch zu jung\";\n}\n// Flacher: if (alter >= 18 && hat_fuehrerschein())"
+   },
+   "vergleich": "Verschachteln geht in beiden Sprachen gleich. In beiden gilt: Halte es flach. Flach heißt: nicht zu tief verschachteln.",
+   "merk": "Tiefe Verschachtelung ist ein schlechtes Zeichen. Kombiniere Bedingungen. Oder nutze early return."
+  },
+  {
+   "titel": "Mehrfach-Auswahl: viele Fälle",
+   "cpp": {
+    "text": "C++ hat dafür switch. Eine Variable wird einmal geprüft. Sie wird mit mehreren case-Werten verglichen. case heißt auf Deutsch „Fall“. Jeder case-Block endet mit break. break heißt: Stopp, hier ist Schluss. Vergisst du break, läuft der Code in den nächsten Fall hinein. Das nennt man fall-through. default fängt alle Werte, die du nicht aufgeschrieben hast. Wichtig: switch funktioniert nur mit ganzen Zahlen und Enums. Ein Enum ist eine eigene Aufzählung, zum Beispiel Rot, Gelb, Grün. Mit Strings (Text) geht switch nicht.",
+    "code": "int wochentag = 3;\nswitch (wochentag) {\n    case 1:\n        std::cout << \"Montag\";\n        break;\n    case 2:\n        std::cout << \"Dienstag\";\n        break;\n    default:\n        std::cout << \"Unter der Woche\";\n}\n// break vergessen = fall-through (läuft weiter!)"
+   },
+   "vergleich": "C++ switch ist schnell und kurz. Es geht aber nur mit ganzen Zahlen. Python if/elif ist flexibler. Es vergleicht auch Strings (Text). match/case ist die moderne Alternative.",
+   "merk": "C++ switch: Vergiss break nicht! Python: nimm if/elif oder match/case."
+  }
+ ]
+}

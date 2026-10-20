@@ -1,0 +1,67 @@
+{
+ "id": "einfuehrung",
+ "titel": "Kapitel 1: Wie Computer und Programme arbeiten",
+ "einleitung": "Bevor wir programmieren, schauen wir uns an, woraus ein Computer besteht und was ein Programm ist. Alles wird ganz einfach erklärt – so verstehst du die Grundlagen, auf denen alles Weitere aufbaut.",
+ "abschnitte": [
+  {
+   "titel": "Woraus besteht ein Computer?",
+   "cpp": {
+    "text": "In C++ ist es genauso: Dein Code ist für Menschen geschrieben. Der Compiler (das Übersetzungs-Programm) übersetzt deinen C++-Code vorher komplett in die Sprache des Chefs (Maschinensprache). Deshalb ist C++ so schnell: Am Ende steht eine fertige Datei, die der Computer direkt ausführen kann – ohne Dolmetscher.",
+    "code": "// Auch C++-Code ist nur eine lesbare Befehlsliste.\n// Der Compiler übersetzt sie in Maschinensprache:\n#include <iostream>\n\nint main() {\n    std::cout << \"Hallo\";\n    return 0;\n}"
+   },
+   "vergleich": "Beide Sprachen sind für Menschen da. Der Unterschied ist nur, WER den Code in die Sprache des Chefs übersetzt: bei Python ein Interpreter während des Laufens, bei C++ ein Compiler vorher.",
+   "merk": "CPU = Chef (rechnet), RAM = Schreibtisch (flüchtig), SSD = Aktenschrank (bleibt). Programmiersprachen übersetzen deine Gedanken für den Chef."
+  },
+  {
+   "titel": "Interpretiert vs. kompiliert – der zentrale Unterschied",
+   "cpp": {
+    "text": "C++ ist wie ein Übersetzer, der das ganze Buch VORHER in eine andere Sprache übersetzt. Er liest deinen gesamten Code, bevor irgendetwas ausgeführt wird. Dabei findet er viele Fehler schon beim Übersetzen: einen falschen Namen, einen Typkonflikt oder eine fehlende Klammer. Erst wenn alles fehlerfrei übersetzt ist, entsteht eine ausführbare Datei. Vorteil: sehr schnell, Fehler früh gefunden. Nachteil: Du brauchst den Übersetzungs-Schritt, und die Fehlermeldungen wirken am Anfang abschreckend.",
+    "code": "int main() {\n    std::cout << 1 / 0;   // Compilerfehler? Nein!\n    // Aber: Division durch 0 ist zur Laufzeit undefiniert.\n    return 0;\n}\n// g++ datei.cpp -o datei   -> erst übersetzen, dann starten"
+   },
+   "vergleich": "Merksatz: Python übersetzt, WÄHREND es läuft. C++ übersetzt VORHER alles. Deshalb startet Python schneller – aber C++ ist am Ende schneller.",
+   "merk": "Python: Zeile für Zeile beim Laufen. C++: alles vorher per Compiler."
+  },
+  {
+   "titel": "Warum beide Sprachen lernen?",
+   "cpp": {
+    "text": "C++ ist wie ein Fahrrad mit Gangschaltung und Handbuch: Am Anfang musst du viel lernen – Typen, Speicher und Klammern. Aber danach verstehst du genau, wie das Fahrrad funktioniert. C++ steckt in Spielen, Betriebssystemen, eingebetteten Geräten und Programmen, die besonders schnell sein müssen.",
+    "code": "// C++: Mehr Details, dafür volle Kontrolle\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<std::string> namen = {\"Anna\", \"Ben\"};\n    for (const auto& n : namen)\n        std::cout << n << std::endl;\n    return 0;\n}"
+   },
+   "vergleich": "Wer beide Sprachen lernt, versteht, WARUM Programmiersprachen so sind, wie sie sind – und kann später für jede Aufgabe die richtige wählen.",
+   "merk": "Python: schnell ans Ziel. C++: mehr Arbeit, dafür volles Verständnis und Tempo."
+  },
+  {
+   "titel": "Maschinensprache: Warum der Prozessor einen Übersetzer braucht",
+   "cpp": {
+    "text": "C++ ist eine kompilierte Sprache. Der Compiler liest deinen ganzen Quelltext vorher. Er prüft ihn und baut daraus eine ausführbare Datei. Diese Datei gibst du weiter. Sie läuft nur auf dem Betriebssystem, für das du sie gebaut hast. Ganz oben steht eine Zeile, die das Werkzeug für die Ausgabe dazuholt. Danach beginnt das Programm mit der main-Funktion. Das ist der Startpunkt, den der Computer zuerst ausführt.",
+    "code": "#include <iostream>\n\nint main() {\n    std::cout << \"Hallo\" << std::endl;\n    return 0;\n}\n// g++ hallo.cpp -o hallo   -> erst übersetzen, dann starten"
+   },
+   "vergleich": "Python übersetzt beim Laufen, C++ übersetzt vorher. Deshalb läuft dieselbe .py-Datei überall, während eine fertige C++-Datei nur für ein Betriebssystem passt.",
+   "merk": "Du installierst nicht die Sprache. Du installierst den Übersetzer."
+  },
+  {
+   "titel": "Die drei Bausteine: Sequenz, Entscheidung, Schleife",
+   "cpp": {
+    "text": "In C++ heißen die drei Bausteine genauso. Die Sequenz sind Befehle untereinander. Die Entscheidung ist if mit else. Die Schleife ist for oder while. Nur die Schreibweise ist anders. Du brauchst geschweifte Klammern und ein Semikolon am Zeilenende. Auch das Hauptprogramm ist eine Funktion mit dem Namen main.",
+    "code": "#include <iostream>\n\nint main() {\n    int zahl = 3;\n\n    std::cout << \"Sequenz\" << std::endl;\n    if (zahl > 2) {\n        std::cout << \"Entscheidung\" << std::endl;\n    }\n    for (int i = 0; i < 3; ++i) {\n        std::cout << \"Schleife \" << i << std::endl;\n    }\n    return 0;\n}"
+   },
+   "vergleich": "Die drei Bausteine sind in beiden Sprachen dieselben. Python schreibt sie kurz hin. C++ verlangt Klammern und Semikolons.",
+   "merk": "Jedes Programm in jeder Sprache besteht aus Sequenz, Entscheidung und Schleife. Alles Weitere ist Zubehör.",
+   "checkliste": [
+    "Sequenz: Befehle laufen von oben nach unten.",
+    "Entscheidung: if, elif und else wählen einen Weg.",
+    "Schleife: for und while wiederholen etwas.",
+    "Alles Weitere ist Zubehör, kein vierter Baustein."
+   ]
+  },
+  {
+   "titel": "Daten und Verpackung: Variablen, Listen, Funktionen, Klassen",
+   "cpp": {
+    "text": "In C++ gibt es dieselben zwei Arten von Zubehör. Eine Variable hält einen Wert. Ein vector hält viele Werte. Eine Funktion fasst Befehle zusammen und bekommt einen Namen. Eine Klasse packt Daten und Funktionen in eine gemeinsame Hülle. C++ verlangt dabei mehr Schreibarbeit. Du musst den Typ jedes Wertes angeben, etwa string für Text oder int für eine ganze Zahl.",
+    "code": "#include <iostream>\n#include <string>\n#include <vector>\n\nvoid begruesse(const std::string& wen) {\n    std::cout << \"Hallo \" << wen << std::endl;\n}\n\nint main() {\n    std::string name = \"Anna\";\n    std::vector<int> zahlen = {3, 8, 1};\n    begruesse(name);\n    return 0;\n}"
+   },
+   "vergleich": "Daten und Verpackung gibt es in beiden Sprachen. Python schreibt nur den Namen hin. C++ verlangt zusätzlich den Typ, etwa string für Text oder vector für eine Liste.",
+   "merk": "Variablen und Listen halten die Werte. Funktionen und Klassen verpacken fertige Bausteine. Beides ist Zubehör, kein vierter Baustein."
+  }
+ ]
+}

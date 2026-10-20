@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lernpfad Python & C++ – Web-App</title>
-<link rel="stylesheet" href="style.css?v=0.9.0">
+<link rel="stylesheet" href="style.css?v=1.0.0">
 </head>
 <body>
 <header>
@@ -17,7 +17,8 @@
         <button id="nav-start" class="nav-btn active" onclick="zeigeAnsicht('start')">🏠 Start</button>
         <button id="nav-ziel" class="nav-btn" onclick="zeigeAnsicht('ziel')">🎯 Ziel &amp; Mission</button>
         <button id="nav-quiz" class="nav-btn" onclick="zeigeAnsicht('quiz')">📝 Quiz</button>
-        <button id="nav-kurs" class="nav-btn" onclick="zeigeAnsicht('kurs')">📖 Sprachkurs</button>
+        <button id="nav-python" class="nav-btn" onclick="zeigeAnsicht('python')" title="Python lernen – eigener Kurs ohne C++">🐍 Python</button>
+        <button id="nav-cpp" class="nav-btn" onclick="zeigeAnsicht('cpp')" title="C++ lernen – eigener Kurs ohne Python">⚙️ C++</button>
         <button id="nav-json" class="nav-btn" onclick="zeigeAnsicht('json')">🧾 JSON-Kurs</button>
         <button id="nav-pruefung" class="nav-btn" onclick="zeigeAnsicht('pruefung')" title="Wissen &amp; Taktik für die Prüfungsteile 1 und 2">🧠 Prüfungstraining</button>
         <button id="nav-glossar" class="nav-btn" onclick="zeigeAnsicht('glossar')">📚 Glossar</button>
@@ -171,21 +172,48 @@
   </section>
 
   <!-- ============ SPRACHKURS ============ -->
-  <section id="ansicht-kurs" class="ansicht" hidden>
-    <div class="karte" id="kurs-uebersicht">
-      <h2>Sprachkurs: Python &amp; C++ im ganzen erklärt</h2>
-      <p class="subtitle">Von den Grundlagen bis zu Speicher, Netzwerken und Git – jedes Konzept im direkten Vergleich.</p>
-      <div id="kurs-liste"></div>
+  <!-- ============ KURS: Python-Kurs ============ -->
+  <section id="ansicht-python" class="ansicht" hidden>
+    <div class="karte" id="python-uebersicht">
+      <h2>🐍 Python-Kurs</h2>
+      <p class="subtitle">Python von den Grundlagen bis zu Dateien und ersten Projekten – hier geht es nur um Python. C++ hat einen eigenen Reiter, damit sich die beiden Sprachen nicht ständig im Weg stehen.</p>
+      <p class="subtitle">Kapitel 2, 3, 4, 7 und 8 enthalten zusätzlich Pflicht- und Vertiefungsaufgaben aus dem Python-Crashkurs (Tag 1) – Lösungen klappen erst nach dem eigenen Versuch auf.</p>
+      <div id="python-liste">
+        <p class="subtitle">Kapitel werden geladen …</p>
+      </div>
     </div>
 
-    <div class="karte" id="kurs-kapitel" hidden>
-      <button class="secondary" onclick="kursZurueck()">← Zurück zur Übersicht</button>
-      <h2 id="kurs-kapitel-titel"></h2>
-      <p class="subtitle" id="kurs-kapitel-einleitung"></p>
-      <div id="kurs-abschnitte"></div>
+    <div class="karte" id="python-kapitel" hidden>
+      <button class="secondary" onclick="sprachZurueck('python')">← Zurück zur Übersicht</button>
+      <h2 id="python-kapitel-titel"></h2>
+      <p class="subtitle" id="python-kapitel-einleitung"></p>
+      <div id="python-abschnitte"></div>
       <div class="button-reihe">
-        <button id="kurs-weiter-btn" class="primary" onclick="kursNaechsterAbschnitt()">Weiter →</button>
-        <button class="secondary" onclick="kursZurueck()">Kapitel schließen</button>
+        <button id="python-weiter-btn" class="primary" onclick="sprachNaechsterAbschnitt('python')">Weiter →</button>
+        <button class="secondary" onclick="sprachZurueck('python')">Kapitel schließen</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ KURS: C++-Kurs ============ -->
+  <section id="ansicht-cpp" class="ansicht" hidden>
+    <div class="karte" id="cpp-uebersicht">
+      <h2>⚙️ C++-Kurs</h2>
+      <p class="subtitle">C++ mit Typen, Speicher, Pointern und Werkzeugen – hier geht es nur um C++. Python hat einen eigenen Reiter.</p>
+      <p class="subtitle">Die Reihenfolge folgt dem Python-Kurs. Wo ein Thema nur Python betrifft (etwa f-Strings oder Listenmethoden), fehlt es hier bewusst statt mit einer Notlösung gefüllt zu werden.</p>
+      <div id="cpp-liste">
+        <p class="subtitle">Kapitel werden geladen …</p>
+      </div>
+    </div>
+
+    <div class="karte" id="cpp-kapitel" hidden>
+      <button class="secondary" onclick="sprachZurueck('cpp')">← Zurück zur Übersicht</button>
+      <h2 id="cpp-kapitel-titel"></h2>
+      <p class="subtitle" id="cpp-kapitel-einleitung"></p>
+      <div id="cpp-abschnitte"></div>
+      <div class="button-reihe">
+        <button id="cpp-weiter-btn" class="primary" onclick="sprachNaechsterAbschnitt('cpp')">Weiter →</button>
+        <button class="secondary" onclick="sprachZurueck('cpp')">Kapitel schließen</button>
       </div>
     </div>
   </section>
@@ -365,6 +393,6 @@
 
 <div id="toast-container" aria-live="polite"></div>
 
-<script src="app.js?v=0.9.0"></script>
+<script src="app.js?v=1.0.0"></script>
 </body>
 </html>

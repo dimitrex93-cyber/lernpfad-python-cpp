@@ -1,0 +1,25 @@
+{
+ "id": "fehlerbehandlung",
+ "titel": "Kapitel 11: Fehlerbehandlung",
+ "einleitung": "Programme machen manchmal Fehler. Zum Beispiel, wenn jemand Unsinn eintippt. Oder wenn eine Datei fehlt. Ohne Schutz bricht das Programm dann ab. Hier lernst du, wie Python und C++ Fehler melden. Und wie du die Fehler abfängst, bevor das Programm abstürzt.",
+ "abschnitte": [
+  {
+   "titel": "Exceptions: Fehler als Objekte",
+   "cpp": {
+    "text": "C++ arbeitet mit try und catch. throw wirft den Fehler. throw heißt: werfen. catch fängt den Fehler wieder ein. catch (const std::exception& e) fängt alle Standard-Fehler. e.what() liefert die Fehlermeldung. Fängt niemand den Fehler, ruft C++ std::terminate auf. Das beendet das Programm – es stürzt ab. Wichtig: Exceptions sind nicht der einzige Fehlerweg in C++. Viele Bibliotheken nutzen Rückgabewerte oder Fehlercodes.",
+    "code": "#include <iostream>\n#include <stdexcept>\n#include <string>\n\ntry {\n    int zahl = std::stoi(\"abc\");  // wirft invalid_argument\n} catch (const std::exception& e) {\n    std::cout << \"Fehler: \" << e.what();\n}\n\n// Selbst werfen:\nif (alter < 0) {\n    throw std::invalid_argument(\"Alter negativ\");\n}"
+   },
+   "vergleich": "Beide Sprachen machen es gleich. Gefährlichen Code schreibst du in try. Den Fehler behandelst du in except oder catch. Python hat Fehlertypen wie ValueError. C++ hat Fehlertypen wie std::invalid_argument. Beide werfen Fehler: Python mit raise, C++ mit throw.",
+   "merk": "try/except (Python) ist wie try/catch (C++). throw (C++) ist wie raise (Python)."
+  },
+  {
+   "titel": "Gute Fehlerbehandlung: Dos and Don'ts",
+   "cpp": {
+    "text": "In C++ gilt dasselbe. Fange gezielt. catch (...) ohne Not fängt wirklich alles – das ist schlecht. Prüfe Ressourcen, bevor du sie benutzt. Eine Ressource ist zum Beispiel eine Datei. Oder nutze RAII. RAII heißt: Das Objekt räumt sich selbst auf. std::ifstream öffnet eine Datei. Bei Fehlern gibt es die Datei automatisch frei. Auch dann, wenn eine Exception kommt. Der Destruktor erledigt das. Der Destruktor ist der Aufräum-Helfer eines Objekts. Bei Dateien gilt: Prüfe, ob das Öffnen geklappt hat. ifstream ist im Fehlerfall false.",
+    "code": "#include <fstream>\n#include <iostream>\n\nstd::ifstream datei(\"daten.txt\");\nif (!datei) {                 // Öffnen fehlgeschlagen?\n    std::cout << \"Datei fehlt\";\n    return 1;\n}\n// RAII: datei schließt sich selbst, egal was passiert\n\n// Gezielt fangen statt catch (...):\ntry {\n    // ...\n} catch (const std::ifstream::failure& e) {\n    std::cout << e.what();\n}"
+   },
+   "vergleich": "Beide Sprachen: Fange gezielt und zeige Meldungen. Verschlucke keine Fehler im Stillen. C++ hat einen Extra-Trick: RAII. Ressourcen räumen sich dabei selbst auf.",
+   "merk": "Fange nur Fehler, die du behandeln kannst. Verschlucke nie alles. In C++ räumen RAII-Objekte Ressourcen selbst auf."
+  }
+ ]
+}

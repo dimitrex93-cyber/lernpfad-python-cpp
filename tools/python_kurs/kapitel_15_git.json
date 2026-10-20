@@ -1,0 +1,34 @@
+{
+ "id": "git",
+ "titel": "Kapitel 15: Git, Projektmanagement und CI",
+ "einleitung": "Programmieren ist Teamarbeit. Auch mit deinem zukünftigen Ich! Git ist das Standard-Werkzeug für Versionsverwaltung (das Verwalten von Code-Ständen). Du lernst die wichtigsten Befehle und Branches (Arbeitslinien). Dazu kommen Scrum und CI. CI (Continuous Integration) heißt: Nach jedem Push (Hochladen auf den Server) laufen die Tests automatisch.",
+ "abschnitte": [
+  {
+   "titel": "Git-Grundlagen: Commits und Repositories",
+   "python": {
+    "text": "Git funktioniert mit jeder Sprache. Die Befehle sind bei Python und C++ gleich. Ein Repository (kurz Repo) ist der Ordner, den Git überwacht. Mit git init machst du einen Ordner zum Repository. Änderungen landen in drei Schritten im Verlauf. git add legt sie in den Staging-Bereich (den Wartebereich). git commit macht eine Momentaufnahme mit Nachricht. git push schickt sie auf den Server. git status zeigt den aktuellen Zustand. git log zeigt die Geschichte.",
+    "code": "git init                  # Repo anlegen\n# Dateien bearbeiten ...\ngit status                # Was hat sich geändert?\ngit add datei.py          # Änderung stufen\ngit commit -m \"Erste Version\"   # Momentaufnahme\ngit log --oneline         # Verlauf ansehen\n\n# Auf GitHub/GitLab laden:\ngit remote add origin git@github.com:user/repo.git\ngit push -u origin main"
+   },
+   "vergleich": "Die Git-Befehle sind identisch. C++-Projekte ignorieren Build-Artefakte (Dateien aus dem Kompilieren wie .o und Binaries). Python-Projekte ignorieren zum Beispiel __pycache__/ und .venv/.",
+   "merk": "add → commit → push. .gitignore hält Build-Dateien aus dem Repo."
+  },
+  {
+   "titel": "Branches: paralleles Arbeiten",
+   "python": {
+    "text": "Ein Branch (Zweig) ist eine parallele Arbeitslinie. Du kannst eine neue Funktion bauen, ohne main (die Hauptlinie) kaputt zu machen. git switch -c feature/noten erstellt einen neuen Branch und wechselt hinein. git merge bringt die Änderungen zurück. Der Workflow kurz: Branch erstellen → arbeiten → committen → zurück zu main → mergen.",
+    "code": "git switch -c feature/noten   # Branch erstellen + wechseln\ngit switch main               # zurück zu main\n\ngit merge feature/noten       # Änderungen übernehmen\n\n# Übersicht:\ngit branch                    # alle Branches\ngit log --oneline --graph     # Verlauf mit Baum\n\n# Konflikt beim Merge?\n# Git markiert die Stellen, du entscheidest und committest."
+   },
+   "vergleich": "Branches funktionieren in beiden Sprachen gleich. Faustregel: main bleibt immer baubar (kompilierbar). Experimente laufen auf Feature-Branches.",
+   "merk": "Feature-Branch anlegen, arbeiten, erst mergen, wenn alles grün ist."
+  },
+  {
+   "titel": "Scrum und Continuous Integration (CI)",
+   "python": {
+    "text": "Scrum ist eine agile Methode für Projektmanagement. Agil heißt: Arbeiten in kleinen Schritten mit viel Feedback. In festen Sprints (2–4 Wochen) entsteht ein nutzbares Stück Produkt. Es gibt drei Rollen. Der Product Owner entscheidet, was zuerst gebaut wird. Er pflegt das Product Backlog (die Aufgabenliste). Der Scrum Master räumt Hindernisse weg. Das Development Team baut das Produkt. CI (Continuous Integration) heißt: Bei jedem Push laufen die Tests automatisch. Grün heißt: Tests bestanden. Rot heißt: Etwas ist kaputt. Auf GitHub läuft das zum Beispiel per GitHub Actions.",
+    "code": "# .github/workflows/tests.yml (GitHub Actions)\nname: Tests\non: [push]\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-python@v5\n        with:\n          python-version: \"3.12\"\n      - run: python3 -m pytest\n\n# Jeder Push -> Tests laufen automatisch\n# Rot = Push hat etwas kaputt gemacht"
+   },
+   "vergleich": "Scrum und CI funktionieren mit jeder Sprache. Python-CI: pytest (ein Test-Werkzeug) nach jedem Push. C++-CI: kompilieren und testen auf frischem System.",
+   "merk": "Scrum: Product Owner, Scrum Master, Team. CI: jeder Push → automatischer Build + Tests."
+  }
+ ]
+}
