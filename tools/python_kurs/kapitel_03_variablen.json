@@ -184,7 +184,8 @@
      "titel": "Vorhersage — wann der Wert eingefroren wird",
      "aufgabe": "Unten steht ein Programm mit einer Neuzuweisung in der Mitte. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf, in dem steht, welche zwei Zahlen du erwartest. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile zuerst 10 und dann 5 ausgegeben wird.",
      "tipp": "Die Zeile mit gesamt wird genau einmal ausgeführt, und zwar an ihrer Position. Sie merkt sich das Ergebnis, nicht die Rechnung.",
-     "loesung": "print(\"Erwartet: zuerst 10, dann 5\")\nanzahl_kartons = 3\ngesamt = anzahl_kartons + 2\nanzahl_kartons = 10\nprint(anzahl_kartons)\nprint(gesamt)"
+     "loesung": "print(\"Erwartet: zuerst 10, dann 5\")\nanzahl_kartons = 3\ngesamt = anzahl_kartons + 2\nanzahl_kartons = 10\nprint(anzahl_kartons)\nprint(gesamt)",
+     "vorgabe": "anzahl_kartons = 3\ngesamt = anzahl_kartons + 2\nanzahl_kartons = 10\nprint(anzahl_kartons)\nprint(gesamt)"
     },
     {
      "titel": "Fünf Werte, fünf Typen",
@@ -208,7 +209,8 @@
      "titel": "Vorhersage — dasselbe Sternchen, zwei Bedeutungen",
      "aufgabe": "Unten stehen vier Zeilen, in denen zweimal ein Sternchen vorkommt. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für alle vier Ausgabezeilen. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile 3333, 12, und erscheinen.",
      "tipp": "Der Typ legt fest, welche Operationen erlaubt sind und was sie bedeuten. Bei Text wiederholt das Sternchen, bei Zahlen multipliziert es.",
-     "loesung": "print(\"Erwartet: 3333, dann 12, dann str, dann int\")\nprint(\"3\" * 4)\nprint(3 * 4)\nprint(type(\"3\"))\nprint(type(3))"
+     "loesung": "print(\"Erwartet: 3333, dann 12, dann str, dann int\")\nprint(\"3\" * 4)\nprint(3 * 4)\nprint(type(\"3\"))\nprint(type(3))",
+     "vorgabe": "print(\"3\" * 4)\nprint(3 * 4)\nprint(type(\"3\"))\nprint(type(3))"
     },
     {
      "titel": "Von Text zu Zahl und zurück",

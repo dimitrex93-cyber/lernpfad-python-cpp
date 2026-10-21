@@ -203,7 +203,8 @@
      "titel": "Vorhersage — was in den Fenstern passiert",
      "aufgabe": "Unten steht ein Programm mit sechs Ausgabezeilen, von denen eine absichtlich das f vermissen lässt. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für alle sechs Zeilen. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Achte besonders auf die letzte Zeile. Fertig, wenn: nach deiner Vorhersagezeile sechs Zeilen folgen, die zweite davon geschweifte Klammern enthält und die letzte wieder klein geschrieben ist.",
      "tipp": "In den geschweiften Klammern darf alles stehen, was einen Wert ergibt — eine Rechnung, ein Methodenaufruf, ein Funktionsaufruf. Und für die letzte Zeile gilt wieder: Eine Methode im f-String ändert die Variable nicht.",
-     "loesung": "print(\"Erwartet: erst woertlich mit Klammern, dann Hallo jens, Jens ist 41, In 10 Jahren 51, 4 Buchstaben, zuletzt jens klein\")\nvorname = \"jens\"\nalter = 41\nprint(\"Hallo, {vorname}!\")\nprint(f\"Hallo, {vorname}!\")\nprint(f\"{vorname.title()} ist {alter} Jahre alt.\")\nprint(f\"In 10 Jahren: {alter + 10}\")\nprint(f\"Der Name hat {len(vorname)} Buchstaben.\")\nprint(vorname)"
+     "loesung": "print(\"Erwartet: erst woertlich mit Klammern, dann Hallo jens, Jens ist 41, In 10 Jahren 51, 4 Buchstaben, zuletzt jens klein\")\nvorname = \"jens\"\nalter = 41\nprint(\"Hallo, {vorname}!\")\nprint(f\"Hallo, {vorname}!\")\nprint(f\"{vorname.title()} ist {alter} Jahre alt.\")\nprint(f\"In 10 Jahren: {alter + 10}\")\nprint(f\"Der Name hat {len(vorname)} Buchstaben.\")\nprint(vorname)",
+     "vorgabe": "vorname = \"jens\"\nalter = 41\nprint(\"Hallo, {vorname}!\")\nprint(f\"Hallo, {vorname}!\")\nprint(f\"{vorname.title()} ist {alter} Jahre alt.\")\nprint(f\"In 10 Jahren: {alter + 10}\")\nprint(f\"Der Name hat {len(vorname)} Buchstaben.\")\nprint(vorname)"
     },
     {
      "titel": "Drei Fehler in sechs Zeilen",

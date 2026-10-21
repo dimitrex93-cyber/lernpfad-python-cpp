@@ -154,7 +154,8 @@
      "titel": "Vorhersage — drei Arten zu teilen",
      "aufgabe": "Unten stehen fünf Zeilen mit Divisionen. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für alle fünf Ausgabezeilen — achte besonders darauf, wo eine Nachkommastelle auftaucht und wo nicht. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile 5.0, , 5, 4.5 und 4 erscheinen.",
      "tipp": "Eine der fünf Zeilen überrascht fast jeden: Die Division geht glatt auf und liefert trotzdem eine Kommazahl.",
-     "loesung": "print(\"Erwartet: 5.0, dann float, dann 5, dann 4.5, dann 4\")\nprint(20 / 4)\nprint(type(20 / 4))\nprint(20 // 4)\nprint(9 / 2)\nprint(9 // 2)"
+     "loesung": "print(\"Erwartet: 5.0, dann float, dann 5, dann 4.5, dann 4\")\nprint(20 / 4)\nprint(type(20 / 4))\nprint(20 // 4)\nprint(9 / 2)\nprint(9 // 2)",
+     "vorgabe": "print(20 / 4)\nprint(type(20 / 4))\nprint(20 // 4)\nprint(9 / 2)\nprint(9 // 2)"
     },
     {
      "titel": "Zahl in einen Satz bringen",

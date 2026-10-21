@@ -139,7 +139,8 @@
      "titel": "Vorhersage — die Anführungszeichen entscheiden",
      "aufgabe": "Unten stehen vier Zeilen. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf, in dem steht, welche vier Ausgabezeilen du erwartest. Erst danach übernimmst du die vier Zeilen aus der Vorgabe darunter und führst das Programm aus. Vergleiche dann deine Vorhersage mit dem, was tatsächlich kommt. Fertig, wenn: deine Vorhersagezeile oben steht und darunter in dieser Reihenfolge 56, 7 8, 99 und 100 - 1 ausgegeben werden.",
      "tipp": "Frage dich bei jeder Zeile nur eines: Steht der Ausdruck zwischen Anführungszeichen oder nicht? Innerhalb denkt Python nicht mit.",
-     "loesung": "print(\"Erwartet: 56, dann 7 * 8, dann 99, dann 100 - 1\")\nprint(7 * 8)\nprint(\"7 * 8\")\nprint(100 - 1)\nprint(\"100 - 1\")"
+     "loesung": "print(\"Erwartet: 56, dann 7 * 8, dann 99, dann 100 - 1\")\nprint(7 * 8)\nprint(\"7 * 8\")\nprint(100 - 1)\nprint(\"100 - 1\")",
+     "vorgabe": "print(7 * 8)\nprint(\"7 * 8\")\nprint(100 - 1)\nprint(\"100 - 1\")"
     },
     {
      "titel": "Zwei kaputte Zeilen reparieren",
@@ -175,7 +176,8 @@
      "titel": "Vorhersage — zählen ab null",
      "aufgabe": "Unten steht ein Programm, das eine Liste mit drei Namen anlegt und darauf zugreift. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf, in dem steht, was du erwartest — auch, ob und wo es abbricht. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile Anna und Carla erscheinen und das Programm danach mit IndexError: list index out of range abbricht.",
      "tipp": "Gezählt wird ab 0. Eine Liste mit drei Einträgen hat deshalb die Positionen 0, 1 und 2 — mehr nicht.",
-     "loesung": "print(\"Erwartet: Anna, dann Carla, dann ein IndexError in Zeile 5\")\nnamen = [\"Anna\", \"Ben\", \"Carla\"]\nprint(namen[0])\nprint(namen[2])\nprint(namen[3])"
+     "loesung": "print(\"Erwartet: Anna, dann Carla, dann ein IndexError in Zeile 5\")\nnamen = [\"Anna\", \"Ben\", \"Carla\"]\nprint(namen[0])\nprint(namen[2])\nprint(namen[3])",
+     "vorgabe": "namen = [\"Anna\", \"Ben\", \"Carla\"]\nprint(namen[0])\nprint(namen[1])\nprint(namen[2])"
     },
     {
      "titel": "Die erste Frage an den Benutzer",
@@ -211,13 +213,15 @@
      "titel": "Reparatur — Text plus Zahl",
      "aufgabe": "Die Vorgabe soll den Satz \"In drei Jahren: 20\" ausgeben und bricht stattdessen mit einer Fehlermeldung ab. Lies die Meldung genau: Sie nennt die Zeile und den Grund. Repariere das Programm so, dass wirklich gerechnet wird. Fertig, wenn: genau eine Zeile erscheint, nämlich \"In drei Jahren: 20\", und keine Fehlermeldung mehr kommt.",
      "tipp": "In eingabe steht kein Wert vom Typ int, obwohl nur Ziffern darin vorkommen. Wandle ihn um, bevor du rechnest, und setze das Ergebnis mit einem f-String in den Satz ein.",
-     "loesung": "eingabe = \"17\"\nalter = int(eingabe)\nprint(f\"In drei Jahren: {alter + 3}\")"
+     "loesung": "eingabe = \"17\"\nalter = int(eingabe)\nprint(f\"In drei Jahren: {alter + 3}\")",
+     "vorgabe": "eingabe = \"17\"\nprint(\"In drei Jahren: \" + eingabe + 3)"
     },
     {
      "titel": "Vorhersage — fünf Zeilen über eine Eingabe",
      "aufgabe": "Unten steht ein Programm, das eine mit Leerzeichen umgebene Eingabe auf fünf Arten untersucht. Schreibe zuerst als allererste Zeile deines Programms einen print-Aufruf mit deiner Vorhersage für alle fünf Ausgaben. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Achte besonders auf den Unterschied zwischen der zweiten und der dritten Zeile. Fertig, wenn: nach deiner Vorhersagezeile fünf Zeilen folgen und die zweite davon False, die dritte True lautet.",
      "tipp": "Eine der beiden Umwandlungsfunktionen ist großzügig mit Leerraum, der Vergleich mit zwei Gleichheitszeichen ist es nicht. Und len zählt Zeichen, nicht Buchstaben.",
-     "loesung": "print(\"Erwartet: 25, False, True, 2 und 3.5\")\neingabe = \"  25  \"\nprint(int(eingabe))\nprint(eingabe == \"25\")\nprint(eingabe.strip() == \"25\")\nprint(len(eingabe.strip()))\nprint(float(\"3.5\"))"
+     "loesung": "print(\"Erwartet: 25, False, True, 2 und 3.5\")\neingabe = \"  25  \"\nprint(int(eingabe))\nprint(eingabe == \"25\")\nprint(eingabe.strip() == \"25\")\nprint(len(eingabe.strip()))\nprint(float(\"3.5\"))",
+     "vorgabe": "eingabe = \"  25  \"\nprint(int(eingabe))\nprint(eingabe == \"25\")\nprint(eingabe.strip() == \"25\")\nprint(len(eingabe.strip()))\nprint(float(\"3.5\"))"
     }
    ]
   },

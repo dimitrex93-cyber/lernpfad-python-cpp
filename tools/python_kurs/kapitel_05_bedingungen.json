@@ -293,13 +293,15 @@
      "titel": "Zwei Zeichen, zwei Fehlermeldungen",
      "aufgabe": "Die Vorgabe soll zweimal True ausgeben und startet nicht einmal. Sie enthält zwei verschiedene Schreibfehler aus diesem Thema. Repariere sie nacheinander mit jeweils einem Lauf dazwischen und lies beide Fehlermeldungen vollständig — die erste nennt die Lösung wörtlich. Fertig, wenn: das Programm ohne Fehlermeldung läuft und zwei Zeilen mit True ausgibt.",
      "tipp": "Ein Zeichen schreibt, zwei Zeichen lesen. Und beim zweiten Fehler steht das Gleichheitszeichen auf der falschen Seite — es gehört immer nach hinten.",
-     "loesung": "alter = 18\nprint(18 == alter)\nprint(alter >= 18)"
+     "loesung": "alter = 18\nprint(18 == alter)\nprint(alter >= 18)",
+     "vorgabe": "alter = 18\nprint(18 = alter)\nprint(alter => 18)"
     },
     {
      "titel": "Vorhersage — and, or, not",
      "aufgabe": "Unten stehen fünf verknüpfte Bedingungen über dieselben zwei Variablen. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für alle fünf Ergebnisse. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Achte besonders auf den Unterschied zwischen Zeile zwei und Zeile drei. Fertig, wenn: nach deiner Vorhersagezeile fünf Wahrheitswerte folgen und du erklären kannst, warum dieselben zwei Teilbedingungen einmal False und einmal True ergeben.",
      "tipp": "and ist streng und verlangt beide Seiten, or ist großzügig und begnügt sich mit einer, not ist der Spiegel und dreht genau einen Wert um.",
-     "loesung": "print(\"Erwartet: True, False, True, False, True\")\nalter = 22\ndienstgrad = \"feldwebel\"\nprint(alter >= 18 and dienstgrad == \"feldwebel\")\nprint(alter >= 18 and dienstgrad == \"hauptmann\")\nprint(alter >= 18 or dienstgrad == \"hauptmann\")\nprint(not alter >= 18)\nprint(not dienstgrad == \"hauptmann\")"
+     "loesung": "print(\"Erwartet: True, False, True, False, True\")\nalter = 22\ndienstgrad = \"feldwebel\"\nprint(alter >= 18 and dienstgrad == \"feldwebel\")\nprint(alter >= 18 and dienstgrad == \"hauptmann\")\nprint(alter >= 18 or dienstgrad == \"hauptmann\")\nprint(not alter >= 18)\nprint(not dienstgrad == \"hauptmann\")",
+     "vorgabe": "alter = 22\ndienstgrad = \"feldwebel\"\nprint(alter >= 18 and dienstgrad == \"feldwebel\")\nprint(alter >= 18 and dienstgrad == \"hauptmann\")\nprint(alter >= 18 or dienstgrad == \"hauptmann\")\nprint(not alter >= 18)\nprint(not dienstgrad == \"hauptmann\")"
     },
     {
      "titel": "Ein Zweig, der auch ausbleiben darf",
@@ -347,7 +349,8 @@
      "titel": "Vorhersage — Kette gegen Einzelfragen",
      "aufgabe": "Unten stehen dieselben drei Bedingungen zweimal: oben als elif-Kette, unten als drei getrennte if. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage, wie viele Ausgabezeilen jeder Teil erzeugt. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile zuerst eine Zeile erscheint, dann die Trennlinie, dann drei Zeilen.",
      "tipp": "Eine elif-Kette ist eine einzige Anweisung mit mehreren Zweigen. Drei getrennte if sind drei eigenständige Anweisungen. Prüfe für 14 Dienstjahre, wie viele der drei Bedingungen für sich genommen zutreffen.",
-     "loesung": "print(\"Erwartet: zuerst eine Zeile, nach der Trennlinie drei Zeilen\")\ndienstjahre = 14\nif dienstjahre >= 12:\n    print(\"Stufe 3\")\nelif dienstjahre >= 8:\n    print(\"Stufe 2\")\nelif dienstjahre >= 4:\n    print(\"Stufe 1\")\nprint(\"---\")\nif dienstjahre >= 12:\n    print(\"Stufe 3\")\nif dienstjahre >= 8:\n    print(\"Stufe 2\")\nif dienstjahre >= 4:\n    print(\"Stufe 1\")"
+     "loesung": "print(\"Erwartet: zuerst eine Zeile, nach der Trennlinie drei Zeilen\")\ndienstjahre = 14\nif dienstjahre >= 12:\n    print(\"Stufe 3\")\nelif dienstjahre >= 8:\n    print(\"Stufe 2\")\nelif dienstjahre >= 4:\n    print(\"Stufe 1\")\nprint(\"---\")\nif dienstjahre >= 12:\n    print(\"Stufe 3\")\nif dienstjahre >= 8:\n    print(\"Stufe 2\")\nif dienstjahre >= 4:\n    print(\"Stufe 1\")",
+     "vorgabe": "dienstjahre = 14\nif dienstjahre >= 12:\n    print(\"Stufe 3\")\nelif dienstjahre >= 8:\n    print(\"Stufe 2\")\nelif dienstjahre >= 4:\n    print(\"Stufe 1\")\nprint(\"---\")\nif dienstjahre >= 12:\n    print(\"Stufe 3\")\nif dienstjahre >= 8:\n    print(\"Stufe 2\")\nif dienstjahre >= 4:\n    print(\"Stufe 1\")"
     },
     {
      "titel": "Steht der Wert in der Liste?",
@@ -389,7 +392,8 @@
      "titel": "Vorhersage — die abgekürzte Oder-Frage",
      "aufgabe": "Unten stehen drei Bedingungen über denselben Fuhrpark. Die erste ist in der Schreibweise aus der gesprochenen Sprache verfasst. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für alle drei Ergebnisse. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile drei Zeilen folgen, von denen die erste gar kein Wahrheitswert ist.",
      "tipp": "Dieselbe Falle wie bei alter &gt;= 18 and &lt;= 30 aus Thema 1: Hinter and und or muss eine vollständige Bedingung stehen. Frage dich, was auf der linken Seite des ersten or eigentlich steht — und ob das schon eine Frage an die Liste ist.",
-     "loesung": "print(\"Erwartet: erst lkw statt True, dann True, dann True\")\nfuhrpark = [\"lkw\", \"jeep\", \"bus\"]\nprint(\"lkw\" or \"jeep\" in fuhrpark)\nprint(\"lkw\" in fuhrpark or \"jeep\" in fuhrpark)\nprint(\"lkw\" in fuhrpark and \"jeep\" in fuhrpark)"
+     "loesung": "print(\"Erwartet: erst lkw statt True, dann True, dann True\")\nfuhrpark = [\"lkw\", \"jeep\", \"bus\"]\nprint(\"lkw\" or \"jeep\" in fuhrpark)\nprint(\"lkw\" in fuhrpark or \"jeep\" in fuhrpark)\nprint(\"lkw\" in fuhrpark and \"jeep\" in fuhrpark)",
+     "vorgabe": "fuhrpark = [\"lkw\", \"jeep\", \"bus\"]\nprint(\"lkw\" or \"jeep\" in fuhrpark)\nprint(\"lkw\" in fuhrpark or \"jeep\" in fuhrpark)\nprint(\"lkw\" in fuhrpark and \"jeep\" in fuhrpark)"
     }
    ]
   },

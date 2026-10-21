@@ -58,19 +58,22 @@
      "titel": "Reparatur — das Programm startet nicht",
      "aufgabe": "Die Vorgabe soll drei Standorte ausgeben. Stattdessen bricht Python ab, bevor eine einzige Zeile gelaufen ist. Führe sie zuerst aus, lies die Meldung genau, und repariere dann das eine fehlende Zeichen. Fertig, wenn: die drei Zeilen Munster, Koblenz, Ulm erscheinen.",
      "tipp": "Die Meldung nennt das fehlende Zeichen wörtlich, und das kleine Dach darunter zeigt auf die Stelle, an der es hingehört.",
-     "loesung": "standorte = ['munster', 'koblenz', 'ulm']\n\nfor standort in standorte:\n    print(standort.title())"
+     "loesung": "standorte = ['munster', 'koblenz', 'ulm']\n\nfor standort in standorte:\n    print(standort.title())",
+     "vorgabe": "standorte = ['munster', 'koblenz', 'ulm']\n\nfor standort in standorte\n    print(standort.title())"
     },
     {
      "titel": "Reparatur — eine Schleife ohne Körper",
      "aufgabe": "Auch diese Vorgabe startet nicht. Diesmal fehlt kein Zeichen, sondern ein Abstand. Führe sie aus, lies die Meldung, und bringe die Zeile dorthin, wo sie hingehört. Fertig, wenn: die drei Dienstgrade groß begonnen untereinander erscheinen.",
      "tipp": "Der Doppelpunkt hat einen Block versprochen. Der verbindliche Standard für eine Ebene sind vier Leerzeichen.",
-     "loesung": "dienstgrade = ['gefreiter', 'feldwebel', 'hauptmann']\n\nfor grad in dienstgrade:\n    print(grad.title())"
+     "loesung": "dienstgrade = ['gefreiter', 'feldwebel', 'hauptmann']\n\nfor grad in dienstgrade:\n    print(grad.title())",
+     "vorgabe": "dienstgrade = ['gefreiter', 'feldwebel', 'hauptmann']\n\nfor grad in dienstgrade:\nprint(grad.title())"
     },
     {
      "titel": "Reparatur — die Ausgabe kommt zu oft",
      "aufgabe": "Diese Vorgabe läuft durch. Es kommt keine Fehlermeldung, und trotzdem ist das Ergebnis falsch: Die Abschlusszeile soll einmal am Ende stehen, erscheint aber nach jedem Fahrzeug. Führe die Vorgabe aus, vergleiche mit dem Soll, und verschiebe die eine Zeile. Fertig, wenn: vier Zeilen erscheinen und Fahrzeugliste vollständig. nur die letzte ist.",
      "tipp": "Beide Fassungen sind gültiger Python-Code — deshalb schweigt Python. Entscheidend ist allein, wie weit rechts die letzte Zeile beginnt.",
-     "loesung": "fahrzeuge = ['lkw', 'jeep', 'transporter']\n\nfor fahrzeug in fahrzeuge:\n    print(fahrzeug.title())\nprint(\"Fahrzeugliste vollständig.\")"
+     "loesung": "fahrzeuge = ['lkw', 'jeep', 'transporter']\n\nfor fahrzeug in fahrzeuge:\n    print(fahrzeug.title())\nprint(\"Fahrzeugliste vollständig.\")",
+     "vorgabe": "fahrzeuge = ['lkw', 'jeep', 'transporter']\n\nfor fahrzeug in fahrzeuge:\n    print(fahrzeug.title())\n    print(\"Fahrzeugliste vollständig.\")"
     },
     {
      "titel": "Die leere Liste",
@@ -142,7 +145,8 @@
      "titel": "Reparatur — die Schleife gibt nichts aus",
      "aufgabe": "Die Vorgabe soll von 10 bis 1 herunterzählen und danach Fertig. melden. Sie läuft ohne jede Fehlermeldung durch, gibt aber nur eine einzige Zeile aus. Führe sie aus, finde heraus, warum die Schleife keinmal läuft, und repariere sie. Fertig, wenn: elf Zeilen erscheinen: 10 bis 1 und darunter Fertig..",
      "tipp": "Setz zur Diagnose ein print(list(range(10, 0))) davor und sieh nach, was die Folge überhaupt enthält. Python zählt von sich aus aufwärts.",
-     "loesung": "for zahl in range(10, 0, -1):\n    print(zahl)\n\nprint(\"Fertig.\")"
+     "loesung": "for zahl in range(10, 0, -1):\n    print(zahl)\n\nprint(\"Fertig.\")",
+     "vorgabe": "for zahl in range(10, 0):\n    print(zahl)\n\nprint(\"Fertig.\")"
     },
     {
      "titel": "Position und Wert zugleich",
@@ -190,13 +194,15 @@
      "titel": "Vorhersage — der Zähler an der falschen Stelle",
      "aufgabe": "Unten steht ein Programm mit zwei Schleifen über dieselbe Liste. Beide sollen aufsummieren, aber die zweite legt ihre Summenvariable im Schleifenkörper an. Schreibe zuerst als allererste Zeile einen print()-Aufruf mit deiner Vorhersage für beide Zahlen. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile zwei Zahlen erscheinen: zuerst 123, darunter 23.",
      "tipp": "Achte darauf, wie weit rechts die Zeile mit = 0 jeweils steht. Was auf Ebene 1 steht, läuft in jedem Durchlauf — auch eine Zuweisung auf null.",
-     "loesung": "print(\"Erwartet: oben die Gesamtsumme, unten nur die letzte Zahl\")\n\nzahlen = [12, 7, 30, 3, 48, 23]\n\nsumme = 0\nfor zahl in zahlen:\n    summe += zahl\nprint(summe)\n\nfor zahl in zahlen:\n    summe_falsch = 0\n    summe_falsch += zahl\nprint(summe_falsch)"
+     "loesung": "print(\"Erwartet: oben die Gesamtsumme, unten nur die letzte Zahl\")\n\nzahlen = [12, 7, 30, 3, 48, 23]\n\nsumme = 0\nfor zahl in zahlen:\n    summe += zahl\nprint(summe)\n\nfor zahl in zahlen:\n    summe_falsch = 0\n    summe_falsch += zahl\nprint(summe_falsch)",
+     "vorgabe": "zahlen = [12, 7, 30, 3, 48, 23]\n\nsumme = 0\nfor zahl in zahlen:\n    summe += zahl\nprint(summe)\n\nfor zahl in zahlen:\n    summe_falsch = 0\n    summe_falsch += zahl\nprint(summe_falsch)"
     },
     {
      "titel": "Reparatur — der Zähler zählt zu viel",
      "aufgabe": "Die Vorgabe soll die Werte über 20 sammeln und dabei mitzählen. Die gefilterte Liste stimmt, der Zähler aber nicht: Er steht am Ende auf 6 statt auf 3. Führe die Vorgabe aus, vergleiche die beiden Ausgaben miteinander, und verschiebe die eine Zeile, die auf der falschen Ebene steht. Fertig, wenn: zwei Zeilen erscheinen: [30, 48, 23] und darunter 3.",
      "tipp": "Zähle die Leerzeichen am Anfang der Zeile anzahl += 1 und vergleiche sie mit der Zeile darüber. Vier heißt „in jedem Durchlauf\", acht heißt „nur bei erfüllter Bedingung\".",
-     "loesung": "zahlen = [12, 7, 30, 3, 48, 23]\n\ngrosse = []\nanzahl = 0\n\nfor zahl in zahlen:\n    if zahl > 20:\n        grosse.append(zahl)\n        anzahl += 1\n\nprint(grosse)\nprint(anzahl)"
+     "loesung": "zahlen = [12, 7, 30, 3, 48, 23]\n\ngrosse = []\nanzahl = 0\n\nfor zahl in zahlen:\n    if zahl > 20:\n        grosse.append(zahl)\n        anzahl += 1\n\nprint(grosse)\nprint(anzahl)",
+     "vorgabe": "zahlen = [12, 7, 30, 3, 48, 23]\n\ngrosse = []\nanzahl = 0\n\nfor zahl in zahlen:\n    if zahl > 20:\n        grosse.append(zahl)\n    anzahl += 1\n\nprint(grosse)\nprint(anzahl)"
     },
     {
      "titel": "Fizz, Buzz und die Reihenfolge der Prüfungen",
@@ -226,7 +232,8 @@
      "titel": "Reparatur — die Schleife, die nicht aufhört",
      "aufgabe": "Die Vorgabe soll drei Diensttage melden und läuft stattdessen ewig. Starte sie ruhig einmal und beende sie mit der Tastenkombination Strg und C. Finde heraus, welche einzige Zeile fehlt, ergänze sie und gib nach der Schleife zusätzlich die Zeile Woche beendet aus. Fertig, wenn: genau vier Zeilen erscheinen, das Programm von selbst endet und kein Abbruch von Hand mehr nötig ist.",
      "tipp": "Die Bedingung ist völlig richtig. Der Fehler steckt im Körper: Dort fehlt der dritte Schritt des Grundmusters, nämlich das Verändern der geprüften Variablen. Die neue Zeile muss eingerückt sein.",
-     "loesung": "tag = 1\nwhile tag <= 3:\n    print(f\"Tag {tag}: Dienst\")\n    tag += 1\nprint(\"Woche beendet\")"
+     "loesung": "tag = 1\nwhile tag <= 3:\n    print(f\"Tag {tag}: Dienst\")\n    tag += 1\nprint(\"Woche beendet\")",
+     "vorgabe": "tag = 1\nwhile tag <= 3:\n    print(f\"Tag {tag}: Dienst\")"
     },
     {
      "titel": "Guthaben aufbrauchen",
@@ -256,7 +263,8 @@
      "titel": "Vorhersage — ein Zeichen Unterschied",
      "aufgabe": "Unten stehen zwei Schleifen, die sich nur in einem einzigen Zeichen unterscheiden. Beide zählen ab 1 hoch, beide geben nach dem Durchlauf den Endstand der Variablen aus. Schreibe zuerst als allererste Zeile einen print-Aufruf mit deiner Vorhersage, welche Zahlen jede Schleife ausgibt und mit welchem Wert sie endet. Führe erst danach aus. Fertig, wenn: nach deiner Vorhersagezeile die Ausgaben beider Schleifen folgen und die beiden Endstände sich um genau eins unterscheiden.",
      "tipp": "Denk daran, dass die Bedingung einmal öfter geprüft wird, als der Körper läuft. Der letzte Wert, den die Variable annimmt, ist deshalb immer einer, der die Bedingung schon verletzt.",
-     "loesung": "print(\"Erwartet: A zaehlt 1 bis 5 und endet mit 6, B zaehlt 1 bis 4 und endet mit 5\")\nzahl = 1\nwhile zahl <= 5:\n    print(f\"A: {zahl}\")\n    zahl += 1\nprint(f\"A endet mit zahl = {zahl}\")\nzahl = 1\nwhile zahl < 5:\n    print(f\"B: {zahl}\")\n    zahl += 1\nprint(f\"B endet mit zahl = {zahl}\")"
+     "loesung": "print(\"Erwartet: A zaehlt 1 bis 5 und endet mit 6, B zaehlt 1 bis 4 und endet mit 5\")\nzahl = 1\nwhile zahl <= 5:\n    print(f\"A: {zahl}\")\n    zahl += 1\nprint(f\"A endet mit zahl = {zahl}\")\nzahl = 1\nwhile zahl < 5:\n    print(f\"B: {zahl}\")\n    zahl += 1\nprint(f\"B endet mit zahl = {zahl}\")",
+     "vorgabe": "zahl = 1\nwhile zahl <= 5:\n    print(f\"A: {zahl}\")\n    zahl += 1\nprint(f\"A endet mit zahl = {zahl}\")\nzahl = 1\nwhile zahl < 5:\n    print(f\"B: {zahl}\")\n    zahl += 1\nprint(f\"B endet mit zahl = {zahl}\")"
     },
     {
      "titel": "Suchen und sofort aufhören",
@@ -292,13 +300,15 @@
      "titel": "Reparatur — continue an der falschen Stelle",
      "aufgabe": "Die Vorgabe soll die ungeraden Zahlen unter 8 ausgeben. Sie gibt nichts aus und hängt. Starte sie ruhig einmal und beende sie mit Strg und C. Finde heraus, welche Zeile an der falschen Stelle steht, und verschiebe sie so, dass das Programm von selbst endet. Fertig, wenn: die vier Zahlen 1, 3, 5 und 7 untereinander erscheinen und das Programm von selbst endet.",
      "tipp": "Spiele den ersten Durchlauf von Hand durch: Welchen Wert hat die Variable, was macht das if damit, und welche Zeilen des Körpers werden danach überhaupt noch erreicht? Die Lösung besteht darin, eine vorhandene Zeile zu verschieben, nicht eine neue zu schreiben.",
-     "loesung": "zahl = 0\nwhile zahl < 8:\n    zahl += 1\n    if zahl % 2 == 0:\n        continue\n    print(zahl)"
+     "loesung": "zahl = 0\nwhile zahl < 8:\n    zahl += 1\n    if zahl % 2 == 0:\n        continue\n    print(zahl)",
+     "vorgabe": "zahl = 0\nwhile zahl < 8:\n    if zahl % 2 == 0:\n        continue\n    print(zahl)\n    zahl += 1"
     },
     {
      "titel": "Vorhersage — break gegen continue",
      "aufgabe": "Unten steht dieselbe Schleife zweimal über derselben Messwertliste, einmal mit break und einmal mit continue an genau derselben Stelle. Schreibe zuerst als allererste Zeile deines Programms einen print-Aufruf mit deiner Vorhersage, welche Werte jede der beiden Fassungen ausgibt. Führe erst danach aus und vergleiche. Fertig, wenn: nach deiner Vorhersagezeile zwei Blöcke mit Überschrift folgen: unter --- mit break --- die Zahlen 10 und 20, unter --- mit continue --- die Zahlen 10, 20, 40 und 50.",
      "tipp": "Beide Schlüsselwörter greifen mitten im Durchlauf. Der Unterschied liegt nur darin, ob die Schleife danach noch einmal von vorn beginnt.",
-     "loesung": "print(\"Erwartet: mit break nur 10 und 20, mit continue 10, 20, 40 und 50\")\nmesswerte = [10, 20, -5, 40, 50]\nprint(\"--- mit break ---\")\nfor wert in messwerte:\n    if wert < 0:\n        break\n    print(wert)\nprint(\"--- mit continue ---\")\nfor wert in messwerte:\n    if wert < 0:\n        continue\n    print(wert)"
+     "loesung": "print(\"Erwartet: mit break nur 10 und 20, mit continue 10, 20, 40 und 50\")\nmesswerte = [10, 20, -5, 40, 50]\nprint(\"--- mit break ---\")\nfor wert in messwerte:\n    if wert < 0:\n        break\n    print(wert)\nprint(\"--- mit continue ---\")\nfor wert in messwerte:\n    if wert < 0:\n        continue\n    print(wert)",
+     "vorgabe": "messwerte = [10, 20, -5, 40, 50]\nprint(\"--- mit break ---\")\nfor wert in messwerte:\n    if wert < 0:\n        break\n    print(wert)\nprint(\"--- mit continue ---\")\nfor wert in messwerte:\n    if wert < 0:\n        continue\n    print(wert)"
     }
    ]
   },
@@ -312,13 +322,15 @@
      "titel": "Vorhersage — dieselbe Zeile, zwei Plätze",
      "aufgabe": "Unten steht ein Programm, das dieselbe Liste zweimal durchläuft. Der einzige Unterschied zwischen den beiden Schleifen ist die Einrückung der Zeile print(\"Fertig.\"). Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage, wie oft Fertig. jeweils erscheint. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile Fertig. oben dreimal und unten genau einmal erscheint.",
      "tipp": "Zähle bei jeder der beiden print(\"Fertig.\")-Zeilen die Leerzeichen am Zeilenanfang. Vier heißt „im Körper\", null heißt „dahinter\".",
-     "loesung": "print(\"Erwartet: oben Fertig nach jedem Fahrzeug, unten Fertig nur einmal am Ende\")\n\nfahrzeuge = ['lkw', 'jeep', 'transporter']\n\nfor fahrzeug in fahrzeuge:\n    print(fahrzeug)\n    print(\"Fertig.\")\n\nprint(\"-\" * 20)\n\nfor fahrzeug in fahrzeuge:\n    print(fahrzeug)\nprint(\"Fertig.\")"
+     "loesung": "print(\"Erwartet: oben Fertig nach jedem Fahrzeug, unten Fertig nur einmal am Ende\")\n\nfahrzeuge = ['lkw', 'jeep', 'transporter']\n\nfor fahrzeug in fahrzeuge:\n    print(fahrzeug)\n    print(\"Fertig.\")\n\nprint(\"-\" * 20)\n\nfor fahrzeug in fahrzeuge:\n    print(fahrzeug)\nprint(\"Fertig.\")",
+     "vorgabe": "fahrzeuge = ['lkw', 'jeep', 'transporter']\n\nfor fahrzeug in fahrzeuge:\n    print(fahrzeug)\n    print(\"Fertig.\")\n\nprint(\"-\" * 20)\n\nfor fahrzeug in fahrzeuge:\n    print(fahrzeug)\nprint(\"Fertig.\")"
     },
     {
      "titel": "Drei Fehler in fünf Zeilen",
      "aufgabe": "Die Vorgabe soll drei Standorte ausgeben und danach einmal melden, dass die Liste vollständig ist. Sie enthält alle drei klassischen Schleifenfehler auf einmal: einen fehlenden Doppelpunkt, eine fehlende Einrückung und eine Zeile, die zu weit rechts steht. Repariere sie einen nach dem anderen und führe nach jedem Schritt aus. Fertig, wenn: vier Zeilen erscheinen: drei Standorte und darunter einmal Liste vollständig..",
      "tipp": "Fang mit dem Fehler an, der die Ausführung ganz verhindert — er steht in der for-Zeile. Danach meldet sich der zweite von selbst. Den dritten meldet niemand; ihn findest du nur, indem du die Ausgabe mit dem Soll vergleichst.",
-     "loesung": "standorte = ['munster', 'koblenz', 'ulm']\n\nfor standort in standorte:\n    print(f\"Standort: {standort.title()}\")\nprint(\"Liste vollständig.\")"
+     "loesung": "standorte = ['munster', 'koblenz', 'ulm']\n\nfor standort in standorte:\n    print(f\"Standort: {standort.title()}\")\nprint(\"Liste vollständig.\")",
+     "vorgabe": "standorte = ['munster', 'koblenz', 'ulm']\n\nfor standort in standorte\nprint(f\"Standort: {standort.title()}\")\n    print(\"Liste vollständig.\")"
     },
     {
      "titel": "Das Zahlenblatt",
