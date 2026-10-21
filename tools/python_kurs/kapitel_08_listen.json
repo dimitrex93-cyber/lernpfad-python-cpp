@@ -190,43 +190,44 @@
     {
      "titel": "Die erste eigene Liste",
      "aufgabe": "Lege eine Liste mit dem Namen werkzeuge an, in der genau vier Werkzeugnamen als Text stehen. Schreib die Namen klein. Gib danach die ganze Liste aus und in einer zweiten Zeile die Anzahl ihrer Elemente. Fertig, wenn: Zwei Zeilen erscheinen — zuerst die vollständige Liste in eckigen Klammern mit Anführungszeichen, darunter die Zahl 4.",
-     "tipp": "Eine Liste steht in eckigen Klammern, die Werte werden durch Kommas getrennt. Die Anzahl der Elemente nennt eine Funktion, deren Name von length kommt."
+     "tipp": "Eine Liste steht in eckigen Klammern, die Werte werden durch Kommas getrennt. Die Anzahl der Elemente nennt eine Funktion, deren Name von length kommt.",
+     "loesung": "werkzeuge = ['hammer', 'zange', 'schraubendreher', 'saege']\nprint(werkzeuge)\nprint(len(werkzeuge))"
     },
     {
      "titel": "Das erste und das dritte Fach",
      "aufgabe": "Übernimm die vorgegebene Liste. Gib das erste und das dritte Element einzeln aus, jedes mit einem eigenen print(). Achte darauf, dass in der Ausgabe nur der reine Wert steht, ohne eckige Klammern. Fertig, wenn: Zwei Zeilen erscheinen: gefreiter und hauptmann.",
      "tipp": "Der Zugriff auf ein einzelnes Fach läuft über den Listennamen und die Fachnummer in eckigen Klammern. Und Python zählt nicht so, wie man es aus dem Alltag kennt.",
-     "loesung": "dienstgrade = ['gefreiter', 'feldwebel', 'hauptmann', 'oberst']"
+     "loesung": "dienstgrade = ['gefreiter', 'feldwebel', 'hauptmann', 'oberst']\n\nprint(dienstgrade[0])\nprint(dienstgrade[2])"
     },
     {
      "titel": "Von hinten gezählt",
      "aufgabe": "Gib aus derselben Liste das letzte und das vorletzte Element aus. Benutze dafür keine ausgezählte Zahl, sondern die Zählung vom Ende her. Die Lösung soll auch dann noch stimmen, wenn jemand später einen fünften Dienstgrad ergänzt. Fertig, wenn: Zwei Zeilen erscheinen: oberst und hauptmann.",
      "tipp": "Ein Index darf auch ein Minuszeichen tragen. Die Rückwärtszählung beginnt nicht bei null.",
-     "loesung": "dienstgrade = ['gefreiter', 'feldwebel', 'hauptmann', 'oberst']"
+     "loesung": "dienstgrade = ['gefreiter', 'feldwebel', 'hauptmann', 'oberst']\n\nprint(dienstgrade[-1])\nprint(dienstgrade[-2])"
     },
     {
      "titel": "Anzahl und größter Index",
      "aufgabe": "Die Vorgabe enthält sechs Messwerte. Gib zuerst die Anzahl der Werte aus. Berechne daraus den größten gültigen Index, speichere ihn in einer Variablen und gib ihn aus. Gib dann den Wert an dieser Position aus — und zum Vergleich denselben Wert noch einmal über den Weg von hinten. Fertig, wenn: Vier Zeilen erscheinen: 6, 5, 21, 21. Die letzten beiden Zeilen müssen gleich sein.",
      "tipp": "Anzahl und größter Index unterscheiden sich immer um genau eins. Das Ergebnis von len() lässt sich ganz normal weiterrechnen und einer Variablen zuweisen.",
-     "loesung": "messwerte = [12, 30, 5, 48, 7, 21]"
+     "loesung": "messwerte = [12, 30, 5, 48, 7, 21]\n\nprint(len(messwerte))\n\ngroesster_index = len(messwerte) - 1\nprint(groesster_index)\nprint(messwerte[groesster_index])\nprint(messwerte[-1])"
     },
     {
      "titel": "Ein Element mitten im Satz",
      "aufgabe": "Gib zwei vollständige deutsche Sätze aus. Der erste nennt das erste Fahrzeug, der zweite das letzte. In beiden Sätzen soll der Fahrzeugname großgeschrieben erscheinen, obwohl er in der Liste klein steht. Fertig, wenn: Die Ausgabe lautet Das erste Fahrzeug ist ein Lkw. und Das letzte Fahrzeug ist ein Bus.",
      "tipp": "Ein Listenelement ist ein ganz gewöhnlicher Textwert. Alles, was mit einem Text geht, geht damit auch — und in den geschweiften Klammern eines f-Strings darf der Zugriff genauso stehen wie ein Variablenname.",
-     "loesung": "fahrzeuge = ['lkw', 'jeep', 'transporter', 'bus']"
+     "loesung": "fahrzeuge = ['lkw', 'jeep', 'transporter', 'bus']\n\nprint(f\"Das erste Fahrzeug ist ein {fahrzeuge[0].title()}.\")\nprint(f\"Das letzte Fahrzeug ist ein {fahrzeuge[-1].title()}.\")"
     },
     {
      "titel": "Der Index steckt in einer Variablen",
      "aufgabe": "Lege eine Variable position mit dem Wert 1 an und gib damit das passende Element der Liste aus. Setze position anschließend auf 3 und gib noch einmal mit derselben Schreibweise aus. Die beiden print-Zeilen sollen Zeichen für Zeichen gleich aussehen. Fertig, wenn: Zwei Zeilen erscheinen: hammelburg und delitzsch.",
      "tipp": "In den eckigen Klammern muss keine Zahl stehen. Dort darf auch der Name einer Variablen stehen, in der eine ganze Zahl liegt.",
-     "loesung": "staedte = ['koblenz', 'hammelburg', 'munster', 'delitzsch']"
+     "loesung": "staedte = ['koblenz', 'hammelburg', 'munster', 'delitzsch']\n\nposition = 1\nprint(staedte[position])\n\nposition = 3\nprint(staedte[position])"
     },
     {
      "titel": "Erst vorhersagen, dann ausführen",
      "aufgabe": "Übernimm den Vorgabecode in deine Datei, aber führe ihn noch nicht aus. Schreib zuerst hinter jede print-Zeile als Kommentar mit #, was deiner Meinung nach dort erscheinen wird. Erst danach das Programm starten und die vier Ausgaben mit deinen vier Vorhersagen vergleichen. Fertig, wenn: Hinter jeder der vier print-Zeilen ein Kommentar steht und die Ausgabe 5, helm, rucksack, karte lautet. Interessant ist nicht, dass die Ausgabe stimmt, sondern an welchen Stellen deine Vorhersage daneben lag.",
      "tipp": "Geh die Liste Fach für Fach durch und schreib dir die Indizes vorwärts und rückwärts daneben. Die letzte Zeile liest man von innen nach außen: erst das Ergebnis in der inneren Klammer ausrechnen, dann das Fach mit dieser Nummer öffnen.",
-     "loesung": "ausruestung = ['helm', 'weste', 'stiefel', 'rucksack', 'karte']\n\nprint(len(ausruestung))\nprint(ausruestung[0])\nprint(ausruestung[-2])\nprint(ausruestung[len(ausruestung) - 1])"
+     "loesung": "dateien = ['protokoll', 'antrag', 'bericht']\nunterlagen = ['protokoll', 'antrag', 'bericht']\n\nprint(sorted(dateien))      # ['antrag', 'bericht', 'protokoll']\nprint(dateien)              # ['protokoll', 'antrag', 'bericht']\n\nunterlagen.sort()\nprint(unterlagen)           # ['antrag', 'bericht', 'protokoll']\nprint(unterlagen[0])        # antrag"
     },
     {
      "titel": "Reparatur — das Programm bricht ab",
@@ -239,90 +240,92 @@
      "titel": "Ein Fach neu belegen",
      "aufgabe": "Gib die vorgegebene Liste aus und darunter ihre Länge. Ersetze dann das zweite Fahrzeug durch 'panzer' und gib Liste und Länge erneut aus. Die beiden Längenangaben sollen zeigen, ob Ersetzen die Liste verlängert. Fertig, wenn: Vier Zeilen erscheinen. An zweiter Stelle der Liste steht nun 'panzer', und beide Male wird die Länge 3 ausgegeben.",
      "tipp": "Dafür braucht es keine Methode. Links steht das Fach, rechts der neue Wert, dazwischen das Gleichheitszeichen — genau wie bei einer gewöhnlichen Variablen.",
-     "loesung": "fahrzeuge = ['lkw', 'jeep', 'transporter']"
+     "loesung": "fahrzeuge = ['lkw', 'jeep', 'transporter']\nprint(fahrzeuge)\nprint(len(fahrzeuge))\n\nfahrzeuge[1] = 'panzer'\nprint(fahrzeuge)\nprint(len(fahrzeuge))"
     },
     {
      "titel": "Hinten anhängen",
      "aufgabe": "Die Werkzeugkiste enthält bisher zwei Stücke. Häng nacheinander 'saege' und 'bohrer' an das Ende an und gib die Liste nach jedem Anhängen aus, damit das Wachsen sichtbar wird. Fertig, wenn: Zwei Zeilen erscheinen, die erste mit drei Elementen und die zweite mit vier, jeweils mit dem neuen Wert ganz hinten.",
      "tipp": "Die Methode heißt wie das englische Wort für anhängen. Sie wird mit einem Punkt an die Liste gehängt und bekommt nur den Wert, keine Position.",
-     "loesung": "werkzeuge = ['hammer', 'zange']"
+     "loesung": "werkzeuge = ['hammer', 'zange']\n\nwerkzeuge.append('saege')\nprint(werkzeuge)\n\nwerkzeuge.append('bohrer')\nprint(werkzeuge)"
     },
     {
      "titel": "Leer anlegen und füllen",
      "aufgabe": "Leg eine leere Liste anwesende an. Gib sie und ihre Länge aus, bevor etwas darin steht. Trag dann nacheinander drei Nachnamen ein und gib Liste und Länge erneut aus. Eine Vorgabe gibt es nicht — du schreibst das Programm von der ersten Zeile an selbst. Fertig, wenn: Zuerst erscheinen [] und 0, danach die Liste mit drei Namen und die Zahl 3.",
-     "tipp": "Zwei eckige Klammern ohne Inhalt ergeben eine Liste ohne Elemente. Gefüllt wird sie mit derselben Methode wie in der vorigen Aufgabe."
+     "tipp": "Zwei eckige Klammern ohne Inhalt ergeben eine Liste ohne Elemente. Gefüllt wird sie mit derselben Methode wie in der vorigen Aufgabe.",
+     "loesung": "anwesende = []\nprint(anwesende)\nprint(len(anwesende))\n\nanwesende.append('mueller')\nanwesende.append('schmidt')\nanwesende.append('weber')\n\nprint(anwesende)\nprint(len(anwesende))"
     },
     {
      "titel": "An bestimmter Stelle einfügen",
      "aufgabe": "Die Postenliste soll ergänzt werden, aber nicht am Ende. Setz 'tor' ganz nach vorn und danach 'lager' an die dritte Stelle. Gib die Liste nach jedem Schritt aus und achte darauf, wohin die bereits vorhandenen Posten rücken. Fertig, wenn: Zuerst erscheint ['tor', 'wache', 'kueche', 'werkstatt'], danach ['tor', 'wache', 'lager', 'kueche', 'werkstatt'].",
      "tipp": "Die passende Methode verlangt zwei Angaben in den Klammern, und die Reihenfolge ist fest: erst wohin, dann was.",
-     "loesung": "posten = ['wache', 'kueche', 'werkstatt']"
+     "loesung": "posten = ['wache', 'kueche', 'werkstatt']\n\nposten.insert(0, 'tor')\nprint(posten)\n\nposten.insert(2, 'lager')\nprint(posten)"
     },
     {
      "titel": "Entfernen über die Position",
      "aufgabe": "Aus dem Tagesablauf fällt der Sportdienst aus. Entferne ihn über seine Position und gib Liste und Länge aus. Entferne danach auch den ersten Eintrag und gib die Liste erneut aus. Benutze dafür das Schlüsselwort, das vor dem Ausdruck steht und keine Klammern hat. Fertig, wenn: Nach dem ersten Schritt erscheinen vier Einträge und die Zahl 4, nach dem zweiten Schritt die drei Einträge ['ausgabe', 'reinigen', 'abtreten'].",
      "tipp": "Zähl nach, welchen Index 'sport' hat. Das gesuchte Schlüsselwort ist drei Buchstaben lang und steht vor dem Listenzugriff.",
-     "loesung": "termine = ['antreten', 'ausgabe', 'sport', 'reinigen', 'abtreten']"
+     "loesung": "termine = ['antreten', 'ausgabe', 'sport', 'reinigen', 'abtreten']\n\ndel termine[2]\nprint(termine)\nprint(len(termine))\n\ndel termine[0]\nprint(termine)"
     },
     {
      "titel": "Herausnehmen und behalten",
      "aufgabe": "Aus der Aufgabenliste soll die zuletzt erledigte Aufgabe herausgenommen und in einer Variablen aufgefangen werden. Gib sie in einem Satz großgeschrieben aus und danach die verbliebene Liste. Mach das Gleiche anschließend mit der ersten Aufgabe. Fertig, wenn: Vier Zeilen erscheinen, beginnend mit Zuletzt bearbeitet: Abrechnung und endend mit ['bericht'].",
      "tipp": "Eine der drei Entfern-Methoden reicht das Element zurück, statt es wegzuwerfen. Ohne Zahl in den Klammern nimmt sie das letzte Fach, mit einer Zahl ein bestimmtes.",
-     "loesung": "aufgaben = ['formular', 'bericht', 'abrechnung']"
+     "loesung": "aufgaben = ['formular', 'bericht', 'abrechnung']\n\nzuletzt = aufgaben.pop()\nprint(f\"Zuletzt bearbeitet: {zuletzt.title()}\")\nprint(aufgaben)\n\nzuerst = aufgaben.pop(0)\nprint(f\"Zuerst bearbeitet: {zuerst.title()}\")\nprint(aufgaben)"
     },
     {
      "titel": "Entfernen über den Wert",
      "aufgabe": "Im Bestand steht 'helm' zweimal. Entferne zuerst 'weste' über ihren Wert und gib die Liste aus. Entferne danach zweimal nacheinander 'helm' — und gib nach jedem Schritt die Liste aus. Beantworte dir dabei selbst, warum ein einziger Aufruf nicht genügt. Fertig, wenn: Drei Zeilen erscheinen und die letzte ['stiefel'] lautet. Nach dem ersten Helm-Aufruf steht noch ein 'helm' in der Liste.",
      "tipp": "Die passende Methode sucht den Wert selbst, die Position muss man nicht kennen. Sie trifft allerdings nicht alle Fächer, in denen der Wert steht.",
-     "loesung": "bestand = ['helm', 'weste', 'helm', 'stiefel']"
+     "loesung": "bestand = ['helm', 'weste', 'helm', 'stiefel']\n\nbestand.remove('weste')\nprint(bestand)\n\nbestand.remove('helm')\nprint(bestand)\n\nbestand.remove('helm')\nprint(bestand)"
     },
     {
      "titel": "Erst vorhersagen, dann ausführen",
      "aufgabe": "Vier Eingriffe hintereinander auf derselben Liste. Übernimm den Vorgabecode, aber führ ihn noch nicht aus: Schreib zuerst hinter jede print-Zeile als Kommentar, was dort erscheinen wird. Denk daran, dass jeder Eingriff die Ausgangslage für den nächsten verändert. Erst dann ausführen und vergleichen. Fertig, wenn: Hinter jeder print-Zeile ein Kommentar steht und das Programm mit ['mueller', 'zink', 'weber'] und der Zahl 3 endet.",
      "tipp": "Schreib dir den Listeninhalt nach jedem Eingriff auf ein Blatt, bevor du den nächsten betrachtest. Besonders bei insert() lohnt es sich, die Indizes neu zu zählen.",
-     "loesung": "namen = ['abel', 'mueller', 'schmidt', 'weber', 'nowak']\n\ndel namen[0]\nprint(namen)\n\nnamen.insert(1, 'zink')\nprint(namen)\n\nletzter = namen.pop()\nprint(letzter)\nprint(namen)\n\nnamen.remove('schmidt')\nprint(namen)\nprint(len(namen))"
+     "loesung": "dateien = ['protokoll', 'antrag', 'bericht']\nunterlagen = ['protokoll', 'antrag', 'bericht']\n\nprint(sorted(dateien))      # ['antrag', 'bericht', 'protokoll']\nprint(dateien)              # ['protokoll', 'antrag', 'bericht']\n\nunterlagen.sort()\nprint(unterlagen)           # ['antrag', 'bericht', 'protokoll']\nprint(unterlagen[0])        # antrag"
     },
     {
      "titel": "Die geordnete Kopie",
      "aufgabe": "Gib die vorgegebene Liste geordnet aus, ohne sie dabei zu verändern. Gib danach die Liste selbst aus, um zu prüfen, dass sie noch in der ursprünglichen Reihenfolge steht. Fang die geordnete Fassung zum Schluss in einer Variablen geordnet auf und gib auch die aus. Fertig, wenn: Drei Zeilen erscheinen. Die erste und die dritte sind gleich und alphabetisch geordnet, die mittlere zeigt die ursprüngliche Reihenfolge.",
      "tipp": "Der gesuchte Befehl ist eine Funktion: Die Liste steht in der Klammer, nicht davor. Was er liefert, ist eine neue Liste.",
-     "loesung": "staedte = ['ulm', 'bonn', 'kiel', 'aachen']"
+     "loesung": "staedte = ['ulm', 'bonn', 'kiel', 'aachen']\n\nprint(sorted(staedte))\nprint(staedte)\n\ngeordnet = sorted(staedte)\nprint(geordnet)"
     },
     {
      "titel": "Dauerhaft umordnen",
      "aufgabe": "Gib die Liste zuerst unverändert aus. Ordne sie dann dauerhaft alphabetisch um und gib sie erneut aus. Gib zum Schluss das erste und das letzte Element aus, um zu zeigen, dass auch der Zugriff über den Index jetzt die geordnete Fassung trifft. Fertig, wenn: Vier Zeilen erscheinen und die letzten beiden aachen und ulm lauten.",
      "tipp": "Diesmal ist der Befehl eine Methode: Die Liste steht davor, mit einem Punkt dazwischen. Und sie steht allein in der Zeile, ohne Zuweisung.",
-     "loesung": "staedte = ['ulm', 'bonn', 'kiel', 'aachen']"
+     "loesung": "staedte = ['ulm', 'bonn', 'kiel', 'aachen']\nprint(staedte)\n\nstaedte.sort()\nprint(staedte)\nprint(staedte[0])\nprint(staedte[-1])"
     },
     {
      "titel": "Von Z nach A",
      "aufgabe": "Gib die Werkzeugliste rückwärts sortiert aus, also von Z nach A, ohne die Liste zu verändern. Prüf mit einer zweiten Ausgabe, dass das Original noch steht. Ordne die Liste danach auch dauerhaft rückwärts um. Fertig, wenn: Die erste und die dritte Zeile lauten ['zange', 'saege', 'hammer', 'bohrer'], die mittlere zeigt die ursprüngliche Reihenfolge.",
      "tipp": "Beide Sortierbefehle nehmen dieselbe Zusatzangabe in den Klammern entgegen. Sie besteht aus einem Wort, einem Gleichheitszeichen und einem großgeschriebenen Wahrheitswert.",
-     "loesung": "werkzeuge = ['zange', 'hammer', 'saege', 'bohrer']"
+     "loesung": "werkzeuge = ['zange', 'hammer', 'saege', 'bohrer']\n\nprint(sorted(werkzeuge, reverse=True))\nprint(werkzeuge)\n\nwerkzeuge.sort(reverse=True)\nprint(werkzeuge)"
     },
     {
      "titel": "Umdrehen ist nicht sortieren",
      "aufgabe": "Die Liste eingang steht in der Reihenfolge, in der die Meldungen eingetroffen sind. Dreh diese Reihenfolge um, sodass die neueste Meldung vorn steht, und gib die Liste aus. Dreh sie danach noch einmal um und gib sie erneut aus. Leg dann eine zweite Liste vergleich mit demselben Inhalt an, sortiere sie rückwärts und gib auch sie aus. Fertig, wenn: Drei Zeilen erscheinen. Die zweite zeigt wieder die Ausgangsreihenfolge, und die dritte unterscheidet sich sichtbar von der ersten.",
      "tipp": "Für das Umdrehen gibt es eine eigene Methode, die nichts sortiert. Für die dritte Zeile brauchst du dagegen einen echten Sortierbefehl mit Zusatzangabe.",
-     "loesung": "eingang = ['nowak', 'abel', 'weber', 'mueller']"
+     "loesung": "eingang = ['nowak', 'abel', 'weber', 'mueller']\n\neingang.reverse()\nprint(eingang)\n\neingang.reverse()\nprint(eingang)\n\nvergleich = ['nowak', 'abel', 'weber', 'mueller']\nvergleich.sort(reverse=True)\nprint(vergleich)"
     },
     {
      "titel": "Wonach Python sortiert",
      "aufgabe": "Drei Listen sind vorgegeben: echte Zahlen, dieselben Zahlen als Text in Anführungszeichen und eine Liste von Dienstgraden mit gemischter Groß- und Kleinschreibung. Sortiere alle drei dauerhaft und gib sie nacheinander aus. Schau dir danach an, welche beiden Ergebnisse überraschen. Fertig, wenn: Drei Zeilen erscheinen. Die erste ist nach Größe geordnet, die zweite nicht, und in der dritten stehen die großgeschriebenen Einträge vorn.",
      "tipp": "Alle drei Listen werden mit demselben Befehl sortiert. Was sich unterscheidet, ist nicht der Befehl, sondern das, was in den Listen steht — achte auf die Anführungszeichen.",
-     "loesung": "zahlen = [42, 7, 13, 99, 1]\nzahlen_als_text = ['42', '7', '13', '99', '1']\ndienstgrade = ['Oberst', 'gefreiter', 'Major', 'feldwebel']"
+     "loesung": "zahlen = [42, 7, 13, 99, 1]\nzahlen_als_text = ['42', '7', '13', '99', '1']\ndienstgrade = ['Oberst', 'gefreiter', 'Major', 'feldwebel']\n\nzahlen.sort()\nprint(zahlen)\n\nzahlen_als_text.sort()\nprint(zahlen_als_text)\n\ndienstgrade.sort()\nprint(dienstgrade)"
     },
     {
      "titel": "Erst vorhersagen, dann ausführen",
      "aufgabe": "Zwei Listen mit identischem Inhalt, zwei verschiedene Befehle. Übernimm den Vorgabecode, aber führ ihn noch nicht aus: Schreib zuerst hinter jede print-Zeile als Kommentar, was dort erscheinen wird. Besonders die zweite Zeile verdient eine bewusste Entscheidung. Erst dann ausführen und vergleichen. Fertig, wenn: Hinter jeder der vier print-Zeilen ein Kommentar steht und du erklären kannst, warum Zeile 2 anders aussieht als Zeile 1 und 3.",
      "tipp": "Die Schreibweise verrät das Verhalten. Steht die Liste in der Klammer oder davor? Nur einer der beiden Befehle fasst das Original an.",
-     "loesung": "dateien = ['protokoll', 'antrag', 'bericht']\nunterlagen = ['protokoll', 'antrag', 'bericht']\n\nprint(sorted(dateien))\nprint(dateien)\n\nunterlagen.sort()\nprint(unterlagen)\nprint(unterlagen[0])"
+     "loesung": "dateien = ['protokoll', 'antrag', 'bericht']\nunterlagen = ['protokoll', 'antrag', 'bericht']\n\nprint(sorted(dateien))      # ['antrag', 'bericht', 'protokoll']\nprint(dateien)              # ['protokoll', 'antrag', 'bericht']\n\nunterlagen.sort()\nprint(unterlagen)           # ['antrag', 'bericht', 'protokoll']\nprint(unterlagen[0])        # antrag"
     },
     {
      "titel": "Reparatur — einmal passiert nichts, einmal ist alles weg",
      "aufgabe": "Das Programm soll den Bestand erst als geordnete Kopie zeigen und ihn danach dauerhaft sortieren. Beides misslingt, und zwar ohne jede Fehlermeldung — das macht diesen Fall unangenehmer als einen Programmabbruch. Führ den Code aus, sieh dir beide Ausgabezeilen an und repariere beide Fehler. Fertig, wenn: Drei Zeilen erscheinen: die geordnete Kopie, danach der unveränderte Bestand und zuletzt der dauerhaft sortierte Bestand. None darf nirgends stehen.",
      "tipp": "Was sorted() liefert, muss irgendwo landen, sonst verfällt es. Und .sort() liefert überhaupt nichts — eine Zuweisung davor macht die Liste kaputt.",
-     "loesung": "bestand = ['zange', 'hammer', 'saege']\n\nsorted(bestand)\nprint(bestand)\n\nbestand = bestand.sort()\nprint(bestand)"
+     "loesung": "bestand = ['zange', 'hammer', 'saege']\n\ngeordnet = sorted(bestand)\nprint(geordnet)\nprint(bestand)\n\nbestand.sort()\nprint(bestand)",
+     "vorgabe": "bestand = ['zange', 'hammer', 'saege']\n\nsorted(bestand)\nprint(bestand)\n\nbestand = bestand.sort()\nprint(bestand)"
     }
    ]
   },
@@ -343,25 +346,26 @@
      "titel": "Fahrtenbuch auswerten",
      "aufgabe": "Bau ein kleines Programm, das ein Fahrtenbuch auswertet. Leg dazu die vorgegebene Zahlenliste an und zusätzlich eine leere Liste offene_fahrten. Gib dann vier Sätze aus: die Anzahl der erfassten Fahrten, die Summe der ersten drei Fahrten, die Länge der letzten Fahrt und die Anzahl der noch offenen Fahrten. Alle vier Sätze sollen vollständige deutsche Sätze sein, keine nackten Zahlen. Fertig, wenn: Vier Sätze erscheinen, darunter Die ersten drei Fahrten ergeben 435 km. und Noch offen: 0 Fahrten.",
      "tipp": "Ein Element einer Zahlenliste ist eine ganz gewöhnliche Zahl und lässt sich damit rechnen. Das Zwischenergebnis darf in einer eigenen Variablen landen, bevor es in den f-String kommt. Zwei leere eckige Klammern ergeben eine Liste ohne Elemente.",
-     "loesung": "kilometer = [120, 85, 230, 45]"
+     "loesung": "kilometer = [120, 85, 230, 45]\noffene_fahrten = []\n\nprint(f\"Erfasste Fahrten: {len(kilometer)}\")\n\nsumme_drei = kilometer[0] + kilometer[1] + kilometer[2]\nprint(f\"Die ersten drei Fahrten ergeben {summe_drei} km.\")\nprint(f\"Die letzte Fahrt ging über {kilometer[-1]} km.\")\nprint(f\"Noch offen: {len(offene_fahrten)} Fahrten.\")"
     },
     {
      "titel": "Reparatur — zwei Namen fehlen und die Liste verschwindet",
      "aufgabe": "Das Programm soll vier Teilnehmer führen und ihre Anzahl nennen. Es bricht aber schon in Zeile 3 ab. Führ es aus, lies die Meldung und repariere die Zeile. Führ es dann erneut aus — der zweite Fehler zeigt sich erst danach, und er meldet sich nicht mit einer Fehlermeldung, sondern mit einem überraschenden Wert. Fertig, wenn: Das Programm ohne Abbruch ['mueller', 'schmidt', 'weber', 'nowak'] und die Zahl 4 ausgibt. Nirgends darf None erscheinen.",
      "tipp": "Zuweisen an ein Fach verlängert eine Liste nicht. Und ein Befehl, der die Liste umbaut, hat nichts zurückzugeben — was dann in der Variablen landet, ist Pythons Wort für „nichts\".",
-     "loesung": "teilnehmer = ['mueller', 'schmidt', 'weber']\n\nteilnehmer.append('nowak')\n\nprint(teilnehmer)\nprint(len(teilnehmer))",
+     "loesung": "teilnehmer = ['mueller', 'schmidt']\n\nteilnehmer.append('weber')\nteilnehmer.append('nowak')\n\nprint(teilnehmer)\nprint(len(teilnehmer))",
      "vorgabe": "teilnehmer = ['mueller', 'schmidt']\n\nteilnehmer[2] = 'weber'\nteilnehmer = teilnehmer.append('nowak')\n\nprint(teilnehmer)\nprint(len(teilnehmer))"
     },
     {
      "titel": "Die Wachliste umbauen",
      "aufgabe": "Die Wachliste muss kurzfristig geändert werden. Setz die folgenden vier Änderungen in genau dieser Reihenfolge um, ohne zwischendurch eine neue Liste anzulegen: 1. 'schmidt' fällt aus und wird über seinen Namen entfernt — seine Position ist nicht bekannt. 2. 'abel' übernimmt und kommt an die erste Stelle. 3. Der jetzt letzte Name wird herausgenommen und als Reserve aufbewahrt. 4. 'zink' kommt hinten dazu. Gib am Ende die fertige Liste aus, dazu einen Satz mit der Anzahl der Eingeteilten und einen Satz mit dem großgeschriebenen Namen der Reserve. Fertig, wenn: ['abel', 'mueller', 'weber', 'zink'] erscheint, dann Eingeteilt: 4 Personen und Reserve: Nowak.",
      "tipp": "Für jede der vier Änderungen ist ein anderer Befehl der passende. Die Entscheidung läuft über zwei Fragen: Kenne ich Position oder Wert — und brauche ich das Entfernte noch?",
-     "loesung": "wachliste = ['mueller', 'schmidt', 'weber', 'nowak']"
+     "loesung": "wachliste = ['mueller', 'schmidt', 'weber', 'nowak']\n\nwachliste.remove('schmidt')\nwachliste.insert(0, 'abel')\nreserve = wachliste.pop()\nwachliste.append('zink')\n\nprint(wachliste)\nprint(f\"Eingeteilt: {len(wachliste)} Personen\")\nprint(f\"Reserve: {reserve.title()}\")"
     },
     {
      "titel": "Dein eigenes kleines Programm",
      "aufgabe": "Schreib ein eigenes kleines Programm von der ersten Zeile an. Es gibt dafür keine Vorgabe und keine eine richtige Lösung — nur fünf Dinge, die vorkommen müssen: 1. Eine Liste mit mindestens vier Textwerten anlegen. Wähl selbst ein Thema: Packliste, Werkzeugkiste, Einkauf, Dienstplan. 2. Mindestens einen Wert ergänzen. 3. Mindestens einen Wert entfernen. 4. Die Liste sortieren. 5. Das Ergebnis formatiert ausgeben: eine Überschrift, eine Trennlinie, die Einträge einzeln nummeriert und großgeschrieben, dazu die Anzahl und das letzte Element. Fertig, wenn: Das Programm ohne Fehlermeldung läuft und eine Ausgabe erzeugt, die ein Mensch ohne Python-Kenntnisse lesen kann — also keine eckigen Klammern und keine Anführungszeichen in den nummerierten Zeilen.",
-     "tipp": "Die Reihenfolge der Schritte entscheidet über das Ergebnis: Erst ergänzen und entfernen, dann sortieren — sonst steht der neue Wert am falschen Platz. Für die Trennlinie reicht ein Text mal einer Zahl. Und für jede Ausgabezeile ist ein f-String das passende Mittel."
+     "tipp": "Die Reihenfolge der Schritte entscheidet über das Ergebnis: Erst ergänzen und entfernen, dann sortieren — sonst steht der neue Wert am falschen Platz. Für die Trennlinie reicht ein Text mal einer Zahl. Und für jede Ausgabezeile ist ein f-String das passende Mittel.",
+     "loesung": "besitzer = \"sebastian\"\npackliste = ['stiefel', 'helm', 'weste', 'karte']\n\npackliste.append('kompass')\npackliste.remove('weste')\npackliste.sort()\n\nprint(f\"Packliste von {besitzer.title()}\")\nprint(\"-\" * 30)\nprint(f\"1. {packliste[0].title()}\")\nprint(f\"2. {packliste[1].title()}\")\nprint(f\"3. {packliste[2].title()}\")\nprint(f\"4. {packliste[3].title()}\")\nprint(\"-\" * 30)\nprint(f\"Teile insgesamt: {len(packliste)}\")\nprint(f\"Zuletzt im Alphabet: {packliste[-1].title()}\")"
     }
    ]
   }

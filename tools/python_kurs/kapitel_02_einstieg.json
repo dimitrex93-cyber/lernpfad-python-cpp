@@ -121,25 +121,25 @@
      "titel": "Die erste eigene Datei",
      "aufgabe": "Lege im Kursordner eine neue Datei an, speichere sie sofort unter dem Namen hallo.py und schreibe erst danach etwas hinein. In die Datei kommt genau eine Zeile, die den Satz Hallo Welt! ins Terminal schreibt. Führe die Datei anschließend auf beiden Wegen aus: einmal über den Ausführen-Knopf im Editor und einmal über den Terminalbefehl. Fertig, wenn: im Terminal die Zeile Hallo Welt! steht — beide Male identisch, und der Dateiname im Editor ist farbig hervorgehoben, weil die Endung .py erkannt wurde.",
      "tipp": "Der Befehl zum Ausgeben heißt print. Dahinter gehören zwei runde Klammern, und der Text darin steht in geraden Anführungszeichen. Der Terminalbefehl lautet python hallo.py, auf macOS und Linux python3 hallo.py.",
-     "loesung": "print(\"Hallo Welt\")"
+     "loesung": "print(\"Hallo Welt!\")"
     },
     {
      "titel": "Packliste mit Leerzeile",
      "aufgabe": "Schreibe ein Programm, das eine Überschrift ausgibt, danach eine leere Zeile und darunter drei Gegenstände einer Packliste, jeden in einer eigenen Zeile. Die leere Zeile soll nicht durch ein Leerzeichen entstehen, sondern durch einen eigenen Aufruf. Fertig, wenn: die Ausgabe fünf Zeilen hat, von denen die zweite vollständig leer ist.",
      "tipp": "print() verträgt auch leere Klammern. Was dann passiert, steht im Lerntext unter „Was alles in die Klammern darf\".",
-     "loesung": "überschrift = \"Meine Packliste für den Urlaub\"\nprint(überschrift.title())\nprint()\nPack_liste = [\"Zahnbürste\", \"Handtuch\", \"Badehose\"]\nprint(Pack_liste[0])\nprint(Pack_liste[1])\nprint(Pack_liste[2])"
+     "loesung": "print(\"Packliste Umzug\")\nprint()\nprint(\"Kartons\")\nprint(\"Werkzeugkiste\")\nprint(\"Schraubendreher\")"
     },
     {
      "titel": "Zwei Werte in einem Aufruf",
      "aufgabe": "Gib zwei Angaben aus, jede in einer eigenen Zeile, aber jeweils mit nur einem print()-Aufruf pro Zeile: in der ersten Zeile das Wort Dienstgrad: und dahinter einen Dienstgrad, in der zweiten das Wort Standort: und dahinter einen Ort. Die beiden Teile einer Zeile sollen als zwei getrennte Werte übergeben werden, nicht als ein einziger langer Text. Fertig, wenn: zwischen Dienstgrad: und dem Dienstgrad genau ein Leerzeichen steht, ohne dass du eines getippt hast.",
      "tipp": "In die Klammern dürfen mehrere Werte, durch Komma getrennt. Das Leerzeichen dazwischen setzt Python selbst.",
-     "loesung": "Dienstgrad = [\"General\", \"Oberst\", \"Hauptmann\", \"Leutnant\"]\nStandort = [\"Berlin\", \"Hamburg\", \"München\", \"Köln\"]\nprint(Dienstgrad[0], Standort[0])\nprint(Dienstgrad[1], Standort[1])\nprint(Dienstgrad[2], Standort[2])\nprint(Dienstgrad[3], Standort[3])"
+     "loesung": "print(\"Dienstgrad:\", \"Hauptfeldwebel\")\nprint(\"Standort:\", \"Munster\")"
     },
     {
      "titel": "Vorhersage — die Anführungszeichen entscheiden",
      "aufgabe": "Unten stehen vier Zeilen. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf, in dem steht, welche vier Ausgabezeilen du erwartest. Erst danach übernimmst du die vier Zeilen aus der Vorgabe darunter und führst das Programm aus. Vergleiche dann deine Vorhersage mit dem, was tatsächlich kommt. Fertig, wenn: deine Vorhersagezeile oben steht und darunter in dieser Reihenfolge 56, 7 8, 99 und 100 - 1 ausgegeben werden.",
      "tipp": "Frage dich bei jeder Zeile nur eines: Steht der Ausdruck zwischen Anführungszeichen oder nicht? Innerhalb denkt Python nicht mit.",
-     "loesung": "print(7 * 8)\nprint(\"7 * 8\")\nprint(100 - 1)\nprint(\"100 - 1\")"
+     "loesung": "print(\"Erwartet: 56, dann 7 * 8, dann 99, dann 100 - 1\")\nprint(7 * 8)\nprint(\"7 * 8\")\nprint(100 - 1)\nprint(\"100 - 1\")"
     },
     {
      "titel": "Zwei kaputte Zeilen reparieren",
@@ -169,13 +169,13 @@
      "titel": "Text und Zahl in einer Zeile",
      "aufgabe": "Die Vorgabe will einen Satz mit einer Zahl darin ausgeben und bricht mit einem TypeError ab. Lies die Meldung wörtlich — sie sagt genau, was mit was nicht zusammengeht. Repariere die Zeile so, dass der Satz erscheint, und benutze dafür das Werkzeug, das print() bereits mitbringt. Fertig, wenn: die Zeile Ich war 12 Jahre dabei ausgegeben wird, mit Leerzeichen an beiden Seiten der Zahl.",
      "tipp": "print() verträgt mehrere Werte, wenn man sie mit Komma trennt — und das Komma stört sich nicht daran, dass einer davon eine Zahl ist.",
-     "loesung": "dienstjahre = 12\nprint(\"Ich war \" + str(dienstjahre) + \" Jahre dabei\")\nprint(f\"Ich war {dienstjahre} Jahre dabei\")"
+     "loesung": "dienstjahre = 12\nprint(\"Ich war\", dienstjahre, \"Jahre dabei\")"
     },
     {
      "titel": "Vorhersage — zählen ab null",
      "aufgabe": "Unten steht ein Programm, das eine Liste mit drei Namen anlegt und darauf zugreift. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf, in dem steht, was du erwartest — auch, ob und wo es abbricht. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile Anna und Carla erscheinen und das Programm danach mit IndexError: list index out of range abbricht.",
      "tipp": "Gezählt wird ab 0. Eine Liste mit drei Einträgen hat deshalb die Positionen 0, 1 und 2 — mehr nicht.",
-     "loesung": "namen = [\"Anna\", \"Ben\", \"Carla\"]\nprint(namen[0])\nprint(namen[1])\nprint(namen[2])"
+     "loesung": "print(\"Erwartet: Anna, dann Carla, dann ein IndexError in Zeile 5\")\nnamen = [\"Anna\", \"Ben\", \"Carla\"]\nprint(namen[0])\nprint(namen[2])\nprint(namen[3])"
     },
     {
      "titel": "Die erste Frage an den Benutzer",
@@ -187,7 +187,7 @@
      "titel": "Ziffern sind trotzdem Text",
      "aufgabe": "In der Vorgabe steht eine Variable, die eine Eingabe nachstellt: Der Wert 25 liegt dort als Text vor. Lass dir mit type ausgeben, welchen Typ dieser Wert hat, wandle ihn dann in eine Ganzzahl um und gib auch deren Typ aus. Rechne zum Schluss zehn dazu. Fertig, wenn: drei Zeilen erscheinen: erst der Typ str, dann der Typ int, dann die Zahl 35.",
      "tipp": "type steht vor dem Wert und nimmt ihn in die Klammer, genau wie len. Die Umwandlung in eine Ganzzahl macht int.",
-     "loesung": "eingabe = \"25\"\nprint(type(eingabe))\n\nzahl = int(eingabe)\nprint(type(zahl))\n\nprint(zahl + 10)"
+     "loesung": "eingabe = \"25\"\nprint(type(eingabe))\nzahl = int(eingabe)\nprint(type(zahl))\nprint(zahl + 10)"
     },
     {
      "titel": "Mit einer eingetippten Zahl rechnen",
@@ -199,25 +199,25 @@
      "titel": "Erst säubern, dann vergleichen",
      "aufgabe": "Eine Antwort ist mit Leerzeichen am Rand und großem Anfangsbuchstaben angekommen. Vergleiche sie zuerst unverändert mit dem erwarteten Wort ja und gib das Ergebnis aus. Säubere sie danach und vergleiche erneut. Entscheide zum Schluss mit einem if, wie es weitergeht. Fertig, wenn: zuerst False, dann True und danach Gut, wir machen weiter. erscheint.",
      "tipp": "Zwei Methoden lassen sich hintereinanderhängen: strip entfernt den Leerraum an beiden Rändern, lower schreibt alles klein. Beide liefern einen neuen Text zurück, der aufgefangen werden muss.",
-     "loesung": "antwort = \"  Ja  \"\nprint(antwort == \"ja\")\n\nsauber = antwort.strip().lower()\nprint(sauber == \"ja\")\n\nif sauber == \"ja\":\n    print(\"Gut, wir machen weiter.\")"
+     "loesung": "eingabe = \"  Ja  \"\nprint(eingabe == \"ja\")\nantwort = eingabe.strip().lower()\nprint(antwort == \"ja\")\nif antwort == \"ja\":\n    print(\"Gut, wir machen weiter.\")\nelse:\n    print(\"Verstanden, wir brechen ab.\")"
     },
     {
      "titel": "Eine Frage über mehrere Zeilen",
      "aufgabe": "Frage den Benutzer nach seiner Einheit. Baue den längeren Aufforderungstext vorher in einer Variablen zusammen, statt ihn in die Klammern von input() zu quetschen. Er soll mit einer Leerzeile beginnen und aus zwei Sätzen auf zwei Zeilen bestehen. Gib die Antwort danach gesäubert und mit großen Anfangsbuchstaben aus. Fertig, wenn: vor der Frage eine Leerzeile steht, die Frage über zwei Zeilen geht und nach der Eingabe logistik munster die Zeile Eingetragen: Logistik Munster erscheint.",
      "tipp": "Der Zeilenumbruch ist die Escape-Sequenz aus Rückstrich und n. Mit += hängt man weiteren Text an das an, was schon in der Variablen steht.",
-     "loesung": "frage = \"\\n\"\nfrage += \"Bitte nenne deine Einheit.\\n\"\nfrage += \"Sie wird ins Protokoll eingetragen: \"\n\neinheit = input(frage)\nprint(\"Eingetragen:\", einheit.strip().title())"
+     "loesung": "aufforderung = \"\\nBitte nenne deine Einheit.\"\naufforderung += \"\\nIch trage sie dann ein: \"\neinheit = input(aufforderung)\nprint(f\"Eingetragen: {einheit.strip().title()}\")"
     },
     {
      "titel": "Reparatur — Text plus Zahl",
      "aufgabe": "Die Vorgabe soll den Satz \"In drei Jahren: 20\" ausgeben und bricht stattdessen mit einer Fehlermeldung ab. Lies die Meldung genau: Sie nennt die Zeile und den Grund. Repariere das Programm so, dass wirklich gerechnet wird. Fertig, wenn: genau eine Zeile erscheint, nämlich \"In drei Jahren: 20\", und keine Fehlermeldung mehr kommt.",
      "tipp": "In eingabe steht kein Wert vom Typ int, obwohl nur Ziffern darin vorkommen. Wandle ihn um, bevor du rechnest, und setze das Ergebnis mit einem f-String in den Satz ein.",
-     "loesung": "eingabe = input(\"Wie alt bist du? \")\nalter = int(eingabe)\nprint(f\"In drei Jahren: {alter + 3}\")"
+     "loesung": "eingabe = \"17\"\nalter = int(eingabe)\nprint(f\"In drei Jahren: {alter + 3}\")"
     },
     {
      "titel": "Vorhersage — fünf Zeilen über eine Eingabe",
      "aufgabe": "Unten steht ein Programm, das eine mit Leerzeichen umgebene Eingabe auf fünf Arten untersucht. Schreibe zuerst als allererste Zeile deines Programms einen print-Aufruf mit deiner Vorhersage für alle fünf Ausgaben. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Achte besonders auf den Unterschied zwischen der zweiten und der dritten Zeile. Fertig, wenn: nach deiner Vorhersagezeile fünf Zeilen folgen und die zweite davon False, die dritte True lautet.",
      "tipp": "Eine der beiden Umwandlungsfunktionen ist großzügig mit Leerraum, der Vergleich mit zwei Gleichheitszeichen ist es nicht. Und len zählt Zeichen, nicht Buchstaben.",
-     "loesung": "print(\"1: 8 | 2: False | 3: True | 4: [  ANNA  ] | 5: [  anna  ]\")\n\neingabe = \"  Anna  \"\nprint(f\"1: {len(eingabe)}\")\nprint(f\"2: {eingabe == 'Anna'}\")\nprint(f\"3: {eingabe.strip() == 'Anna'}\")\nprint(f\"4: [{eingabe.upper()}]\")\nprint(f\"5: [{eingabe.lower()}]\")"
+     "loesung": "print(\"Erwartet: 25, False, True, 2 und 3.5\")\neingabe = \"  25  \"\nprint(int(eingabe))\nprint(eingabe == \"25\")\nprint(eingabe.strip() == \"25\")\nprint(len(eingabe.strip()))\nprint(float(\"3.5\"))"
     }
    ]
   },
@@ -231,20 +231,21 @@
      "titel": "Der Ausrüstungszettel",
      "aufgabe": "Baue ein Programm, das einen kleinen Zettel ausgibt: zuerst eine Überschrift, dann eine leere Zeile, dann zwei Zeilen mit je einer Bezeichnung und einer Stückzahl als zwei getrennten Werten, und zum Schluss zweimal dieselbe Addition der beiden Stückzahlen — einmal so, dass Python rechnet, und einmal so, dass die Rechnung wörtlich dasteht. Fertig, wenn: die Ausgabe sechs Zeilen hat, die vorletzte das Ergebnis 15 zeigt und die letzte den Text 12 + 3.",
      "tipp": "Die letzten beiden Zeilen unterscheiden sich nur durch zwei Zeichen. Für die leere Zeile brauchst du einen Aufruf ohne Argument, für die Stückzahlen das Komma.",
-     "loesung": "ueberschrift = \"Meine Ausrüstung\"\nprint(ueberschrift)\nprint()\nprint(\"Helm\", 12)\nprint(\"Stiefel\", 3)\nprint(\"Stückzahlen zusammen:\", 12 + 3)\nprint(\"Rechnung wörtlich:\", \"12 + 3\")",
+     "loesung": "print(\"Ausruestungszettel\")\nprint()\nprint(\"Kartons:\", 12)\nprint(\"Kisten:\", 3)\nprint(12 + 3)\nprint(\"12 + 3\")",
      "vorgabe": "Überschrift = \"Meine Packliste\"\nprint(überschrift)\nprint(\"9 * 9\")\nprint(\"=\")\nprint(9 * 9)"
     },
     {
      "titel": "Der Fehler ohne Fehlermeldung",
      "aufgabe": "Die Vorgabe läuft fehlerfrei durch und ist trotzdem falsch. Gewollt sind die beiden Zeilen Hallo Marie! und Marie Curie. Führe die Vorgabe aus, vergleiche jede Ausgabezeile mit dem, was dort stehen sollte, und repariere beide Abweichungen. Fertig, wenn: genau Hallo Marie! und darunter Marie Curie ausgegeben wird — ohne geschweifte Klammern und mit Leerzeichen zwischen den Namen.",
      "tipp": "Geschweifte Klammern in der Ausgabe bedeuten immer dasselbe: Vor dem öffnenden Anführungszeichen fehlt ein Buchstabe. Und beim Zusammenhängen von Texten kommt kein Leerzeichen von allein dazu — es muss als eigener Text dastehen.",
-     "loesung": "vorname = \"Marie\"\nnachname = \"Curie\"\nprint(f\"Hallo , {vorname}!\")\nprint(vorname ,nachname)"
+     "loesung": "vorname = \"Marie\"\nnachname = \"Curie\"\nprint(f\"Hallo {vorname}!\")\nprint(vorname + \" \" + nachname)",
+     "vorgabe": "vorname = \"Marie\"\nnachname = \"Curie\"\nprint(f\"Hallo , {vorname}!\")\nprint(vorname ,nachname)"
     },
     {
      "titel": "Prüfen, statt abstürzen zu lassen",
      "aufgabe": "In der Vorgabe steht eine Liste mit fünf nachgestellten Eingaben; nur zwei davon sind brauchbare ganze Zahlen. Gehe die Liste mit einer for-Schleife durch, säubere jeden Eintrag und prüfe vor der Umwandlung, ob überhaupt nur Ziffern darin stehen. Zu gültigen Einträgen gibst du aus, wie alt die Person in zehn Jahren wäre; ungültige bekommen eine freundliche Rückmeldung, bei der der Eintrag in eckigen Klammern steht, damit der Leerraum sichtbar wird. Fertig, wenn: fünf Zeilen erscheinen, zwei davon mit einem Rechenergebnis, drei mit der Aufforderung zur neuen Eingabe, und das Programm nirgends abbricht.",
      "tipp": "Die Methode isdigit sagt, ob ein Text ausschließlich aus Ziffern besteht. Sie ist streng: Ein leerer Text, ein Komma und ein ausgeschriebenes Wort geben alle False. Säubere jeden Eintrag, bevor du prüfst.",
-     "loesung": "eingaben = [\" 25\", \"abc\", \" 7 \", \"4,5\", \"\"]\n\nfor eintrag in eingaben:\n    sauber = eintrag.strip()\n    if sauber.isdigit():\n        alter = int(sauber)\n        print(f\"In zehn Jahren: {alter + 10}\")\n    else:\n        print(f\"Bitte erneut eingeben: [{eintrag}]\")"
+     "loesung": "eingaben = [\"25\", \"\", \"3,5\", \"fünfundzwanzig\", \"  40  \"]\nfor eingabe in eingaben:\n    sauber = eingabe.strip()\n    if sauber.isdigit():\n        zahl = int(sauber)\n        print(f\"{sauber}: gültig - in zehn Jahren {zahl + 10}\")\n    else:\n        print(f\"[{eingabe}]: keine ganze Zahl - bitte neu eingeben\")"
     }
    ]
   }

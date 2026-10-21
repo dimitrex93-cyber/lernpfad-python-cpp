@@ -153,26 +153,26 @@
      "titel": "Der erste Name für einen Wert",
      "aufgabe": "Lege eine Variable an, die einen Satz enthält, und gib sie anschließend aus. Der Satz selbst darf nur an einer einzigen Stelle im Programm stehen. Achte darauf, dass in der print()-Zeile keine Anführungszeichen mehr vorkommen. Fertig, wenn: die Zeile Der Lehrgang beginnt. im Terminal steht — und nicht das Wort nachricht.",
      "tipp": "Links vom = steht der Name, rechts der Wert. In der print()-Zeile wird der Name ohne Anführungszeichen benutzt, denn ausgegeben werden soll der Wert dahinter, nicht das Wort.",
-     "loesung": "nachricht = \"Der Lehrgang beginnt heute.\"\nprint(nachricht)"
+     "loesung": "nachricht = \"Der Lehrgang beginnt.\"\nprint(nachricht)"
     },
     {
      "titel": "Derselbe Name, ein neuer Wert",
      "aufgabe": "Lege eine Variable standort mit einem Ort an und gib sie aus. Weise derselben Variablen danach einen anderen Ort zu und gib sie erneut aus. Benutze für beide Ausgaben denselben Variablennamen. Fertig, wenn: zwei verschiedene Orte untereinander stehen, obwohl in beiden print()-Zeilen dasselbe Wort steht.",
      "tipp": "Eine Neuzuweisung sieht genauso aus wie die erste Zuweisung. Entscheidend ist, dass die Ausgabe dazwischen steht, nicht danach.",
-     "loesung": "stantort = \"Berlin\"\nprint(\"Der Standort ist \" + stantort)\n\nstandort = \"Wilhelmshaven\"\nprint(\"Der Standort ist \" + standort)"
+     "loesung": "standort = \"Munster\"\nprint(standort)\n\nstandort = \"Koblenz\"\nprint(standort)"
     },
     {
      "titel": "Aus zwei Namen wird einer",
      "aufgabe": "Lege zwei Variablen an, eine für einen Vornamen und eine für einen Nachnamen. Setze beide in einer dritten Variablen zu einem vollständigen Namen zusammen und gib nur diese dritte Variable aus. Zwischen Vor- und Nachname gehört genau ein Leerzeichen. Fertig, wenn: Marie Curie in einer Zeile steht — mit Lücke, nicht MarieCurie.",
      "tipp": "Rechts vom = darf stehen, was bereits bekannt ist, auch andere Variablen. Das Pluszeichen hängt Texte aneinander, fügt aber nichts hinzu, was nicht dasteht.",
-     "loesung": "vorname = \"marie\"\nnachname = \"curie\"\nganzer_name = f\"{vorname} {nachname}\"\nprint(ganzer_name.title())",
+     "loesung": "vorname = \"Marie\"\nnachname = \"Curie\"\nvoller_name = vorname + \" \" + nachname\nprint(voller_name)",
      "vorgabe": "vorname = \"marie\"\nNachname = \"curie\"\nganzer_name = f\"{vorname} {Nachname}\"\nprint(\"Hallo , \" + vorname + \" \" + nachname + \"!\")\nprint(ganzer_name.title())"
     },
     {
      "titel": "Zahlen in Variablen",
      "aufgabe": "Lege zwei Variablen für Zahlen an: die Teilnehmerzahl eines Lehrgangs und seine Dauer in Tagen. Gib beide jeweils mit einer Beschriftung davor aus, und zwar so, dass Beschriftung und Zahl als zwei getrennte Werte in einem print()-Aufruf stehen. Halte dich bei den Namen an den Stil des Kurses. Fertig, wenn: zwei Zeilen erscheinen, in denen hinter dem Doppelpunkt jeweils eine Zahl steht, und beide Variablennamen klein geschrieben sind und ihre Bedeutung nennen.",
      "tipp": "Zahlen stehen ohne Anführungszeichen. Das Komma in print() verträgt Text und Zahl nebeneinander, das Pluszeichen nicht.",
-     "loesung": "Teilnehmer_zahl = 6\ndauer_in_Tagen = 5\nprint(\"Die Teilnehmerzahl beträgt:\" + str(Teilnehmer_zahl))\nprint(\"und die Dauer des Lehrgangs beträgt:\" + str(dauer_in_Tagen) + \" Tage.\")"
+     "loesung": "anzahl_teilnehmer = 12\ndauer_tage = 5\nprint(\"Teilnehmer:\", anzahl_teilnehmer)\nprint(\"Dauer in Tagen:\", dauer_tage)"
     },
     {
      "titel": "Verbotene Namen reparieren",
@@ -184,42 +184,43 @@
      "titel": "Vorhersage — wann der Wert eingefroren wird",
      "aufgabe": "Unten steht ein Programm mit einer Neuzuweisung in der Mitte. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf, in dem steht, welche zwei Zahlen du erwartest. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile zuerst 10 und dann 5 ausgegeben wird.",
      "tipp": "Die Zeile mit gesamt wird genau einmal ausgeführt, und zwar an ihrer Position. Sie merkt sich das Ergebnis, nicht die Rechnung.",
-     "loesung": "anzahl_kartons = 3\ngesamt = anzahl_kartons + 2\nanzahl_kartons = 10\nprint(anzahl_kartons)\nprint(gesamt)"
+     "loesung": "print(\"Erwartet: zuerst 10, dann 5\")\nanzahl_kartons = 3\ngesamt = anzahl_kartons + 2\nanzahl_kartons = 10\nprint(anzahl_kartons)\nprint(gesamt)"
     },
     {
      "titel": "Fünf Werte, fünf Typen",
      "aufgabe": "Lass dir für fünf verschiedene Werte den Typ nennen: für eine ganze Zahl, eine Kommazahl, eine Ziffernfolge in Anführungszeichen, einen Wahrheitswert und eine Liste. Schreibe die fünf Werte direkt in die Klammern, ohne vorher Variablen anzulegen. Fertig, wenn: fünf Zeilen erscheinen, die mit <class ' beginnen, und die dritte davon str nennt, obwohl dort Ziffern stehen.",
      "tipp": "Die eingebaute Funktion, die den Typ nennt, heißt type(). Sie muss in print() hineingereicht werden, sonst sieht man nichts.",
-     "loesung": "print(type(\"a\"))\nprint(type(5))\nprint(type(3.141))\nprint(type(True))\nprint(type([1, 2, 3]))"
+     "loesung": "print(type(42))\nprint(type(4.2))\nprint(type(\"42\"))\nprint(type(True))\nprint(type([1, 2, 3]))"
     },
     {
      "titel": "Den passenden Typ wählen",
      "aufgabe": "Lege drei Variablen an: eine Postleitzahl, eine Anzahl Umzugskartons und ein Gewicht in Kilogramm mit einer Nachkommastelle. Wähle für jede den Typ, der zur Sache passt, und gib danach die Postleitzahl selbst sowie die Typen aller drei Variablen aus. Die Postleitzahl soll eine führende Null behalten. Fertig, wenn: die Postleitzahl mit ihrer führenden Null ausgegeben wird und die drei Typzeilen str, int und float nennen.",
      "tipp": "Die Leitfrage lautet nicht „sieht es aus wie eine Zahl\", sondern „rechne ich damit\". Mit einer Postleitzahl rechnet niemand.",
-     "loesung": "postleitzahl = 26419\numzugskatons = 12\ngewicht = 25.5\nprint(f\"Die Postleitzahl ist {postleitzahl}, es gibt {umzugskatons} Umzugskartons und das Gewicht beträgt {gewicht} kg.\")"
+     "loesung": "postleitzahl = \"01067\"\nanzahl_kartons = 12\ngewicht_kg = 23.5\nprint(postleitzahl)\nprint(type(postleitzahl))\nprint(type(anzahl_kartons))\nprint(type(gewicht_kg))"
     },
     {
      "titel": "Wie lang ist das?",
      "aufgabe": "Lass dir die Länge von drei verschiedenen Sammlungen nennen: von einem Wort, von einer Liste mit drei Namen und von einer Zuordnung mit zwei Einträgen. Benutze für alle drei dieselbe Funktion. Fertig, wenn: drei Zahlen untereinander stehen: 12, 3 und 2.",
      "tipp": "Alles, was mehrere Werte enthält, beantwortet dieselbe Frage nach der Länge — egal ob Text, Liste oder Zuordnung. Die Funktion heißt len().",
-     "loesung": "liste = [\"12\", \"34\", \"56\"]\nprint(liste)\nlen(liste)"
+     "loesung": "print(len(\"Marschbefehl\"))\nnamen = [\"Anna\", \"Ben\", \"Carla\"]\nprint(len(namen))\nausruestung = {'farbe': 'oliv', 'groesse': 42}\nprint(len(ausruestung))"
     },
     {
      "titel": "Vorhersage — dasselbe Sternchen, zwei Bedeutungen",
      "aufgabe": "Unten stehen vier Zeilen, in denen zweimal ein Sternchen vorkommt. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für alle vier Ausgabezeilen. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile 3333, 12, und erscheinen.",
      "tipp": "Der Typ legt fest, welche Operationen erlaubt sind und was sie bedeuten. Bei Text wiederholt das Sternchen, bei Zahlen multipliziert es.",
-     "loesung": "print(\"3\" * 4)\nprint(3 * 4)\nprint(type(\"3\"))\nprint(type(3))"
+     "loesung": "print(\"Erwartet: 3333, dann 12, dann str, dann int\")\nprint(\"3\" * 4)\nprint(3 * 4)\nprint(type(\"3\"))\nprint(type(3))"
     },
     {
      "titel": "Von Text zu Zahl und zurück",
      "aufgabe": "Lege eine Variable an, die eine Zahl als Text enthält. Wandle sie in eine echte Zahl um, lege das Ergebnis unter einem eigenen Namen ab und addiere darauf 5. Gib anschließend zusätzlich einen Satz aus, der die ursprüngliche Zahl enthält, indem du sie wieder in Text umwandelst und mit + anhängst. Fertig, wenn: zuerst 30 und darunter Alter: 25 ausgegeben wird.",
-     "tipp": "Die Funktionen für die Umwandlung heißen genauso wie die Zieltypen. Eine davon macht aus Text eine Ganzzahl, die andere macht aus einer Zahl Text."
+     "tipp": "Die Funktionen für die Umwandlung heißen genauso wie die Zieltypen. Eine davon macht aus Text eine Ganzzahl, die andere macht aus einer Zahl Text.",
+     "loesung": "alter_als_text = \"25\"\nalter = int(alter_als_text)\nprint(alter + 5)\nprint(\"Alter: \" + str(alter))"
     },
     {
      "titel": "Der Typ passt nicht",
      "aufgabe": "Die Vorgabe soll die Summe aus zwei Angaben ausgeben und bricht ab. Führe sie aus, lies die Meldung und bestimme für jeden der beiden Werte den Typ — zur Not mit einer zusätzlichen print(type(...))-Zeile. Repariere das Programm so, dass tatsächlich gerechnet wird. Fertig, wenn: die Zahl 8 ausgegeben wird, nicht 53 und keine Fehlermeldung.",
      "tipp": "Die Meldung nennt beide beteiligten Typen. Einer von beiden muss umgewandelt werden, bevor + etwas Sinnvolles tun kann — und zwar in die Richtung, in der am Ende gerechnet wird.",
-     "loesung": "anzahl_kartons = \"5\"\nzusatz = 3\n\nprint(type(anzahl_kartons), type(zusatz))\nprint(int(anzahl_kartons) + zusatz)",
+     "loesung": "anzahl_kartons = \"5\"\nzusatz = 3\nprint(int(anzahl_kartons) + zusatz)",
      "vorgabe": "anzahl_kartons = \"5\"\nzusatz = 3\nprint(anzahl_kartons + zusatz)"
     }
    ]
@@ -234,13 +235,13 @@
      "titel": "Ein eingebauter Name wurde überschrieben",
      "aufgabe": "Die Vorgabe bricht in Zeile 3 ab, obwohl diese Zeile völlig harmlos aussieht. Führe sie aus, lies den Fehlertyp und finde die Zeile, in der der Fehler tatsächlich gemacht wurde. Repariere das Programm, indem du dem Text einen passenden eigenen Namen gibst, und gib anschließend Überschrift und Anzahl aus. Fertig, wenn: zuerst Teilnehmerliste und darunter Teilnehmer: 12 erscheint und kein eingebauter Name mehr als Variable verwendet wird.",
      "tipp": "Die Meldung lautet TypeError: 'str' object is not callable — ein Text lässt sich nicht aufrufen. Frage dich, was in Zeile 1 mit dem Schild print passiert ist. Der Editor färbt eingebaute Namen ein; die Farbe verrät den Fehler sofort.",
-     "loesung": "Liste = \" Teilnehmerliste\"\nanzahl_teilnehmer = 12\n\nprint(Liste + \": \" + str(anzahl_teilnehmer))"
+     "loesung": "ueberschrift = \"Teilnehmerliste\"\nanzahl_teilnehmer = 12\nprint(ueberschrift)\nprint(\"Teilnehmer:\", anzahl_teilnehmer)"
     },
     {
      "titel": "Veränderbar oder nicht",
      "aufgabe": "Die Vorgabe soll zwei Dinge ändern: den ersten Eintrag einer Ausrüstungsliste und die Schreibweise einer Kennung. Einer der beiden Versuche wirkt, der andere nicht. Führe die Vorgabe aus, finde heraus, welcher der beiden wirkungslos bleibt, und repariere ihn. Fertig, wenn: die Liste ['Muetze', 'Weste', 'Stiefel'] ausgibt und die Kennung in Großbuchstaben erscheint.",
      "tipp": "list ist veränderbar, str nicht. Was eine Methode bei einem unveränderbaren Wert liefert, ist ein neuer Wert — und der geht verloren, wenn ihn niemand auffängt.",
-     "loesung": "ausruestung = ['Helm', 'Weste', 'Stiefel']\nausruestung[0] = 'Muetze'\nkennung = \"nato-code\"\nkennung.upper()\nprint(ausruestung)\nprint(kennung)"
+     "loesung": "ausruestung = ['Helm', 'Weste', 'Stiefel']\nausruestung[0] = 'Muetze'\nkennung = \"nato-code\"\nkennung = kennung.upper()\nprint(ausruestung)\nprint(kennung)"
     }
    ]
   }

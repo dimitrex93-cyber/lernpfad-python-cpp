@@ -146,43 +146,50 @@
     {
      "titel": "Apostroph und Anführungszeichen im Text",
      "aufgabe": "Gib zwei Sätze aus. Im ersten kommt ein Apostroph mitten im Wort vor, im zweiten steht ein Teil des Satzes in doppelten Anführungszeichen. Löse beides allein über die Wahl der äußeren Anführungszeichen, ohne Rückstriche. Fertig, wenn: beide Sätze vollständig und unverändert erscheinen und kein SyntaxError kommt.",
-     "tipp": "Einfache und doppelte Anführungszeichen sind gleichwertig. Außen gehört die Sorte, die im Text selbst nicht vorkommt."
+     "tipp": "Einfache und doppelte Anführungszeichen sind gleichwertig. Außen gehört die Sorte, die im Text selbst nicht vorkommt.",
+     "loesung": "satz = \"Ich habe's geschafft\"\nprint(satz)\nprint('Sie sagte: \"Guten Morgen\"')"
     },
     {
      "titel": "Vier Zeilen aus einem einzigen Aufruf",
      "aufgabe": "Gib eine Überschrift und darunter drei eingerückte Ausrüstungsgegenstände aus — insgesamt vier Zeilen, aber mit genau einem print()-Aufruf. Die Einrückung soll kein getipptes Leerzeichen sein, sondern ein Tabulator. Fertig, wenn: vier Zeilen erscheinen, von denen die unteren drei eingerückt sind, und im Quelltext nur ein einziges print steht.",
-     "tipp": "Zeilenumbruch und Tabulator lassen sich im Quelltext nicht hinschreiben, dafür gibt es die Escape-Sequenzen: ein Rückstrich und ein Buchstabe stehen gemeinsam für ein Zeichen."
+     "tipp": "Zeilenumbruch und Tabulator lassen sich im Quelltext nicht hinschreiben, dafür gibt es die Escape-Sequenzen: ein Rückstrich und ein Buchstabe stehen gemeinsam für ein Zeichen.",
+     "loesung": "print(\"Packliste:\\n\\tHelm\\n\\tWeste\\n\\tStiefel\")"
     },
     {
      "titel": "Drei Schreibweisen desselben Namens",
      "aufgabe": "Lege einen klein geschriebenen Namen aus Vor- und Nachname in einer Variablen ab. Gib ihn danach in drei Schreibweisen aus — jedes Wort groß begonnen, alles groß und alles klein — und gib zum Schluss die Variable selbst noch einmal aus. Fertig, wenn: vier Zeilen erscheinen und die letzte wieder klein geschrieben ist wie die ursprüngliche Zuweisung.",
-     "tipp": "Die drei Werkzeuge hängen mit einem Punkt am Text und heißen title(), upper() und lower(). Die Klammern gehören dazu, auch wenn nichts darin steht."
+     "tipp": "Die drei Werkzeuge hängen mit einem Punkt am Text und heißen title(), upper() und lower(). Die Klammern gehören dazu, auch wenn nichts darin steht.",
+     "loesung": "name = \"thomas mueller\"\nprint(name.title())\nprint(name.upper())\nprint(name.lower())\nprint(name)"
     },
     {
      "titel": "Zeichen zählen",
      "aufgabe": "Lass dir die Länge von drei Texten nennen: einem Wort ohne Leerzeichen, einem Namen aus zwei Wörtern und einem Text ohne jeden Inhalt. Überlege vorher, ob das Leerzeichen im zweiten Text mitzählt. Fertig, wenn: die drei Zahlen 10, 14 und 0 untereinander stehen.",
-     "tipp": "Die Funktion steht vor dem Wert und nimmt ihn in die Klammer — anders als eine Methode, die hinter dem Wert steht."
+     "tipp": "Die Funktion steht vor dem Wert und nimmt ihn in die Klammer — anders als eine Methode, die hinter dem Wert steht.",
+     "loesung": "print(len(\"Bundeswehr\"))\nprint(len(\"thomas mueller\"))\nprint(len(\"\"))"
     },
     {
      "titel": "Trennlinie und zusammengesetzte Zeile",
      "aufgabe": "Gib eine Zeile aus 30 Bindestrichen aus, darunter eine Zeile, in der zwei Variablen mit einem Leerzeichen dazwischen zusammengehängt sind, und darunter noch einmal dieselbe Trennlinie. Die Bindestriche sollen nicht einzeln getippt werden. Fertig, wenn: drei Zeilen erscheinen, die erste und die dritte identisch lang, und in der Mitte Logistik Munster steht.",
-     "tipp": "Text mal Zahl wiederholt den Text. Beim Zusammenhängen mit + kommt kein Zeichen von selbst dazu — das Leerzeichen ist ein eigener Text."
+     "tipp": "Text mal Zahl wiederholt den Text. Beim Zusammenhängen mit + kommt kein Zeichen von selbst dazu — das Leerzeichen ist ein eigener Text.",
+     "loesung": "einheit = \"Logistik\"\nstandort = \"Munster\"\nprint(\"-\" * 30)\nprint(einheit + \" \" + standort)\nprint(\"-\" * 30)"
     },
     {
      "titel": "Der erste f-String",
      "aufgabe": "Lege zwei Variablen für Vor- und Nachnamen an. Baue daraus in einer dritten Variablen einen vollständigen Satz zusammen, ohne ein einziges Pluszeichen zu benutzen, und gib diese dritte Variable aus. Fertig, wenn: die Zeile Bewerbung von Jens Hartmann erscheint und im Quelltext kein + vorkommt.",
-     "tipp": "Ein f direkt vor dem öffnenden Anführungszeichen schaltet die geschweiften Klammern scharf. Was darin steht, wird ausgewertet und eingesetzt."
+     "tipp": "Ein f direkt vor dem öffnenden Anführungszeichen schaltet die geschweiften Klammern scharf. Was darin steht, wird ausgewertet und eingesetzt.",
+     "loesung": "vorname = \"Jens\"\nnachname = \"Hartmann\"\nbewerbung = f\"Bewerbung von {vorname} {nachname}\"\nprint(bewerbung)"
     },
     {
      "titel": "Warum sich nichts ändert",
      "aufgabe": "Die Vorgabe soll einen klein geschriebenen Namen in ordentlicher Schreibweise ausgeben und tut es nicht. Es kommt keine Fehlermeldung, die Ausgabe ist nur falsch. Finde die Ursache und repariere die Zeile. Fertig, wenn: Jens Hartmann ausgegeben wird, mit großen Anfangsbuchstaben in beiden Wörtern.",
      "tipp": "Die Methode liefert ein Ergebnis zurück, anstatt den Text zu ändern. Ein Ergebnis, das niemand auffängt, ist verloren.",
-     "loesung": "name = \"jens hartmann\"\nname.title()\nprint(name)"
+     "loesung": "name = \"jens hartmann\"\nname = name.title()\nprint(name)"
     },
     {
      "titel": "Leerzeichen am Rand entfernen",
      "aufgabe": "Eine Angabe ist mit überflüssigen Leerzeichen am Anfang und am Ende angekommen. Gib sie zuerst unverändert aus, dann bereinigt — jeweils in eckige Klammern eingefasst, damit die Leerzeichen sichtbar werden. Das bereinigte Ergebnis soll in derselben Variablen stehen. Fertig, wenn: zwei Zeilen erscheinen: oben [ munster ] und darunter [munster].",
-     "tipp": "Die Methode heißt strip(). Wie bei title() gilt: Sie ändert den Text nicht, sie gibt einen neuen zurück — der muss aufgefangen werden."
+     "tipp": "Die Methode heißt strip(). Wie bei title() gilt: Sie ändert den Text nicht, sie gibt einen neuen zurück — der muss aufgefangen werden.",
+     "loesung": "eingabe = \"   munster   \"\nprint(\"[\" + eingabe + \"]\")\neingabe = eingabe.strip()\nprint(\"[\" + eingabe + \"]\")"
     }
    ]
   },
@@ -196,13 +203,13 @@
      "titel": "Vorhersage — was in den Fenstern passiert",
      "aufgabe": "Unten steht ein Programm mit sechs Ausgabezeilen, von denen eine absichtlich das f vermissen lässt. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für alle sechs Zeilen. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Achte besonders auf die letzte Zeile. Fertig, wenn: nach deiner Vorhersagezeile sechs Zeilen folgen, die zweite davon geschweifte Klammern enthält und die letzte wieder klein geschrieben ist.",
      "tipp": "In den geschweiften Klammern darf alles stehen, was einen Wert ergibt — eine Rechnung, ein Methodenaufruf, ein Funktionsaufruf. Und für die letzte Zeile gilt wieder: Eine Methode im f-String ändert die Variable nicht.",
-     "loesung": "vorname = \"jens\"\nalter = 41\nprint(\"Hallo, {vorname}!\")\nprint(f\"Hallo, {vorname}!\")\nprint(f\"{vorname.title()} ist {alter} Jahre alt.\")\nprint(f\"In 10 Jahren: {alter + 10}\")\nprint(f\"Der Name hat {len(vorname)} Buchstaben.\")\nprint(vorname)"
+     "loesung": "print(\"Erwartet: erst woertlich mit Klammern, dann Hallo jens, Jens ist 41, In 10 Jahren 51, 4 Buchstaben, zuletzt jens klein\")\nvorname = \"jens\"\nalter = 41\nprint(\"Hallo, {vorname}!\")\nprint(f\"Hallo, {vorname}!\")\nprint(f\"{vorname.title()} ist {alter} Jahre alt.\")\nprint(f\"In 10 Jahren: {alter + 10}\")\nprint(f\"Der Name hat {len(vorname)} Buchstaben.\")\nprint(vorname)"
     },
     {
      "titel": "Drei Fehler in sechs Zeilen",
      "aufgabe": "Die Vorgabe soll zwei Zeilen ausgeben: Bewerbung von Jens Hartmann und Das ist Jens' Bewerbung. Sie enthält drei verschiedene Fehler aus diesem Thema — einen, der das Programm gar nicht erst starten lässt, und zwei, die stillschweigend das Falsche tun. Repariere alle drei, und zwar einen nach dem anderen mit jeweils einem Lauf dazwischen. Fertig, wenn: genau die beiden genannten Zeilen erscheinen, mit großen Anfangsbuchstaben in beiden Namen und mit dem Apostroph hinter Jens.",
      "tipp": "Fang mit dem Fehler an, der die Ausführung verhindert — er steht in der letzten Zeile und hat mit der Sorte der äußeren Anführungszeichen zu tun. Danach bleiben zwei stille Fehler: einer in den beiden Zeilen mit title(), einer am öffnenden Anführungszeichen der vorletzten Zeile.",
-     "loesung": "vorname = \"jens\"\nnachname = \"hartmann\"\n\nprint(f\"Bewerbung von {vorname.title()} {nachname.title()}\")\nprint(\"Das ist Jens' Bewerbung\")",
+     "loesung": "vorname = 'jens'\nnachname = 'hartmann'\nvorname = vorname.title()\nnachname = nachname.title()\nprint(f\"Bewerbung von {vorname} {nachname}\")\nprint(\"Das ist Jens' Bewerbung\")",
      "vorgabe": "vorname = 'jens'\nnachname = 'hartmann'\nvorname.title()\nnachname.title()\nprint(\"Bewerbung von {vorname} {nachname}\")\nprint('Das ist Jens' Bewerbung')"
     }
    ]

@@ -123,39 +123,44 @@
     {
      "titel": "Alle sieben Rechenarten an einem Zahlenpaar",
      "aufgabe": "Rechne mit den beiden Zahlen 12 und 8 alle sieben Rechenarten durch, die der Kurs braucht, und gib jedes Ergebnis in einer eigenen Zeile aus. Bei der Potenz nimmst du stattdessen 2 hoch 8. Schreibe die Zahlen direkt in die Rechnung, ohne Variablen. Fertig, wenn: sieben Zeilen erscheinen und genau eine davon eine Nachkommastelle zeigt.",
-     "tipp": "Die sieben Zeichen sind +, -, , /, //, % und . Zwei davon beantworten dieselbe Division auf zwei verschiedene Arten."
+     "tipp": "Die sieben Zeichen sind +, -, , /, //, % und . Zwei davon beantworten dieselbe Division auf zwei verschiedene Arten.",
+     "loesung": "print(12 + 8)\nprint(12 - 8)\nprint(12 * 8)\nprint(12 / 8)\nprint(12 // 8)\nprint(12 % 8)\nprint(2 ** 8)"
     },
     {
      "titel": "Ganzzahl trifft Kommazahl",
      "aufgabe": "Lege zwei Variablen an: eine Anzahl Kartons als ganze Zahl und ein Gewicht je Karton mit einer Nachkommastelle. Gib die Typen beider Variablen aus, danach das Gesamtgewicht und zum Schluss den Typ dieses Ergebnisses. Fertig, wenn: vier Zeilen erscheinen und die letzte float nennt, obwohl einer der beiden Ausgangswerte ein int war.",
-     "tipp": "Der Unterschied zwischen den beiden Zahlentypen steht nicht in einer Angabe, sondern in der Schreibweise des Werts. Wo ein Punkt steht, ist es eine Kommazahl."
+     "tipp": "Der Unterschied zwischen den beiden Zahlentypen steht nicht in einer Angabe, sondern in der Schreibweise des Werts. Wo ein Punkt steht, ist es eine Kommazahl.",
+     "loesung": "anzahl_kartons = 12\ngewicht_kg = 23.5\nprint(type(anzahl_kartons))\nprint(type(gewicht_kg))\nprint(anzahl_kartons * gewicht_kg)\nprint(type(anzahl_kartons * gewicht_kg))"
     },
     {
      "titel": "Dieselben Zahlen, zwei Ergebnisse",
      "aufgabe": "Lege eine Variable für eine Anzahl Dienstjahre an. Gib danach zwei Rechnungen aus, die genau dieselben drei Zahlen verwenden und sich nur durch eine Klammer unterscheiden: einmal die Dienstjahre in Monaten plus ein halbes Jahr, einmal die Dienstjahre mal anderthalb Jahre in Monaten. Fertig, wenn: zwei verschiedene Zahlen untereinander stehen: 102 und 144.",
-     "tipp": "Punkt vor Strich gilt wie in der Schule. Klammern sind das einzige Mittel, die Rangfolge zu ändern — und sie kosten nichts."
+     "tipp": "Punkt vor Strich gilt wie in der Schule. Klammern sind das einzige Mittel, die Rangfolge zu ändern — und sie kosten nichts.",
+     "loesung": "dienstjahre = 8\nprint(dienstjahre * 12 + 6)\nprint(dienstjahre * (12 + 6))"
     },
     {
      "titel": "Volle Portionen und der Rest",
      "aufgabe": "Verteile 47 Verpflegungspakete auf 6 Personen. Gib drei Zahlen aus: das Ergebnis der gewöhnlichen Division, die Anzahl der Pakete, die jeder sicher bekommt, und die Anzahl der Pakete, die übrig bleiben. Zerlege anschließend 200 Sekunden auf dieselbe Weise in volle Minuten und Restsekunden. Fertig, wenn: fünf Zahlen untereinander stehen, darunter 7 volle Pakete mit 5 Rest und 3 Minuten mit 20 Sekunden Rest.",
-     "tipp": "// wirft den Rest weg und nennt die vollen Portionen, % nennt nur den Rest. Beide arbeiten an derselben Division."
+     "tipp": "// wirft den Rest weg und nennt die vollen Portionen, % nennt nur den Rest. Beide arbeiten an derselben Division.",
+     "loesung": "pakete = 47\npersonen = 6\nprint(pakete / personen)\nprint(pakete // personen)\nprint(pakete % personen)\n\nsekunden = 200\nprint(sekunden // 60)\nprint(sekunden % 60)"
     },
     {
      "titel": "Zwei Nachkommastellen für einen Betrag",
      "aufgabe": "Teile Materialkosten von 129.90 Euro auf 7 Personen auf. Gib den Betrag je Person zweimal aus: einmal ohne jede Formatangabe und einmal auf zwei Nachkommastellen, jeweils mit dem Wort Euro dahinter. Benutze dafür in beiden Fällen einen f-String. Fertig, wenn: die erste Zeile eine lange Ziffernfolge hinter dem Punkt zeigt und die zweite genau zwei Stellen: 18.56.",
-     "tipp": "In den geschweiften Klammern darf hinter dem Wert ein Doppelpunkt stehen und danach eine Angabe, wie der Wert aussehen soll. Die wichtigste im Kursalltag lautet .2f."
+     "tipp": "In den geschweiften Klammern darf hinter dem Wert ein Doppelpunkt stehen und danach eine Angabe, wie der Wert aussehen soll. Die wichtigste im Kursalltag lautet .2f.",
+     "loesung": "materialkosten = 129.90\npersonen = 7\nprint(f\"Pro Person: {materialkosten / personen} Euro\")\nprint(f\"Pro Person: {materialkosten / personen:.2f} Euro\")"
     },
     {
      "titel": "Vorhersage — drei Arten zu teilen",
      "aufgabe": "Unten stehen fünf Zeilen mit Divisionen. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für alle fünf Ausgabezeilen — achte besonders darauf, wo eine Nachkommastelle auftaucht und wo nicht. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile 5.0, , 5, 4.5 und 4 erscheinen.",
      "tipp": "Eine der fünf Zeilen überrascht fast jeden: Die Division geht glatt auf und liefert trotzdem eine Kommazahl.",
-     "loesung": "print(20 / 4)\nprint(type(20 / 4))\nprint(20 // 4)\nprint(9 / 2)\nprint(9 // 2)"
+     "loesung": "print(\"Erwartet: 5.0, dann float, dann 5, dann 4.5, dann 4\")\nprint(20 / 4)\nprint(type(20 / 4))\nprint(20 // 4)\nprint(9 / 2)\nprint(9 // 2)"
     },
     {
      "titel": "Zahl in einen Satz bringen",
      "aufgabe": "Die Vorgabe will eine Zahl in einen Satz einbauen und bricht mit einem TypeError ab. Repariere die Zeile auf beide Arten, die der Kurs kennt, und gib den Satz folglich zweimal aus — einmal über einen f-String und einmal über eine ausdrückliche Umwandlung. Fertig, wenn: zweimal dieselbe Zeile Ich war 12 Jahre dabei. erscheint.",
      "tipp": "Der eine Weg setzt die Zahl in ein geschweiftes Fenster. Der andere macht aus der Zahl vorher Text, mit einer Funktion, die genauso heißt wie der Zieltyp.",
-     "loesung": "dienstjahre = 12\n\nprint(f\"Ich war {dienstjahre} Jahre dabei.\")\nprint(\"Ich war \" + str(dienstjahre) + \" Jahre dabei.\")",
+     "loesung": "dienstjahre = 12\nprint(f\"Ich war {dienstjahre} Jahre dabei.\")\nprint(\"Ich war \" + str(dienstjahre) + \" Jahre dabei.\")",
      "vorgabe": "dienstjahre = 12\nprint(\"Ich war \" + dienstjahre + \" Jahre dabei.\")"
     }
    ]
@@ -170,12 +175,13 @@
      "titel": "Zwei Texte, die aussehen wie Zahlen",
      "aufgabe": "Die Vorgabe gibt 246 aus, obwohl 30 herauskommen soll. Es gibt keine Fehlermeldung. Finde die Ursache, repariere das Programm und gib zusätzlich eine zweite Zeile aus, die das Ergebnis durch 7 teilt und auf zwei Nachkommastellen anzeigt. Fertig, wenn: zuerst 30 ausgegeben wird und darunter Pro Woche: 4.29.",
      "tipp": "Eine Ziffernfolge in Anführungszeichen ist Text, keine Zahl — und + tut mit Text das, was es mit Text immer tut. Die Gegenrichtung zu str() heißt int().",
-     "loesung": "anzahl_als_text = \"24\"\nzusatz_als_text = \"6\"\nprint(anzahl_als_text + zusatz_als_text)"
+     "loesung": "anzahl_als_text = \"24\"\nzusatz_als_text = \"6\"\ngesamt = int(anzahl_als_text) + int(zusatz_als_text)\nprint(gesamt)\nprint(f\"Pro Woche: {gesamt / 7:.2f}\")"
     },
     {
      "titel": "Die Umzugsrechnung",
      "aufgabe": "Baue eine kleine Kostenrechnung für einen Umzug. Gegeben sind 23 Kartons zu je 1.95 Euro und eine Transportpauschale von 180.00 Euro; die Gesamtkosten werden auf 4 Personen umgelegt. Zusätzlich passen 8 Kartons in eine Fahrt — gib aus, wie viele volle Fahrten nötig sind und wie viele Kartons danach noch übrig bleiben. Alle Geldbeträge erscheinen mit zwei Nachkommastellen, und die Rechnung soll aus benannten Variablen bestehen, nicht aus hingeschriebenen Zahlen in der Ausgabezeile. Fertig, wenn: drei Zeilen erscheinen: Gesamtkosten 224.85 Euro, pro Person 56.21 Euro, und 2 volle Fahrten mit 7 Kartons Rest.",
-     "tipp": "Vier Werkzeuge dieses Themas kommen zusammen: Punkt vor Strich (oder eine Klammer, die es deutlich macht), die Division / für die Umlage, // und % für die Fahrten und :.2f für die Beträge."
+     "tipp": "Vier Werkzeuge dieses Themas kommen zusammen: Punkt vor Strich (oder eine Klammer, die es deutlich macht), die Division / für die Umlage, // und % für die Fahrten und :.2f für die Beträge.",
+     "loesung": "kartons = 23\npreis_pro_karton = 1.95\ntransportpauschale = 180.00\npersonen = 4\nkartons_pro_fahrt = 8\n\ngesamtkosten = kartons * preis_pro_karton + transportpauschale\npro_person = gesamtkosten / personen\nvolle_fahrten = kartons // kartons_pro_fahrt\nrest_kartons = kartons % kartons_pro_fahrt\n\nprint(f\"Gesamtkosten: {gesamtkosten:.2f} Euro\")\nprint(f\"Pro Person: {pro_person:.2f} Euro\")\nprint(f\"Volle Fahrten: {volle_fahrten}, Rest: {rest_kartons} Kartons\")"
     }
    ]
   }

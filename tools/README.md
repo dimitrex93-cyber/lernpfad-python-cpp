@@ -54,8 +54,9 @@ Codebeispiel und Merksatz pro Abschnitt.
 
 - **Python-Kurs:** `tools/python_kurs/` – 19 Kapitel, 147 Abschnitte. Die
   Kapitel 2–8 enthalten zusätzlich **133 Pflicht- und 25
-  Vertiefungsaufgaben** aus dem Python-Crashkurs (Tag 1–3) mit Lösungen
-  (`aufgaben_pflicht` / `aufgaben_vertiefung`); Reparatur- und
+  Vertiefungsaufgaben** aus dem Python-Crashkurs (Tag 1–3) – alle mit Lösung
+  aus den offiziellen Lösungssammlungen (`aufgaben_pflicht` /
+  `aufgaben_vertiefung`); Reparatur- und
   Vorhersage-Aufgaben tragen zusätzlich den fehlerhaften Ausgangscode als
   `vorgabe`.
 - **C++-Kurs:** `tools/cpp_kurs/` – 19 Kapitel, 121 Abschnitte, dazu 71

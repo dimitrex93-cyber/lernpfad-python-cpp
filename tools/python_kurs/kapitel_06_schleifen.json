@@ -40,73 +40,73 @@
      "titel": "Jedes Fahrzeug einmal",
      "aufgabe": "Eine Liste hält vier Fahrzeuge in Kleinschreibung. Gib alle vier untereinander aus, jedes mit großem Anfangsbuchstaben — und zwar mit einer Schleife, nicht mit vier einzelnen Aufrufen. Im Quelltext darf print nur ein einziges Mal vorkommen. Fertig, wenn: vier Zeilen erscheinen: Lkw, Jeep, Transporter, Bus.",
      "tipp": "Die Kopfzeile besteht aus vier Teilen: for, einem frei gewählten Namen, in, der Liste — und am Ende dem Doppelpunkt. Die Zeile darunter wird vier Leerzeichen eingerückt.",
-     "loesung": "fahrzeuge = [\"lkw\", \"jeep\", \"transporter\", \"bus\"]\n\nfor fahrzeug in fahrzeuge:\n    print(fahrzeug.capitalize())"
+     "loesung": "fahrzeuge = ['lkw', 'jeep', 'transporter', 'bus']\n\nfor fahrzeug in fahrzeuge:\n    print(fahrzeug.title())"
     },
     {
      "titel": "Zwei Zeilen in jedem Durchlauf",
      "aufgabe": "Begrüße drei Teilnehmer. Zu jedem sollen zwei Zeilen erscheinen: eine Begrüßung mit großem Anfangsbuchstaben und darunter die Anzahl der Buchstaben seines Namens. Beide Zeilen gehören in denselben Schleifenkörper. Fertig, wenn: sechs Zeilen erscheinen, beginnend mit Hallo, Anna! und Dein Name hat 4 Buchstaben. — je Teilnehmer eine Begrüßung und direkt darunter die Buchstabenzahl.",
      "tipp": "Im Schleifenkörper dürfen beliebig viele Zeilen stehen, solange alle gleich weit eingerückt sind. Die Buchstabenzahl liefert len() aus Bereich 1.",
-     "loesung": "teilnehmer = [\"anna\", \"dirk\", \"clara\"]\n\nfor name in teilnehmer:\n    print(f\"Hallo, {name.capitalize()}!\")\n    print(f\"Dein Name hat {len(name)} Buchstaben.\")"
+     "loesung": "teilnehmer = ['anna', 'bernd', 'clara']\n\nfor name in teilnehmer:\n    print(f\"Hallo, {name.title()}!\")\n    print(f\"Dein Name hat {len(name)} Buchstaben.\")"
     },
     {
      "titel": "Der Abschluss gehört nach draußen",
      "aufgabe": "Gib drei Werkzeuge untereinander aus, jedes groß begonnen, und darunter genau einmal die Zeile Alle Werkzeuge geprüft.. Die Abschlusszeile soll nicht in jedem Durchlauf erscheinen. Fertig, wenn: insgesamt vier Zeilen erscheinen und die letzte nur einmal dasteht.",
      "tipp": "Was einmal laufen soll, steht am linken Rand — also auf derselben Höhe wie das Wort for. Vier Leerzeichen nach rechts hieße: in jedem Durchlauf.",
-     "loesung": "werkzeuge = [\"hammer\", \"zange\", \"saege\"]\n\nfor werkzeug in werkzeuge:\n    print(werkzeug.capitalize())\n\nprint(\"Alle Werkzeuge geprüft.\")"
+     "loesung": "werkzeuge = ['zange', 'hammer', 'schraubendreher']\n\nfor werkzeug in werkzeuge:\n    print(werkzeug.title())\n\nprint(\"Alle Werkzeuge geprüft.\")"
     },
     {
      "titel": "Reparatur — das Programm startet nicht",
      "aufgabe": "Die Vorgabe soll drei Standorte ausgeben. Stattdessen bricht Python ab, bevor eine einzige Zeile gelaufen ist. Führe sie zuerst aus, lies die Meldung genau, und repariere dann das eine fehlende Zeichen. Fertig, wenn: die drei Zeilen Munster, Koblenz, Ulm erscheinen.",
      "tipp": "Die Meldung nennt das fehlende Zeichen wörtlich, und das kleine Dach darunter zeigt auf die Stelle, an der es hingehört.",
-     "loesung": "standorte = [\"Munster\", \"Koblenz\", \"Ulm\"]\n\nfor standort in standorte:\n    print(standort)"
+     "loesung": "standorte = ['munster', 'koblenz', 'ulm']\n\nfor standort in standorte:\n    print(standort.title())"
     },
     {
      "titel": "Reparatur — eine Schleife ohne Körper",
      "aufgabe": "Auch diese Vorgabe startet nicht. Diesmal fehlt kein Zeichen, sondern ein Abstand. Führe sie aus, lies die Meldung, und bringe die Zeile dorthin, wo sie hingehört. Fertig, wenn: die drei Dienstgrade groß begonnen untereinander erscheinen.",
      "tipp": "Der Doppelpunkt hat einen Block versprochen. Der verbindliche Standard für eine Ebene sind vier Leerzeichen.",
-     "loesung": "dienstgrade = [\"leutnant\", \"feldwebel\", \"hauptmann\"]\n\nfor dienstgrad in dienstgrade:\n    print(dienstgrad.capitalize())"
+     "loesung": "dienstgrade = ['gefreiter', 'feldwebel', 'hauptmann']\n\nfor grad in dienstgrade:\n    print(grad.title())"
     },
     {
      "titel": "Reparatur — die Ausgabe kommt zu oft",
      "aufgabe": "Diese Vorgabe läuft durch. Es kommt keine Fehlermeldung, und trotzdem ist das Ergebnis falsch: Die Abschlusszeile soll einmal am Ende stehen, erscheint aber nach jedem Fahrzeug. Führe die Vorgabe aus, vergleiche mit dem Soll, und verschiebe die eine Zeile. Fertig, wenn: vier Zeilen erscheinen und Fahrzeugliste vollständig. nur die letzte ist.",
      "tipp": "Beide Fassungen sind gültiger Python-Code — deshalb schweigt Python. Entscheidend ist allein, wie weit rechts die letzte Zeile beginnt.",
-     "loesung": "fahrzeuge = [\"lkw\", \"jeep\", \"transporter\"]\n\nfor fahrzeug in fahrzeuge:\n    print(fahrzeug.capitalize())\n\nprint(\"Fahrzeugliste vollständig.\")"
+     "loesung": "fahrzeuge = ['lkw', 'jeep', 'transporter']\n\nfor fahrzeug in fahrzeuge:\n    print(fahrzeug.title())\nprint(\"Fahrzeugliste vollständig.\")"
     },
     {
      "titel": "Die leere Liste",
      "aufgabe": "Lege eine Liste offener Punkte an, die noch keinen einzigen Eintrag enthält. Lass eine Schleife darüber laufen, die jeden Punkt melden würde, und gib danach die Anzahl aus. Überlege vorher, wie oft der Schleifenkörper läuft. Fertig, wenn: genau eine Zeile erscheint: Anzahl offener Punkte: 0 — und keine Fehlermeldung.",
      "tipp": "So viele Elemente, so viele Durchläufe. Null Elemente sind kein Sonderfall, sondern die logische Fortsetzung dieser Regel.",
-     "loesung": "offene_punkte = []\n\nfor punkt in offene_punkte:\n    print(f\"Offener Punkt: {punkt}\")\n\nprint(f\"Anzahl offener Punkte: {len(offene_punkte)}\")"
+     "loesung": "offene_punkte = []\n\nfor punkt in offene_punkte:\n    print(f\"Offen: {punkt}\")\n\nprint(f\"Anzahl offener Punkte: {len(offene_punkte)}\")"
     },
     {
      "titel": "Rechnen im Schleifenkörper",
      "aufgabe": "Vier Gewichte in Kilogramm sollen ausgewertet werden. Gib je Gewicht eine Zeile aus, in der sowohl der ursprüngliche Wert als auch sein Doppeltes steht. Die Liste selbst darf dabei nicht verändert werden. Fertig, wenn: vier Zeilen nach dem Muster 8 kg einzeln, 16 kg doppelt erscheinen.",
      "tipp": "Die Schleifenvariable ist eine ganz gewöhnliche Variable. In den geschweiften Klammern eines f-Strings darf auch gerechnet werden.",
-     "loesung": "gewichte = [8, 12, 5, 20]\n\nfor gewicht in gewichte:\n    print(f\"{gewicht} kg einzeln, {gewicht * 2} kg doppelt\")"
+     "loesung": "gewichte = [8, 3, 11, 25]\n\nfor gewicht in gewichte:\n    print(f\"{gewicht} kg einzeln, {gewicht * 2} kg doppelt\")"
     },
     {
      "titel": "Was nach der Schleife übrig bleibt",
      "aufgabe": "Gib drei Monatsnamen groß begonnen aus. Gib danach — am linken Rand, nach dem Ende der Schleife — die Schleifenvariable noch einmal aus, eingebettet in den Satz Zuletzt bearbeitet: .... Überlege vorher, welcher Monat dort stehen wird. Fertig, wenn: vier Zeilen erscheinen und in der vierten derselbe Monat steht wie in der dritten.",
      "tipp": "Die Schleifenvariable verschwindet nach dem letzten Durchlauf nicht. Sie behält den Wert, den sie zuletzt bekommen hat.",
-     "loesung": "monate = [\"januar\", \"februar\", \"maerz\"]\n\nfor monat in monate:\n    print(monat.capitalize())\n\nprint(f\"Zuletzt bearbeitet: {monat.capitalize()}\")"
+     "loesung": "monate = ['januar', 'februar', 'märz']\n\nfor monat in monate:\n    print(monat.title())\n\nprint(f\"Zuletzt bearbeitet: {monat.title()}\")"
     },
     {
      "titel": "Zwei Schleifen über dieselbe Liste",
      "aufgabe": "Drei Bewerbungsbereiche sollen zweimal durchlaufen werden. Die erste Schleife meldet jeden Bereich komplett in Großbuchstaben, danach kommt eine Trennlinie aus 30 Bindestrichen, und die zweite Schleife nennt jeden Bereich groß begonnen samt seiner Zeichenzahl. Fertig, wenn: sieben Zeilen erscheinen: Beworben: LOGISTIK bis Beworben: FAHRDIENST, eine Trennlinie aus Bindestrichen und darunter Logistik hat 8 Zeichen. bis Fahrdienst hat 10 Zeichen.",
      "tipp": "Eine Liste darf beliebig oft durchlaufen werden; die Schleife verbraucht sie nicht. Beide for-Zeilen und die Trennlinie stehen am linken Rand.",
-     "loesung": "bereiche = [\"Logistik\", \"Einkauf\", \"Fahrdienst\"]\n\nfor bereich in bereiche:\n    print(f\"Beworben: {bereich.upper()}\")\n\nprint(\"-\" * 30)\n\nfor bereich in bereiche:\n    print(f\"{bereich} hat {len(bereich)} Zeichen.\")"
+     "loesung": "bewerbungen = ['logistik', 'it-service', 'fahrdienst']\n\nfor bereich in bewerbungen:\n    print(f\"Beworben: {bereich.upper()}\")\n\nprint(\"-\" * 30)\n\nfor bereich in bewerbungen:\n    print(f\"{bereich.title()} hat {len(bereich)} Zeichen.\")"
     },
     {
      "titel": "Fünf Durchgänge zählen",
      "aufgabe": "Gib fünf Zeilen aus, die mit Durchgang 1 beginnen und mit Durchgang 5 enden. Im Quelltext darf keine dieser fünf Zahlen einzeln stehen — die Zahlen sollen erzeugt, nicht getippt werden. Fertig, wenn: fünf Zeilen von Durchgang 1 bis Durchgang 5 erscheinen.",
      "tipp": "range() braucht hier zwei Zahlen: den Startwert und den Endwert. Denk daran, dass der Endwert eine Grenze ist und nicht mitzählt.",
-     "loesung": "for nummer in range(1, 6):\n    print(f\"Durchgang {nummer}\")"
+     "loesung": "for zahl in range(1, 6):\n    print(f\"Durchgang {zahl}\")"
     },
     {
      "titel": "Vorhersage — ist die 5 dabei?",
      "aufgabe": "Ein Programm soll range(1, 5) durchlaufen. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage: Welche Zahlen kommen, und ist die 5 darunter? Erst danach schreibst du die Schleife und lässt dir zum Vergleich list(range(1, 5)) und list(range(1, 6)) ausgeben. Fertig, wenn: nach deiner Vorhersagezeile die Zahlen 1 bis 4 einzeln erscheinen und darunter die beiden Listen [1, 2, 3, 4] und [1, 2, 3, 4, 5].",
      "tipp": "Das Ende ist eine Grenze, kein Mitglied. list() macht die Zahlenfolge sichtbar, ohne dass eine Schleife nötig wäre.",
-     "loesung": "print(\"Vorhersage: Es kommen 1, 2, 3 und 4 — die 5 ist nicht dabei.\")\n\nfor zahl in range(1, 5):\n    print(zahl)\n\nprint(list(range(1, 5)))\nprint(list(range(1, 6)))"
+     "loesung": "print(\"Erwartet: 1, 2, 3, 4 — die 5 fehlt\")\n\nfor zahl in range(1, 5):\n    print(zahl)\n\nprint(list(range(1, 5)))\nprint(list(range(1, 6)))"
     },
     {
      "titel": "Drei Formen sichtbar machen",
@@ -130,13 +130,13 @@
      "titel": "Fünf Messwerte auswerten",
      "aufgabe": "Fünf Messwerte liegen als Liste vor. Gib vier beschriftete Zeilen aus: Anzahl, kleinster Wert, größter Wert und Summe. Schreibe dafür keine einzige Schleife. Fertig, wenn: vier Zeilen mit den Werten 5, 7, 42 und 123 erscheinen.",
      "tipp": "Vier eingebaute Funktionen beantworten das ohne Schleife. Alle vier bekommen die ganze Liste in die Klammer, nicht ein einzelnes Element.",
-     "loesung": "messwerte = [7, 42, 30, 24, 20]\n\nprint(f\"Anzahl: {len(messwerte)}\")\nprint(f\"Kleinster Wert: {min(messwerte)}\")\nprint(f\"Größter Wert: {max(messwerte)}\")\nprint(f\"Summe: {sum(messwerte)}\")"
+     "loesung": "messwerte = [18, 42, 7, 31, 25]\n\nprint(f\"Anzahl:    {len(messwerte)}\")\nprint(f\"Kleinster: {min(messwerte)}\")\nprint(f\"Größter:   {max(messwerte)}\")\nprint(f\"Summe:     {sum(messwerte)}\")"
     },
     {
      "titel": "Der Durchschnitt",
      "aufgabe": "Fünf Arbeitstage mit unterschiedlichen Stundenzahlen sollen ausgewertet werden. Gib drei Zeilen aus: die Gesamtsumme, die Anzahl der Tage und den Durchschnitt. Der Durchschnitt soll gerechnet und nicht von Hand eingetragen werden. Fertig, wenn: die Zeilen die Werte 40, 5 und 8.0 nennen.",
      "tipp": "Der Durchschnitt ist die Summe geteilt durch die Anzahl — beide Zahlen liefert Python fertig, und in den geschweiften Klammern eines f-Strings darf gerechnet werden.",
-     "loesung": "stunden = [8, 8, 8, 8, 8]\n\nprint(f\"Gesamtsumme: {sum(stunden)}\")\nprint(f\"Anzahl der Tage: {len(stunden)}\")\nprint(f\"Durchschnitt: {sum(stunden) / len(stunden)}\")"
+     "loesung": "stunden = [8, 6, 9, 7, 10]\n\nprint(f\"Summe:        {sum(stunden)}\")\nprint(f\"Tage:         {len(stunden)}\")\nprint(f\"Durchschnitt: {sum(stunden) / len(stunden)}\")"
     },
     {
      "titel": "Reparatur — die Schleife gibt nichts aus",
@@ -148,157 +148,157 @@
      "titel": "Position und Wert zugleich",
      "aufgabe": "Gib zu jedem Fahrzeug nicht nur den Namen aus, sondern auch seine Positionsnummer in der Liste. Die Nummern sollen bei 0 beginnen und nicht von Hand mitgezählt werden; die Lösung muss auch dann noch richtig sein, wenn ein Fahrzeug dazukommt. Fertig, wenn: vier Zeilen nach dem Muster Platz 0: Lkw bis Platz 3: Bus erscheinen.",
      "tipp": "Lass die Schleife nicht über die Werte laufen, sondern über die Positionsnummern. len() sagt, wie viele es sind, und range() macht Zahlen daraus.",
-     "loesung": "fahrzeuge = [\"Lkw\", \"Jeep\", \"Transporter\", \"Bus\"]\n\nfor position in range(len(fahrzeuge)):\n    print(f\"Platz {position}: {fahrzeuge[position]}\")"
+     "loesung": "fahrzeuge = ['lkw', 'jeep', 'transporter', 'bus']\n\nfor position in range(len(fahrzeuge)):\n    print(f\"Platz {position}: {fahrzeuge[position].title()}\")"
     },
     {
      "titel": "Groß oder klein — für jede Zahl einzeln",
      "aufgabe": "Sechs Zahlen sollen beurteilt werden. Gib zu jeder eine Zeile aus: Werte über 20 gelten als groß, alle anderen als klein. Der Wert selbst soll in der Zeile stehen. Fertig, wenn: sechs Zeilen erscheinen, davon drei mit ist groß. und drei mit ist klein..",
      "tipp": "Ein if darf überall stehen, wo auch ein anderer Befehl stehen darf — also auch im Schleifenkörper. Dann braucht sein eigener Körper acht Leerzeichen.",
-     "loesung": "zahlen = [12, 30, 7, 48, 19, 23]\n\nfor zahl in zahlen:\n    if zahl > 20:\n        print(f\"{zahl} ist groß.\")\n    else:\n        print(f\"{zahl} ist klein.\")"
+     "loesung": "zahlen = [12, 7, 30, 3, 48, 23]\n\nfor zahl in zahlen:\n    if zahl > 20:\n        print(f\"{zahl} ist groß.\")\n    else:\n        print(f\"{zahl} ist klein.\")"
     },
     {
      "titel": "Nur die Treffer melden",
      "aufgabe": "Fünf Dateigrößen in Megabyte sollen geprüft werden. Melde nur die Dateien über 500 MB als zu groß für den Anhang; zu den anderen soll nichts erscheinen. Nach der Schleife kommt einmal die Zeile Prüfung beendet.. Fertig, wenn: zwei Meldungen nach dem Muster 890 MB — zu groß für den Anhang. erscheinen (890 und 1500) und darunter einmal Prüfung beendet..",
      "tipp": "Das else ist nicht Pflicht. Oft interessiert nur ein Fall, dann bleibt der andere einfach leer.",
-     "loesung": "groessen = [120, 890, 45, 1500, 300]\n\nfor groesse in groessen:\n    if groesse > 500:\n        print(f\"{groesse} MB — zu groß für den Anhang.\")\n\nprint(\"Prüfung beendet.\")"
+     "loesung": "dateigroessen = [120, 890, 45, 1500, 300]\n\nfor groesse in dateigroessen:\n    if groesse > 500:\n        print(f\"{groesse} MB — zu groß für den Anhang.\")\n\nprint(\"Prüfung beendet.\")"
     },
     {
      "titel": "Mitzählen",
      "aufgabe": "Sechs Noten liegen vor. Zähle, wie viele davon eine 5 sind, und gib am Ende einen Satz aus, der sowohl diese Anzahl als auch die Gesamtzahl der Noten nennt. Während der Schleife soll nichts ausgegeben werden. Fertig, wenn: genau eine Zeile erscheint: 2 von 6 sind durchgefallen.",
      "tipp": "Ein Zähler ist eine Variable, die vor der Schleife auf 0 gesetzt und im Körper um eins erhöht wird. Die Kurzschreibweise dafür heißt +=.",
-     "loesung": "noten = [2, 5, 4, 1, 5, 3]\ndurchgefallen = 0\n\nfor note in noten:\n    if note == 5:\n        durchgefallen += 1\n\nprint(f\"{durchgefallen} von {len(noten)} sind durchgefallen.\")"
+     "loesung": "noten = [2, 5, 3, 5, 1, 4]\n\ndurchgefallen = 0\n\nfor note in noten:\n    if note == 5:\n        durchgefallen += 1\n\nprint(f\"{durchgefallen} von {len(noten)} sind durchgefallen.\")"
     },
     {
      "titel": "Aufsummieren von Hand",
      "aufgabe": "Vier Preise sollen zu einer Gesamtsumme addiert werden — mit einer Schleife, nicht mit sum(). Gib am Ende eine Zeile aus, die die Summe mit der Einheit Euro nennt. Fertig, wenn: genau eine Zeile erscheint: Gesamt: 53.5 Euro",
      "tipp": "Dasselbe Muster wie beim Zähler, nur wird nicht eins dazugezählt, sondern der Wert selbst. Die Variable startet ebenfalls bei 0.",
-     "loesung": "preise = [12.5, 20.0, 9.0, 12.0]\ngesamt = 0\n\nfor preis in preise:\n    gesamt += preis\n\nprint(f\"Gesamt: {gesamt} Euro\")"
+     "loesung": "preise = [12.50, 7.00, 30.25, 3.75]\n\nsumme = 0\n\nfor preis in preise:\n    summe += preis\n\nprint(f\"Gesamt: {summe} Euro\")"
     },
     {
      "titel": "Filtern in eine neue Liste",
      "aufgabe": "Aus fünf Bewerbernamen sollen die kurzen herausgesucht werden: alle mit weniger als fünf Buchstaben. Lege sie groß begonnen in einer zweiten Liste ab und gib am Ende beide Listen aus — die neue und die ursprüngliche. Fertig, wenn: zuerst ['Anna', 'Dirk', 'Emil'] erscheint und darunter die unveränderte Ausgangsliste mit allen fünf Namen in Kleinschreibung.",
      "tipp": "Leere Zielliste vor der Schleife, if in der Schleife, append() im if. Die Buchstabenzahl liefert len().",
-     "loesung": "bewerber = [\"anna\", \"dirk\", \"katharina\", \"emil\", \"sebastian\"]\nkurze_namen = []\n\nfor name in bewerber:\n    if len(name) < 5:\n        kurze_namen.append(name.capitalize())\n\nprint(kurze_namen)\nprint(bewerber)"
+     "loesung": "bewerber = ['anna', 'bernd', 'clara', 'dirk', 'emil']\n\nkurze_namen = []\n\nfor name in bewerber:\n    if len(name) < 5:\n        kurze_namen.append(name.title())\n\nprint(kurze_namen)\nprint(bewerber)"
     },
     {
      "titel": "Einsortieren in zwei Listen",
      "aufgabe": "Sortiere sechs Zahlen in zwei Listen ein: Werte über 20 in die eine, alle übrigen in die andere. Gib beide Listen aus und darunter eine Rechnung, die zeigt, dass zusammen wieder sechs Elemente herauskommen. Fertig, wenn: drei Zeilen erscheinen: [30, 48, 23], [12, 7, 3] und 3 + 3 = 6.",
      "tipp": "Zwei Ziellisten, beide vor der Schleife angelegt, und ein if mit else: In jedem Durchlauf wird genau eines der beiden append() ausgeführt.",
-     "loesung": "zahlen = [30, 12, 48, 7, 23, 3]\ngrosse = []\nkleine = []\n\nfor zahl in zahlen:\n    if zahl > 20:\n        grosse.append(zahl)\n    else:\n        kleine.append(zahl)\n\nprint(grosse)\nprint(kleine)\nprint(f\"{len(grosse)} + {len(kleine)} = {len(zahlen)}\")"
+     "loesung": "zahlen = [12, 7, 30, 3, 48, 23]\n\ngrosse = []\nkleine = []\n\nfor zahl in zahlen:\n    if zahl > 20:\n        grosse.append(zahl)\n    else:\n        kleine.append(zahl)\n\nprint(grosse)\nprint(kleine)\nprint(f\"{len(grosse)} + {len(kleine)} = {len(grosse) + len(kleine)}\")"
     },
     {
      "titel": "Vorhersage — der Zähler an der falschen Stelle",
      "aufgabe": "Unten steht ein Programm mit zwei Schleifen über dieselbe Liste. Beide sollen aufsummieren, aber die zweite legt ihre Summenvariable im Schleifenkörper an. Schreibe zuerst als allererste Zeile einen print()-Aufruf mit deiner Vorhersage für beide Zahlen. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile zwei Zahlen erscheinen: zuerst 123, darunter 23.",
      "tipp": "Achte darauf, wie weit rechts die Zeile mit = 0 jeweils steht. Was auf Ebene 1 steht, läuft in jedem Durchlauf — auch eine Zuweisung auf null.",
-     "loesung": "print(\"Vorhersage: Die erste Schleife ergibt 123, die zweite ergibt 23.\")\n\nzahlen = [30, 12, 48, 10, 23]\n\nsumme = 0\nfor zahl in zahlen:\n    summe += zahl\nprint(summe)\n\nfor zahl in zahlen:\n    summe = 0\n    summe += zahl\nprint(summe)"
+     "loesung": "print(\"Erwartet: oben die Gesamtsumme, unten nur die letzte Zahl\")\n\nzahlen = [12, 7, 30, 3, 48, 23]\n\nsumme = 0\nfor zahl in zahlen:\n    summe += zahl\nprint(summe)\n\nfor zahl in zahlen:\n    summe_falsch = 0\n    summe_falsch += zahl\nprint(summe_falsch)"
     },
     {
      "titel": "Reparatur — der Zähler zählt zu viel",
      "aufgabe": "Die Vorgabe soll die Werte über 20 sammeln und dabei mitzählen. Die gefilterte Liste stimmt, der Zähler aber nicht: Er steht am Ende auf 6 statt auf 3. Führe die Vorgabe aus, vergleiche die beiden Ausgaben miteinander, und verschiebe die eine Zeile, die auf der falschen Ebene steht. Fertig, wenn: zwei Zeilen erscheinen: [30, 48, 23] und darunter 3.",
      "tipp": "Zähle die Leerzeichen am Anfang der Zeile anzahl += 1 und vergleiche sie mit der Zeile darüber. Vier heißt „in jedem Durchlauf\", acht heißt „nur bei erfüllter Bedingung\".",
-     "loesung": "zahlen = [30, 12, 48, 7, 23]\ngrosse = []\nanzahl = 0\n\nfor zahl in zahlen:\n    if zahl > 20:\n        grosse.append(zahl)\n        anzahl += 1\n\nprint(grosse)\nprint(anzahl)"
+     "loesung": "zahlen = [12, 7, 30, 3, 48, 23]\n\ngrosse = []\nanzahl = 0\n\nfor zahl in zahlen:\n    if zahl > 20:\n        grosse.append(zahl)\n        anzahl += 1\n\nprint(grosse)\nprint(anzahl)"
     },
     {
      "titel": "Fizz, Buzz und die Reihenfolge der Prüfungen",
      "aufgabe": "Diese Aufgabe ist in der IT-Branche so bekannt, dass sie in Vorstellungsgesprächen gestellt wird. Sie prüft nichts Schwieriges — nur, ob jemand eine elif-Kette in der richtigen Reihenfolge aufschreiben kann. Gib die Zahlen von 1 bis 20 untereinander aus, mit drei Ausnahmen: - Ist die Zahl durch 3 teilbar, erscheint statt ihr Fizz. - Ist sie durch 5 teilbar, erscheint statt ihr Buzz. - Ist sie durch 3 und durch 5 teilbar, erscheint FizzBuzz. Ob eine Zahl durch 3 teilbar ist, verrät der Rest: zahl % 3 ergibt dann 0. Fertig, wenn: zwanzig Zeilen erscheinen, die mit 1, 2, Fizz, 4, Buzz beginnen — und in Zeile 15 steht FizzBuzz, nicht Fizz.",
      "tipp": "Alle vier Fälle schließen einander aus, also gehört eine elif-Kette hin und keine getrennten if. Die Kette hört beim ersten Treffer auf — überlege dir deshalb genau, welche Bedingung ganz oben stehen muss. Die engste zuerst, die weiteste zuletzt. Zwei Bedingungen verbindest du mit and, und hinter and beginnt immer eine neue, vollständige Bedingung: zahl % 3 == 0 and zahl % 5 == 0.",
-     "loesung": "for zahl in range(1, 21):\n    if zahl % 3 == 0 and zahl % 5 == 0:\n        print(\"FizzBuzz\")\n    elif zahl % 3 == 0:\n        print(\"Fizz\")\n    elif zahl % 5 == 0:\n        print(\"Buzz\")\n    else:\n        print(zahl)"
+     "loesung": "for zahl in range(1, 21):\n    if zahl % 3 == 0 and zahl % 5 == 0:\n        print('FizzBuzz')\n    elif zahl % 3 == 0:\n        print('Fizz')\n    elif zahl % 5 == 0:\n        print('Buzz')\n    else:\n        print(zahl)"
     },
     {
      "titel": "Das Grundmuster des Zählers",
      "aufgabe": "Gib fünf Runden untereinander aus, jede mit ihrer Nummer, und melde danach einmal das Ende. Benutze dafür eine while-Schleife mit einer Zählvariablen. Achte darauf, dass alle drei Schritte vorkommen: anlegen, prüfen, verändern. Fertig, wenn: sechs Zeilen erscheinen: Runde 1 von 5 bis Runde 5 von 5 und darunter Durchgang beendet.",
      "tipp": "Die Bedingung steht in der while-Zeile und wird vor jedem Durchlauf geprüft. Die Zeile, die den Zähler weiterdreht, gehört eingerückt in den Körper, sonst endet die Schleife nie.",
-     "loesung": "runde = 1\n\nwhile runde <= 5:\n    print(f\"Runde {runde} von 5\")\n    runde += 1\n\nprint(\"Durchgang beendet.\")"
+     "loesung": "runde = 1\nwhile runde <= 5:\n    print(f\"Runde {runde} von 5\")\n    runde += 1\nprint(\"Durchgang beendet\")"
     },
     {
      "titel": "Countdown bis zum Start",
      "aufgabe": "Zähle von 5 herunter bis 1 und gib jede Zahl mit drei angehängten Punkten aus. Nach der 1 soll das Wort Start erscheinen. Diesmal wird die Zählvariable nicht größer, sondern kleiner. Fertig, wenn: fünf Zeilen von 5 ... bis 1 ... untereinander stehen und darunter Start!.",
      "tipp": "Dasselbe Muster wie beim Hochzählen, nur mit umgedrehter Bedingung und mit -= statt +=. Überlege zuerst, bei welchem Wert die Schleife enden soll.",
-     "loesung": "zahl = 5\n\nwhile zahl >= 1:\n    print(f\"{zahl} ...\")\n    zahl -= 1\n\nprint(\"Start!\")"
+     "loesung": "countdown = 5\nwhile countdown > 0:\n    print(f\"{countdown} ...\")\n    countdown -= 1\nprint(\"Start!\")"
     },
     {
      "titel": "Eine Schleife, die kein einziges Mal läuft",
      "aufgabe": "Lege eine Variable für offene Urlaubstage mit dem Wert 0 an und baue darum eine Schleife, die für jeden offenen Tag eine Zeile ausgeben würde. Gib danach eine Meldung aus und zusätzlich den Wert der Variablen. Überlege vorher, wie viele Zeilen die Schleife ausgibt. Fertig, wenn: genau zwei Zeilen erscheinen: Kein Resturlaub mehr offen. und darunter 0 — keine davon aus dem Schleifenkörper.",
      "tipp": "Die Bedingung steht vor dem Körper und wird auch vor dem ersten Durchlauf geprüft. Ist sie schon dann falsch, passiert im Körper gar nichts.",
-     "loesung": "offene_tage = 0\n\nwhile offene_tage > 0:\n    print(f\"Noch {offene_tage} Tage offen.\")\n    offene_tage -= 1\n\nprint(\"Kein Resturlaub mehr offen.\")\nprint(offene_tage)"
+     "loesung": "resturlaub = 0\nwhile resturlaub > 0:\n    print(f\"Noch {resturlaub} Tage offen\")\n    resturlaub -= 1\nprint(\"Kein Resturlaub mehr offen.\")\nprint(resturlaub)"
     },
     {
      "titel": "Reparatur — die Schleife, die nicht aufhört",
      "aufgabe": "Die Vorgabe soll drei Diensttage melden und läuft stattdessen ewig. Starte sie ruhig einmal und beende sie mit der Tastenkombination Strg und C. Finde heraus, welche einzige Zeile fehlt, ergänze sie und gib nach der Schleife zusätzlich die Zeile Woche beendet aus. Fertig, wenn: genau vier Zeilen erscheinen, das Programm von selbst endet und kein Abbruch von Hand mehr nötig ist.",
      "tipp": "Die Bedingung ist völlig richtig. Der Fehler steckt im Körper: Dort fehlt der dritte Schritt des Grundmusters, nämlich das Verändern der geprüften Variablen. Die neue Zeile muss eingerückt sein.",
-     "loesung": "tag = 1\n\nwhile tag <= 3:\n    print(f\"Diensttag {tag}\")\n    tag += 1\n\nprint(\"Woche beendet.\")"
+     "loesung": "tag = 1\nwhile tag <= 3:\n    print(f\"Tag {tag}: Dienst\")\n    tag += 1\nprint(\"Woche beendet\")"
     },
     {
      "titel": "Guthaben aufbrauchen",
      "aufgabe": "Ein Guthaben von 250 Euro wird jeden Tag um 40 Euro belastet. Zähle mit, wie viele Tage das dauert, und gib nach jedem Tag den verbliebenen Stand aus. Melde am Ende die Anzahl der Tage und den Endstand. Fertig, wenn: sieben Zeilen von Tag 1: noch 210 Euro bis Tag 7: noch -30 Euro erscheinen und darunter Nach 7 Tagen ist das Guthaben bei -30.",
      "tipp": "Hier zählen zwei Variablen mit: eine für das Guthaben, eine für die Tage. Die Bedingung prüft nur das Guthaben, die Tageszählung läuft nebenher im Körper.",
-     "loesung": "guthaben = 250\ntage = 0\n\nwhile guthaben > 0:\n    guthaben -= 40\n    tage += 1\n    print(f\"Tag {tage}: noch {guthaben} Euro\")\n\nprint(f\"Nach {tage} Tagen ist das Guthaben bei {guthaben}.\")"
+     "loesung": "guthaben = 250\ntag = 0\nwhile guthaben > 0:\n    tag += 1\n    guthaben -= 40\n    print(f\"Tag {tag}: noch {guthaben} Euro\")\nprint(f\"Nach {tag} Tagen ist das Guthaben bei {guthaben}.\")"
     },
     {
      "titel": "Eine Liste mit while durchgehen",
      "aufgabe": "In der Vorgabe steht eine Liste mit vier Nachnamen. Gib sie nummeriert aus, beginnend bei 1. Benutze dafür ausnahmsweise eine while-Schleife mit einem Index statt einer for-Schleife. Melde am Ende, wie viele Namen abgearbeitet wurden. Fertig, wenn: vier Zeilen von 1. Krause bis 4. Schmitz erscheinen und darunter 4 Namen abgearbeitet.",
      "tipp": "Der Index beginnt bei 0, die Nummerierung in der Ausgabe bei 1. Die Bedingung vergleicht den Index mit der Länge der Liste, und len liefert diese Länge.",
-     "loesung": "nachnamen = [\"Krause\", \"Berg\", \"Timm\", \"Schmitz\"]\nindex = 0\n\nwhile index < len(nachnamen):\n    print(f\"{index + 1}. {nachnamen[index]}\")\n    index += 1\n\nprint(f\"{index} Namen abgearbeitet\")"
+     "loesung": "namen = [\"Krause\", \"Berg\", \"Timm\", \"Schmitz\"]\nindex = 0\nwhile index < len(namen):\n    print(f\"{index + 1}. {namen[index]}\")\n    index += 1\nprint(f\"{len(namen)} Namen abgearbeitet.\")"
     },
     {
      "titel": "Fragen, bis jemand quit tippt",
      "aufgabe": "Schreibe ein Programm, das immer wieder nach einer Nachricht fragt und sie wiederholt, bis der Benutzer das vereinbarte Wort quit eintippt. Das Abbruchwort selbst soll nicht mehr ausgegeben werden. Melde zum Schluss, dass das Programm beendet ist, und starte es im Terminal. Fertig, wenn: jede eingetippte Nachricht einmal zurückkommt, quit dagegen nicht mehr erscheint und zum Schluss Programm beendet. steht.",
      "tipp": "Die Variable, über die die Bedingung entscheidet, muss schon vor der Schleife existieren, sonst gibt es einen NameError. Ein leerer Text ist dafür ein guter Startwert, weil er die Bedingung sicher erfüllt. Im Körper verhindert ein if, dass das Abbruchwort noch einmal ausgegeben wird.",
-     "loesung": "nachricht = \"\"\n\nwhile nachricht != \"quit\":\n    nachricht = input(\"Nachricht: \")\n    if nachricht != \"quit\":\n        print(nachricht)\n\nprint(\"Programm beendet.\")"
+     "loesung": "nachricht = \"\"\nwhile nachricht != \"quit\":\n    nachricht = input(\"\\nSag etwas (quit beendet das Programm): \")\n    if nachricht != \"quit\":\n        print(nachricht)\nprint(\"Programm beendet.\")"
     },
     {
      "titel": "Der Gepäckschalter",
      "aufgabe": "Baue einen Schalter, der nach dem Gewicht eines Gepäckstücks in Kilogramm fragt und die Zusatzgebühr nennt: bis 20 kg nichts, bis 30 kg 25 Euro, darüber 60 Euro. Die Frage wiederholt sich, bis jemand quit tippt. Die Umwandlung in eine Zahl darf erst nach der Abbruchprüfung passieren. Fertig, wenn: 18 kg Keine Zusatzgebühr. ergibt, 25 kg Zusatzgebühr: 25 Euro. und 40 kg Zusatzgebühr: 60 Euro. — und quit die Zeile Schalter geschlossen. ausgibt, statt mit einem ValueError abzubrechen.",
      "tipp": "Die Eingabe bleibt zunächst Text, weil sie mit dem Abbruchwort verglichen werden muss. Erst im else-Zweig, wenn feststeht, dass es nicht quit war, wird sie mit int zur Zahl. Die drei Gebührenstufen sind ein if mit elif und else.",
-     "loesung": "while True:\n    eingabe = input(\"Gewicht in kg (oder quit): \")\n\n    if eingabe == \"quit\":\n        break\n    else:\n        gewicht = int(eingabe)\n        if gewicht <= 20:\n            print(\"Keine Zusatzgebühr.\")\n        elif gewicht <= 30:\n            print(\"Zusatzgebühr: 25 Euro.\")\n        else:\n            print(\"Zusatzgebühr: 60 Euro.\")\n\nprint(\"Schalter geschlossen.\")"
+     "loesung": "antwort = \"\"\nwhile antwort != \"quit\":\n    antwort = input(\"\\nWie schwer ist das Gepäck in kg? (quit beendet) \")\n    if antwort != \"quit\":\n        gewicht = int(antwort)\n        if gewicht <= 20:\n            print(\"Keine Zusatzgebühr.\")\n        elif gewicht <= 30:\n            print(\"Zusatzgebühr: 25 Euro.\")\n        else:\n            print(\"Zusatzgebühr: 60 Euro.\")\nprint(\"Schalter geschlossen.\")"
     },
     {
      "titel": "Vorhersage — ein Zeichen Unterschied",
      "aufgabe": "Unten stehen zwei Schleifen, die sich nur in einem einzigen Zeichen unterscheiden. Beide zählen ab 1 hoch, beide geben nach dem Durchlauf den Endstand der Variablen aus. Schreibe zuerst als allererste Zeile einen print-Aufruf mit deiner Vorhersage, welche Zahlen jede Schleife ausgibt und mit welchem Wert sie endet. Führe erst danach aus. Fertig, wenn: nach deiner Vorhersagezeile die Ausgaben beider Schleifen folgen und die beiden Endstände sich um genau eins unterscheiden.",
      "tipp": "Denk daran, dass die Bedingung einmal öfter geprüft wird, als der Körper läuft. Der letzte Wert, den die Variable annimmt, ist deshalb immer einer, der die Bedingung schon verletzt.",
-     "loesung": "print(\"Vorhersage: Die erste Schleife endet bei 5, die zweite bei 6.\")\n\nzahl = 1\nwhile zahl < 5:\n    zahl += 1\nprint(zahl)\n\nzahl = 1\nwhile zahl <= 5:\n    zahl += 1\nprint(zahl)"
+     "loesung": "print(\"Erwartet: A zaehlt 1 bis 5 und endet mit 6, B zaehlt 1 bis 4 und endet mit 5\")\nzahl = 1\nwhile zahl <= 5:\n    print(f\"A: {zahl}\")\n    zahl += 1\nprint(f\"A endet mit zahl = {zahl}\")\nzahl = 1\nwhile zahl < 5:\n    print(f\"B: {zahl}\")\n    zahl += 1\nprint(f\"B endet mit zahl = {zahl}\")"
     },
     {
      "titel": "Suchen und sofort aufhören",
      "aufgabe": "Gehe eine Liste mit vier Nachnamen durch und melde bei jedem geprüften Eintrag, dass er angesehen wurde. Sobald der gesuchte Name auftaucht, soll die Schleife sofort enden, ohne die restlichen Einträge noch anzufassen. Gib danach eine Schlussmeldung aus. Fertig, wenn: nur drei Zeilen von geprüft: Krause bis geprüft: Timm erscheinen, obwohl die Liste vier Namen hat, darunter Timm gefunden - Suche beendet. und zuletzt fertig.",
      "tipp": "Das Schlüsselwort für den sofortigen Ausstieg ist break und steht allein auf einer eigenen Zeile. Es gehört in den if-Zweig, nicht daneben.",
-     "loesung": "nachnamen = [\"Krause\", \"Berg\", \"Timm\", \"Schmitz\"]\n\nfor name in nachnamen:\n    print(f\"geprüft: {name}\")\n    if name == \"Timm\":\n        print(\"Timm gefunden - Suche beendet.\")\n        break\n\nprint(\"fertig.\")"
+     "loesung": "namen = [\"Krause\", \"Berg\", \"Timm\", \"Schmitz\"]\ngesucht = \"Timm\"\nfor name in namen:\n    print(f\"geprüft: {name}\")\n    if name == gesucht:\n        print(f\"{gesucht} gefunden - Suche beendet.\")\n        break\nprint(\"fertig\")"
     },
     {
      "titel": "Jede dritte Zahl überspringen",
      "aufgabe": "Gib die Zahlen von 1 bis 12 aus, lass dabei aber alle Vielfachen von 3 weg. Benutze eine while-Schleife und filtere die unerwünschten Zahlen mit continue aus, statt den Rest in ein if einzurücken. Melde am Ende, dass die Schleife fertig ist. Fertig, wenn: acht Zahlen erscheinen, weder 3 noch 6, 9 oder 12 darunter sind und zuletzt fertig steht.",
      "tipp": "Der Rest einer Division wird mit dem Prozentzeichen berechnet; ist er 0, ist die Zahl ohne Rest teilbar. Achte unbedingt darauf, an welcher Stelle im Körper du den Zähler erhöhst.",
-     "loesung": "zahl = 0\n\nwhile zahl < 12:\n    zahl += 1\n    if zahl % 3 == 0:\n        continue\n    print(zahl)\n\nprint(\"fertig\")"
+     "loesung": "zahl = 0\nwhile zahl < 12:\n    zahl += 1\n    if zahl % 3 == 0:\n        continue\n    print(zahl)\nprint(\"fertig\")"
     },
     {
      "titel": "Die Warteschlange abarbeiten",
      "aufgabe": "In der Vorgabe stehen eine Liste mit drei offenen Anträgen und eine leere Liste für die erledigten. Arbeite die Warteschlange ab, bis sie leer ist, und zwar in der Reihenfolge des Eingangs: Wer zuerst kam, wird zuerst bedient. Gib nach jedem Vorgang aus, was bearbeitet wurde und was noch offen ist. Fertig, wenn: drei Bearbeitungszeilen erscheinen, die offene Liste dabei Schritt für Schritt schrumpft und am Ende alle drei Anträge in der Erledigt-Liste stehen.",
      "tipp": "Eine Liste mit Inhalt gilt als wahr, eine leere als falsch, deshalb genügt die Liste selbst als Bedingung. Zum Entnehmen gibt es pop, und mit der Angabe 0 holt es das erste statt des letzten Elements.",
-     "loesung": "offen = [\"Antrag A\", \"Antrag B\", \"Antrag C\"]\nerledigt = []\n\nwhile offen:\n    antrag = offen.pop(0)\n    erledigt.append(antrag)\n    print(f\"Bearbeitet: {antrag} — noch offen: {offen}\")\n\nprint(f\"Erledigt: {erledigt}\")"
+     "loesung": "warteschlange = [\"Antrag-12\", \"Antrag-13\", \"Antrag-14\"]\nerledigt = []\nwhile warteschlange:\n    fall = warteschlange.pop(0)\n    erledigt.append(fall)\n    print(f\"bearbeitet: {fall} | offen: {warteschlange}\")\nprint(f\"erledigt: {erledigt}\")"
     },
     {
      "titel": "Einen Wert vollständig entfernen",
      "aufgabe": "In einer Teilnehmerliste steht an mehreren Stellen der Eintrag \"abgesagt\". Gib die Liste zuerst unverändert aus, entferne danach alle Vorkommen dieses Eintrags und gib die bereinigte Liste sowie die verbliebene Anzahl aus. Die Methode zum Entfernen erwischt immer nur ein Vorkommen, deshalb braucht es eine Schleife. Fertig, wenn: die zweite ausgegebene Liste nur noch ['Berg', 'Krause', 'Timm'] enthält und darunter 3 Teilnehmer bleiben. steht.",
      "tipp": "Die Bedingung lautet nicht \"solange etwas drin ist\", sondern \"solange dieser eine Wert noch vorkommt\". Dafür gibt es das Schlüsselwort in. Entfernt wird mit remove.",
-     "loesung": "teilnehmer = [\"Berg\", \"abgesagt\", \"Krause\", \"abgesagt\", \"Timm\", \"abgesagt\"]\n\nprint(teilnehmer)\n\nwhile \"abgesagt\" in teilnehmer:\n    teilnehmer.remove(\"abgesagt\")\n\nprint(teilnehmer)\nprint(f\"{len(teilnehmer)} Teilnehmer bleiben.\")"
+     "loesung": "teilnehmer = [\"Berg\", \"abgesagt\", \"Krause\", \"abgesagt\", \"Timm\", \"abgesagt\"]\nprint(teilnehmer)\nwhile \"abgesagt\" in teilnehmer:\n    teilnehmer.remove(\"abgesagt\")\nprint(teilnehmer)\nprint(f\"{len(teilnehmer)} Teilnehmer bleiben.\")"
     },
     {
      "titel": "Die bewusste Endlosschleife mit Ausstieg",
      "aufgabe": "Schreibe ein Programm, das immer wieder nach einem Standort fragt und ihn mit großen Anfangsbuchstaben notiert. Diesmal soll die Schleife keine eigene Bedingung in der Kopfzeile haben, sondern ausschließlich über das Abbruchwort quit im Körper enden. Melde danach, dass die Liste abgeschlossen ist, und starte das Programm im Terminal. Fertig, wenn: nach der Eingabe munster die Zeile Notiert: Munster kommt, quit nicht mehr erscheint und zum Schluss Liste abgeschlossen. steht.",
      "tipp": "Eine Kopfzeile, deren Bedingung einfach der Wahrheitswert True ist, läuft für immer. Sie ist nur dann erlaubt, wenn im Körper ein break steht. Eine Startvariable vor der Schleife braucht diese Bauweise nicht.",
-     "loesung": "while True:\n    standort = input(\"Standort (oder quit): \")\n\n    if standort == \"quit\":\n        break\n\n    print(f\"Notiert: {standort.capitalize()}\")\n\nprint(\"Liste abgeschlossen.\")"
+     "loesung": "while True:\n    standort = input(\"\\nWelchen Standort hast du erlebt? (quit beendet) \")\n    if standort == \"quit\":\n        break\n    print(f\"Notiert: {standort.title()}\")\nprint(\"Liste abgeschlossen.\")"
     },
     {
      "titel": "Reparatur — continue an der falschen Stelle",
      "aufgabe": "Die Vorgabe soll die ungeraden Zahlen unter 8 ausgeben. Sie gibt nichts aus und hängt. Starte sie ruhig einmal und beende sie mit Strg und C. Finde heraus, welche Zeile an der falschen Stelle steht, und verschiebe sie so, dass das Programm von selbst endet. Fertig, wenn: die vier Zahlen 1, 3, 5 und 7 untereinander erscheinen und das Programm von selbst endet.",
      "tipp": "Spiele den ersten Durchlauf von Hand durch: Welchen Wert hat die Variable, was macht das if damit, und welche Zeilen des Körpers werden danach überhaupt noch erreicht? Die Lösung besteht darin, eine vorhandene Zeile zu verschieben, nicht eine neue zu schreiben.",
-     "loesung": "zahl = 0\n\nwhile zahl < 8:\n    zahl += 1\n    if zahl % 2 == 0:\n        continue\n    print(zahl)"
+     "loesung": "zahl = 0\nwhile zahl < 8:\n    zahl += 1\n    if zahl % 2 == 0:\n        continue\n    print(zahl)"
     },
     {
      "titel": "Vorhersage — break gegen continue",
      "aufgabe": "Unten steht dieselbe Schleife zweimal über derselben Messwertliste, einmal mit break und einmal mit continue an genau derselben Stelle. Schreibe zuerst als allererste Zeile deines Programms einen print-Aufruf mit deiner Vorhersage, welche Werte jede der beiden Fassungen ausgibt. Führe erst danach aus und vergleiche. Fertig, wenn: nach deiner Vorhersagezeile zwei Blöcke mit Überschrift folgen: unter --- mit break --- die Zahlen 10 und 20, unter --- mit continue --- die Zahlen 10, 20, 40 und 50.",
      "tipp": "Beide Schlüsselwörter greifen mitten im Durchlauf. Der Unterschied liegt nur darin, ob die Schleife danach noch einmal von vorn beginnt.",
-     "loesung": "print(\"Vorhersage: mit break kommen 10 und 20, mit continue 10, 20, 40 und 50.\")\n\nmesswerte = [10, 20, 30, 40, 50]\n\nprint(\"--- mit break ---\")\nfor wert in messwerte:\n    if wert == 30:\n        break\n    print(wert)\n\nprint(\"--- mit continue ---\")\nfor wert in messwerte:\n    if wert == 30:\n        continue\n    print(wert)"
+     "loesung": "print(\"Erwartet: mit break nur 10 und 20, mit continue 10, 20, 40 und 50\")\nmesswerte = [10, 20, -5, 40, 50]\nprint(\"--- mit break ---\")\nfor wert in messwerte:\n    if wert < 0:\n        break\n    print(wert)\nprint(\"--- mit continue ---\")\nfor wert in messwerte:\n    if wert < 0:\n        continue\n    print(wert)"
     }
    ]
   },
@@ -312,43 +312,43 @@
      "titel": "Vorhersage — dieselbe Zeile, zwei Plätze",
      "aufgabe": "Unten steht ein Programm, das dieselbe Liste zweimal durchläuft. Der einzige Unterschied zwischen den beiden Schleifen ist die Einrückung der Zeile print(\"Fertig.\"). Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage, wie oft Fertig. jeweils erscheint. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile Fertig. oben dreimal und unten genau einmal erscheint.",
      "tipp": "Zähle bei jeder der beiden print(\"Fertig.\")-Zeilen die Leerzeichen am Zeilenanfang. Vier heißt „im Körper\", null heißt „dahinter\".",
-     "loesung": "print(\"Vorhersage: oben erscheint Fertig. dreimal, unten genau einmal.\")\n\nnamen = [\"Anna\", \"Ben\", \"Clara\"]\n\nfor name in namen:\n    print(name)\n    print(\"Fertig.\")\n\nfor name in namen:\n    print(name)\nprint(\"Fertig.\")"
+     "loesung": "print(\"Erwartet: oben Fertig nach jedem Fahrzeug, unten Fertig nur einmal am Ende\")\n\nfahrzeuge = ['lkw', 'jeep', 'transporter']\n\nfor fahrzeug in fahrzeuge:\n    print(fahrzeug)\n    print(\"Fertig.\")\n\nprint(\"-\" * 20)\n\nfor fahrzeug in fahrzeuge:\n    print(fahrzeug)\nprint(\"Fertig.\")"
     },
     {
      "titel": "Drei Fehler in fünf Zeilen",
      "aufgabe": "Die Vorgabe soll drei Standorte ausgeben und danach einmal melden, dass die Liste vollständig ist. Sie enthält alle drei klassischen Schleifenfehler auf einmal: einen fehlenden Doppelpunkt, eine fehlende Einrückung und eine Zeile, die zu weit rechts steht. Repariere sie einen nach dem anderen und führe nach jedem Schritt aus. Fertig, wenn: vier Zeilen erscheinen: drei Standorte und darunter einmal Liste vollständig..",
      "tipp": "Fang mit dem Fehler an, der die Ausführung ganz verhindert — er steht in der for-Zeile. Danach meldet sich der zweite von selbst. Den dritten meldet niemand; ihn findest du nur, indem du die Ausgabe mit dem Soll vergleichst.",
-     "loesung": "standorte = [\"Munster\", \"Koblenz\", \"Ulm\"]\n\nfor standort in standorte:\n    print(standort)\n\nprint(\"Liste vollständig.\")"
+     "loesung": "standorte = ['munster', 'koblenz', 'ulm']\n\nfor standort in standorte:\n    print(f\"Standort: {standort.title()}\")\nprint(\"Liste vollständig.\")"
     },
     {
      "titel": "Das Zahlenblatt",
      "aufgabe": "Baue eine Liste mit allen Vielfachen von 5 von 5 bis einschließlich 50 auf, ohne eine dieser Zahlen zu tippen. Gib danach die Liste aus und darunter fünf beschriftete Kennzahlen: Anzahl, kleinste Zahl, größte Zahl, Summe und Durchschnitt. Fertig, wenn: die Liste zehn Zahlen enthält und die Kennzahlen 10, 5, 50, 275 und 27.5 lauten.",
      "tipp": "Die dritte Zahl in range() ist die Schrittweite — und denk an die Grenze: Wer bis einschließlich 50 will, muss weiter gehen als 50. Zum Füllen dient wieder das Muster „leere Liste, Schleife, append()\".",
-     "loesung": "zahlen = []\n\nfor zahl in range(5, 51, 5):\n    zahlen.append(zahl)\n\nprint(zahlen)\nprint(f\"Anzahl: {len(zahlen)}\")\nprint(f\"Kleinste Zahl: {min(zahlen)}\")\nprint(f\"Größte Zahl: {max(zahlen)}\")\nprint(f\"Summe: {sum(zahlen)}\")\nprint(f\"Durchschnitt: {sum(zahlen) / len(zahlen)}\")"
+     "loesung": "zahlen = []\n\nfor zahl in range(5, 51, 5):\n    zahlen.append(zahl)\n\nprint(zahlen)\nprint(f\"Anzahl:       {len(zahlen)}\")\nprint(f\"Kleinste:     {min(zahlen)}\")\nprint(f\"Größte:       {max(zahlen)}\")\nprint(f\"Summe:        {sum(zahlen)}\")\nprint(f\"Durchschnitt: {sum(zahlen) / len(zahlen)}\")"
     },
     {
      "titel": "Zwischenstand mitschreiben",
      "aufgabe": "Vier Zahlen sollen ausgewertet werden: Alle Werte über 5 werden aufsummiert und mitgezählt. Gib bei jedem Treffer eine Zwischenstandszeile mit dem aktuellen Zähler und der aktuellen Summe aus, und nach der Schleife genau eine Ergebniszeile. Fertig, wenn: drei Zwischenstandszeilen nach dem Muster Treffer 9 — Zwischenstand: 1 Werte, Summe 9 erscheinen und darunter Endergebnis: 3 Werte über 5, zusammen 50.",
      "tipp": "Die Zwischenstandszeile steht auf Ebene 2, also im if, direkt hinter den beiden +=-Zeilen. Die Ergebniszeile steht auf Ebene 0, also am linken Rand.",
-     "loesung": "zahlen = [9, 21, 20, 3]\nanzahl = 0\nsumme = 0\n\nfor zahl in zahlen:\n    if zahl > 5:\n        anzahl += 1\n        summe += zahl\n        print(f\"Treffer {zahl} — Zwischenstand: {anzahl} Werte, Summe {summe}\")\n\nprint(f\"Endergebnis: {anzahl} Werte über 5, zusammen {summe}.\")"
+     "loesung": "zahlen = [4, 9, 16, 25]\n\nsumme = 0\nanzahl = 0\n\nfor zahl in zahlen:\n    if zahl > 5:\n        summe += zahl\n        anzahl += 1\n        print(f\"Treffer {zahl} — Zwischenstand: {anzahl} Werte, Summe {summe}\")\n\nprint(f\"Endergebnis: {anzahl} Werte über 5, zusammen {summe}\")"
     },
     {
      "titel": "Offene Aufgabe — eine kleine Auswertung",
      "aufgabe": "Schreibe ein eigenes kleines Auswertungsprogramm. Es soll eine Liste von Zahlen durchlaufen, mit einem if die Werte über einer selbst gewählten Grenze herausfiltern, dabei mitzählen und am Ende ein formatiertes Ergebnis ausgeben, das die Trefferzahl und die Gesamtzahl nennt. Thema und Zahlen wählst du selbst — Einsatzdauern, Kilometerstände, Dateigrößen, was dir näherliegt. Diese Aufgabe hat keine eine richtige Lösung. Fertig, wenn: dein Programm ohne Fehlermeldung läuft und eine Ergebniszeile ausgibt, in der die Anzahl der Treffer und die Gesamtzahl der geprüften Werte vorkommen.",
      "tipp": "Halte dich an den dreiteiligen Aufbau: Zähler und Zielliste vor der Schleife, if mit append() und += in der Schleife, die Ausgabe danach. Die Längenprobe len(treffer) gegen den Zähler zeigt dir, ob du sauber gearbeitet hast.",
-     "loesung": "kilometerstaende = [120, 45, 300, 80, 510, 30]\ngrenze = 100\ntreffer = []\nanzahl = 0\n\nfor stand in kilometerstaende:\n    if stand > grenze:\n        treffer.append(stand)\n        anzahl += 1\n\nprint(f\"{anzahl} von {len(kilometerstaende)} Werten liegen über {grenze} km.\")\nprint(f\"Treffer: {treffer}\")"
+     "loesung": "dauer = [45, 120, 30, 200, 15, 90]\n\nlange = []\nanzahl = 0\n\nfor wert in dauer:\n    if wert > 60:\n        lange.append(wert)\n        anzahl += 1\n\nprint(f\"{anzahl} von {len(dauer)} Einsätzen dauerten länger als 60 Minuten.\")\nprint(f\"Das waren: {lange}\")\nprint(f\"Zusammen {sum(lange)} Minuten.\")"
     },
     {
      "titel": "Sparplan bis zum Ziel",
      "aufgabe": "Ein Sparziel von 1200 Euro soll mit monatlich 250 Euro erreicht werden. Zähle die Monate mit, sammle jeden erreichten Zwischenstand in einer Liste und gib am Ende beides aus. Prüfe zusätzlich mit einem if, ob über das Ziel hinausgespart wurde, und nenne in diesem Fall den überschüssigen Betrag. Fertig, wenn: von 5 Monaten und 1250 Euro die Rede ist, die Liste fünf Zwischenstände enthält und die Schlusszeile 50 Euro Überschuss nennt.",
      "tipp": "Drei Dinge wachsen gleichzeitig: der Stand, der Monatszähler und die Liste. Die Bedingung prüft nur den Stand. Neue Einträge kommen mit append ans Ende der Liste.",
-     "loesung": "ziel = 1200\nrate = 250\nstand = 0\nmonate = 0\nverlauf = []\n\nwhile stand < ziel:\n    stand += rate\n    monate += 1\n    verlauf.append(stand)\n\nprint(f\"Nach {monate} Monaten sind {stand} Euro gespart.\")\nprint(verlauf)\n\nif stand > ziel:\n    print(f\"{stand - ziel} Euro Überschuss\")"
+     "loesung": "ziel = 1200\nrate = 250\nstand = 0\nmonat = 0\nverlauf = []\nwhile stand < ziel:\n    monat += 1\n    stand += rate\n    verlauf.append(stand)\nprint(f\"Nach {monat} Monaten sind {stand} Euro zusammen.\")\nprint(f\"Verlauf: {verlauf}\")\nif stand > ziel:\n    print(f\"Das sind {stand - ziel} Euro mehr als noetig.\")"
     },
     {
      "titel": "Offene Aufgabe — den Auftragsstapel abarbeiten",
      "aufgabe": "Schreibe ein kleines Programm, das einen Stapel von Aufträgen mit einer while-Schleife abarbeitet. Leere Einträge sollen übersprungen und dabei gemeldet werden, der Eintrag \"STOP\" beendet die Bearbeitung sofort. Erledigte Aufträge wandern in eine zweite Liste; am Ende sollen beide Listen ausgegeben werden, also auch das, was offen geblieben ist. Für diese Aufgabe gibt es mehr als eine richtige Lösung. Fertig, wenn: zwei Aufträge als erledigt gemeldet sind, der leere Eintrag als übersprungen auftaucht, bei STOP abgebrochen wird und am Ende ein Auftrag unbearbeitet offen bleibt.",
      "tipp": "Die Liste selbst kann die Bedingung sein, wenn der Körper mit pop Einträge herausnimmt. Für das Überspringen und das Abbrechen brauchst du die beiden Schlüsselwörter dieses Themas, jedes in einem eigenen if am Anfang des Körpers.",
-     "loesung": "stapel = [\"Auftrag A\", \"\", \"Auftrag B\", \"STOP\", \"Auftrag C\"]\nerledigt = []\n\nwhile stapel:\n    auftrag = stapel.pop(0)\n\n    if auftrag == \"\":\n        print(\"Leerer Eintrag — übersprungen.\")\n        continue\n\n    if auftrag == \"STOP\":\n        print(\"STOP — Bearbeitung abgebrochen.\")\n        break\n\n    erledigt.append(auftrag)\n    print(f\"Erledigt: {auftrag}\")\n\nprint(f\"Erledigt-Liste: {erledigt}\")\nprint(f\"Offen geblieben: {stapel}\")"
+     "loesung": "auftraege = [\"Transport\", \"\", \"Wartung\", \"STOP\", \"Schulung\"]\nerledigt = []\nwhile auftraege:\n    auftrag = auftraege.pop(0)\n    if auftrag == \"\":\n        print(\"leerer Eintrag - übersprungen\")\n        continue\n    if auftrag == \"STOP\":\n        print(\"STOP gefunden - Abbruch\")\n        break\n    erledigt.append(auftrag)\n    print(f\"erledigt: {auftrag}\")\nprint(f\"erledigt: {erledigt}\")\nprint(f\"offen:    {auftraege}\")"
     }
    ]
   }
