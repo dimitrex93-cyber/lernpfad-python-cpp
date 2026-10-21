@@ -851,6 +851,10 @@ def zeige_abschnitt(abschnitt, index, anzahl):
                 print(f"  {nummer}. {aufgabe.get('titel', 'Aufgabe')}")
                 if aufgabe.get("aufgabe"):
                     print(f"     {aufgabe['aufgabe']}")
+                if aufgabe.get("vorgabe"):
+                    print(c("     Vorgabe (fehlerhaft):", "dunkel"))
+                    for zeile in aufgabe["vorgabe"].splitlines():
+                        print(c("       " + zeile, "dunkel"))
                 if aufgabe.get("stdin"):
                     print(c("     Eingabe zum Testen: "
                             + aufgabe["stdin"].replace("\n", " | "), "dunkel"))

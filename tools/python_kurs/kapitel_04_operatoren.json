@@ -155,7 +155,8 @@
      "titel": "Zahl in einen Satz bringen",
      "aufgabe": "Die Vorgabe will eine Zahl in einen Satz einbauen und bricht mit einem TypeError ab. Repariere die Zeile auf beide Arten, die der Kurs kennt, und gib den Satz folglich zweimal aus — einmal über einen f-String und einmal über eine ausdrückliche Umwandlung. Fertig, wenn: zweimal dieselbe Zeile Ich war 12 Jahre dabei. erscheint.",
      "tipp": "Der eine Weg setzt die Zahl in ein geschweiftes Fenster. Der andere macht aus der Zahl vorher Text, mit einer Funktion, die genauso heißt wie der Zieltyp.",
-     "loesung": "dienstjahre = 12\nprint(\"Ich war \" + dienstjahre + \" Jahre dabei.\")"
+     "loesung": "dienstjahre = 12\n\nprint(f\"Ich war {dienstjahre} Jahre dabei.\")\nprint(\"Ich war \" + str(dienstjahre) + \" Jahre dabei.\")",
+     "vorgabe": "dienstjahre = 12\nprint(\"Ich war \" + dienstjahre + \" Jahre dabei.\")"
     }
    ]
   },

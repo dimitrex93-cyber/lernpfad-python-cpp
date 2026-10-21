@@ -232,7 +232,8 @@
      "titel": "Reparatur — das Programm bricht ab",
      "aufgabe": "Der Vorgabecode soll das erste und das letzte Fahrzeug nennen. Er tut es nicht: Die erste Zeile zeigt das falsche Fahrzeug, danach bricht das Programm mit einer Fehlermeldung ab. Führ ihn zuerst unverändert aus, lies die Meldung von unten nach oben und repariere dann beide Zeilen. Die Liste selbst darfst du nicht verändern. Fertig, wenn: Das Programm läuft ohne Fehlermeldung durch und gibt Erstes Fahrzeug: lkw und Letztes Fahrzeug: transporter aus.",
      "tipp": "Zähl nach, wie viele Fächer die Liste hat, und überleg, welcher Index der größte gültige ist. Für das letzte Element gibt es einen Weg, der ohne Nachzählen auskommt.",
-     "loesung": "fahrzeuge = ['lkw', 'jeep', 'transporter']\n\nprint(f\"Erstes Fahrzeug: {fahrzeuge[1]}\")\nprint(f\"Letztes Fahrzeug: {fahrzeuge[3]}\")"
+     "loesung": "fahrzeuge = ['lkw', 'jeep', 'transporter']\n\nprint(f\"Erstes Fahrzeug: {fahrzeuge[0]}\")\nprint(f\"Letztes Fahrzeug: {fahrzeuge[-1]}\")",
+     "vorgabe": "fahrzeuge = ['lkw', 'jeep', 'transporter']\n\nprint(f\"Erstes Fahrzeug: {fahrzeuge[1]}\")\nprint(f\"Letztes Fahrzeug: {fahrzeuge[3]}\")"
     },
     {
      "titel": "Ein Fach neu belegen",
@@ -335,7 +336,8 @@
      "titel": "Reparatur — vier Posten, aber nur drei",
      "aufgabe": "Die Vorgabe soll vier Postennamen führen und den vierten ausgeben. Die Zählung stimmt nicht, und erst dadurch bricht das Programm am Ende ab. Führ den Code zuerst aus und sieh dir die erste Ausgabezeile genau an — dort steckt die eigentliche Ursache. Repariere sie an der Wurzel, nicht am Index. Fertig, wenn: Die Liste mit vier getrennten Namen erscheint, len() die Zahl 4 nennt und lager ausgegeben wird.",
      "tipp": "Vergleich die ausgegebene Liste Wort für Wort mit der Zeile im Quelltext. Zwischen zwei Werten einer Liste gehört ein Satzzeichen, das hier an einer Stelle fehlt.",
-     "loesung": "posten = ['wache', 'kueche', 'werkstatt' 'lager']\n\nprint(posten)\nprint(len(posten))\nprint(posten[3])"
+     "loesung": "posten = ['wache', 'kueche', 'werkstatt', 'lager']\n\nprint(posten)\nprint(len(posten))\nprint(posten[3])",
+     "vorgabe": "posten = ['wache', 'kueche', 'werkstatt' 'lager']\n\nprint(posten)\nprint(len(posten))\nprint(posten[3])"
     },
     {
      "titel": "Fahrtenbuch auswerten",
@@ -347,7 +349,8 @@
      "titel": "Reparatur — zwei Namen fehlen und die Liste verschwindet",
      "aufgabe": "Das Programm soll vier Teilnehmer führen und ihre Anzahl nennen. Es bricht aber schon in Zeile 3 ab. Führ es aus, lies die Meldung und repariere die Zeile. Führ es dann erneut aus — der zweite Fehler zeigt sich erst danach, und er meldet sich nicht mit einer Fehlermeldung, sondern mit einem überraschenden Wert. Fertig, wenn: Das Programm ohne Abbruch ['mueller', 'schmidt', 'weber', 'nowak'] und die Zahl 4 ausgibt. Nirgends darf None erscheinen.",
      "tipp": "Zuweisen an ein Fach verlängert eine Liste nicht. Und ein Befehl, der die Liste umbaut, hat nichts zurückzugeben — was dann in der Variablen landet, ist Pythons Wort für „nichts\".",
-     "loesung": "teilnehmer = ['mueller', 'schmidt']\n\nteilnehmer[2] = 'weber'\nteilnehmer = teilnehmer.append('nowak')\n\nprint(teilnehmer)\nprint(len(teilnehmer))"
+     "loesung": "teilnehmer = ['mueller', 'schmidt', 'weber']\n\nteilnehmer.append('nowak')\n\nprint(teilnehmer)\nprint(len(teilnehmer))",
+     "vorgabe": "teilnehmer = ['mueller', 'schmidt']\n\nteilnehmer[2] = 'weber'\nteilnehmer = teilnehmer.append('nowak')\n\nprint(teilnehmer)\nprint(len(teilnehmer))"
     },
     {
      "titel": "Die Wachliste umbauen",

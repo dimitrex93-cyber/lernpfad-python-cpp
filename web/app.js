@@ -8,7 +8,7 @@
 const DATEN_PFAD = "/daten/";
 // Versionsmarker: erscheint im Footer. LEER = Browser nutzt alte app.js
 // (Cache!) → Strg+F5 / Cache leeren.
-const APP_VERSION = "2.0.0";
+const APP_VERSION = "2.1.0";
 const STUFEN = ["leicht", "mittel", "schwer"];
 const STUFEN_BESCHREIBUNG = {
   leicht: "nur leichte Fragen",
@@ -1474,6 +1474,10 @@ function aufgabenHtml(liste, schluessel) {
     html += `<li><strong>${escapeHtml(a.titel || "Aufgabe " + (i + 1))}</strong>`;
     if (a.aufgabe) html += `<p>${escapeHtml(a.aufgabe)}</p>`;
     if (a.stdin) html += `<p class="aufgaben-tipp">⌨️ Eingabe zum Testen: ${escapeHtml(a.stdin.replace(/\n/g, " ⏎ "))}</p>`;
+    if (a.vorgabe) {
+      html += `<p class="aufgaben-tipp">🐞 Vorgabe (so wie sie fehlschlägt):</p>` +
+        `<pre class="code">${escapeHtml(a.vorgabe)}</pre>`;
+    }
     if (a.tipp) html += `<p class="aufgaben-tipp">💡 ${escapeHtml(a.tipp)}</p>`;
     if (a.loesung) {
       html += `<button class="secondary klein" onclick="toggleLoesung('${lid}')">Lösung anzeigen</button>`;

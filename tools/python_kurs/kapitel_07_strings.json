@@ -202,7 +202,8 @@
      "titel": "Drei Fehler in sechs Zeilen",
      "aufgabe": "Die Vorgabe soll zwei Zeilen ausgeben: Bewerbung von Jens Hartmann und Das ist Jens' Bewerbung. Sie enthält drei verschiedene Fehler aus diesem Thema — einen, der das Programm gar nicht erst starten lässt, und zwei, die stillschweigend das Falsche tun. Repariere alle drei, und zwar einen nach dem anderen mit jeweils einem Lauf dazwischen. Fertig, wenn: genau die beiden genannten Zeilen erscheinen, mit großen Anfangsbuchstaben in beiden Namen und mit dem Apostroph hinter Jens.",
      "tipp": "Fang mit dem Fehler an, der die Ausführung verhindert — er steht in der letzten Zeile und hat mit der Sorte der äußeren Anführungszeichen zu tun. Danach bleiben zwei stille Fehler: einer in den beiden Zeilen mit title(), einer am öffnenden Anführungszeichen der vorletzten Zeile.",
-     "loesung": "vorname = 'jens'\nnachname = 'hartmann'\nvorname.title()\nnachname.title()\nprint(\"Bewerbung von {vorname} {nachname}\")\nprint('Das ist Jens' Bewerbung')"
+     "loesung": "vorname = \"jens\"\nnachname = \"hartmann\"\n\nprint(f\"Bewerbung von {vorname.title()} {nachname.title()}\")\nprint(\"Das ist Jens' Bewerbung\")",
+     "vorgabe": "vorname = 'jens'\nnachname = 'hartmann'\nvorname.title()\nnachname.title()\nprint(\"Bewerbung von {vorname} {nachname}\")\nprint('Das ist Jens' Bewerbung')"
     }
    ]
   }

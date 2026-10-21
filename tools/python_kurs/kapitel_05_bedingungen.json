@@ -16,7 +16,7 @@
    "titel": "Verschachtelte Bedingungen",
    "python": {
     "text": "Du kannst Bedingungen verschachteln. Das heißt: eine if sitzt in einer anderen if. Wie eine Schachtel in einer Schachtel. Manchmal ist das nötig. Oft wird es aber unübersichtlich. Besser: Kombiniere die Bedingungen mit and oder or. Oder nutze early return. Early return heißt: Beende die Funktion sofort, wenn die Bedingung stimmt. Zu tief verschachtelter Code ist schwer zu lesen. Das ist ein Zeichen: Bau den Code um.",
-    "code": "alter = 20\nif alter >= 18:\n    if hat_fuehrerschein():\n        print(\"Darf fahren\")\n    else:\n        print(\"Kein Führerschein\")\nelse:\n    print(\"Noch zu jung\")\n# Flacher wäre: if alter >= 18 and hat_fuehrerschein():"
+    "code": "alter = 20\nhat_fuehrerschein_ja = True\n\nif alter >= 18:\n    if hat_fuehrerschein_ja:\n        print(\"Darf fahren\")\n    else:\n        print(\"Kein Fuehrerschein\")\nelse:\n    print(\"Noch zu jung\")\n\n# Flacher und leichter zu lesen:\nif alter >= 18 and hat_fuehrerschein_ja:\n    print(\"Flach geprueft: darf fahren\")"
    },
    "vergleich": "Verschachteln geht in beiden Sprachen gleich. In beiden gilt: Halte es flach. Flach heißt: nicht zu tief verschachteln.",
    "merk": "Tiefe Verschachtelung ist ein schlechtes Zeichen. Kombiniere Bedingungen. Oder nutze early return."
@@ -29,6 +29,401 @@
    },
    "vergleich": "C++ switch ist schnell und kurz. Es geht aber nur mit ganzen Zahlen. Python if/elif ist flexibler. Es vergleicht auch Strings (Text). match/case ist die moderne Alternative.",
    "merk": "C++ switch: Vergiss break nicht! Python: nimm if/elif oder match/case."
+  },
+  {
+   "titel": "Ein Vergleich ist ein Ausdruck",
+   "python": {
+    "text": "Ein Vergleich ist kein Befehl. Er ist eine Frage mit einer Antwort. Python antwortet mit True (wahr) oder False (falsch). Diesen Typ nennt man bool. Er hat genau zwei mögliche Werte. Ein Vielleicht gibt es nicht. Das Ergebnis eines Vergleichs ist ein ganz normaler Wert. Du kannst ihn direkt ausgeben. Du kannst ihn auch in einer Variablen ablegen. Das ist wie bei 3 plus 4. Da kommt auch ein Wert heraus. Nur ist es hier ein Wahrheitswert statt einer Zahl. Mit type() fragst du nach dem Typ. Die Antwort ist dann bool. Ein Name wie volljaehrig sagt beim Lesen sofort, worum es geht. Darum lohnt sich das Speichern in größeren Programmen.",
+    "code": "print(5 > 3)\nprint(5 < 3)\nprint(type(5 > 3))\n\nalter = 17\nvolljaehrig = alter >= 18\nprint(volljaehrig)\nprint(f\"Alter {alter}, volljaehrig: {volljaehrig}\")"
+   },
+   "vergleich": "Ohne Bedingung läuft jedes Programm stur von oben nach unten. Mit Bedingung hängt der Weg von den Daten ab. Aus einer Frage werden zwei mögliche Wege.",
+   "merk": "Jede Bedingung ist eine Frage mit nur zwei erlaubten Antworten: True oder False.",
+   "checkliste": [
+    "Ein Vergleich liefert einen Wert vom Typ bool.",
+    "True heißt wahr, False heißt falsch.",
+    "Ein Vergleich darf allein in print() stehen.",
+    "Das Ergebnis lässt sich in einer Variablen speichern.",
+    "Ein sprechender Name macht den Code lesbarer."
+   ]
+  },
+  {
+   "titel": "= legt ab, == fragt",
+   "python": {
+    "text": "Das einfache Gleichheitszeichen legt einen Wert ab. Das doppelte Gleichheitszeichen stellt eine Frage. Die beiden Zeichen sehen fast gleich aus. Sie bedeuten aber etwas völlig anderes. auto = text schreibt den Wert in die Variable. auto == text fragt nur: Steht das drin? Die Frage verändert nichts. Das ist der Grund für die zwei Zeichen. Python muss wissen, ob du etwas festlegen oder etwas wissen willst. Wer die Zeichen verwechselt, überschreibt im schlimmsten Fall stillschweigend seine Daten. An vielen Stellen bricht Python aber sofort ab. Dann steht in der Meldung: perhaps you meant ==. Auf Deutsch: Du hast wohl das doppelte Zeichen gemeint. Eine Frage ohne Empfänger verfällt einfach. Das Ergebnis entsteht, wird aber nirgends benutzt.",
+    "code": "auto = \"audi\"\nprint(auto == \"audi\")\nprint(auto == \"bmw\")\nprint(auto)\n\nauto == \"bmw\"\nprint(auto)\nauto = \"bmw\"\nprint(auto)"
+   },
+   "vergleich": "Ein = ist ein Befehl zum Ablegen. Zwei == sind eine Frage mit Antwort. Nur das doppelte Zeichen liefert True oder False.",
+   "merk": "Ein = sagt: sei ab jetzt. Zwei == fragen: bist du?",
+   "checkliste": [
+    "= schreibt einen Wert in eine Variable.",
+    "== vergleicht zwei Werte und ändert nichts.",
+    "Eine Frage ohne print() hat kein sichtbares Ergebnis.",
+    "Bei der Fehlermeldung perhaps you meant == fehlt ein Zeichen."
+   ]
+  },
+  {
+   "titel": "Die sechs Vergleichsoperatoren",
+   "python": {
+    "text": "Es gibt sechs Vergleichsoperatoren. == heißt ist gleich. != heißt ist ungleich. Das Ausrufezeichen bedeutet nicht. Deshalb ist != die Verneinung von gleich. Dann kommen größer als und kleiner als. Die letzten beiden heißen größer oder gleich und kleiner oder gleich. Das Gleichheitszeichen steht immer hinten. Es heißt also >= und <=, niemals => oder =<. Sonst bricht das Programm mit einem Syntaxfehler ab. Alle sechs arbeiten nach demselben Muster. Links ein Wert, rechts ein Wert, dazwischen das Zeichen. Heraus kommt True oder False. Der wichtigste Unterschied steckt an der Grenze. >= 18 nimmt die Achtzehnjährigen mit. > 18 lässt sie draußen. Bei einer Grenze ist genau dieser eine Wert fast immer der interessante. Solche Fehler fallen beim Testen oft nicht auf. Meist wird zufällig kein Grenzfall getestet.",
+    "code": "print(5 == 5)\nprint(5 != 5)\nprint(5 > 3)\nprint(5 < 3)\nprint(5 >= 5)\nprint(5 <= 3)\n\nbestand = 10\nprint(bestand < 10)\nprint(bestand <= 10)\nprint(18 > 18)\nprint(18 >= 18)"
+   },
+   "vergleich": "> und >= unterscheiden sich an genau einem Wert. < und <= genauso. An der Grenze entscheidet das Gleichheitszeichen über einen ganzen Fall.",
+   "merk": "Sechs Zeichen decken jeden Vergleich ab, und das Gleichheitszeichen steht immer hinten.",
+   "checkliste": [
+    "== gleich, != ungleich.",
+    "> größer, < kleiner.",
+    ">= größer oder gleich, <= kleiner oder gleich.",
+    "Niemals => oder =< schreiben.",
+    "Bei ab 18 gehört >= in die Bedingung."
+   ]
+  },
+  {
+   "titel": "Zahl und Text sind nie gleich",
+   "python": {
+    "text": "Die Zahl 5 und der Text 5 sehen gleich aus. Für Python sind sie verschieden. Das eine ist eine Zahl, das andere ein Text. Der Vergleich der beiden ergibt deshalb False. Beim Vergleich mit kleiner bricht Python sogar ab. Die Meldung heißt TypeError. Sie sagt: Diese beiden Typen lassen sich nicht vergleichen. Vor dem Vergleich muss also der Typ stimmen. Text von einer Eingabe wandelt man mit int() in eine Zahl um. Danach klappt der Vergleich. Mit type() siehst du, welcher Typ in einer Variablen steckt. Zwei Werte desselben Typs lassen sich immer vergleichen. Bei Zahlen nach der Größe. Bei Texten nach der Reihenfolge im Zeichensatz. Bei gemischten Typen ist der Vergleich meist ein Fehler.",
+    "code": "print(5 == \"5\")\nprint(type(5))\nprint(type(\"5\"))\nprint(type(5) == int)\n\neingabe = \"5\"\nprint(int(eingabe) == 5)\nprint(int(eingabe) + 1)"
+   },
+   "vergleich": "5 == 5 ist True. 5 == Text ist False. Das Auge sieht zwei gleiche Zeichen, Python sieht zwei verschiedene Typen.",
+   "merk": "Erst den Typ prüfen, dann vergleichen. Eine Zahl und ein Text sind nie gleich.",
+   "checkliste": [
+    "5 und der Text 5 sind verschiedene Typen.",
+    "5 == Text ergibt False, ohne Fehlermeldung.",
+    "5 < Text bricht mit TypeError ab.",
+    "int() macht aus einem Zahlentext eine Zahl.",
+    "type() zeigt den Typ eines Werts."
+   ]
+  },
+  {
+   "titel": "Text vergleichen: erst klein machen",
+   "python": {
+    "text": "Python unterscheidet Groß- und Kleinschreibung. Audi und audi sind zwei verschiedene Texte. Das ist Absicht. Ein Passwort soll sich nicht von der Feststelltaste ändern lassen. Beim Vergleich von Eingaben ist das aber lästig. Menschen tippen mal groß und mal klein. Die Lösung heißt .lower(). Diese Methode liefert eine kleingeschriebene Kopie des Textes. Das Original bleibt unverändert. Text lässt sich auch mit kleiner und größer vergleichen. Dann zählt die Reihenfolge im Zeichensatz. Dabei kommen alle Großbuchstaben vor allen Kleinbuchstaben. Zebra steht also vor apfel. Auch dagegen hilft .lower(). Gegen Leerzeichen am Rand hilft .strip(). Es entfernt sie links und rechts. In der Praxis schreibt man beides hintereinander: erst strip, dann lower. Das kostet wenig und spart viel Fehlersuche.",
+    "code": "auto = \"Audi\"\nprint(auto == \"audi\")\nprint(auto.lower() == \"audi\")\nprint(auto)\n\neingabe = \"  Audi  \"\nprint(f\"[{eingabe}]\")\nprint(eingabe == \"audi\")\nprint(eingabe.lower() == \"audi\")\nprint(eingabe.strip().lower() == \"audi\")\n\nprint(\"apfel\" < \"birne\")\nprint(\"Apfel\" < \"apfel\")"
+   },
+   "vergleich": "lower() beseitigt nur den Unterschied zwischen groß und klein. Gegen Leerzeichen am Rand hilft strip(). Erst beides zusammen macht die Eingabe vergleichbar.",
+   "merk": "Text von außen immer erst mit strip().lower() behandeln, dann vergleichen.",
+   "checkliste": [
+    "Audi und audi sind für Python verschieden.",
+    "lower() liefert eine Kopie in Kleinschreibung.",
+    "Das Original bleibt bei lower() unverändert.",
+    "strip() entfernt Leerzeichen am Rand.",
+    "Großbuchstaben stehen im Zeichensatz vor Kleinbuchstaben."
+   ]
+  },
+  {
+   "titel": "Was als falsch gilt: 0, leerer Text, leere Liste, None",
+   "python": {
+    "text": "True und False sind nicht die einzigen Werte, die als wahr oder falsch zählen. Python kann jeden Wert in einen Wahrheitswert umwandeln. Das geht mit bool(). Falsch sind vier Dinge: die Zahl 0, der leere Text, die leere Liste und None. None bedeutet: kein Wert, nichts. Alles andere gilt als wahr. Auch eine Liste mit einem Element ist wahr. Sogar dann, wenn das Element selbst die Null ist. Denn die Liste ist nicht leer. Achtung bei Texten mit Leerzeichen. Ein Text aus lauter Leerzeichen ist nicht leer. Er gilt als wahr. Erst .strip() macht daraus einen leeren Text. Diese Regel gilt überall dort, wo Python einen Wahrheitswert erwartet. Also auch hinter if.",
+    "code": "print(bool(0))\nprint(bool(\"\"))\nprint(bool([]))\nprint(bool(None))\nprint(bool(7))\nprint(bool([0]))\nprint(bool(\" \"))\n\ntext = \"   \"\nif text.strip():\n    print(\"Text vorhanden\")\nelse:\n    print(\"Text ist leer\")"
+   },
+   "vergleich": "bool(liste) prüft die Liste, nicht ihren Inhalt. [0] ist wahr, weil die Liste ein Element hat. [] ist falsch, weil sie keines hat.",
+   "merk": "0, leerer Text, leere Liste und None sind falsch. Alles andere ist wahr.",
+   "checkliste": [
+    "bool() macht aus jedem Wert True oder False.",
+    "0, leerer Text, leere Liste und None sind falsch.",
+    "Jede nicht leere Sammlung ist wahr.",
+    "[0] ist wahr, obwohl das Element die Null ist.",
+    "Ein Text aus Leerzeichen ist nicht leer."
+   ]
+  },
+  {
+   "titel": "and, or, not verbinden Bedingungen",
+   "python": {
+    "text": "Oft hängt eine Entscheidung an mehreren Fragen. Zum Beispiel: volljährig und angemeldet. Dafür hat Python drei Wörter: and, or und not. Das sind echte Wörter, keine Sonderzeichen. and verlangt beide Seiten. Ist eine Seite falsch, ist das Ganze falsch. or ist großzügig. Eine wahre Seite genügt. not ist der Spiegel. Es dreht den Wert um. Aus True wird False, aus False wird True. Hinter and und or muss immer eine vollständige Bedingung stehen. Wer hinter and nur den halben Vergleich schreibt, bekommt einen Syntaxfehler. Richtig ist die Bedingung zweimal ausgeschrieben. Python erlaubt zusätzlich die Kurzform mit dem Namen in der Mitte. Für Bereiche ist das die lesbarste Schreibweise. Der Name muss dabei wirklich in der Mitte stehen.",
+    "code": "alter = 22\ndienstgrad = \"feldwebel\"\n\nprint(alter >= 18 and dienstgrad == \"feldwebel\")\nprint(alter >= 18 and dienstgrad == \"hauptmann\")\nprint(alter >= 18 or dienstgrad == \"hauptmann\")\nprint(not alter >= 18)\n\nprint(alter >= 18 and alter <= 30)\nprint(18 <= alter <= 30)"
+   },
+   "vergleich": "and ist streng und will beide Seiten. or ist großzügig und nimmt eine. not ist der Spiegel und dreht genau einen Wert um.",
+   "merk": "and ist streng, or ist großzügig, not ist der Spiegel. Dahinter beginnt immer eine volle Bedingung.",
+   "checkliste": [
+    "and liefert nur True, wenn beide Seiten wahr sind.",
+    "or liefert True, sobald eine Seite wahr ist.",
+    "not dreht einen Wahrheitswert um.",
+    "Hinter and und or steht eine vollständige Bedingung.",
+    "18 <= alter <= 30 ist die Kurzform für zwei Vergleiche."
+   ]
+  },
+  {
+   "titel": "Kurzschluss, Rangfolge und Klammern",
+   "python": {
+    "text": "Python wertet eine Bedingung von links nach rechts aus. Bei and hört es auf, sobald eine Seite falsch ist. Bei or hört es auf, sobald eine Seite wahr ist. Das nennt man Kurzschluss. Die rechte Seite wird dann gar nicht mehr geprüft. Das ist nützlich, kann aber überraschen. Die abgekürzte Oder-Frage aus dem Alltag zeigt das. Dort steht links nur ein Text und keine Frage. Ein nicht leerer Text gilt als wahr. Also gibt or diesen Text selbst zurück. In einer Bedingung wäre das immer erfüllt. Hinter or muss deshalb die volle Frage stehen. Für die Rangfolge gilt: Zuerst kommen die Vergleiche, dann not, dann and, dann or. Mit Klammern legst du die Reihenfolge selbst fest. Klammern sind immer erlaubt. Sie kosten nichts und machen die Absicht klar. Wer Klammern setzt, muss die Rangfolge nicht im Kopf haben.",
+    "code": "fuhrpark = [\"lkw\", \"jeep\", \"bus\"]\nprint(\"lkw\" or \"jeep\" in fuhrpark)\nprint(\"lkw\" in fuhrpark or \"jeep\" in fuhrpark)\n\nprint(True or False and False)\nprint((True or False) and False)\nprint(not True and False)\nprint(not (True and False))"
+   },
+   "vergleich": "Ohne Klammern gilt erst not, dann and, dann or. Mit Klammern entscheidest du selbst, was zuerst gerechnet wird.",
+   "merk": "and und or hören früh auf. Klammern sagen, was zuerst gilt.",
+   "checkliste": [
+    "Bei and stoppt Python beim ersten False.",
+    "Bei or stoppt Python beim ersten True.",
+    "Ein nicht leerer Text zählt als wahr.",
+    "Rangfolge: Vergleich, dann not, dann and, dann or.",
+    "Klammern machen die Reihenfolge sichtbar."
+   ]
+  },
+  {
+   "titel": "if allein und die Einrückung",
+   "python": {
+    "text": "if heißt wenn. Dahinter steht die Bedingung. Am Zeilenende steht ein Doppelpunkt. Er kündigt einen Block an. Ein Block ist eine Gruppe von Zeilen, die zusammengehören. Der Block ist eingerückt, meist mit vier Leerzeichen. Alles, was gleich weit eingerückt ist, gehört dazu. Der Block endet dort, wo die Einrückung endet. Ein Schlusswort wie end gibt es nicht. Stimmt die Bedingung nicht, überspringt Python den Block. Danach läuft das Programm einfach weiter. Nicht eingerückte Zeilen laufen immer. Ein if ohne else ist deshalb kein halbes if. Es heißt: tu das zusätzlich, falls es zutrifft. Fehlt der Doppelpunkt, meldet Python SyntaxError expected ':'. Fehlt die Einrückung, meldet es IndentationError. Beide Meldungen nennen genau, was fehlt. Tabulatoren und Leerzeichen darf man nicht mischen. Sonst kommt TabError.",
+    "code": "alter = 16\nprint(\"Kontrolle beginnt\")\nif alter >= 18:\n    print(\"Zutritt erlaubt\")\nprint(\"Kontrolle beendet\")\n\nalter = 20\nif alter >= 18:\n    print(\"Zeile A gehoert zum Block\")\n    print(\"Zeile B gehoert zum Block\")\nprint(\"Zeile C steht ausserhalb\")"
+   },
+   "vergleich": "Andere Sprachen klammern den Block mit geschweiften Klammern. Python nutzt die Einrückung selbst. Sie ist keine Kosmetik, sondern Bedeutung.",
+   "merk": "Doppelpunkt, Zeilenumbruch, vier Leerzeichen. Diese drei Handgriffe gehören zusammen.",
+   "checkliste": [
+    "Die Kopfzeile endet mit einem Doppelpunkt.",
+    "Der Block ist vier Leerzeichen eingerückt.",
+    "Alle Zeilen eines Blocks sind gleich weit eingerückt.",
+    "Der Block endet, wo die Einrückung endet.",
+    "Nicht eingerückte Zeilen laufen immer."
+   ]
+  },
+  {
+   "titel": "else fängt alles Übrige auf",
+   "python": {
+    "text": "else heißt sonst. Es steht genau so weit links wie das zugehörige if. Es hat einen Doppelpunkt. Es hat aber keine Bedingung. Das wäre auch nicht nötig. else bedeutet: in allen übrigen Fällen. Welche das sind, hat das if darüber schon festgelegt. Bei if und else läuft genau ein Block. Nie beide, nie keiner. Das ist der Unterschied zum if allein. Dort kann auch gar nichts geschehen. Wer immer eine Antwort will, braucht ein else. Zwei getrennte if mit größer und kleiner lassen den Grenzwert durchfallen. Der Achtzehnjährige bekäme dann gar keine Meldung. Mit else kann das nicht passieren. Aber Vorsicht: else fängt auch Tippfehler auf. Es wirkt dann zufrieden und behauptet etwas Falsches.",
+    "code": "alter = 16\nif alter >= 18:\n    print(\"Zutritt erlaubt\")\nelse:\n    print(\"Zutritt verweigert\")\n\ndienstgrad = \"feldwbel\"\nif dienstgrad == \"gefreiter\":\n    print(\"Mannschaft\")\nelse:\n    print(\"Unteroffizier oder hoeher\")\n\nif dienstgrad == \"gefreiter\":\n    print(\"Mannschaft\")\nelif dienstgrad == \"feldwebel\":\n    print(\"Unteroffizier\")\nelse:\n    print(f\"Unbekannter Dienstgrad: {dienstgrad}\")"
+   },
+   "vergleich": "Mit else steht die Bedingung einmal da. Mit zwei getrennten if steht sie zweimal da, einmal umgedreht. Ändert man die Grenze, muss man an zwei Stellen daran denken.",
+   "merk": "if und else ist eine Weiche: genau ein Gleis wird befahren, keines bleibt übrig.",
+   "checkliste": [
+    "else steht auf derselben Höhe wie das if.",
+    "else hat nie eine Bedingung.",
+    "Bei if und else läuft genau ein Block.",
+    "else fängt auch Unerwartetes auf.",
+    "Für das Unerwartete lieber eine eigene Meldung schreiben."
+   ]
+  },
+  {
+   "titel": "elif-Kette: die Reihenfolge entscheidet",
+   "python": {
+    "text": "elif heißt sonst wenn. Es ist die Kurzform von else if. Eine Kette beginnt mit genau einem if. Danach dürfen beliebig viele elif folgen. Das else ist freiwillig und steht immer zuletzt. elif hat immer eine Bedingung. else hat nie eine. Python prüft die Kette von oben nach unten. Beim ersten Treffer hält es an. Der ganze Rest wird nicht einmal mehr angeschaut. Deshalb gehört die engste Bedingung nach oben. Steht die weiteste oben, fängt sie alle engeren Fälle ab. Jede Bedingung wäre für sich richtig, das Ergebnis trotzdem falsch. Die Reihenfolge ist also Teil der Logik. Lässt man das else weg, kann auch gar nichts geschehen. Manchmal ist das gewollt. Oft ist es ein Fehler, den niemand bemerkt.",
+    "code": "alter = 9\nif alter < 6:\n    preis = 0\nelif alter < 18:\n    preis = 5\nelif alter < 65:\n    preis = 12\nelse:\n    preis = 8\nprint(f\"Der Eintritt kostet {preis} Euro.\")\n\ndienstgrad = \"oberst\"\nif dienstgrad == \"gefreiter\":\n    print(\"Mannschaft\")\nelif dienstgrad == \"feldwebel\":\n    print(\"Unteroffizier\")\nprint(\"Pruefung beendet\")"
+   },
+   "vergleich": "Eine elif-Kette ist eine einzige Anweisung mit mehreren Zweigen. Es läuft höchstens einer davon. Die Reihenfolge der Prüfungen bestimmt das Ergebnis.",
+   "merk": "elif prüft von oben nach unten und hört beim ersten Treffer auf. Das Engste gehört nach oben.",
+   "checkliste": [
+    "Genau ein if am Anfang.",
+    "Beliebig viele elif in der Mitte.",
+    "Höchstens ein else am Ende.",
+    "elif hat eine Bedingung, else nie.",
+    "Erster Treffer gewinnt, der Rest wird übersprungen."
+   ]
+  },
+  {
+   "titel": "Getrennte if und verschachtelte Bedingungen",
+   "python": {
+    "text": "Drei if untereinander sind keine Kette. Jedes if ist eine eigene Anweisung. Jede Bedingung wird geprüft. Jeder passende Block läuft. Eine elif-Kette führt dagegen höchstens einen Block aus. Eine Frage hilft bei der Wahl: Kann mehr als eines gleichzeitig zutreffen? Wenn ja, gehören getrennte if hin. Schließen sich die Fälle aus, gehört elif hin. Typisch für elif sind Einstufungen wie Preis, Note oder Rang. Typisch für getrennte if sind Merkmale, die sich nicht ausschließen. Verschachteln heißt: ein if steht im Block eines anderen if. Das ist wie eine Schachtel in einer Schachtel. Es funktioniert, wird aber schnell unübersichtlich. Meist lässt sich das Innere mit and nach außen ziehen. Tiefe Verschachtelung ist ein Zeichen, den Code umzubauen.",
+    "code": "punkte = 95\nif punkte >= 90:\n    print(\"sehr gut\")\nelif punkte >= 80:\n    print(\"gut\")\nelif punkte >= 60:\n    print(\"bestanden\")\nprint(\"---\")\nif punkte >= 90:\n    print(\"sehr gut\")\nif punkte >= 80:\n    print(\"gut\")\nif punkte >= 60:\n    print(\"bestanden\")\nprint(\"---\")\nalter = 20\nhat_fuehrerschein = True\nif alter >= 18:\n    if hat_fuehrerschein:\n        print(\"Darf fahren\")\n    else:\n        print(\"Kein Fuehrerschein\")\nelse:\n    print(\"Noch zu jung\")\nif alter >= 18 and hat_fuehrerschein:\n    print(\"Flach: Darf fahren\")"
+   },
+   "vergleich": "Eine elif-Kette beantwortet die Frage: Welcher Fall liegt vor? Getrennte if beantworten: Welche dieser Dinge treffen zu?",
+   "merk": "Schließen sich die Fälle aus, nimm elif. Sind es unabhängige Merkmale, nimm getrennte if.",
+   "checkliste": [
+    "Getrennte if prüfen jede Bedingung einzeln.",
+    "Eine elif-Kette führt höchstens einen Block aus.",
+    "Bei sich ausschließenden Fällen gehört elif hin.",
+    "Verschachteln heißt if im Block eines if.",
+    "Mit and lässt sich das Innere oft nach außen ziehen."
+   ]
+  },
+  {
+   "titel": "in und not in bei Listen und Texten",
+   "python": {
+    "text": "in fragt: Steht der Wert in der Liste? Die Antwort ist True oder False. Es ist nie die Position. not in ist die Gegenprobe. Es sind zwei Wörter mit genau einem Leerzeichen. notin kennt Python nicht. Bei einer Liste vergleicht in immer ganze Elemente. Ein Teil eines Elements zählt nicht. Bei einem Text ist es umgekehrt. Dort sucht in nach einem Stück des Textes. Dieselbe Frage, zwei Bedeutungen. Der Typ der rechten Seite entscheidet. Groß- und Kleinschreibung gilt auch hier. Die Bedingung schreibt man so, wie man den Normalfall spricht. Ist der Normalfall nicht dabei, gehört not in nach oben. Sonst liest man die Regel rückwärts. Vor dem Aufnehmen in eine Liste prüft man mit not in auf Dubletten.",
+    "code": "fahrzeuge = [\"lkw\", \"jeep\", \"transporter\", \"bus\"]\nprint(\"jeep\" in fahrzeuge)\nprint(\"panzer\" in fahrzeuge)\nprint(\"jee\" in fahrzeuge)\n\nkennzeichen = \"HH-BW 1234\"\nprint(\"BW\" in kennzeichen)\n\ngesperrte = [\"hoffmann\", \"krueger\"]\nbenutzer = \"Schmidt\"\nprint(benutzer.lower() not in gesperrte)\nif benutzer.lower() not in gesperrte:\n    print(f\"{benutzer} darf sich anmelden.\")\nelse:\n    print(f\"{benutzer} ist gesperrt.\")"
+   },
+   "vergleich": "Rechts eine Liste: in sucht ganze Elemente. Rechts ein Text: in sucht ein Stück des Textes. jee in der Liste ist False, BW im Text ist True.",
+   "merk": "in fragt nach ganzen Elementen bei Listen und nach Textstücken bei Texten.",
+   "checkliste": [
+    "in liefert immer True oder False, nie eine Position.",
+    "not in sind zwei Wörter.",
+    "Bei Listen zählt nur das ganze Element.",
+    "Bei Texten zählt auch ein Teil des Textes.",
+    "Dubletten prüft man mit not in vor dem Anhängen."
+   ]
+  },
+  {
+   "titel": "if liste: leere Listen und len",
+   "python": {
+    "text": "Eine leere Liste ist kein Fehler. Sie ist der normale Anfang, wenn noch nichts eingetragen wurde. Die Liste selbst gilt als falsch. Deshalb ist if liste: die kurze Frage: Ist überhaupt etwas drin? Ist die Liste leer, läuft der else-Zweig. len(liste) gibt die Anzahl der Elemente. Diese Zahl lässt sich mit größer, kleiner und gleich vergleichen. Wer die Länge mit null vergleicht, sagt dasselbe, nur umständlicher. In Python schreibt man die kurze Form. Wichtig: if liste prüft die Liste, nicht das erste Element. Auf das erste Element darf man erst zugreifen, wenn klar ist, dass etwas drin ist. Sonst bricht das Programm mit IndexError ab. Bei einer leeren Liste gibt es nicht einmal den Index Null. Darum gilt: erst fragen, dann hineingreifen.",
+    "code": "auftraege = []\nprint(bool(auftraege))\nif auftraege:\n    print(\"Auftraege vorhanden.\")\nelse:\n    print(\"Keine Auftraege.\")\n\nauftraege = [\"wartung bus\", \"tuev lkw\"]\nprint(len(auftraege))\nif auftraege:\n    print(f\"Es liegen {len(auftraege)} Auftraege vor.\")\nif len(auftraege) >= 2:\n    print(\"Genug Auftraege fuer heute.\")\n\nif auftraege:\n    print(auftraege[0])\nelse:\n    print(\"Nichts zum Anzeigen.\")\n\nteilnehmer = [\"abel\", \"busch\", \"clausen\"]\nif len(teilnehmer) >= 3:\n    print(\"Der Kurs findet statt.\")"
+   },
+   "vergleich": "if liste: ist die kurze Form. if len liste größer 0 sagt dasselbe, rechnet aber erst eine Zahl aus. if liste ungleich leerer Liste baut sogar eine zweite Liste.",
+   "merk": "Erst fragen, ob etwas drin ist, dann hineingreifen.",
+   "checkliste": [
+    "Eine leere Liste gilt als falsch.",
+    "if liste: heißt: Ist etwas drin?",
+    "len(liste) liefert die Anzahl als Zahl.",
+    "Die Anzahl lässt sich mit >= und < vergleichen.",
+    "liste[0] auf einer leeren Liste ergibt IndexError."
+   ]
+  },
+  {
+   "titel": "Pflichtaufgaben",
+   "python": {
+    "text": "Weitere pflichtaufgaben aus dem Python-Crashkurs (Tag 2 und 3). Schreibe jede Aufgabe in eine eigene Datei und führe sie aus."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Ein Vergleich hat ein Ergebnis",
+     "aufgabe": "Gib drei Zeilen aus: zuerst einen Vergleich zweier Zahlen, der zutrifft, dann denselben Vergleich umgedreht, und zum Schluss den Typ des ersten Vergleichsergebnisses. Es steht keine Entscheidung darum herum — die Vergleiche stehen für sich allein. Fertig, wenn: untereinander True, False und erscheinen.",
+     "tipp": "Ein Vergleich darf überall dort stehen, wo auch 3 + 4 stehen dürfte — also auch direkt in der Klammer von print(). Den Typ eines Werts nennt type().",
+     "loesung": "print(12 > 5)\nprint(12 < 5)\nprint(type(12 > 5))"
+    },
+    {
+     "titel": "Den Wahrheitswert aufheben",
+     "aufgabe": "Lege ein Alter in einer Variablen ab und speichere das Ergebnis der Frage „ist diese Person volljährig?\" in einer zweiten Variablen mit sprechendem Namen. Gib diese zweite Variable zuerst allein aus und danach noch einmal in einem vollständigen Satz zusammen mit dem Alter. Fertig, wenn: zwei Zeilen erscheinen und in beiden False auftaucht, in der zweiten zusammen mit der Zahl 17.",
+     "tipp": "Rechts vom = darf jeder Ausdruck stehen, also auch ein Vergleich. Für den Satz in der zweiten Zeile ist ein f-String aus Bereich 1 der kürzeste Weg.",
+     "loesung": "alter = 17\nvolljaehrig = alter >= 18\nprint(volljaehrig)\nprint(f\"Alter {alter}, volljaehrig: {volljaehrig}\")"
+    },
+    {
+     "titel": "Alle sechs auf einmal",
+     "aufgabe": "Lege zwei Variablen mit demselben Zahlenwert an und stelle beiden nacheinander alle sechs Vergleichsfragen — gleich, ungleich, größer, kleiner, größer oder gleich, kleiner oder gleich. Überlege vor dem Ausführen, wie viele der sechs Zeilen True ergeben müssen. Fertig, wenn: sechs Zeilen erscheinen, von denen genau drei True lauten.",
+     "tipp": "Die sechs Zeichen sind ==, !=, &gt;, &lt;, &gt;= und &lt;=. Bei den letzten beiden steht das Gleichheitszeichen hinten.",
+     "loesung": "bestand = 10\ngrenze = 10\nprint(bestand == grenze)\nprint(bestand != grenze)\nprint(bestand > grenze)\nprint(bestand < grenze)\nprint(bestand >= grenze)\nprint(bestand <= grenze)"
+    },
+    {
+     "titel": "Die Grenze trifft es genau",
+     "aufgabe": "Ein Lager meldet Nachbestellbedarf ab einem Restbestand von 10 Stück. Der Bestand steht gerade bei genau 10. Gib nacheinander aus, was und >=. Fertig, wenn: vier Zeilen erscheinen, die sich paarweise unterscheiden: False, True, False, True.",
+     "tipp": "Beide Vergleiche unterscheiden sich an genau einem einzigen Wert — und dieser eine Wert ist gerade der, der in der Variablen steht.",
+     "loesung": "bestand = 10\nprint(bestand < 10)\nprint(bestand <= 10)\nalter = 18\nprint(alter > 18)\nprint(alter >= 18)"
+    },
+    {
+     "titel": "Text vergleicht man klein",
+     "aufgabe": "Eine Angabe ist mit Großbuchstaben und mit überflüssigen Leerzeichen am Rand angekommen und soll mit dem kleingeschriebenen Wert \"audi\" verglichen werden. Gib die Angabe zuerst in eckigen Klammern aus, damit man die Leerzeichen sieht, und danach drei Vergleiche: ohne Bereinigung, nur klein gemacht und zusätzlich von den Leerzeichen befreit. Fertig, wenn: nach der Zeile mit den eckigen Klammern dreimal ein Wahrheitswert folgt, von denen nur der letzte True lautet.",
+     "tipp": ".lower() beseitigt den Unterschied zwischen groß und klein, .strip() die Leerzeichen am Rand. Beide lassen sich hintereinanderhängen.",
+     "loesung": "eingabe = \"  Audi  \"\nprint(f\"[{eingabe}]\")\nprint(eingabe == \"audi\")\nprint(eingabe.lower() == \"audi\")\nprint(eingabe.strip().lower() == \"audi\")"
+    },
+    {
+     "titel": "Zwei Zeichen, zwei Fehlermeldungen",
+     "aufgabe": "Die Vorgabe soll zweimal True ausgeben und startet nicht einmal. Sie enthält zwei verschiedene Schreibfehler aus diesem Thema. Repariere sie nacheinander mit jeweils einem Lauf dazwischen und lies beide Fehlermeldungen vollständig — die erste nennt die Lösung wörtlich. Fertig, wenn: das Programm ohne Fehlermeldung läuft und zwei Zeilen mit True ausgibt.",
+     "tipp": "Ein Zeichen schreibt, zwei Zeichen lesen. Und beim zweiten Fehler steht das Gleichheitszeichen auf der falschen Seite — es gehört immer nach hinten.",
+     "loesung": "alter = 18\nprint(18 == alter)\nprint(alter >= 18)"
+    },
+    {
+     "titel": "Vorhersage — and, or, not",
+     "aufgabe": "Unten stehen fünf verknüpfte Bedingungen über dieselben zwei Variablen. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für alle fünf Ergebnisse. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Achte besonders auf den Unterschied zwischen Zeile zwei und Zeile drei. Fertig, wenn: nach deiner Vorhersagezeile fünf Wahrheitswerte folgen und du erklären kannst, warum dieselben zwei Teilbedingungen einmal False und einmal True ergeben.",
+     "tipp": "and ist streng und verlangt beide Seiten, or ist großzügig und begnügt sich mit einer, not ist der Spiegel und dreht genau einen Wert um.",
+     "loesung": "print(\"Erwartet: True, False, True, False, True\")\nalter = 22\ndienstgrad = \"feldwebel\"\nprint(alter >= 18 and dienstgrad == \"feldwebel\")\nprint(alter >= 18 and dienstgrad == \"hauptmann\")\nprint(alter >= 18 or dienstgrad == \"hauptmann\")\nprint(not alter >= 18)\nprint(not dienstgrad == \"hauptmann\")"
+    },
+    {
+     "titel": "Ein Zweig, der auch ausbleiben darf",
+     "aufgabe": "Ein Lager meldet Nachbestellbedarf ab einem Restbestand von 10 Stück. Schreibe ein Programm, das zuerst den Beginn der Prüfung meldet, dann nur bei Bedarf die Nachbestellung, und am Ende in jedem Fall das Ende der Prüfung. Der Bestand liegt bei 7. Fertig, wenn: drei Zeilen erscheinen und die mittlere verschwindet, sobald du den Bestand auf 25 setzt und erneut ausführst.",
+     "tipp": "Drei Handgriffe gehören zusammen: Doppelpunkt am Ende der Kopfzeile, Zeilenumbruch, vier Leerzeichen. Alles, was nicht eingerückt ist, läuft immer.",
+     "loesung": "bestand = 7\nprint(\"Pruefung beginnt\")\nif bestand <= 10:\n    print(\"Nachbestellen\")\nprint(\"Pruefung beendet\")"
+    },
+    {
+     "titel": "Entweder oder",
+     "aufgabe": "Schreibe eine Zutrittskontrolle, die in jedem Fall eine Rückmeldung gibt: Bei mindestens 18 Jahren wird der Zutritt erlaubt, in allen übrigen Fällen verweigert. Das Alter liegt bei 16. Fertig, wenn: genau eine Zeile erscheint und zwar Zutritt verweigert.",
+     "tipp": "else steht genau so weit links wie das zugehörige if, trägt ebenfalls einen Doppelpunkt und bekommt keine Bedingung.",
+     "loesung": "alter = 16\nif alter >= 18:\n    print(\"Zutritt erlaubt\")\nelse:\n    print(\"Zutritt verweigert\")"
+    },
+    {
+     "titel": "Was gehört zum Block und was nicht",
+     "aufgabe": "Baue eine Entscheidung, deren Block aus zwei Zeilen besteht, und hänge eine dritte Zeile an, die außerhalb steht und deshalb immer läuft. Geprüft wird, ob die Schicht die Nachtschicht ist. Führe danach dasselbe Programm mit schicht = \"tag\" noch einmal aus und beobachte, welche Zeilen verschwinden. Fertig, wenn: beim ersten Lauf drei Zeilen erscheinen und beim zweiten Lauf nur noch die letzte.",
+     "tipp": "Alle Zeilen eines Blocks sind gleich weit eingerückt. Der Block endet dort, wo die Einrückung endet — ein Schlusswort wie end gibt es nicht.",
+     "loesung": "schicht = \"nacht\"\nif schicht == \"nacht\":\n    print(\"Zuschlag wird gezahlt\")\n    print(\"Ruhezeit beachten\")\nprint(\"Eintrag gespeichert\")"
+    },
+    {
+     "titel": "Eine Preisliste mit vier Stufen",
+     "aufgabe": "Baue eine Eintrittspreisstaffel: unter 6 Jahren frei, unter 18 Jahren 5 Euro, unter 65 Jahren 12 Euro, in allen übrigen Fällen 8 Euro. Lege den Preis in einer Variablen ab und gib ihn erst danach in einem vollständigen Satz aus. Das Alter liegt bei 9. Fertig, wenn: genau eine Zeile erscheint: Der Eintritt kostet 5 Euro.",
+     "tipp": "elif ist die Kurzform von „else if\". Die Kette wird von oben nach unten abgearbeitet und hält beim ersten Treffer an — die engste Bedingung gehört deshalb nach oben.",
+     "loesung": "alter = 9\nif alter < 6:\n    preis = 0\nelif alter < 18:\n    preis = 5\nelif alter < 65:\n    preis = 12\nelse:\n    preis = 8\nprint(f\"Der Eintritt kostet {preis} Euro.\")"
+    },
+    {
+     "titel": "Das else für das Unerwartete",
+     "aufgabe": "Schreibe eine Dienstgradprüfung mit drei erwarteten Fällen — Gefreiter, Feldwebel, Hauptmann — und reserviere das else ausdrücklich für alles, was nicht dazugehört. Der unbekannte Fall soll den tatsächlich eingetragenen Dienstgrad mit ausgeben. Geprüft wird \"oberleutnant\". Fertig, wenn: eine Zeile erscheint, die den Dienstgrad oberleutnant wörtlich nennt.",
+     "tipp": "Damit der unbekannte Wert in der Meldung auftaucht, gehört er in geschweifte Klammern in einem f-String aus Bereich 1.",
+     "loesung": "dienstgrad = \"oberleutnant\"\nif dienstgrad == \"gefreiter\":\n    print(\"Mannschaft\")\nelif dienstgrad == \"feldwebel\":\n    print(\"Unteroffizier\")\nelif dienstgrad == \"hauptmann\":\n    print(\"Offizier\")\nelse:\n    print(f\"Unbekannter Dienstgrad: {dienstgrad}\")"
+    },
+    {
+     "titel": "Drei unabhängige Fragen",
+     "aufgabe": "Drei Qualifikationen werden als Wahrheitswerte geführt: Führerschein ja, Gabelstaplerschein nein, Ersthelfer ja. Melde für jede vorhandene Qualifikation eine eigene Zeile. Benutze dafür keine elif-Kette, und schreibe hinter if nur den Variablennamen, ohne Vergleich. Fertig, wenn: genau zwei Zeilen erscheinen — die zum Gabelstaplerschein fehlt.",
+     "tipp": "Hinter if muss kein Vergleich stehen, sondern irgendetwas, das einen Wahrheitswert ergibt. Eine Variable, in der bereits True oder False steckt, genügt vollkommen.",
+     "loesung": "fuehrerschein = True\ngabelstapler = False\nersthelfer = True\nif fuehrerschein:\n    print(\"Fuehrerschein vorhanden\")\nif gabelstapler:\n    print(\"Gabelstaplerschein vorhanden\")\nif ersthelfer:\n    print(\"Ersthelfer-Ausbildung vorhanden\")"
+    },
+    {
+     "titel": "Zwei vergessene Kleinigkeiten",
+     "aufgabe": "Die Vorgabe soll zwei Zeilen ausgeben und startet nicht. Sie enthält zwei Formfehler, die Python nacheinander meldet. Repariere sie einzeln mit jeweils einem Lauf dazwischen und lies beide Meldungen vollständig — beide sagen wörtlich, was fehlt. Fertig, wenn: zwei Zeilen erscheinen: Zutritt erlaubt und Kontrolle beendet.",
+     "tipp": "Die erste Meldung betrifft das Ende der Kopfzeile. Die zweite betrifft den Zeilenanfang darunter — ein Doppelpunkt verspricht einen Block, und dieses Versprechen muss eingelöst werden.",
+     "loesung": "alter = 20\nif alter >= 18:\n    print(\"Zutritt erlaubt\")\nprint(\"Kontrolle beendet\")"
+    },
+    {
+     "titel": "Vorhersage — Kette gegen Einzelfragen",
+     "aufgabe": "Unten stehen dieselben drei Bedingungen zweimal: oben als elif-Kette, unten als drei getrennte if. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage, wie viele Ausgabezeilen jeder Teil erzeugt. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile zuerst eine Zeile erscheint, dann die Trennlinie, dann drei Zeilen.",
+     "tipp": "Eine elif-Kette ist eine einzige Anweisung mit mehreren Zweigen. Drei getrennte if sind drei eigenständige Anweisungen. Prüfe für 14 Dienstjahre, wie viele der drei Bedingungen für sich genommen zutreffen.",
+     "loesung": "print(\"Erwartet: zuerst eine Zeile, nach der Trennlinie drei Zeilen\")\ndienstjahre = 14\nif dienstjahre >= 12:\n    print(\"Stufe 3\")\nelif dienstjahre >= 8:\n    print(\"Stufe 2\")\nelif dienstjahre >= 4:\n    print(\"Stufe 1\")\nprint(\"---\")\nif dienstjahre >= 12:\n    print(\"Stufe 3\")\nif dienstjahre >= 8:\n    print(\"Stufe 2\")\nif dienstjahre >= 4:\n    print(\"Stufe 1\")"
+    },
+    {
+     "titel": "Steht der Wert in der Liste?",
+     "aufgabe": "Lege eine Liste mit vier Fahrzeugarten an. Stelle ihr danach drei Fragen und gib die Antworten einzeln aus: ob ein enthaltenes Fahrzeug darin steht, ob ein nicht enthaltenes darin steht, und ob ein Teilwort eines enthaltenen Fahrzeugs darin steht. Es steht keine Entscheidung darum herum. Fertig, wenn: drei Zeilen erscheinen: True, False, False.",
+     "tipp": "Das Schlüsselwort steht zwischen dem gesuchten Wert und der Liste und liest sich wie ein deutscher Satz. Das Ergebnis ist ein ganz gewöhnlicher Wahrheitswert und lässt sich direkt ausgeben.",
+     "loesung": "fahrzeuge = [\"lkw\", \"jeep\", \"transporter\", \"bus\"]\nprint(\"jeep\" in fahrzeuge)\nprint(\"panzer\" in fahrzeuge)\nprint(\"jee\" in fahrzeuge)"
+    },
+    {
+     "titel": "Ist das Werkzeug im Bestand?",
+     "aufgabe": "Eine Liste führt den Werkzeugbestand. Der gesuchte Gegenstand steht in einer eigenen Variablen, nicht direkt im Code. Melde in einem vollständigen Satz, ob er im Bestand ist oder fehlt — der gesuchte Gegenstand soll im Satz selbst vorkommen. Fertig, wenn: genau eine Zeile erscheint: zange ist im Bestand.",
+     "tipp": "Die Prüfung mit in ist eine ganz gewöhnliche Bedingung und darf deshalb hinter if stehen. Für die beiden Sätze eignen sich f-Strings aus Bereich 1.",
+     "loesung": "werkzeuge = [\"hammer\", \"zange\", \"schraubendreher\"]\ngesucht = \"zange\"\nif gesucht in werkzeuge:\n    print(f\"{gesucht} ist im Bestand.\")\nelse:\n    print(f\"{gesucht} fehlt im Bestand.\")"
+    },
+    {
+     "titel": "Die Sperrliste und die Großschreibung",
+     "aufgabe": "Eine Sperrliste enthält zwei kleingeschriebene Namen. Der zu prüfende Benutzername kommt von außen und ist groß geschrieben. Gib zuerst aus, was die Prüfung ohne Bereinigung antwortet, dann was sie mit Bereinigung antwortet, und melde danach in einem Satz, ob sich der Benutzer anmelden darf. Formuliere die Bedingung so, dass der erlaubte Fall oben steht. Fertig, wenn: drei Zeilen erscheinen: True, False und eine Meldung, die den Benutzer als gesperrt ausweist.",
+     "tipp": "Die Gegenprobe heißt not in — zwei getrennte Wörter mit genau einem Leerzeichen dazwischen. Gegen die Großschreibung hilft dieselbe Methode wie in Thema 1.",
+     "loesung": "gesperrte = [\"hoffmann\", \"krueger\"]\nbenutzer = \"Krueger\"\nprint(benutzer not in gesperrte)\nprint(benutzer.lower() not in gesperrte)\nif benutzer.lower() not in gesperrte:\n    print(f\"{benutzer} darf sich anmelden.\")\nelse:\n    print(f\"{benutzer} ist gesperrt.\")"
+    },
+    {
+     "titel": "Ist überhaupt etwas drin?",
+     "aufgabe": "Zwei Listen liegen vor: eine leere Warteliste und eine Auftragsliste mit zwei Einträgen. Gib zuerst für beide den reinen Wahrheitswert aus und melde danach für jede Liste in einem Satz, ob etwas darin steht. Bei der Auftragsliste soll die Anzahl mit im Satz stehen. Benutze die kürzeste Schreibweise, die Python dafür kennt. Fertig, wenn: vier Zeilen erscheinen: False, True, Warteliste ist leer. und Es liegen 2 Auftraege vor.",
+     "tipp": "Hinter if genügt der Listenname allein — kein Vergleich, kein in. Die Anzahl liefert len() aus Bereich 1.",
+     "loesung": "warteliste = []\nauftraege = [\"wartung bus\", \"tuev lkw\"]\nprint(bool(warteliste))\nprint(bool(auftraege))\nif warteliste:\n    print(\"Warteliste abarbeiten.\")\nelse:\n    print(\"Warteliste ist leer.\")\nif auftraege:\n    print(f\"Es liegen {len(auftraege)} Auftraege vor.\")\nelse:\n    print(\"Keine Auftraege.\")"
+    },
+    {
+     "titel": "Anzahl, erster und letzter Wert",
+     "aufgabe": "Eine Messreihe liegt als Liste von vier Zahlen vor. Gib die Anzahl, den ersten und den letzten Messwert aus. Melde danach über drei unabhängige Prüfungen: ob mindestens drei Werte vorliegen, ob der erste Wert über 10 liegt und ob der letzte Wert unter 5 liegt. Fertig, wenn: sechs Zeilen erscheinen — drei Zahlen und darunter alle drei Meldungen.",
+     "tipp": "Der Zugriff über den Index in eckigen Klammern ist aus Bereich 2 bekannt; -1 liefert das letzte Element, ohne dass man die Länge kennen muss. Was dabei herauskommt, ist ein ganz gewöhnlicher Wert und lässt sich mit den Operatoren aus Thema 1 vergleichen.",
+     "loesung": "messwerte = [12, 7, 23, 4]\nprint(len(messwerte))\nprint(messwerte[0])\nprint(messwerte[-1])\nif len(messwerte) >= 3:\n    print(\"Genug Messwerte fuer die Auswertung.\")\nif messwerte[0] > 10:\n    print(\"Erster Messwert ueber dem Grenzwert.\")\nif messwerte[-1] < 5:\n    print(\"Letzter Messwert ungewoehnlich niedrig.\")"
+    },
+    {
+     "titel": "Erst fragen, dann hineingreifen",
+     "aufgabe": "Die Vorgabe soll den ersten Auftrag anzeigen und bricht mitten im Lauf ab. Die erste Zeile der Ausgabe erscheint noch, die zweite nicht. Lies die Fehlermeldung, erkläre dir die Ursache und baue die Prüfung so um, dass das Programm auch bei leerer Liste sauber durchläuft und eine verständliche Meldung ausgibt. Fertig, wenn: zwei Zeilen erscheinen, keine Fehlermeldung mehr kommt und das Programm auch dann noch richtig arbeitet, wenn die Liste Einträge enthält.",
+     "tipp": "Bei einer leeren Liste gibt es keinen einzigen gültigen Index — nicht einmal die Null. Die Frage „ist überhaupt etwas drin?\" aus Aufgabe 3.3.04 gehört deshalb vor den Zugriff.",
+     "loesung": "auftraege = []\nprint(\"Auftragsliste wird geprueft\")\nif auftraege:\n    print(auftraege[0])\nelse:\n    print(\"Keine Auftraege vorhanden.\")"
+    },
+    {
+     "titel": "Vorhersage — die abgekürzte Oder-Frage",
+     "aufgabe": "Unten stehen drei Bedingungen über denselben Fuhrpark. Die erste ist in der Schreibweise aus der gesprochenen Sprache verfasst. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für alle drei Ergebnisse. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile drei Zeilen folgen, von denen die erste gar kein Wahrheitswert ist.",
+     "tipp": "Dieselbe Falle wie bei alter &gt;= 18 and &lt;= 30 aus Thema 1: Hinter and und or muss eine vollständige Bedingung stehen. Frage dich, was auf der linken Seite des ersten or eigentlich steht — und ob das schon eine Frage an die Liste ist.",
+     "loesung": "print(\"Erwartet: erst lkw statt True, dann True, dann True\")\nfuhrpark = [\"lkw\", \"jeep\", \"bus\"]\nprint(\"lkw\" or \"jeep\" in fuhrpark)\nprint(\"lkw\" in fuhrpark or \"jeep\" in fuhrpark)\nprint(\"lkw\" in fuhrpark and \"jeep\" in fuhrpark)"
+    }
+   ]
+  },
+  {
+   "titel": "Vertiefungsaufgaben",
+   "python": {
+    "text": "Weitere vertiefungsaufgaben aus dem Python-Crashkurs (Tag 2 und 3). Schreibe jede Aufgabe in eine eigene Datei und führe sie aus."
+   },
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Von, bis und in Kleinschreibung",
+     "aufgabe": "Geprüft werden soll, ob eine Person zwischen 18 und 30 Jahre alt ist und den Dienstgrad Feldwebel hat. Die Vorgabe versucht das in der Schreibweise aus der gesprochenen Sprache und startet deshalb nicht; die Dienstgradprüfung darunter läuft zwar, antwortet aber falsch. Repariere beides, schreibe die Altersprüfung zusätzlich in der verketteten Kurzform auf und gib zum Schluss das Gesamtergebnis in einem Satz aus. Fertig, wenn: vier Zeilen erscheinen — dreimal True und darunter ein Satz, der auf passend: True endet.",
+     "tipp": "Hinter and beginnt immer eine neue, vollständige Bedingung — der Variablenname muss also noch einmal hingeschrieben werden. Für Bereiche gibt es zusätzlich eine Kurzform, bei der der Name in der Mitte steht. Und beim Dienstgrad gilt die Regel aus Aufgabe 3.1.05.",
+     "loesung": "alter = 24\ndienstgrad = \"Feldwebel\"\nprint(alter >= 18 and alter <= 30)\nprint(18 <= alter <= 30)\nprint(dienstgrad.lower() == \"feldwebel\")\npassend = 18 <= alter <= 30 and dienstgrad.lower() == \"feldwebel\"\nprint(f\"Alter {alter}, Dienstgrad {dienstgrad}, passend: {passend}\")"
+    },
+    {
+     "titel": "Jede Bedingung richtig, das Ergebnis falsch",
+     "aufgabe": "Die Vorgabe ist die Preisstaffel aus Aufgabe 3.2.04 mit denselben Grenzen und denselben Preisen. Sie läuft ohne Fehlermeldung durch und berechnet für das neunjährige Kind trotzdem einen falschen Preis. Finde die Ursache und repariere sie, ohne eine einzige Bedingung oder einen einzigen Preis zu ändern. Fertig, wenn: statt 12 Euro wieder 5 Euro ausgegeben wird und alle vier Zweige unverändert dieselben Grenzen tragen wie vorher.",
+     "tipp": "Prüfe die Zweige von oben nach unten, so wie Python es tut, und halte beim ersten Treffer an. Welcher Zweig fängt den Neunjährigen ab — und welcher hätte ihn abfangen sollen?",
+     "loesung": "alter = 9\nif alter < 6:\n    preis = 0\nelif alter < 18:\n    preis = 5\nelif alter < 65:\n    preis = 12\nelse:\n    preis = 8\nprint(f\"Der Eintritt kostet {preis} Euro.\")"
+    },
+    {
+     "titel": "Eine vollständige Meldung bauen",
+     "aufgabe": "Baue aus allem, was dieser Tag hergibt, eine kleine Auswertung für eine Bewerbung. Gegeben sind ein Name, die Dienstjahre und ein Wahrheitswert für einen belegten Lehrgang. Ermittle über eine elif-Kette die Stufe (ab 12 Jahren Stufe 3, ab 8 Stufe 2, ab 4 Stufe 1, sonst ohne Stufe) und gib Name, Dienstjahre und Stufe in einer Zeile aus. Melde danach über getrennte if den belegten Lehrgang und — nur wenn beides zusammenkommt — die erfüllten Voraussetzungen. Fertig, wenn: drei Zeilen erscheinen, die erste beginnt mit Jens Hartmann: und die letzte lautet Voraussetzungen fuer die Bewerbung erfuellt.",
+     "tipp": "Die Kette setzt nur eine Variable stufe; ausgegeben wird erst danach, mit einem f-String. Für die letzte Meldung müssen zwei Bedingungen zugleich gelten — dafür gibt es and aus Thema 1.",
+     "loesung": "name = \"Jens Hartmann\"\ndienstjahre = 14\nlehrgang = True\n\nif dienstjahre >= 12:\n    stufe = \"Stufe 3\"\nelif dienstjahre >= 8:\n    stufe = \"Stufe 2\"\nelif dienstjahre >= 4:\n    stufe = \"Stufe 1\"\nelse:\n    stufe = \"ohne Stufe\"\n\nprint(f\"{name}: {dienstjahre} Dienstjahre, {stufe}\")\n\nif lehrgang:\n    print(\"Lehrgang belegt\")\nif dienstjahre >= 12 and lehrgang:\n    print(\"Voraussetzungen fuer die Bewerbung erfuellt\")"
+    },
+    {
+     "titel": "Eine Teilnehmerliste pflegen",
+     "aufgabe": "Baue die Aufnahme eines neuen Teilnehmers in eine Kursliste. Der neue Name kommt groß geschrieben an, die Liste führt kleingeschriebene Namen. Nimm ihn nur auf, wenn er noch nicht darauf steht, und melde in beiden Fällen, was geschehen ist. Melde danach unabhängig davon, ob die Gruppe klein genug für einen Raum ist (nicht leer und unter fünf Personen) und ob beide Stammteilnehmer dabei sind. Gib zum Schluss die Liste selbst aus. Fertig, wenn: vier Zeilen erscheinen, die erste meldet die Aufnahme, die dritte beide Stammteilnehmer und die letzte zeigt eine Liste mit drei kleingeschriebenen Namen.",
+     "tipp": "Die Dublettenprüfung lautet if … not in …: und erst danach teilnehmer.append(…). Für die kleine Gruppe braucht es zwei Bedingungen mit and — die eine ist der Listenname allein, die andere ein Vergleich mit len().",
+     "loesung": "teilnehmer = [\"abel\", \"busch\"]\nneuer = \"Clausen\"\n\nif neuer.lower() not in teilnehmer:\n    teilnehmer.append(neuer.lower())\n    print(f\"{neuer} wurde aufgenommen.\")\nelse:\n    print(f\"{neuer} steht schon auf der Liste.\")\n\nif teilnehmer and len(teilnehmer) < 5:\n    print(f\"Kleine Gruppe mit {len(teilnehmer)} Teilnehmern, ein Raum genuegt.\")\n\nif \"abel\" in teilnehmer and \"busch\" in teilnehmer:\n    print(\"Beide Stammteilnehmer sind dabei.\")\n\nprint(teilnehmer)"
+    }
+   ]
   }
  ]
 }

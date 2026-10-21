@@ -165,7 +165,8 @@
      "titel": "Aus zwei Namen wird einer",
      "aufgabe": "Lege zwei Variablen an, eine für einen Vornamen und eine für einen Nachnamen. Setze beide in einer dritten Variablen zu einem vollständigen Namen zusammen und gib nur diese dritte Variable aus. Zwischen Vor- und Nachname gehört genau ein Leerzeichen. Fertig, wenn: Marie Curie in einer Zeile steht — mit Lücke, nicht MarieCurie.",
      "tipp": "Rechts vom = darf stehen, was bereits bekannt ist, auch andere Variablen. Das Pluszeichen hängt Texte aneinander, fügt aber nichts hinzu, was nicht dasteht.",
-     "loesung": "vorname = \"marie\"\nNachname = \"curie\"\nganzer_name = f\"{vorname} {Nachname}\"\nprint(\"Hallo , \" + vorname + \" \" + nachname + \"!\")\nprint(ganzer_name.title())"
+     "loesung": "vorname = \"marie\"\nnachname = \"curie\"\nganzer_name = f\"{vorname} {nachname}\"\nprint(ganzer_name.title())",
+     "vorgabe": "vorname = \"marie\"\nNachname = \"curie\"\nganzer_name = f\"{vorname} {Nachname}\"\nprint(\"Hallo , \" + vorname + \" \" + nachname + \"!\")\nprint(ganzer_name.title())"
     },
     {
      "titel": "Zahlen in Variablen",
@@ -218,7 +219,8 @@
      "titel": "Der Typ passt nicht",
      "aufgabe": "Die Vorgabe soll die Summe aus zwei Angaben ausgeben und bricht ab. Führe sie aus, lies die Meldung und bestimme für jeden der beiden Werte den Typ — zur Not mit einer zusätzlichen print(type(...))-Zeile. Repariere das Programm so, dass tatsächlich gerechnet wird. Fertig, wenn: die Zahl 8 ausgegeben wird, nicht 53 und keine Fehlermeldung.",
      "tipp": "Die Meldung nennt beide beteiligten Typen. Einer von beiden muss umgewandelt werden, bevor + etwas Sinnvolles tun kann — und zwar in die Richtung, in der am Ende gerechnet wird.",
-     "loesung": "anzahl_kartons = \"5\"\nzusatz = 3\nprint(anzahl_kartons + zusatz)"
+     "loesung": "anzahl_kartons = \"5\"\nzusatz = 3\n\nprint(type(anzahl_kartons), type(zusatz))\nprint(int(anzahl_kartons) + zusatz)",
+     "vorgabe": "anzahl_kartons = \"5\"\nzusatz = 3\nprint(anzahl_kartons + zusatz)"
     }
    ]
   },
