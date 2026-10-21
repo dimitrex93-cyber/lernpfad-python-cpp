@@ -33,7 +33,7 @@
   {
    "titel": "Pflichtaufgaben",
    "python": {
-    "text": "Weitere pflichtaufgaben aus dem Python-Crashkurs (Tag 2 und 3). Schreibe jede Aufgabe in eine eigene Datei und führe sie aus."
+    "text": "Weitere Pflichtaufgaben aus dem Python-Crashkurs (Tag 2 und 3). Schreibe jede Aufgabe in eine eigene Datei und führe sie aus."
    },
    "aufgaben_pflicht": [
     {
@@ -305,7 +305,7 @@
   {
    "titel": "Vertiefungsaufgaben",
    "python": {
-    "text": "Weitere vertiefungsaufgaben aus dem Python-Crashkurs (Tag 2 und 3). Schreibe jede Aufgabe in eine eigene Datei und führe sie aus."
+    "text": "Weitere Vertiefungsaufgaben aus dem Python-Crashkurs (Tag 2 und 3). Schreibe jede Aufgabe in eine eigene Datei und führe sie aus."
    },
    "aufgaben_vertiefung": [
     {
