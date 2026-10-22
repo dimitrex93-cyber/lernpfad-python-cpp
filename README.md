@@ -88,7 +88,7 @@ Inhalte nutzen und denselben Fortschritt teilen:
 Seit v1.0.0 hat jede Sprache einen **eigenen Reiter** – kein Hin und Her mehr
 zwischen zwei Sprachen in einem Abschnitt.
 
-- **🐍 Python-Kurs** (`tools/python_kurs/`): 19 Kapitel, 196 Abschnitte. Die Kapitel 2–9 enthalten zusätzlich **220 Übungsaufgaben** (Pflicht und Vertiefung) aus dem Python-Crashkurs (Tag 1–4) – mit Tipp, teils fehlerhafter Vorgabe und Lösung zum Aufklappen. **158 Aufgaben haben eine Lösung** aus den offiziellen Lösungssammlungen; die 62 Aufgaben zu Tag 4 warten noch darauf.
+- **🐍 Python-Kurs** (`tools/python_kurs/`): **20 Kapitel, 199 Abschnitte**. Die Kapitel 2–9 enthalten zusätzlich **238 Übungsaufgaben** aus dem Python-Crashkurs (Tag 1–4) – **alle mit Lösung** aus den offiziellen Lösungssammlungen, 74 davon mit fehlerhafter Vorgabe zum Reparieren. Kapitel 20 ist das mehrteilige Projekt „Lernkarten-Trainer" (Stufe 1 und 2, je Schritt mit Lösung).
 - **⚙️ C++-Kurs** (`tools/cpp_kurs/`): 19 Kapitel, 121 Abschnitte, **49 Pflicht- und 22 Vertiefungsaufgaben** – jede mit vollständiger, unter g++ -std=c++17 -Wall -Wextra warnungsfrei kompilierter Lösung. Themen, die nur Python betreffen (f-Strings, Listenmethoden), fehlen hier bewusst statt mit einer Notlösung gefüllt zu werden.
 - Beide Kurse in einfacher Sprache ([STIL.md](STIL.md): „Einfach erklärt“), je Abschnitt Erklärung, Code und Merksatz; Checklisten und Aufgaben als eigene Kästen.
 - Mit **Glossar** der wichtigsten Begriffe (149 Einträge, `tools/sprachkurs/glossar.json`).

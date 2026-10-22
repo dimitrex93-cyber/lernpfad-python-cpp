@@ -581,124 +581,146 @@
     {
      "titel": "Der erste Datensatz",
      "aufgabe": "Lege einen Personaldatensatz mit drei Angaben an: Name, Dienstgrad und Einheit. Jede Angabe soll eine eigene Beschriftung tragen, damit später erkennbar bleibt, was sie bedeutet. Gib zuerst den gesamten Datensatz aus und darunter die Zahl seiner Einträge. Fertig, wenn: eine Zeile mit geschweiften Klammern erscheint und darunter die Zahl 3.",
-     "tipp": "Geschweifte Klammern außen, zwischen Beschriftung und Wert ein Doppelpunkt, zwischen zwei Paaren ein Komma. Wie viele Paare es geworden sind, beantwortet len() — dieselbe Funktion wie bei der Liste."
+     "tipp": "Geschweifte Klammern außen, zwischen Beschriftung und Wert ein Doppelpunkt, zwischen zwei Paaren ein Komma. Wie viele Paare es geworden sind, beantwortet len() — dieselbe Funktion wie bei der Liste.",
+     "loesung": "ausweis = {'name': 'Jens Hartmann', 'dienstgrad': 'Hauptfeldwebel', 'einheit': 'Logistik'}\nprint(ausweis)\nprint(len(ausweis))"
     },
     {
      "titel": "Zahlen als Beschriftung",
      "aufgabe": "Erfasse eine Spindbelegung: Zu jeder Spindnummer gehört ein Nachname. Spind 12 gehört Hartmann, Spind 27 gehört Beck, Spind 103 gehört Kraus; die Nummern sollen genau so im Programm stehen, nicht als Text. Gib die Nachnamen zu Spind 27 und 103 einzeln aus, dann die Zahl der belegten Spinde und zum Schluss den Satz Spind 12 gehoert Hartmann. Fertig, wenn: vier Zeilen erscheinen und die dritte die Zahl 3 ist, obwohl die größte Nummer 103 lautet.",
-     "tipp": "Auch Zahlen dürfen Schlüssel sein, solange sie eine eigene Bedeutung haben und keine fortlaufende Position sind. In den eckigen Klammern steht die Nummer dann ohne Anführungszeichen."
+     "tipp": "Auch Zahlen dürfen Schlüssel sein, solange sie eine eigene Bedeutung haben und keine fortlaufende Position sind. In den eckigen Klammern steht die Nummer dann ohne Anführungszeichen.",
+     "loesung": "spinde = {12: 'Hartmann', 27: 'Beck', 103: 'Kraus'}\nprint(spinde[27])\nprint(spinde[103])\nprint(len(spinde))\nprint(f\"Spind 12 gehoert {spinde[12]}.\")"
     },
     {
      "titel": "Nachsehen, ohne abzustürzen",
      "aufgabe": "Lege einen Datensatz mit Name und Dienstgrad an — eine Telefonnummer ist nicht erfasst. Frage nacheinander den Dienstgrad ab, dann die fehlende Telefonnummer, und dann die Telefonnummer noch einmal so, dass statt eines Leerwerts der Text nicht hinterlegt erscheint. Gib zum Schluss den Datensatz selbst aus. Fertig, wenn: vier Zeilen erscheinen, in der zweiten None steht und die letzte weiterhin nur zwei Paare zeigt.",
-     "tipp": "Die Methode heißt .get() und nimmt — weil sie eine Methode ist — runde Klammern. Ein zweiter Wert in diesen Klammern ist der Ersatz für den Fall, dass es den Schlüssel nicht gibt."
+     "tipp": "Die Methode heißt .get() und nimmt — weil sie eine Methode ist — runde Klammern. Ein zweiter Wert in diesen Klammern ist der Ersatz für den Fall, dass es den Schlüssel nicht gibt.",
+     "loesung": "ausweis = {'name': 'Jens Hartmann', 'dienstgrad': 'Hauptfeldwebel'}\nprint(ausweis.get('dienstgrad'))\nprint(ausweis.get('telefon'))\nprint(ausweis.get('telefon', 'nicht hinterlegt'))\nprint(ausweis)"
     },
     {
      "titel": "Zwei Datensätze vergleichen",
      "aufgabe": "Zwei Personaldatensätze aus der Vorgabe führen je einen Namen und die Dienstjahre. Gib zu jedem eine Zeile nach dem Muster Hartmann: 14 Dienstjahre aus. Vergleiche danach die beiden Dienstjahrzahlen und melde in einer dritten Zeile, wer länger dabei ist und um wie viele Jahre — nach dem Muster Hartmann ist laenger dabei, und zwar um 8 Jahre. Der Unterschied darf nicht von Hand ausgerechnet im Programm stehen. Fertig, wenn: drei Zeilen erscheinen und die dritte Hartmann ist laenger dabei, und zwar um 8 Jahre. lautet.",
      "tipp": "Ein Zugriff mit eckigen Klammern liefert den reinen Wert — und mit reinen Werten lässt sich alles tun, was du schon kennst: vergleichen, abziehen, in einen f-String setzen. In der Bedingung hinter if stehen deshalb zwei solche Zugriffe nebeneinander.",
-     "vorgabe": "hartmann = {'name': 'Hartmann', 'dienstjahre': 14}\nkessler = {'name': 'Kessler', 'dienstjahre': 6}"
+     "vorgabe": "hartmann = {'name': 'Hartmann', 'dienstjahre': 14}\nkessler = {'name': 'Kessler', 'dienstjahre': 6}",
+     "loesung": "hartmann = {'name': 'Hartmann', 'dienstjahre': 14}\nkessler = {'name': 'Kessler', 'dienstjahre': 6}\nprint(f\"{hartmann['name']}: {hartmann['dienstjahre']} Dienstjahre\")\nprint(f\"{kessler['name']}: {kessler['dienstjahre']} Dienstjahre\")\nif hartmann['dienstjahre'] > kessler['dienstjahre']:\n    unterschied = hartmann['dienstjahre'] - kessler['dienstjahre']\n    print(f\"{hartmann['name']} ist laenger dabei, und zwar um {unterschied} Jahre.\")\nelse:\n    unterschied = kessler['dienstjahre'] - hartmann['dienstjahre']\n    print(f\"{kessler['name']} ist laenger dabei, und zwar um {unterschied} Jahre.\")"
     },
     {
      "titel": "Ein Fahrauftrag wird ausgewertet",
      "aufgabe": "Der Fahrauftrag aus der Vorgabe hält Fahrzeug, Fahrer, Ziel und die gefahrenen Kilometer. Gib vier Zeilen aus: erst einen Satz nach dem Muster Lkw 7 faehrt mit Hartmann nach Munster., dann bei mehr als 100 Kilometern Lange Fahrt: Pause einplanen. und sonst Kurze Fahrt., dann die Restkilometer bis zum Tageslimit von 200 nach dem Muster Bis zum Tageslimit bleiben 58 km., und zuletzt 4 Angaben erfasst. Weder die 58 noch die 4 dürfen als Zahl im Programm stehen. Fertig, wenn: vier Zeilen erscheinen, die dritte Bis zum Tageslimit bleiben 58 km. und die vierte 4 Angaben erfasst. lautet.",
      "tipp": "Drei verschiedene Fragen an denselben Datensatz: In der ersten Zeile werden drei Fächer gelesen, in der Bedingung eines, und in der letzten Zeile wird gar kein Fach geöffnet, sondern das Regal selbst gezählt. Eine Rechnung darf dabei mitten im f-String stehen.",
-     "vorgabe": "auftrag = {'fahrzeug': 'Lkw 7', 'fahrer': 'Hartmann', 'ziel': 'Munster', 'km': 142}"
+     "vorgabe": "auftrag = {'fahrzeug': 'Lkw 7', 'fahrer': 'Hartmann', 'ziel': 'Munster', 'km': 142}",
+     "loesung": "auftrag = {'fahrzeug': 'Lkw 7', 'fahrer': 'Hartmann', 'ziel': 'Munster', 'km': 142}\nprint(f\"{auftrag['fahrzeug']} faehrt mit {auftrag['fahrer']} nach {auftrag['ziel']}.\")\nif auftrag['km'] > 100:\n    print(\"Lange Fahrt: Pause einplanen.\")\nelse:\n    print(\"Kurze Fahrt.\")\nprint(f\"Bis zum Tageslimit bleiben {200 - auftrag['km']} km.\")\nprint(f\"{len(auftrag)} Angaben erfasst.\")"
     },
     {
      "titel": "Reparatur — das Feld, das es nicht gibt",
      "aufgabe": "Die Vorgabe soll einen Datensatz prüfen und dabei drei Zeilen ausgeben. Sie bricht stattdessen nach der ersten Zeile ab. Führe sie zuerst unverändert aus, lies die letzte Zeile der Fehlermeldung, und ändere dann genau die eine Zeile, die den Abbruch auslöst — ohne den Datensatz zu erweitern. Fehlt die Telefonnummer, soll nicht hinterlegt erscheinen. Fertig, wenn: drei Zeilen erscheinen, die zweite nicht hinterlegt lautet und die dritte wieder Datensatz geprueft ist.",
      "tipp": "Die Fehlermeldung wird von unten nach oben gelesen: Die letzte Zeile nennt die Art des Fehlers und dahinter den Schlüssel, der gesucht und nicht gefunden wurde. Für optionale Felder gibt es den zweiten, sanfteren Zugriffsweg aus diesem Thema.",
-     "vorgabe": "ausweis = {'name': 'Jens Hartmann', 'dienstgrad': 'Hauptfeldwebel', 'standort': 'Munster'}\nprint(ausweis['name'])\nprint(ausweis['telefon'])\nprint(\"Datensatz geprueft\")"
+     "vorgabe": "ausweis = {'name': 'Jens Hartmann', 'dienstgrad': 'Hauptfeldwebel', 'standort': 'Munster'}\nprint(ausweis['name'])\nprint(ausweis['telefon'])\nprint(\"Datensatz geprueft\")",
+     "loesung": "ausweis = {'name': 'Jens Hartmann', 'dienstgrad': 'Hauptfeldwebel', 'standort': 'Munster'}\nprint(ausweis['name'])\nprint(ausweis.get('telefon', 'nicht hinterlegt'))\nprint(\"Datensatz geprueft\")"
     },
     {
      "titel": "Vorhersage — ein Schlüssel kommt doppelt vor",
      "aufgabe": "Unten steht ein Programm, in dem derselbe Schlüssel zweimal geschrieben wurde. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für alle sechs Ausgabezeilen. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Achte besonders auf die zweite Zeile und auf die letzte. Fertig, wenn: nach deiner Vorhersagezeile sechs Zeilen folgen, die zweite davon 2 lautet und die letzte dasselbe zeigt wie die erste.",
      "tipp": "Jeder Schlüssel kommt in einem Dictionary genau einmal vor — Python meldet keinen Fehler, wenn man es zweimal hinschreibt. Überlege, welcher der beiden Werte gewinnt und an welcher Stelle das Fach danach steht.",
-     "vorgabe": "dienstposten = {'rolle': 'Kraftfahrer', 'rolle': 'Disponent', 'standort': 'Munster'}\nprint(dienstposten)\nprint(len(dienstposten))\nprint(dienstposten.get('rolle'))\nprint(dienstposten.get('fahrerlaubnis'))\nprint(dienstposten.get('fahrerlaubnis', 'keine Angabe'))\nprint(dienstposten)"
+     "vorgabe": "dienstposten = {'rolle': 'Kraftfahrer', 'rolle': 'Disponent', 'standort': 'Munster'}\nprint(dienstposten)\nprint(len(dienstposten))\nprint(dienstposten.get('rolle'))\nprint(dienstposten.get('fahrerlaubnis'))\nprint(dienstposten.get('fahrerlaubnis', 'keine Angabe'))\nprint(dienstposten)",
+     "loesung": "print(\"Erwartet: ein Paar faellt weg, dann 2, Disponent, None, keine Angabe, Dictionary unveraendert\")\ndienstposten = {'rolle': 'Kraftfahrer', 'rolle': 'Disponent', 'standort': 'Munster'}\nprint(dienstposten)\nprint(len(dienstposten))\nprint(dienstposten.get('rolle'))\nprint(dienstposten.get('fahrerlaubnis'))\nprint(dienstposten.get('fahrerlaubnis', 'keine Angabe'))\nprint(dienstposten)"
     },
     {
      "titel": "Ein Feld dazu, ein Feld geändert",
      "aufgabe": "Beginne mit einem Datensatz aus Name und Standort. Gib ihn aus, ergänze dann einen Dienstgrad, ändere den Standort und gib den Datensatz erneut aus. Zum Schluss soll die Zahl der Einträge erscheinen. Achte in der zweiten Ausgabe darauf, an welcher Stelle die beiden Änderungen gelandet sind. Fertig, wenn: drei Zeilen erscheinen, die letzte 3 lautet und der neue Dienstgrad in der zweiten Zeile hinten steht.",
-     "tipp": "Für „neu anlegen\" und für „überschreiben\" gibt es denselben Befehl: die Zuweisung mit =. Welche der beiden Wirkungen eintritt, entscheidet Python allein anhand des Schlüssels."
+     "tipp": "Für „neu anlegen\" und für „überschreiben\" gibt es denselben Befehl: die Zuweisung mit =. Welche der beiden Wirkungen eintritt, entscheidet Python allein anhand des Schlüssels.",
+     "loesung": "ausweis = {'name': 'Jens Hartmann', 'standort': 'Munster'}\nprint(ausweis)\nausweis['dienstgrad'] = 'Hauptfeldwebel'\nausweis['standort'] = 'Dortmund'\nprint(ausweis)\nprint(len(ausweis))"
     },
     {
      "titel": "Zugang und Abgang verbuchen",
      "aufgabe": "Ein Fahrzeugbestand führt 3 Lkw, 7 Jeeps und 1 Bus. Erhöhe die Zahl der Jeeps um zwei und verringere die der Busse um eins, ohne die neuen Zahlen selbst auszurechnen und hinzuschreiben. Gib danach den gesamten Bestand aus und zusätzlich eine Satzzeile mit der neuen Jeep-Zahl. Fertig, wenn: zwei Zeilen erscheinen, im Dictionary 'jeep': 9 und 'bus': 0 stehen und die zweite Zeile Jeeps jetzt: 9 lautet.",
-     "tipp": "Rechts vom Gleichheitszeichen darf derselbe Zugriff noch einmal stehen. Gelesen wird so eine Zeile von rechts nach links: erst rechnen, dann ins Fach legen."
+     "tipp": "Rechts vom Gleichheitszeichen darf derselbe Zugriff noch einmal stehen. Gelesen wird so eine Zeile von rechts nach links: erst rechnen, dann ins Fach legen.",
+     "loesung": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nbestand['jeep'] = bestand['jeep'] + 2\nbestand['bus'] = bestand['bus'] - 1\nprint(bestand)\nprint(f\"Jeeps jetzt: {bestand['jeep']}\")"
     },
     {
      "titel": "Zwei Arten, etwas herauszunehmen",
      "aufgabe": "Ein Lagerbestand führt 24 Helme, 18 Westen und 31 Paar Stiefel. Nimm die Westen so heraus, dass ihre Stückzahl danach noch zur Verfügung steht, und gib diese Zahl aus. Entferne die Helme anschließend ersatzlos. Gib nach jedem Schritt den Bestand aus und zum Schluss die Zahl der verbliebenen Posten. Fertig, wenn: vier Zeilen erscheinen: erst 18, dann zwei Dictionaries mit abnehmender Länge und zuletzt die Zahl 1.",
-     "tipp": "Beide Wege entfernen das Paar vollständig. Der Unterschied liegt darin, ob der Wert dabei zurückgegeben wird und sich in einer Variablen auffangen lässt."
+     "tipp": "Beide Wege entfernen das Paar vollständig. Der Unterschied liegt darin, ob der Wert dabei zurückgegeben wird und sich in einer Variablen auffangen lässt.",
+     "loesung": "lager = {'helm': 24, 'weste': 18, 'stiefel': 31}\nentnommen = lager.pop('weste')\nprint(entnommen)\nprint(lager)\ndel lager['helm']\nprint(lager)\nprint(len(lager))"
     },
     {
      "titel": "Ausbuchen, bis nichts mehr da ist",
      "aufgabe": "Der Fahrzeugbestand und die drei Ausbuchungen aus der Vorgabe sind gegeben. Gehe die Ausbuchungen der Reihe nach durch. Ist die Kategorie erfasst, ziehe ein Fahrzeug ab und melde bus ausgebucht, Rest: 0. Steht danach eine Null im Fach, entferne den Posten ganz und melde bus ist jetzt nicht mehr erfasst. Ist die Kategorie gar nicht mehr erfasst, melde bus ist nicht erfasst. Gib zum Schluss den Bestand aus. Fertig, wenn: fünf Zeilen erscheinen, die dritte bus ist nicht erfasst lautet und die letzte {'lkw': 3, 'jeep': 6} zeigt.",
      "tipp": "Im Rumpf der Schleife stecken zwei Entscheidungen ineinander: die äußere fragt mit in, ob es das Fach überhaupt gibt, die innere fragt nach dem Abziehen, ob der Wert jetzt null ist. Das del gehört in die innere — und weil es das Fach entfernt, greift beim nächsten Durchgang der else-Zweig der äußeren.",
-     "vorgabe": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nausbuchungen = ['bus', 'bus', 'jeep']"
+     "vorgabe": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nausbuchungen = ['bus', 'bus', 'jeep']",
+     "loesung": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nausbuchungen = ['bus', 'bus', 'jeep']\nfor teil in ausbuchungen:\n    if teil in bestand:\n        bestand[teil] = bestand[teil] - 1\n        print(f\"{teil} ausgebucht, Rest: {bestand[teil]}\")\n        if bestand[teil] == 0:\n            del bestand[teil]\n            print(f\"{teil} ist jetzt nicht mehr erfasst\")\n    else:\n        print(f\"{teil} ist nicht erfasst\")\nprint(bestand)"
     },
     {
      "titel": "Spinde der Reihe nach vergeben",
      "aufgabe": "Die drei Namen aus der Vorgabe sollen Spinde bekommen, beginnend bei Nummer 10. Stelle ein leeres Dictionary auf und trage in einer Schleife zu jedem Namen die nächste Spindnummer als Schlüssel ein — die Nummern stehen nicht im Programm, sondern werden hochgezählt. Gib danach das gefüllte Dictionary aus, darunter die Zahl der vergebenen Spinde, und prüfe zum Schluss, ob Spind 11 belegt ist: wenn ja die Zeile Spind 11: Beck, sonst Spind 11 ist frei. Fertig, wenn: drei Zeilen erscheinen: {10: 'Hartmann', 11: 'Beck', 12: 'Kraus'}, die Zahl 3 und Spind 11: Beck.",
      "tipp": "Zwei Dinge laufen gleichzeitig: Die Schleife geht die Namen durch, und eine eigene Variable zählt die Spindnummern hoch. Diese Variable wird vor der Schleife auf 10 gesetzt und am Ende jedes Durchgangs um eins erhöht. In den eckigen Klammern steht dann der Variablenname, nicht eine hingeschriebene Zahl.",
-     "vorgabe": "namen = ['Hartmann', 'Beck', 'Kraus']"
+     "vorgabe": "namen = ['Hartmann', 'Beck', 'Kraus']",
+     "loesung": "namen = ['Hartmann', 'Beck', 'Kraus']\nspinde = {}\nnummer = 10\nfor name in namen:\n    spinde[nummer] = name\n    nummer = nummer + 1\nprint(spinde)\nprint(len(spinde))\nif 11 in spinde:\n    print(f\"Spind 11: {spinde[11]}\")\nelse:\n    print(\"Spind 11 ist frei\")"
     },
     {
      "titel": "Vorhersage — wonach `in` eigentlich fragt",
      "aufgabe": "Unten stehen fünf Prüfungen an einem Lagerbestand. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für alle fünf Ergebnisse. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Die vierte und die fünfte Zeile fragen beide nach der Zahl 24 und sind trotzdem nicht dasselbe. Fertig, wenn: nach deiner Vorhersagezeile fünf Wahrheitswerte folgen und die vierte Zeile False lautet, obwohl 24 im Bestand vorkommt.",
      "tipp": "Bei der Liste prüft in die Elemente. Überlege, was beim Dictionary die Entsprechung dazu ist — die Aufschrift des Fachs oder sein Inhalt.",
-     "vorgabe": "lager = {'helm': 24, 'weste': 18}\nprint('helm' in lager)\nprint('stiefel' in lager)\nprint('stiefel' not in lager)\nprint(24 in lager)\nprint(24 in lager.values())"
+     "vorgabe": "lager = {'helm': 24, 'weste': 18}\nprint('helm' in lager)\nprint('stiefel' in lager)\nprint('stiefel' not in lager)\nprint(24 in lager)\nprint(24 in lager.values())",
+     "loesung": "print(\"Erwartet: True, False, True, dann zweimal die Frage nach dem Wert 24\")\nlager = {'helm': 24, 'weste': 18}\nprint('helm' in lager)\nprint('stiefel' in lager)\nprint('stiefel' not in lager)\nprint(24 in lager)\nprint(24 in lager.values())"
     },
     {
      "titel": "Reparatur — ausbuchen, was nicht da ist",
      "aufgabe": "Die Vorgabe soll einen Posten ausbuchen und danach den Bestand zeigen. Sie bricht ab, bevor überhaupt etwas ausgegeben wird. Führe sie zuerst unverändert aus und lies die Fehlermeldung. Baue sie dann so um, dass sie in beiden Fällen eine sinnvolle Meldung ausgibt — wenn der Posten da ist und wenn er fehlt. Fertig, wenn: zwei Zeilen erscheinen: erst handschuhe sind gar nicht erfasst, dann der unveränderte Bestand mit drei Paaren.",
      "tipp": "Die Fehlermeldung ist dieselbe wie beim Lesen eines unbekannten Schlüssels — auch das Entfernen verlangt ein Fach, das es gibt. Die Abhilfe steht im Abschnitt über in: vorher nachsehen und beide Fälle behandeln.",
-     "vorgabe": "lager = {'helm': 24, 'weste': 18, 'stiefel': 31}\ndel lager['handschuhe']\nprint(lager)"
+     "vorgabe": "lager = {'helm': 24, 'weste': 18, 'stiefel': 31}\ndel lager['handschuhe']\nprint(lager)",
+     "loesung": "lager = {'helm': 24, 'weste': 18, 'stiefel': 31}\nif 'handschuhe' in lager:\n    del lager['handschuhe']\n    print(\"handschuhe ausgebucht\")\nelse:\n    print(\"handschuhe sind gar nicht erfasst\")\nprint(lager)"
     },
     {
      "titel": "Jedes Paar einmal ausgeben",
      "aufgabe": "Ein Fahrzeugbestand führt 3 Lkw, 7 Jeeps und 1 Bus. Gib zu jeder Kategorie eine Zeile aus, in der die Bezeichnung und die Zahl durch einen Doppelpunkt getrennt stehen. Die Bezeichnungen dürfen im Schleifenteil nicht einzeln hingeschrieben werden. Fertig, wenn: drei Zeilen erscheinen, beginnend mit lkw: 3.",
-     "tipp": "Werden Aufschrift und Inhalt gleichzeitig gebraucht, ist .items() die richtige Ansicht. Hinter for stehen dann zwei Namen, durch ein Komma getrennt."
+     "tipp": "Werden Aufschrift und Inhalt gleichzeitig gebraucht, ist .items() die richtige Ansicht. Hinter for stehen dann zwei Namen, durch ein Komma getrennt.",
+     "loesung": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nfor fahrzeug, anzahl in bestand.items():\n    print(f\"{fahrzeug}: {anzahl}\")"
     },
     {
      "titel": "Alles zusammenzählen",
      "aufgabe": "Ein Lagerbestand führt 24 Helme, 18 Westen und 31 Paar Stiefel. Ermittle die Gesamtzahl aller Teile, ohne die Zahlen selbst zu addieren, und gib sie aus. Gib darunter die Zahl der Posten aus und zum Schluss eine Zeile, in der beide Zahlen in einem Satz stehen. Fertig, wenn: drei Zeilen erscheinen: 73, 3 und 73 Teile in 3 Kategorien.",
-     "tipp": "Hier zählt nur der Inhalt der Fächer, nicht die Aufschrift — dafür gibt es .values(). Eine Summe braucht vor der Schleife einen Startwert, der bei null beginnt."
+     "tipp": "Hier zählt nur der Inhalt der Fächer, nicht die Aufschrift — dafür gibt es .values(). Eine Summe braucht vor der Schleife einen Startwert, der bei null beginnt.",
+     "loesung": "bestand = {'helm': 24, 'weste': 18, 'stiefel': 31}\ngesamt = 0\nfor anzahl in bestand.values():\n    gesamt = gesamt + anzahl\nprint(gesamt)\nprint(len(bestand))\nprint(f\"{gesamt} Teile in {len(bestand)} Kategorien\")"
     },
     {
      "titel": "In alphabetischer Ordnung ausgeben",
      "aufgabe": "Gib den Lagerbestand aus Aufgabe 6.3.02 noch einmal aus, diesmal nach den Bezeichnungen sortiert, mit Bezeichnung und Stückzahl in einer Zeile. Gib danach das Dictionary selbst aus und sieh dir an, ob sich dort etwas verändert hat. Fertig, wenn: drei sortierte Zeilen erscheinen, beginnend mit helm: 24, und die vierte Zeile das Dictionary in der ursprünglichen Reihenfolge zeigt.",
-     "tipp": "sorted() aus Bereich 4 arbeitet auch mit den Schlüsseln eines Dictionarys. Den Wert holt man sich im Schleifenrumpf weiterhin über den Schlüssel."
+     "tipp": "sorted() aus Bereich 4 arbeitet auch mit den Schlüsseln eines Dictionarys. Den Wert holt man sich im Schleifenrumpf weiterhin über den Schlüssel.",
+     "loesung": "bestand = {'helm': 24, 'weste': 18, 'stiefel': 31}\nfor teil in sorted(bestand.keys()):\n    print(f\"{teil}: {bestand[teil]}\")\nprint(bestand)"
     },
     {
      "titel": "Eine Entscheidung je Durchgang",
      "aufgabe": "Drei Standorte sind mit ihrer Fahrzeugzahl erfasst: Munster 4, Dortmund 1, Koeln 9. Gib zu jedem Standort eine Zeile aus, die ihn als einsatzbereit meldet, wenn mehr als drei Fahrzeuge dort stehen, und sonst Verstärkung anfordert. In beiden Fällen sollen der Standortname mit großem Anfangsbuchstaben und die Zahl in Klammern erscheinen. Fertig, wenn: drei Zeilen erscheinen und genau die mittlere Verstaerkung noetig (1) enthält.",
-     "tipp": "Innerhalb der Schleife sind die beiden Namen ganz gewöhnliche Variablen — alles, was mit Variablen geht, geht damit: Vergleiche, if/else, f-Strings und Methoden wie .title()."
+     "tipp": "Innerhalb der Schleife sind die beiden Namen ganz gewöhnliche Variablen — alles, was mit Variablen geht, geht damit: Vergleiche, if/else, f-Strings und Methoden wie .title().",
+     "loesung": "standorte = {'munster': 4, 'dortmund': 1, 'koeln': 9}\nfor ort, fahrzeuge in standorte.items():\n    if fahrzeuge > 3:\n        print(f\"{ort.title()}: einsatzbereit ({fahrzeuge})\")\n    else:\n        print(f\"{ort.title()}: Verstaerkung noetig ({fahrzeuge})\")"
     },
     {
      "titel": "Die schwachen Standorte sammeln",
      "aufgabe": "Vier Standorte sind mit ihrer Fahrzeugzahl erfasst: Munster 4, Dortmund 1, Koeln 9, Kiel 2. Gehe sie in einer Schleife durch und sammle die Namen aller Standorte mit weniger als drei Fahrzeugen in einer zunächst leeren Liste, jeweils mit großem Anfangsbuchstaben. Gib danach diese Liste aus und darunter die Zeile 2 von 4 Standorten brauchen Verstaerkung. Beide Zahlen darin werden gezählt, nicht hingeschrieben. Fertig, wenn: zwei Zeilen erscheinen: ['Dortmund', 'Kiel'] und 2 von 4 Standorten brauchen Verstaerkung.",
      "tipp": "Die Sammelliste wird vor der Schleife angelegt, gefüllt wird sie im if-Zweig mit .append(). Am Ende beantworten zwei len()-Aufrufe die Frage nach beiden Zahlen — einer für die Liste, einer für das Dictionary.",
-     "vorgabe": "standorte = {'munster': 4, 'dortmund': 1, 'koeln': 9, 'kiel': 2}"
+     "vorgabe": "standorte = {'munster': 4, 'dortmund': 1, 'koeln': 9, 'kiel': 2}",
+     "loesung": "standorte = {'munster': 4, 'dortmund': 1, 'koeln': 9, 'kiel': 2}\nschwach = []\nfor ort, fahrzeuge in standorte.items():\n    if fahrzeuge < 3:\n        schwach.append(ort.title())\nprint(schwach)\nprint(f\"{len(schwach)} von {len(standorte)} Standorten brauchen Verstaerkung.\")"
     },
     {
      "titel": "Soll und Ist nebeneinanderlegen",
      "aufgabe": "Zwei Dictionaries aus der Vorgabe führen dieselben drei Posten: das eine den Sollbestand, das andere den tatsächlichen. Gehe den Sollbestand in einer Schleife durch und hole dir zu jedem Posten den Istwert aus dem zweiten Dictionary. Gib je Posten eine Zeile aus: helm: 6 fehlen, wenn zu wenig da ist, stiefel: 1 zu viel, wenn zu viel da ist, und weste: vollstaendig, wenn beide Zahlen gleich sind. Zähle dabei mit, wie viele Teile insgesamt fehlen, und melde das zum Schluss als Insgesamt fehlen 6 Teile. Fertig, wenn: vier Zeilen erscheinen und die letzte Insgesamt fehlen 6 Teile. lautet.",
      "tipp": "Die Schleife läuft nur über ein Dictionary; das zweite wird im Rumpf mit demselben Schlüssel abgefragt — in den eckigen Klammern steht dann die Schleifenvariable ohne Anführungszeichen. Drei Fälle brauchen if, elif und else, und der Zähler für die fehlenden Teile gehört in den ersten Zweig.",
-     "vorgabe": "soll = {'helm': 30, 'weste': 20, 'stiefel': 30}\nist = {'helm': 24, 'weste': 20, 'stiefel': 31}"
+     "vorgabe": "soll = {'helm': 30, 'weste': 20, 'stiefel': 30}\nist = {'helm': 24, 'weste': 20, 'stiefel': 31}",
+     "loesung": "soll = {'helm': 30, 'weste': 20, 'stiefel': 30}\nist = {'helm': 24, 'weste': 20, 'stiefel': 31}\nfehlend = 0\nfor teil, menge in soll.items():\n    vorhanden = ist[teil]\n    if vorhanden < menge:\n        print(f\"{teil}: {menge - vorhanden} fehlen\")\n        fehlend = fehlend + (menge - vorhanden)\n    elif vorhanden > menge:\n        print(f\"{teil}: {vorhanden - menge} zu viel\")\n    else:\n        print(f\"{teil}: vollstaendig\")\nprint(f\"Insgesamt fehlen {fehlend} Teile.\")"
     },
     {
      "titel": "Vorhersage — was die drei Ansichten liefern",
      "aufgabe": "Unten steht ein Programm, das dasselbe Dictionary auf sechs Arten ausgibt. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für alle sechs Zeilen. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Achte darauf, welche Klammernsorte jeweils erscheint und wo zusätzlich ein Wort vor der Klammer steht. Fertig, wenn: nach deiner Vorhersagezeile sechs Zeilen folgen, von denen drei mit dict_ beginnen und die letzte geschweifte Klammern zeigt.",
      "tipp": "Überlege für jede Zeile zwei Dinge: Kommen die Aufschriften, die Inhalte oder beides heraus — und in welcher Reihenfolge. Bei .items() hilft die Frage, wie Schlüssel und Wert zusammenbleiben können, wenn sie in einer Zeile stehen.",
-     "vorgabe": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nprint(bestand.keys())\nprint(bestand.values())\nprint(bestand.items())\nprint(sorted(bestand))\nprint(list(bestand))\nprint(bestand)"
+     "vorgabe": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nprint(bestand.keys())\nprint(bestand.values())\nprint(bestand.items())\nprint(sorted(bestand))\nprint(list(bestand))\nprint(bestand)",
+     "loesung": "print(\"Erwartet: erst die Schluessel, dann die Werte, dann die Paare, zuletzt zwei Listen und das Dictionary\")\nbestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nprint(bestand.keys())\nprint(bestand.values())\nprint(bestand.items())\nprint(sorted(bestand))\nprint(list(bestand))\nprint(bestand)"
     },
     {
      "titel": "Reparatur — die vergessenen Klammern",
      "aufgabe": "Die Vorgabe soll die drei Fahrzeugbezeichnungen untereinander ausgeben und bricht stattdessen ab, bevor eine einzige Zeile erscheint. Führe sie zuerst unverändert aus und lies die Fehlermeldung. Die Reparatur besteht aus zwei Zeichen. Fertig, wenn: drei Zeilen mit lkw, jeep und bus erscheinen.",
      "tipp": "Die Meldung sagt, dass etwas nicht durchlaufbar ist — und meint damit nicht das Dictionary, sondern das, was ohne Klammern hinter dem Punkt steht. Ein Aufruf braucht Klammern, auch wenn nichts darin steht.",
-     "vorgabe": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nfor fahrzeug in bestand.keys:\n    print(fahrzeug)"
+     "vorgabe": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nfor fahrzeug in bestand.keys:\n    print(fahrzeug)",
+     "loesung": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nfor fahrzeug in bestand.keys():\n    print(fahrzeug)"
     }
    ]
   },
@@ -744,25 +766,29 @@
      "titel": "Vollständigkeitsprüfung eines Datensatzes",
      "aufgabe": "Ein Personaldatensatz enthält Name, Dienstgrad und Standort. Eine Liste nennt fünf Felder, die eigentlich erfasst sein sollten. Gehe diese Liste durch und gib zu jedem Feld eine Zeile aus — entweder den Wert oder den Hinweis nicht hinterlegt. Zum Schluss soll eine Zeile melden, wie viele Felder tatsächlich erfasst sind und wie viele erwartet wurden. Das Programm darf an keiner Stelle abbrechen. Fertig, wenn: sechs Zeilen erscheinen, zwei davon mit nicht hinterlegt, und die letzte Erfasste Felder: 3 von 5 lautet.",
      "tipp": "Die Schleifenvariable ist in jedem Durchgang ein Text aus der Liste — und genau dieser Text ist der Schlüssel, der in die runden Klammern von .get() gehört. Dort steht dann ein Variablenname ohne Anführungszeichen, kein geschriebener Schlüssel.",
-     "vorgabe": "ausweis = {'name': 'Jens Hartmann', 'dienstgrad': 'Hauptfeldwebel', 'standort': 'Munster'}\nfelder = ['name', 'dienstgrad', 'standort', 'telefon', 'email']"
+     "vorgabe": "ausweis = {'name': 'Jens Hartmann', 'dienstgrad': 'Hauptfeldwebel', 'standort': 'Munster'}\nfelder = ['name', 'dienstgrad', 'standort', 'telefon', 'email']",
+     "loesung": "ausweis = {'name': 'Jens Hartmann', 'dienstgrad': 'Hauptfeldwebel', 'standort': 'Munster'}\nfelder = ['name', 'dienstgrad', 'standort', 'telefon', 'email']\nfor feld in felder:\n    print(f\"{feld}: {ausweis.get(feld, 'nicht hinterlegt')}\")\nprint(f\"Erfasste Felder: {len(ausweis)} von {len(felder)}\")"
     },
     {
      "titel": "Materialausgaben zählen",
      "aufgabe": "Eine Liste protokolliert sechs Materialausgaben, manche Teile kommen mehrfach vor. Zähle, wie oft jedes Teil ausgegeben wurde, und gib das Ergebnis als Dictionary aus. Darunter soll eine Zeile melden, wie viele Ausgaben insgesamt protokolliert wurden und wie viele verschiedene Teile dabei vorkamen. Die Teilenamen dürfen im Zählteil des Programms nicht hingeschrieben werden. Fertig, wenn: zwei Zeilen erscheinen: {'helm': 3, 'weste': 2, 'stiefel': 1} und darunter 6 Ausgaben, 3 verschiedene Teile.",
      "tipp": "Fange mit einem leeren Dictionary an und gehe die Liste mit einer for-Schleife durch. In jedem Durchgang ist genau eine Frage zu beantworten: Gibt es das Fach schon? Daraus folgt entweder „um eins erhöhen\" oder „mit 1 anlegen\".",
-     "vorgabe": "ausgaben = ['helm', 'weste', 'helm', 'stiefel', 'helm', 'weste']"
+     "vorgabe": "ausgaben = ['helm', 'weste', 'helm', 'stiefel', 'helm', 'weste']",
+     "loesung": "ausgaben = ['helm', 'weste', 'helm', 'stiefel', 'helm', 'weste']\nzaehler = {}\nfor teil in ausgaben:\n    if teil in zaehler:\n        zaehler[teil] = zaehler[teil] + 1\n    else:\n        zaehler[teil] = 1\nprint(zaehler)\nprint(f\"{len(ausgaben)} Ausgaben, {len(zaehler)} verschiedene Teile\")"
     },
     {
      "titel": "Reparatur — zwei Fehler, zwei Läufe",
      "aufgabe": "Die Vorgabe soll den Bestand alphabetisch sortiert ausgeben, je Zeile Bezeichnung und Zahl durch Doppelpunkt getrennt. Sie enthält zwei Fehler: einen, der das Programm abbrechen lässt, und einen, der stillschweigend das Falsche ausgibt. Repariere einen nach dem anderen, mit jeweils einem Lauf dazwischen. Fertig, wenn: drei Zeilen erscheinen, beginnend mit bus: 1, und nirgends runde Klammern oder Anführungszeichen in der Ausgabe stehen.",
      "tipp": "Fang mit dem Abbruch an: Ein Dictionary lässt sich nicht selbst umsortieren, es gibt nur eine sortierte Ansicht darauf. Der zweite Fehler zeigt sich erst danach in der Ausgabe — zwei Dinge auf einmal brauchen zwei Namen, oder man nimmt gleich die Ansicht, die nur die Aufschriften liefert.",
-     "vorgabe": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nbestand.sort()\nfor paar in bestand.items():\n    print(paar)"
+     "vorgabe": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nbestand.sort()\nfor paar in bestand.items():\n    print(paar)",
+     "loesung": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nfor fahrzeug in sorted(bestand.keys()):\n    print(f\"{fahrzeug}: {bestand[fahrzeug]}\")"
     },
     {
      "titel": "Gesamtstunden und Spitzenreiter",
      "aufgabe": "Vier Personen sind mit ihren Wochenstunden erfasst. Ermittle in einem einzigen Schleifendurchlauf zwei Dinge: die Summe aller Stunden und die Person mit den meisten Stunden. Gib beides in je einer Satzzeile aus, den Namen mit großem Anfangsbuchstaben. Zwei Personen haben dieselbe Höchstzahl — sieh dir an, welche davon gemeldet wird. Fertig, wenn: zwei Zeilen erscheinen: Gesamt: 169 Stunden und Spitze: Beck mit 45 Stunden.",
      "tipp": "Vor der Schleife werden drei Merker gebraucht: einer für die Summe, einer für die bisher größte Zahl und einer für den Namen, der dazugehört. Im Rumpf wird die aktuelle Zahl mit dem bisherigen Höchstwert verglichen und bei Bedarf beides gemeinsam aktualisiert.",
-     "vorgabe": "stunden = {'hartmann': 38, 'beck': 45, 'kraus': 41, 'wolf': 45}"
+     "vorgabe": "stunden = {'hartmann': 38, 'beck': 45, 'kraus': 41, 'wolf': 45}",
+     "loesung": "stunden = {'hartmann': 38, 'beck': 45, 'kraus': 41, 'wolf': 45}\ngesamt = 0\nspitze = 0\nspitzenname = ''\nfor person, stundenzahl in stunden.items():\n    gesamt = gesamt + stundenzahl\n    if stundenzahl > spitze:\n        spitze = stundenzahl\n        spitzenname = person\nprint(f\"Gesamt: {gesamt} Stunden\")\nprint(f\"Spitze: {spitzenname.title()} mit {spitze} Stunden\")"
     }
    ]
   }

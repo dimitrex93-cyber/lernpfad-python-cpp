@@ -197,176 +197,207 @@
      "titel": "Die erste eigene Funktion",
      "aufgabe": "Schreibe eine Funktion mit dem Namen begruessen, die zwei feste Zeilen ausgibt: Guten Morgen. und darunter Schoen, dass du da bist. Rufe sie danach einmal auf. Fertig, wenn: zwei Zeilen erscheinen — und keine mehr, solange du nur einmal aufrufst.",
      "tipp": "Die Kopfzeile besteht aus vier Teilen: def, dem Namen, einem leeren Klammerpaar und einem Doppelpunkt. Alles, was zur Funktion gehört, steht darunter um vier Leerzeichen eingerückt. Der Aufruf ist der Name mit Klammern.",
-     "vorgabe": "def begruessen():\n    print('Guten Morgen.')\n    print('Schön, dass du da bist')\n\nbegruessen()"
+     "vorgabe": "def begruessen():\n    print('Guten Morgen.')\n    print('Schön, dass du da bist')\n\nbegruessen()",
+     "loesung": "def begruessen():\n    print(\"Guten Morgen.\")\n    print(\"Schoen, dass du da bist.\")\n\nbegruessen()"
     },
     {
      "titel": "Eine Schleife in der Verpackung",
      "aufgabe": "Eine Funktion darf in ihrem Körper alles enthalten, was du bisher gelernt hast. Schreibe zeige_werkzeuge, die eine Liste mit drei Werkzeugnamen anlegt und jeden Eintrag mit einem vorangestellten Bindestrich ausgibt. Benutze dafür eine for-Schleife und einen f-String. Fertig, wenn: drei Zeilen erscheinen, jede beginnt mit einem Bindestrich und einem Leerzeichen.",
      "tipp": "Alles gehört in den Körper: die Liste, die Schleife und die Ausgabe. Der Schleifenkörper ist dann doppelt eingerückt — vier Leerzeichen für die Funktion, vier weitere für die Schleife.",
-     "vorgabe": "werkzeug = ['Schraubendreher', 'Hammer', 'Zange']\n\ndef zeige_werkzeuge(werkzeug):\n    for tool in werkzeug:\n        print(f\"- {tool}\")\n\nzeige_werkzeuge(werkzeug)"
+     "vorgabe": "werkzeug = ['Schraubendreher', 'Hammer', 'Zange']\n\ndef zeige_werkzeuge(werkzeug):\n    for tool in werkzeug:\n        print(f\"- {tool}\")\n\nzeige_werkzeuge(werkzeug)",
+     "loesung": "def zeige_werkzeuge():\n    werkzeuge = [\"Zange\", \"Hammer\", \"Schraubendreher\"]\n    for werkzeug in werkzeuge:\n        print(f\"- {werkzeug}\")\n\nzeige_werkzeuge()"
     },
     {
      "titel": "Die Beschriftung der Verpackung",
      "aufgabe": "Schreibe eine Funktion zeige_bestand, die die Zeile Bestand: 42 Stueck ausgibt, und gib ihr als allererste Zeile des Körpers einen Docstring in dreifachen Anführungszeichen. Rufe die Funktion auf und gib danach den Docstring selbst aus. Fertig, wenn: zwei Zeilen erscheinen — die Bestandsmeldung und darunter der Beschreibungstext.",
      "tipp": "Den aufbewahrten Text holst du mit zeige_bestand.__doc__ — zwei Unterstriche vorn, zwei hinten, ohne Klammern. Ein Kommentar mit dem Rautezeichen würde das nicht leisten, der wird nach dem Lesen weggeworfen.",
-     "vorgabe": "def zeige_bestand():\n    \"\"\"das haben wir an schrauben im lager.\"\"\"\n    print(\"Bestand: 42 Stück.\")\n\nzeige_bestand()\nprint(zeige_bestand.__doc__)"
+     "vorgabe": "def zeige_bestand():\n    \"\"\"das haben wir an schrauben im lager.\"\"\"\n    print(\"Bestand: 42 Stück.\")\n\nzeige_bestand()\nprint(zeige_bestand.__doc__)",
+     "loesung": "def zeige_bestand():\n    \"\"\"Gibt den aktuellen Lagerbestand aus.\"\"\"\n    print(\"Bestand: 42 Stueck\")\n\nzeige_bestand()\nprint(zeige_bestand.__doc__)"
     },
     {
      "titel": "Eine Funktion ruft die nächste",
      "aufgabe": "Baue einen Wachplan aus zwei Funktionen. zeige_trennlinie gibt eine Zeile aus zwanzig Bindestrichen aus. zeige_wachplan ruft zuerst zeige_trennlinie auf, gibt dann die Überschrift Wachplan Dienstag aus, ruft erneut zeige_trennlinie auf, listet darunter die drei Namen aus der Vorgabe mit zwei führenden Leerzeichen auf und setzt zum Schluss noch eine Trennlinie. Im Hauptprogramm steht nur ein einziger Aufruf. Fertig, wenn: sieben Zeilen erscheinen — Trennlinie, Wachplan Dienstag, Trennlinie, die drei eingerückten Namen, Trennlinie — und im Hauptprogramm genau eine Zeile steht.",
      "tipp": "Ein Aufruf ist eine ganz gewöhnliche Anweisung — er darf deshalb auch im Körper einer anderen Funktion stehen, eingerückt wie jede andere Zeile. Dieselbe Trennlinie wird dreimal gebraucht, geschrieben wird sie einmal. Beide Definitionen stehen oben, das Hauptprogramm unten.",
-     "vorgabe": "wache = [\"Hartmann\", \"Kessler\", \"Lorenz\"]\n\ndef zeige_trennlinie():\n    print('=' * 20)\n\ndef zeige_wachplan():\n    for name in wache:\n        print(f\"- {name}\")\n\nprint('Wachplan Dienstag')\nzeige_trennlinie()\nzeige_wachplan()\nzeige_trennlinie()\nprint(\"plan ende\")"
+     "vorgabe": "wache = [\"Hartmann\", \"Kessler\", \"Lorenz\"]\n\ndef zeige_trennlinie():\n    print('=' * 20)\n\ndef zeige_wachplan():\n    for name in wache:\n        print(f\"- {name}\")\n\nprint('Wachplan Dienstag')\nzeige_trennlinie()\nzeige_wachplan()\nzeige_trennlinie()\nprint(\"plan ende\")",
+     "loesung": "def zeige_trennlinie():\n    print(\"--------------------\")\n\ndef zeige_wachplan():\n    zeige_trennlinie()\n    print(\"Wachplan Dienstag\")\n    zeige_trennlinie()\n    wache = [\"Hartmann\", \"Kessler\", \"Lorenz\"]\n    for name in wache:\n        print(f\"  {name}\")\n    zeige_trennlinie()\n\nzeige_wachplan()"
     },
     {
      "titel": "Zwei Funktionen, eine Prüfung",
      "aufgabe": "Schreibe eine Funktion pruefe_fuhrpark, die den Fuhrpark aus der Vorgabe durchgeht und zu jeder Kategorie eine Zeile ausgibt: bei null Fahrzeugen Jeep: nicht verfuegbar, sonst Lkw: 3 einsatzbereit. Zähle im Körper mit, wie viele Kategorien leer sind, und gib nach der Schleife die Zeile 1 Kategorie ohne Fahrzeug. aus. Eine zweite Funktion melde_ende gibt Pruefung beendet. aus. Rufe beide nacheinander auf. Fertig, wenn: fünf Zeilen erscheinen: drei Fahrzeugzeilen, darunter 1 Kategorie ohne Fahrzeug. und zuletzt Pruefung beendet.",
      "tipp": "Der Zähler wird im Körper vor der Schleife auf 0 gesetzt; stünde er darin, begänne er in jedem Durchgang von vorn. Die Meldezeile danach ist nur eine Ebene eingerückt — vier Leerzeichen für die Funktion, keine weiteren für die Schleife. Über das Dictionary läufst du mit .items() wie in Bereich 6.",
-     "vorgabe": "fuhrpark = {\"Lkw\": 3, \"Jeep\": 0, \"Bus\": 2}"
+     "vorgabe": "fuhrpark = {\"Lkw\": 3, \"Jeep\": 0, \"Bus\": 2}",
+     "loesung": "def pruefe_fuhrpark():\n    fuhrpark = {\"Lkw\": 3, \"Jeep\": 0, \"Bus\": 2}\n    luecken = 0\n    for fahrzeug, anzahl in fuhrpark.items():\n        if anzahl == 0:\n            print(f\"{fahrzeug}: nicht verfuegbar\")\n            luecken = luecken + 1\n        else:\n            print(f\"{fahrzeug}: {anzahl} einsatzbereit\")\n    print(f\"{luecken} Kategorie ohne Fahrzeug.\")\n\ndef melde_ende():\n    print(\"Pruefung beendet.\")\n\npruefe_fuhrpark()\nmelde_ende()"
     },
     {
      "titel": "Drei Namen, ein lesbares Programm",
      "aufgabe": "Baue einen kleinen Kurstag aus drei Funktionen: pruefe_anwesenheit entscheidet mit einem if, ob der Kurs mit 11 Anwesenden beschlussfähig ist (ab 10 ja), und gibt Kurs ist beschlussfaehig. oder Zu wenige Teilnehmer. aus, zeige_teilnehmerliste gibt drei Namen aus einer Liste mit vorangestelltem Bindestrich aus, melde_kurstagende gibt Kurstag beendet. aus. Rufe alle drei nacheinander auf. Fertig, wenn: fünf Zeilen erscheinen und die letzten drei Zeilen deines Programms sich laut vorgelesen wie ein Satz anhören.",
-     "tipp": "Alle Namen werden klein geschrieben und mit Unterstrichen verbunden — das heißt snake_case und ist in Python die Regel für Funktionen. Jeder Name beginnt mit einem Verb, weil eine Funktion eine Tätigkeit ist."
+     "tipp": "Alle Namen werden klein geschrieben und mit Unterstrichen verbunden — das heißt snake_case und ist in Python die Regel für Funktionen. Jeder Name beginnt mit einem Verb, weil eine Funktion eine Tätigkeit ist.",
+     "loesung": "def pruefe_anwesenheit():\n    anwesend = 11\n    if anwesend >= 10:\n        print(\"Kurs ist beschlussfaehig.\")\n    else:\n        print(\"Zu wenige Teilnehmer.\")\n\ndef zeige_teilnehmerliste():\n    teilnehmer = [\"Hartmann\", \"Kessler\", \"Lorenz\"]\n    for name in teilnehmer:\n        print(f\"- {name}\")\n\ndef melde_kurstagende():\n    print(\"Kurstag beendet.\")\n\npruefe_anwesenheit()\nzeige_teilnehmerliste()\nmelde_kurstagende()"
     },
     {
      "titel": "Vorhersage — definiert ist nicht ausgeführt",
      "aufgabe": "In der Vorgabe stehen zwei vollständige Funktionen. Eine davon wird ohne Klammern „aufgerufen\". Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage, welche Zeilen erscheinen werden. Übernimm erst danach die Vorgabe und führe aus. Fertig, wenn: nach deiner Vorhersagezeile genau eine weitere Zeile erscheint — und keine Fehlermeldung.",
      "tipp": "Vergleiche die beiden letzten Zeilen Zeichen für Zeichen. Der Unterschied sind zwei Klammern — und die Klammern sind der Befehl „führ das jetzt aus\".",
-     "vorgabe": "def melde_start():\n    print(\"Start gemeldet.\")\n\ndef melde_ende():\n    print(\"Ende gemeldet.\")\n\nmelde_start\nmelde_ende()"
+     "vorgabe": "def melde_start():\n    print(\"Start gemeldet.\")\n\ndef melde_ende():\n    print(\"Ende gemeldet.\")\n\nmelde_start\nmelde_ende()",
+     "loesung": "print(\"Erwartet: nur eine Zeile, naemlich Ende gemeldet.\")\n\ndef melde_start():\n    print(\"Start gemeldet.\")\n\ndef melde_ende():\n    print(\"Ende gemeldet.\")\n\nmelde_start\nmelde_ende()"
     },
     {
      "titel": "Ein Wert von außen",
      "aufgabe": "Schreibe eine Funktion begruesse_teilnehmer, die einen Parameter name hat und damit eine Zeile nach dem Muster Guten Morgen, Hartmann. ausgibt. Rufe sie dreimal mit drei verschiedenen Namen auf. Fertig, wenn: drei verschiedene Begrüßungszeilen erscheinen, obwohl die Ausgabe nur einmal im Code steht.",
-     "tipp": "In die Klammern der Definition kommt der Name des Fachs, in die Klammern des Aufrufs der Wert, der hineingelegt wird. Im Körper verhält sich name wie eine ganz normale Variable und passt in einen f-String."
+     "tipp": "In die Klammern der Definition kommt der Name des Fachs, in die Klammern des Aufrufs der Wert, der hineingelegt wird. Im Körper verhält sich name wie eine ganz normale Variable und passt in einen f-String.",
+     "loesung": "def begruesse_teilnehmer(name):\n    print(f\"Guten Morgen, {name}.\")\n\nbegruesse_teilnehmer(\"Hartmann\")\nbegruesse_teilnehmer(\"Kessler\")\nbegruesse_teilnehmer(\"Lorenz\")"
     },
     {
      "titel": "Eine Funktion in der Schleife",
      "aufgabe": "Schreibe eine Funktion drucke_namensschild, die zu einem übergebenen Namen ein kleines Schild aus drei Zeilen ausgibt: eine Linie, der eingerückte Name, noch eine Linie. Lege danach eine Liste mit drei Namen an und rufe die Funktion in einer for-Schleife für jeden Namen auf. Fertig, wenn: neun Zeilen erscheinen, also drei vollständige Schilder.",
-     "tipp": "Die Schleifenvariable aus for name in teilnehmer: ist genau das, was in die Klammern des Aufrufs gehört. Die Funktion muss dafür nichts wissen und nichts ändern — sie wird einfach mehrmals mit verschiedenen Werten aufgerufen."
+     "tipp": "Die Schleifenvariable aus for name in teilnehmer: ist genau das, was in die Klammern des Aufrufs gehört. Die Funktion muss dafür nichts wissen und nichts ändern — sie wird einfach mehrmals mit verschiedenen Werten aufgerufen.",
+     "loesung": "def drucke_namensschild(name):\n    print(\"--------------------\")\n    print(f\"  {name}\")\n    print(\"--------------------\")\n\nteilnehmer = [\"Hartmann\", \"Kessler\", \"Lorenz\"]\nfor name in teilnehmer:\n    drucke_namensschild(name)"
     },
     {
      "titel": "Der Name statt der Stelle",
      "aufgabe": "Schreibe eine Funktion melde_lehrgang mit den Parametern teilnehmer und lehrgang. Rufe sie zweimal auf und beschrifte beide Male jeden Wert mit dem Parameternamen. Beim zweiten Aufruf drehst du die Reihenfolge der beiden Angaben absichtlich um. Fertig, wenn: beide Zeilen nach dem Muster Hartmann ist fuer Gabelstapler gemeldet. lauten — auch die zweite, obwohl die Aufrufe verschieden aufgebaut sind.",
-     "tipp": "Ein Schlüsselwortargument wird als parametername=wert geschrieben. Das Gleichheitszeichen ist hier keine Zuweisung an eine Variable, sondern die Beschriftung des Wertes."
+     "tipp": "Ein Schlüsselwortargument wird als parametername=wert geschrieben. Das Gleichheitszeichen ist hier keine Zuweisung an eine Variable, sondern die Beschriftung des Wertes.",
+     "loesung": "def melde_lehrgang(teilnehmer, lehrgang):\n    print(f\"{teilnehmer} ist fuer {lehrgang} gemeldet.\")\n\nmelde_lehrgang(teilnehmer=\"Hartmann\", lehrgang=\"Gabelstapler\")\nmelde_lehrgang(lehrgang=\"Erste Hilfe\", teilnehmer=\"Kessler\")"
     },
     {
      "titel": "Ein Wert, der meistens stimmt",
      "aufgabe": "Schreibe eine Funktion melde_abgabe mit den Parametern geraet und zustand, wobei zustand den Vorgabewert \"in Ordnung\" trägt und die Funktion eine Zeile nach dem Muster Laptop: in Ordnung ausgibt. Rufe sie dreimal auf: zweimal ohne Zustandsangabe, einmal mit. Fertig, wenn: drei Zeilen erscheinen und zwei davon den Zustand in Ordnung melden, ohne dass er im Aufruf steht.",
-     "tipp": "Der Vorgabewert steht in der Definition, direkt hinter dem Parameter: zustand=\"in Ordnung\". Im Aufruf darf die Angabe dann weggelassen werden."
+     "tipp": "Der Vorgabewert steht in der Definition, direkt hinter dem Parameter: zustand=\"in Ordnung\". Im Aufruf darf die Angabe dann weggelassen werden.",
+     "loesung": "def melde_abgabe(geraet, zustand=\"in Ordnung\"):\n    print(f\"{geraet}: {zustand}\")\n\nmelde_abgabe(\"Laptop\")\nmelde_abgabe(\"Headset\", \"defekt\")\nmelde_abgabe(\"Beamer\")"
     },
     {
      "titel": "Vorgabewert trifft Schleife",
      "aufgabe": "Schreibe eine Funktion melde_tankstand mit den Parametern fahrzeug, liter und reserve, wobei reserve den Vorgabewert 20 trägt. Liegt der Tankstand unter der Reserve, gibt die Funktion Lkw: 12 Liter - auftanken aus, sonst Jeep: 45 Liter - in Ordnung. Gehe die Tankstände aus der Vorgabe in einer Schleife durch und rufe die Funktion für jedes Fahrzeug ohne Reserveangabe auf. Hänge danach einen einzelnen Aufruf für den Bus an, bei dem du die Reserve als Schlüsselwortargument auf 25 setzt. Fertig, wenn: vier Zeilen erscheinen und der Bus mit denselben 20 Litern zuerst als Bus: 20 Liter - in Ordnung und danach als Bus: 20 Liter - auftanken gemeldet wird.",
      "tipp": "Aus .items() kommen in jedem Durchgang zwei Werte, und genau diese beiden gehören in die Klammern des Aufrufs. Den dritten Wert lässt du dort weg — dann greift der Vorgabewert. Im letzten Aufruf schreibst du ihn mit Namen hin: reserve=25.",
-     "vorgabe": "tankstaende = {\"Jeep\": 45, \"Lkw\": 12, \"Bus\": 20}"
+     "vorgabe": "tankstaende = {\"Jeep\": 45, \"Lkw\": 12, \"Bus\": 20}",
+     "loesung": "def melde_tankstand(fahrzeug, liter, reserve=20):\n    if liter < reserve:\n        print(f\"{fahrzeug}: {liter} Liter - auftanken\")\n    else:\n        print(f\"{fahrzeug}: {liter} Liter - in Ordnung\")\n\ntankstaende = {\"Jeep\": 45, \"Lkw\": 12, \"Bus\": 20}\nfor fahrzeug, liter in tankstaende.items():\n    melde_tankstand(fahrzeug, liter)\nmelde_tankstand(\"Bus\", 20, reserve=25)"
     },
     {
      "titel": "Eine Nummer, ein Name, ein Status",
      "aufgabe": "Schreibe eine Funktion drucke_eintrag mit den Parametern nummer, name und status, wobei status den Vorgabewert \"offen\" trägt und die Funktion eine Zeile nach dem Muster 1. Hartmann [offen] ausgibt. Gehe danach die Bewerberliste aus der Vorgabe in einer Schleife durch und rufe die Funktion für jeden Namen auf. Die Nummer zählst du dabei selbst hoch, beginnend bei 1. Für Kessler — und nur für ihn — übergibst du zusätzlich den Status eingeladen als Schlüsselwortargument. Fertig, wenn: drei Zeilen erscheinen: 1. Hartmann [offen], 2. Kessler [eingeladen] und 3. Lorenz [offen].",
      "tipp": "Der Zähler ist eine ganz gewöhnliche Variable: vor der Schleife auf 1 setzen, am Ende jedes Durchgangs um eins erhöhen. Welcher der beiden Aufrufe gebraucht wird, entscheidet ein if im Schleifenrumpf — zwei Aufrufe derselben Funktion, einmal mit und einmal ohne dritten Wert.",
-     "vorgabe": "bewerber = [\"Hartmann\", \"Kessler\", \"Lorenz\"]"
+     "vorgabe": "bewerber = [\"Hartmann\", \"Kessler\", \"Lorenz\"]",
+     "loesung": "def drucke_eintrag(nummer, name, status=\"offen\"):\n    print(f\"{nummer}. {name} [{status}]\")\n\nbewerber = [\"Hartmann\", \"Kessler\", \"Lorenz\"]\nnummer = 1\nfor name in bewerber:\n    if name == \"Kessler\":\n        drucke_eintrag(nummer, name, status=\"eingeladen\")\n    else:\n        drucke_eintrag(nummer, name)\n    nummer = nummer + 1"
     },
     {
      "titel": "Ein Fach bleibt leer",
      "aufgabe": "Die Vorgabe gibt eine Zeile aus und stürzt dann ab. Lies die Fehlermeldung vollständig — sie nennt die betroffene Funktion, die Art des Problems und sogar den Namen dessen, was fehlt. Repariere den fehlerhaften Aufruf. Fertig, wenn: zwei Zeilen erscheinen und keine Fehlermeldung mehr.",
      "tipp": "Zähle die Parameter in der Definition und die Argumente im zweiten Aufruf. Python ist hier streng: Die Zahl muss stimmen, und der letzte Teil der Meldung in Anführungszeichen verrät genau, welches Fach leer geblieben ist.",
-     "vorgabe": "def melde_bewerbung(name, stelle):\n    print(f\"{name} bewirbt sich auf {stelle}.\")\n\nmelde_bewerbung(\"Hartmann\", \"Lagerlogistik\")\nmelde_bewerbung(\"Kessler\")"
+     "vorgabe": "def melde_bewerbung(name, stelle):\n    print(f\"{name} bewirbt sich auf {stelle}.\")\n\nmelde_bewerbung(\"Hartmann\", \"Lagerlogistik\")\nmelde_bewerbung(\"Kessler\")",
+     "loesung": "def melde_bewerbung(name, stelle):\n    print(f\"{name} bewirbt sich auf {stelle}.\")\n\nmelde_bewerbung(\"Hartmann\", \"Lagerlogistik\")\nmelde_bewerbung(\"Kessler\", \"IT-Support\")"
     },
     {
      "titel": "Vorhersage — zweimal dieselben Werte",
      "aufgabe": "In der Vorgabe steht derselbe Aufruf zweimal, nur mit vertauschten Werten. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage: Wie viele Ausgabezeilen gibt es, und wie viele Fehlermeldungen? Übernimm erst danach die Vorgabe und führe aus. Fertig, wenn: nach deiner Vorhersagezeile zwei Zeilen erscheinen, von denen die zweite inhaltlich Unsinn ist — ohne dass Python etwas bemängelt.",
      "tipp": "Frage dich nicht, ob die Werte sinnvoll sind, sondern nur, ob sie passen: Wie viele Argumente verlangt die Funktion, und wie viele bekommt sie? Bedeutung kann Python nicht prüfen.",
-     "vorgabe": "def melde_uebergabe(geraet, raum):\n    print(f\"{geraet} wurde in Raum {raum} uebergeben.\")\n\nmelde_uebergabe(\"Laptop\", \"214\")\nmelde_uebergabe(\"214\", \"Laptop\")"
+     "vorgabe": "def melde_uebergabe(geraet, raum):\n    print(f\"{geraet} wurde in Raum {raum} uebergeben.\")\n\nmelde_uebergabe(\"Laptop\", \"214\")\nmelde_uebergabe(\"214\", \"Laptop\")",
+     "loesung": "print(\"Erwartet: zwei Zeilen, keine Fehlermeldung, die zweite ist Unsinn\")\n\ndef melde_uebergabe(geraet, raum):\n    print(f\"{geraet} wurde in Raum {raum} uebergeben.\")\n\nmelde_uebergabe(\"Laptop\", \"214\")\nmelde_uebergabe(\"214\", \"Laptop\")"
     },
     {
      "titel": "Ein Dictionary als Argument",
      "aufgabe": "Schreibe eine Funktion zeige_bestand, die ein Dictionary mit Artikeln und Mengen entgegennimmt und zu jedem Eintrag meldet, ob nachbestellt werden muss. Die Grenze kommt als zweiter Parameter mindestmenge mit dem Vorgabewert 5. Rufe die Funktion zweimal auf — einmal ohne Grenze, einmal mit der Grenze 10 — und trenne beide Durchläufe durch eine Zeile mit drei Bindestrichen. Fertig, wenn: sieben Zeilen erscheinen und die Säge im ersten Durchlauf in Ordnung ist, im zweiten aber nachbestellt werden muss.",
      "tipp": "Ein Dictionary wird genauso übergeben wie jeder andere Wert — es steht beim Aufruf einfach in den Klammern. Im Körper durchläufst du es mit for artikel, menge in lager.items(): wie in Bereich 6.",
-     "vorgabe": "bestand = {\"Hammer\": 12, \"Zange\": 3, \"Saege\": 5}"
+     "vorgabe": "bestand = {\"Hammer\": 12, \"Zange\": 3, \"Saege\": 5}",
+     "loesung": "def zeige_bestand(lager, mindestmenge=5):\n    for artikel, menge in lager.items():\n        if menge < mindestmenge:\n            print(f\"{artikel}: {menge} Stueck - nachbestellen\")\n        else:\n            print(f\"{artikel}: {menge} Stueck - in Ordnung\")\n\nbestand = {\"Hammer\": 12, \"Zange\": 3, \"Saege\": 5}\nzeige_bestand(bestand)\nprint(\"---\")\nzeige_bestand(bestand, 10)"
     },
     {
      "titel": "Das erste `return`",
      "aufgabe": "Schreibe eine Funktion berechne_tagessatz, die aus Stundenzahl und Stundensatz den Tageslohn berechnet und ihn zurückgibt. In der Funktion selbst darf kein print stehen. Rufe sie mit 8 Stunden und einem Stundensatz von 18.5 auf, speichere das Ergebnis in einer Variablen und gib es erst danach in einem vollständigen Satz aus. Fertig, wenn: genau eine Zeile erscheint: Tagessatz: 148.0 Euro",
-     "tipp": "Hinter return steht der Wert, der zurückgehen soll — hier eine Rechnung. Der Aufruf berechne_tagessatz(8, 18.5) ist danach selbst ein Wert und darf rechts vom Gleichheitszeichen stehen wie eine Zahl."
+     "tipp": "Hinter return steht der Wert, der zurückgehen soll — hier eine Rechnung. Der Aufruf berechne_tagessatz(8, 18.5) ist danach selbst ein Wert und darf rechts vom Gleichheitszeichen stehen wie eine Zahl.",
+     "loesung": "def berechne_tagessatz(stunden, stundensatz):\n    return stunden * stundensatz\n\ntagessatz = berechne_tagessatz(8, 18.5)\nprint(f\"Tagessatz: {tagessatz} Euro\")"
     },
     {
      "titel": "Mehrere Ausgänge",
      "aufgabe": "Schreibe eine Funktion ermittle_stufe, die aus den Dienstjahren eine Stufe ermittelt: ab 12 Jahren Stufe 3, ab 8 Stufe 2, ab 4 Stufe 1, in allen übrigen Fällen „ohne Stufe\". Jeder Zweig gibt seinen Text mit return zurück. Prüfe die Funktion mit 14, 9 und 2 Dienstjahren. Fertig, wenn: drei Zeilen erscheinen: Stufe 3, Stufe 2, ohne Stufe",
-     "tipp": "Eine Funktion darf mehrere return-Anweisungen haben; jede ist ein eigener Ausgang. Für den letzten Fall brauchst du nicht einmal ein else — wenn kein Zweig vorher gegriffen hat, läuft der Ablauf einfach bis zum letzten return weiter."
+     "tipp": "Eine Funktion darf mehrere return-Anweisungen haben; jede ist ein eigener Ausgang. Für den letzten Fall brauchst du nicht einmal ein else — wenn kein Zweig vorher gegriffen hat, läuft der Ablauf einfach bis zum letzten return weiter.",
+     "loesung": "def ermittle_stufe(dienstjahre):\n    if dienstjahre >= 12:\n        return \"Stufe 3\"\n    elif dienstjahre >= 8:\n        return \"Stufe 2\"\n    elif dienstjahre >= 4:\n        return \"Stufe 1\"\n    return \"ohne Stufe\"\n\nprint(ermittle_stufe(14))\nprint(ermittle_stufe(9))\nprint(ermittle_stufe(2))"
     },
     {
      "titel": "Einen Datensatz zurückgeben",
      "aufgabe": "Schreibe eine Funktion baue_datensatz, die aus Name, Dienstjahren und Lehrgang ein Dictionary baut und dieses zurückgibt. Rufe sie mit Jens Hartmann, 14 Dienstjahren und dem Lehrgang Gabelstapler auf, gib den gelieferten Datensatz einmal vollständig aus und danach nur die Dienstjahre daraus. Fertig, wenn: zwei Zeilen erscheinen, die erste in geschweiften Klammern, die zweite nur 14.",
-     "tipp": "Baue das Dictionary im Körper in einer Variablen auf und gib diese Variable mit return zurück. Aus dem gelieferten Dictionary holst du einen Wert wie gewohnt über den Schlüssel in eckigen Klammern."
+     "tipp": "Baue das Dictionary im Körper in einer Variablen auf und gib diese Variable mit return zurück. Aus dem gelieferten Dictionary holst du einen Wert wie gewohnt über den Schlüssel in eckigen Klammern.",
+     "loesung": "def baue_datensatz(name, dienstjahre, lehrgang):\n    person = {\"name\": name, \"dienstjahre\": dienstjahre, \"lehrgang\": lehrgang}\n    return person\n\nhartmann = baue_datensatz(\"Jens Hartmann\", 14, \"Gabelstapler\")\nprint(hartmann)\nprint(hartmann[\"dienstjahre\"])"
     },
     {
      "titel": "Die Falle mit `sort`",
      "aufgabe": "Schreibe ein Programm, das denselben Vorgang zweimal zeigt. Zuerst der falsche Weg: eine Stundenliste mit sort() sortieren, das Ergebnis in einer Variablen auffangen und beides ausgeben. Danach der richtige Weg: eine zweite Liste mit sorted() sortieren, das Ergebnis auffangen und wieder beides ausgeben. Fertig, wenn: vier Zeilen erscheinen, die erste lautet None, die letzte zeigt eine unsortierte Liste.",
-     "tipp": "Frage dich bei jeder Zeile zweierlei: Was passiert mit der Liste selbst, und was kommt als Rückgabewert heraus? Die beiden Antworten sind bei sort() und bei sorted() genau vertauscht."
+     "tipp": "Frage dich bei jeder Zeile zweierlei: Was passiert mit der Liste selbst, und was kommt als Rückgabewert heraus? Die beiden Antworten sind bei sort() und bei sorted() genau vertauscht.",
+     "loesung": "stunden = [9, 6, 11, 8]\nfalsch = stunden.sort()\nprint(falsch)\nprint(stunden)\n\ntage = [3, 1, 2]\nrichtig = sorted(tage)\nprint(richtig)\nprint(tage)"
     },
     {
      "titel": "Das Ergebnis entscheidet",
      "aufgabe": "Schreibe eine Funktion ist_geeignet, die Dienstjahre und eine Grenze mindestjahre mit dem Vorgabewert 8 entgegennimmt und True oder False zurückgibt. In der Funktion darf kein print stehen. Gehe danach die Bewerber aus der Vorgabe in einer Schleife durch und setze den Rückgabewert direkt hinter if: Wer geeignet ist, bekommt die Zeile Hartmann: geeignet, wer nicht, die Zeile Kessler: nicht geeignet. Zähle die Geeigneten mit und gib zum Schluss die Zeile 2 von 3 sind geeignet. aus. Fertig, wenn: vier Zeilen erscheinen und die letzte 2 von 3 sind geeignet. lautet.",
      "tipp": "Hinter return darf ein Vergleich stehen — er wird zuerst ausgerechnet, und das Ergebnis ist bereits True oder False. Ein if mit return True und einem else mit return False tut dasselbe, ist aber drei Zeilen länger. Der Aufruf passt danach ohne Umweg hinter if.",
-     "vorgabe": "bewerber = {\"Hartmann\": 14, \"Kessler\": 6, \"Lorenz\": 9}"
+     "vorgabe": "bewerber = {\"Hartmann\": 14, \"Kessler\": 6, \"Lorenz\": 9}",
+     "loesung": "def ist_geeignet(dienstjahre, mindestjahre=8):\n    return dienstjahre >= mindestjahre\n\nbewerber = {\"Hartmann\": 14, \"Kessler\": 6, \"Lorenz\": 9}\ngeeignet = 0\nfor name, jahre in bewerber.items():\n    if ist_geeignet(jahre):\n        print(f\"{name}: geeignet\")\n        geeignet = geeignet + 1\n    else:\n        print(f\"{name}: nicht geeignet\")\nprint(f\"{geeignet} von {len(bewerber)} sind geeignet.\")"
     },
     {
      "titel": "Der erste Treffer genügt",
      "aufgabe": "Schreibe eine Funktion finde_ersten_mangel, die einen Lagerbestand und eine Mindestmenge entgegennimmt. Sie durchsucht den Bestand und gibt die Bezeichnung des ersten Postens zurück, der unter der Mindestmenge liegt; findet sie keinen, gibt sie den leeren Text \"\" zurück. Rufe sie für den Bestand aus der Vorgabe nacheinander mit den Grenzen 5 und 2 auf und melde das Ergebnis je Grenze in einer Zeile — entweder Grenze 5: zuerst nachbestellen - Weste oder Grenze 2: alle Posten ausreichend. Fertig, wenn: zwei Zeilen erscheinen: Grenze 5: zuerst nachbestellen - Weste und Grenze 2: alle Posten ausreichend.",
      "tipp": "Hier ist das vorzeitige return ausdrücklich erwünscht: Sobald der erste Treffer feststeht, ist die Funktion fertig und muss nicht weitersuchen. Das zweite return steht nach der Schleife auf derselben Einrückungsebene wie sie — es wird nur erreicht, wenn kein Durchgang vorher ausgestiegen ist. Für die beiden Grenzen genügt eine Schleife über die Liste [5, 2].",
-     "vorgabe": "bestand = {\"Helm\": 24, \"Weste\": 3, \"Stiefel\": 31}"
+     "vorgabe": "bestand = {\"Helm\": 24, \"Weste\": 3, \"Stiefel\": 31}",
+     "loesung": "def finde_ersten_mangel(lager, mindestmenge):\n    for teil, menge in lager.items():\n        if menge < mindestmenge:\n            return teil\n    return \"\"\n\nbestand = {\"Helm\": 24, \"Weste\": 3, \"Stiefel\": 31}\nfor grenze in [5, 2]:\n    mangel = finde_ersten_mangel(bestand, grenze)\n    if mangel == \"\":\n        print(f\"Grenze {grenze}: alle Posten ausreichend.\")\n    else:\n        print(f\"Grenze {grenze}: zuerst nachbestellen - {mangel}\")"
     },
     {
      "titel": "Vorhersage — was steckt in der Variablen?",
      "aufgabe": "Die Vorgabe enthält eine Funktion, die ihr Ergebnis ausgibt. Der Aufrufer fängt den Rückgabewert trotzdem in einer Variablen auf und gibt diese aus. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage, was die beiden folgenden Zeilen ausgeben werden. Übernimm erst danach die Vorgabe und führe aus. Fertig, wenn: nach deiner Vorhersagezeile zwei Zeilen erscheinen, von denen die zweite nicht die Zahl der ersten wiederholt.",
      "tipp": "Suche im Funktionskörper nach einem return. Findest du keins — was bekommt dann die Variable ergebnis? Jeder Aufruf in Python hat ein Ergebnis, auch wenn keins bestimmt wurde.",
-     "vorgabe": "def zeige_tagessatz(stunden, stundensatz):\n    print(stunden * stundensatz)\n\nergebnis = zeige_tagessatz(8, 18.5)\nprint(ergebnis)"
+     "vorgabe": "def zeige_tagessatz(stunden, stundensatz):\n    print(stunden * stundensatz)\n\nergebnis = zeige_tagessatz(8, 18.5)\nprint(ergebnis)",
+     "loesung": "print(\"Erwartet: zuerst 148.0, danach None\")\n\ndef zeige_tagessatz(stunden, stundensatz):\n    print(stunden * stundensatz)\n\nergebnis = zeige_tagessatz(8, 18.5)\nprint(ergebnis)"
     },
     {
      "titel": "Zwei Zahlen auf dem Bildschirm und trotzdem ein Absturz",
      "aufgabe": "Die Vorgabe soll die beiden Nettopreise zu 119 und 238 Euro addieren und die Summe melden. Beide Zahlen erscheinen tatsächlich — und dann stürzt das Programm ab. Lies die Fehlermeldung und repariere die Funktion. Danach soll nur noch die Summenzeile erscheinen. Fertig, wenn: genau eine Zeile erscheint: Gesamt netto: 300.0 Euro",
      "tipp": "Addiert werden nicht die ausgegebenen Zahlen, sondern die Rückgabewerte. Steht in der Meldung das Wort NoneType, prüfe als Erstes, ob die aufgerufene Funktion überhaupt ein return hat.",
-     "vorgabe": "def netto(brutto):\n    print(round(brutto / 1.19, 2))\n\ngesamt = netto(119) + netto(238)\nprint(f\"Gesamt netto: {gesamt} Euro\")"
+     "vorgabe": "def netto(brutto):\n    print(round(brutto / 1.19, 2))\n\ngesamt = netto(119) + netto(238)\nprint(f\"Gesamt netto: {gesamt} Euro\")",
+     "loesung": "def netto(brutto):\n    return round(brutto / 1.19, 2)\n\ngesamt = netto(119) + netto(238)\nprint(f\"Gesamt netto: {gesamt} Euro\")"
     },
     {
      "titel": "Eine Liste nur lesen",
      "aufgabe": "Schreibe eine Funktion zeige_dienstplan, die eine Liste von Namen entgegennimmt und jeden Namen mit vorangestelltem Bindestrich ausgibt. Rufe sie mit einer Liste aus drei Namen auf und gib die Liste danach noch einmal vollständig aus. Fertig, wenn: vier Zeilen erscheinen und die letzte die Liste unverändert zeigt.",
-     "tipp": "Eine Liste wird übergeben wie jeder andere Wert: Sie steht beim Aufruf in den Klammern, in der Definition fängt ein Parameter sie auf. Im Körper verhält sie sich wie jede Liste — du kannst darüber schleifen, als hätte sie dort immer gelegen."
+     "tipp": "Eine Liste wird übergeben wie jeder andere Wert: Sie steht beim Aufruf in den Klammern, in der Definition fängt ein Parameter sie auf. Im Körper verhält sie sich wie jede Liste — du kannst darüber schleifen, als hätte sie dort immer gelegen.",
+     "loesung": "def zeige_dienstplan(namen):\n    for name in namen:\n        print(f\"- {name}\")\n\nschicht = [\"Hartmann\", \"Kessler\", \"Lorenz\"]\nzeige_dienstplan(schicht)\nprint(schicht)"
     },
     {
      "titel": "Die Funktion verändert das Original",
      "aufgabe": "Schreibe eine Funktion trage_nach, die eine Liste und einen Namen entgegennimmt und den Namen an die Liste anhängt. Die Funktion gibt nichts zurück. Gib die Liste vor und nach dem Aufruf aus. Fertig, wenn: zwei Zeilen erscheinen und die zweite einen Eintrag mehr enthält als die erste.",
-     "tipp": "Im Körper genügt eine einzige Zeile mit append(). Kein return, keine Rückgabe — und trotzdem ist die Liste draußen danach länger."
+     "tipp": "Im Körper genügt eine einzige Zeile mit append(). Kein return, keine Rückgabe — und trotzdem ist die Liste draußen danach länger.",
+     "loesung": "def trage_nach(liste, name):\n    liste.append(name)\n\nschicht = [\"Hartmann\", \"Kessler\"]\nprint(\"vorher: \", schicht)\ntrage_nach(schicht, \"Lorenz\")\nprint(\"nachher:\", schicht)"
     },
     {
      "titel": "Eine Kopie übergeben",
      "aufgabe": "Schreibe eine Funktion kuerze_auf_drei, die so lange das letzte Element aus einer Liste entfernt, bis nur noch drei übrig sind, und die gekürzte Liste dann ausgibt. Rufe sie so auf, dass die Originalliste mit fünf Bewerbern unverändert bleibt, und gib das Original danach aus. Fertig, wenn: zwei Zeilen erscheinen — die gekürzte Liste mit drei Namen und darunter das vollständige Original mit fünf.",
      "tipp": "Die Entscheidung trifft nicht die Funktion, sondern der Aufruf: Zwei Zeichen hinter dem Listennamen erzeugen einen Abschnitt von Anfang bis Ende und damit eine vollständige, eigenständige neue Liste. Für die Schleife eignet sich while mit len().",
-     "vorgabe": "bewerber = [\"Hartmann\", \"Kessler\", \"Lorenz\", \"Brandt\", \"Weiss\"]"
+     "vorgabe": "bewerber = [\"Hartmann\", \"Kessler\", \"Lorenz\", \"Brandt\", \"Weiss\"]",
+     "loesung": "def kuerze_auf_drei(liste):\n    while len(liste) > 3:\n        liste.pop()\n    print(f\"gekuerzt: {liste}\")\n\nbewerber = [\"Hartmann\", \"Kessler\", \"Lorenz\", \"Brandt\", \"Weiss\"]\nkuerze_auf_drei(bewerber[:])\nprint(f\"Original: {bewerber}\")"
     },
     {
      "titel": "Jedes Fahrzeug nur einmal nennen",
      "aufgabe": "Schreibe eine Funktion ohne_doppelte, die eine Liste von Fahrzeugnamen entgegennimmt und eine neue Liste zurückgibt, in der jeder Name nur noch einmal vorkommt — in der Reihenfolge des ersten Auftretens. Die übergebene Liste darf dabei nicht verändert werden. Gib jedes Fahrzeug der neuen Liste mit vorangestelltem Bindestrich aus, darunter die Zeile 6 Fahrten mit 3 Fahrzeugen. und zum Schluss die unveränderte Einsatzliste. Fertig, wenn: fünf Zeilen erscheinen: drei Fahrzeugzeilen, die Zeile 6 Fahrten mit 3 Fahrzeugen. und darunter die Einsatzliste mit allen sechs Einträgen.",
      "tipp": "Das Muster lohnt sich zu merken: leere Liste anlegen, über die übergebene Liste schleifen, vor dem append() mit not in nachsehen, ob der Name in der neuen Liste schon steht, und am Ende die neue Liste zurückgeben. Die übergebene Liste wird dabei nur gelesen.",
-     "vorgabe": "einsatzliste = [\"Lkw 7\", \"Jeep 2\", \"Lkw 7\", \"Bus 1\", \"Jeep 2\", \"Lkw 7\"]"
+     "vorgabe": "einsatzliste = [\"Lkw 7\", \"Jeep 2\", \"Lkw 7\", \"Bus 1\", \"Jeep 2\", \"Lkw 7\"]",
+     "loesung": "def ohne_doppelte(fahrten):\n    fahrzeuge = []\n    for fahrzeug in fahrten:\n        if fahrzeug not in fahrzeuge:\n            fahrzeuge.append(fahrzeug)\n    return fahrzeuge\n\neinsatzliste = [\"Lkw 7\", \"Jeep 2\", \"Lkw 7\", \"Bus 1\", \"Jeep 2\", \"Lkw 7\"]\nbeteiligt = ohne_doppelte(einsatzliste)\nfor fahrzeug in beteiligt:\n    print(f\"- {fahrzeug}\")\nprint(f\"{len(einsatzliste)} Fahrten mit {len(beteiligt)} Fahrzeugen.\")\nprint(einsatzliste)"
     },
     {
      "titel": "Eintragen — und melden, ob es geklappt hat",
      "aufgabe": "Schreibe eine Funktion trage_ein, die eine Wachliste und einen Namen entgegennimmt. Steht der Name schon auf der Liste, gibt sie False zurück und ändert nichts. Sonst hängt sie ihn an und gibt True zurück. Die Funktion gibt selbst nichts aus. Gehe danach die drei Meldungen aus der Vorgabe durch, rufe die Funktion für jede auf und setze den Rückgabewert direkt hinter if: Je nach Ergebnis erscheint Lorenz eingetragen. oder Hartmann steht schon auf der Liste. Gib zum Schluss die Wachliste aus. Fertig, wenn: vier Zeilen erscheinen, die zweite Hartmann steht schon auf der Liste. lautet und die Wachliste am Ende vier Namen enthält.",
      "tipp": "Die Funktion tut hier beides: Sie verändert die übergebene Liste und gibt etwas zurück. Das return False steht dabei ganz vorn im Körper — danach ist die Funktion beendet, und das append() darunter wird gar nicht mehr erreicht. Der Aufruf passt hinter if, weil er einen Wahrheitswert liefert.",
-     "vorgabe": "wache = [\"Hartmann\", \"Kessler\"]\nmeldungen = [\"Lorenz\", \"Hartmann\", \"Brandt\"]"
+     "vorgabe": "wache = [\"Hartmann\", \"Kessler\"]\nmeldungen = [\"Lorenz\", \"Hartmann\", \"Brandt\"]",
+     "loesung": "def trage_ein(wache, name):\n    if name in wache:\n        return False\n    wache.append(name)\n    return True\n\nwache = [\"Hartmann\", \"Kessler\"]\nmeldungen = [\"Lorenz\", \"Hartmann\", \"Brandt\"]\nfor name in meldungen:\n    if trage_ein(wache, name):\n        print(f\"{name} eingetragen.\")\n    else:\n        print(f\"{name} steht schon auf der Liste.\")\nprint(wache)"
     },
     {
      "titel": "Vorhersage — ist das Original danach verändert?",
      "aufgabe": "Die Vorgabe ruft dieselbe Funktion zweimal auf: einmal mit der Liste, einmal mit einer Kopie. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage, wie die beiden Listen am Ende aussehen. Übernimm erst danach die Vorgabe und führe aus. Fertig, wenn: nach deiner Vorhersagezeile vier Zeilen erscheinen und genau eine der beiden Listen am Ende kürzer ist.",
      "tipp": "Beide Aufrufe sehen fast gleich aus und unterscheiden sich um drei Zeichen. Frage dich bei jedem: Bekommt die Funktion dieselbe Liste oder eine frische, eigenständige zweite?",
-     "vorgabe": "def erledige_ersten(auftraege):\n    auftrag = auftraege.pop(0)\n    print(f\"erledigt: {auftrag}\")\n\nliste_a = [\"Drucker\", \"Router\", \"Laptop\"]\nliste_b = [\"Drucker\", \"Router\", \"Laptop\"]\n\nerledige_ersten(liste_a)\nerledige_ersten(liste_b[:])\n\nprint(\"liste_a:\", liste_a)\nprint(\"liste_b:\", liste_b)"
+     "vorgabe": "def erledige_ersten(auftraege):\n    auftrag = auftraege.pop(0)\n    print(f\"erledigt: {auftrag}\")\n\nliste_a = [\"Drucker\", \"Router\", \"Laptop\"]\nliste_b = [\"Drucker\", \"Router\", \"Laptop\"]\n\nerledige_ersten(liste_a)\nerledige_ersten(liste_b[:])\n\nprint(\"liste_a:\", liste_a)\nprint(\"liste_b:\", liste_b)",
+     "loesung": "print(\"Erwartet: liste_a verliert Drucker, liste_b bleibt vollstaendig\")\n\ndef erledige_ersten(auftraege):\n    auftrag = auftraege.pop(0)\n    print(f\"erledigt: {auftrag}\")\n\nliste_a = [\"Drucker\", \"Router\", \"Laptop\"]\nliste_b = [\"Drucker\", \"Router\", \"Laptop\"]\n\nerledige_ersten(liste_a)\nerledige_ersten(liste_b[:])\n\nprint(\"liste_a:\", liste_a)\nprint(\"liste_b:\", liste_b)"
     },
     {
      "titel": "Der Vorrat ist nach dem Aufruf verschwunden",
      "aufgabe": "Die Vorgabe arbeitet alle offenen Aufträge ab und soll danach einen Bericht darüber ausgeben, welche Aufträge anlagen. Sie läuft ohne Fehlermeldung durch, und der Bericht bleibt trotzdem leer. Repariere das Programm, ohne die Funktion zu ändern. Fertig, wenn: fünf Zeilen erscheinen: die Berichtsüberschrift, drei Auftragszeilen und die Liste der erledigten Aufträge.",
      "tipp": "Die Funktion bearbeitet zwei Listen, und für jede gilt dasselbe: Jede Veränderung wirkt nach außen. Die Schleife läuft, bis der Vorrat leer ist — und genau diesen Vorrat soll der Bericht danach noch aufzählen. Die Lösung besteht aus drei Zeichen im Aufruf.",
-     "vorgabe": "def arbeite_ab(offen, erledigt):\n    while offen:\n        auftrag = offen.pop(0)\n        erledigt.append(auftrag)\n\noffene_auftraege = [\"Drucker\", \"Router\", \"Laptop\"]\nerledigte_auftraege = []\n\narbeite_ab(offene_auftraege, erledigte_auftraege)\n\nprint(\"Bericht - diese Auftraege lagen an:\")\nfor auftrag in offene_auftraege:\n    print(f\"- {auftrag}\")\nprint(f\"erledigt: {erledigte_auftraege}\")"
+     "vorgabe": "def arbeite_ab(offen, erledigt):\n    while offen:\n        auftrag = offen.pop(0)\n        erledigt.append(auftrag)\n\noffene_auftraege = [\"Drucker\", \"Router\", \"Laptop\"]\nerledigte_auftraege = []\n\narbeite_ab(offene_auftraege, erledigte_auftraege)\n\nprint(\"Bericht - diese Auftraege lagen an:\")\nfor auftrag in offene_auftraege:\n    print(f\"- {auftrag}\")\nprint(f\"erledigt: {erledigte_auftraege}\")",
+     "loesung": "def arbeite_ab(offen, erledigt):\n    while offen:\n        auftrag = offen.pop(0)\n        erledigt.append(auftrag)\n\noffene_auftraege = [\"Drucker\", \"Router\", \"Laptop\"]\nerledigte_auftraege = []\n\narbeite_ab(offene_auftraege[:], erledigte_auftraege)\n\nprint(\"Bericht - diese Auftraege lagen an:\")\nfor auftrag in offene_auftraege:\n    print(f\"- {auftrag}\")\nprint(f\"erledigt: {erledigte_auftraege}\")"
     }
    ]
   },
@@ -380,30 +411,35 @@
      "titel": "Zwei Zeilen zu früh und zwei Klammern zu wenig",
      "aufgabe": "Die Vorgabe soll den Dienstplan zweimal ausgeben. Sie startet nicht. Repariere sie in zwei Schritten mit jeweils einem Lauf dazwischen: Der erste Lauf endet mit einer Fehlermeldung, der zweite läuft durch, gibt aber immer noch zu wenig aus. Fertig, wenn: vier Zeilen erscheinen — der Dienstplan aus zwei Zeilen, zweimal hintereinander.",
      "tipp": "Python arbeitet die Datei von oben nach unten ab. Lies die erste Fehlermeldung wörtlich: Sie behauptet nicht, der Name sei falsch geschrieben, sondern dass es ihn an dieser Stelle noch nicht gibt. Nimm dir danach die letzte Zeile vor und vergleiche sie mit einem richtigen Aufruf.",
-     "vorgabe": "zeige_dienstplan()\n\ndef zeige_dienstplan():\n    print(\"Fruehdienst: Hartmann\")\n    print(\"Spaetdienst: Kessler\")\n\nzeige_dienstplan"
+     "vorgabe": "zeige_dienstplan()\n\ndef zeige_dienstplan():\n    print(\"Fruehdienst: Hartmann\")\n    print(\"Spaetdienst: Kessler\")\n\nzeige_dienstplan",
+     "loesung": "def zeige_dienstplan():\n    print(\"Fruehdienst: Hartmann\")\n    print(\"Spaetdienst: Kessler\")\n\nzeige_dienstplan()\nzeige_dienstplan()"
     },
     {
      "titel": "Einmal Absturz, einmal stiller Unsinn",
      "aufgabe": "Die Vorgabe soll einen Ausgabezettel mit drei Zeilen erzeugen. Sie enthält zwei Fehler sehr unterschiedlicher Art. Repariere sie in zwei Schritten mit jeweils einem Lauf dazwischen: Der erste Lauf bricht ab, der zweite läuft durch und behauptet trotzdem etwas Falsches. Ändere dabei die Funktion selbst nicht. Fertig, wenn: drei Zeilen erscheinen, in denen die Geräte Laptop, Headset und Beamer in den Räumen 214, 107 und 301 stehen.",
      "tipp": "Der erste Fehler steht in der letzten Zeile und wird von Python gemeldet; vergleiche das beschriftete Argument zeichenweise mit dem Parameter in der Definition. Den zweiten Fehler meldet niemand — lies die ausgegebenen Zeilen und frage dich, ob sie inhaltlich stimmen können. Gegen Fehler dieser Art hilft, jeden Wert zu beschriften.",
-     "vorgabe": "def melde_ausgabe(geraet, raum):\n    print(f\"{geraet} wurde in Raum {raum} ausgegeben.\")\n\nmelde_ausgabe(\"Laptop\", \"214\")\nmelde_ausgabe(\"107\", \"Headset\")\nmelde_ausgabe(\"Beamer\", raeum=\"301\")"
+     "vorgabe": "def melde_ausgabe(geraet, raum):\n    print(f\"{geraet} wurde in Raum {raum} ausgegeben.\")\n\nmelde_ausgabe(\"Laptop\", \"214\")\nmelde_ausgabe(\"107\", \"Headset\")\nmelde_ausgabe(\"Beamer\", raeum=\"301\")",
+     "loesung": "def melde_ausgabe(geraet, raum):\n    print(f\"{geraet} wurde in Raum {raum} ausgegeben.\")\n\nmelde_ausgabe(geraet=\"Laptop\", raum=\"214\")\nmelde_ausgabe(geraet=\"Headset\", raum=\"107\")\nmelde_ausgabe(geraet=\"Beamer\", raum=\"301\")"
     },
     {
      "titel": "Gezählt wird nur bis zum ersten Treffer",
      "aufgabe": "Die Vorgabe soll zählen, wie viele Prüfungen bestanden wurden — bestanden ist alles bis einschließlich Note 4. Sie läuft ohne Fehlermeldung durch und behauptet, es sei genau eine. Finde die Ursache und repariere sie. Fertig, wenn: die Zeile bestanden: 3 erscheint.",
      "tipp": "return verlässt nicht die Schleife, sondern die ganze Funktion. Was passiert also beim allerersten Durchlauf, wenn die erste Note bereits bestanden ist? Du brauchst einen Zähler, der hochgezählt wird, und ein return an einer Stelle, die erst nach der Schleife erreicht wird.",
-     "vorgabe": "def zaehle_bestandene(noten):\n    for note in noten:\n        if note <= 4:\n            return 1\n    return 0\n\nergebnisse = [2, 5, 3, 4, 6]\nprint(f\"bestanden: {zaehle_bestandene(ergebnisse)}\")"
+     "vorgabe": "def zaehle_bestandene(noten):\n    for note in noten:\n        if note <= 4:\n            return 1\n    return 0\n\nergebnisse = [2, 5, 3, 4, 6]\nprint(f\"bestanden: {zaehle_bestandene(ergebnisse)}\")",
+     "loesung": "def zaehle_bestandene(noten):\n    treffer = 0\n    for note in noten:\n        if note <= 4:\n            treffer += 1\n    return treffer\n\nergebnisse = [2, 5, 3, 4, 6]\nprint(f\"bestanden: {zaehle_bestandene(ergebnisse)}\")"
     },
     {
      "titel": "Eine Funktion benutzt die andere",
      "aufgabe": "Baue eine Wochenabrechnung aus zwei Funktionen. berechne_tagessatz liefert aus Stunden und Stundensatz den Tageslohn zurück. berechne_woche bekommt eine Liste von Tagesstunden und den Stundensatz, ruft für jeden Tag die erste Funktion auf, summiert deren Rückgabewerte und liefert die Wochensumme zurück. Rufe berechne_woche mit der Wochenliste und einem Stundensatz von 18.5 auf, gib die Wochensumme aus und darunter dieselbe Summe mit zehn Prozent Zuschlag, auf zwei Stellen gerundet. Fertig, wenn: zwei Zeilen erscheinen: Wochenlohn: 740.0 Euro und Mit Zuschlag: 814.0 Euro",
      "tipp": "In berechne_woche legst du vor der Schleife einen Zähler auf 0 und addierst in jedem Durchlauf den Rückgabewert der anderen Funktion dazu. Das return steht erst nach der Schleife. Dass eine Funktion eine andere aufruft, ist nichts Besonderes — Hauptsache, beide sind vorher definiert.",
-     "vorgabe": "woche = [8, 9, 7, 10, 6]"
+     "vorgabe": "woche = [8, 9, 7, 10, 6]",
+     "loesung": "def berechne_tagessatz(stunden, stundensatz):\n    return stunden * stundensatz\n\ndef berechne_woche(tage, stundensatz):\n    gesamt = 0\n    for stunden in tage:\n        gesamt += berechne_tagessatz(stunden, stundensatz)\n    return gesamt\n\nwoche = [8, 9, 7, 10, 6]\nsumme = berechne_woche(woche, 18.5)\nprint(f\"Wochenlohn:   {summe} Euro\")\nprint(f\"Mit Zuschlag: {round(summe * 1.1, 2)} Euro\")"
     },
     {
      "titel": "Ein eigenes kleines Programm",
      "aufgabe": "Schreibe ein eigenes Programm zur Bewerbungsverwaltung. Es muss mindestens zwei eigene Funktionen benutzen, von denen mindestens eine etwas mit return zurückgibt. Als Daten dient eine Liste von Dictionaries mit mindestens drei Bewerbern, von denen jeder einen Namen und eine Anzahl Dienstjahre trägt. Das Programm soll die Bewerber mit genügend Dienstjahren ermitteln, sie auflisten und die Anzahl melden. Welche Auswahl du triffst, wie du die Funktionen nennst und welche Grenze du setzt, entscheidest du selbst. Fertig, wenn: dein Programm eine Überschrift, eine Liste der passenden Bewerber und eine Anzahl ausgibt — und wenn du zu jeder deiner Funktionen in einem Satz sagen kannst, ob sie etwas zurückgibt oder etwas tut.",
-     "tipp": "Eine bewährte Aufteilung: Eine Funktion sucht und gibt eine neue Liste mit den Treffern zurück, die andere zeigt eine Liste an und gibt nichts zurück. Innen brauchst du das Muster aus Aufgabe 7.4.04 — leere Liste, Schleife, append(), return — und für den Zugriff auf die Einträge die eckigen Klammern aus Bereich 6."
+     "tipp": "Eine bewährte Aufteilung: Eine Funktion sucht und gibt eine neue Liste mit den Treffern zurück, die andere zeigt eine Liste an und gibt nichts zurück. Innen brauchst du das Muster aus Aufgabe 7.4.04 — leere Liste, Schleife, append(), return — und für den Zugriff auf die Einträge die eckigen Klammern aus Bereich 6.",
+     "loesung": "def finde_passende(bewerbungen, mindestjahre):\n    treffer = []\n    for person in bewerbungen:\n        if person[\"dienstjahre\"] >= mindestjahre:\n            treffer.append(person[\"name\"])\n    return treffer\n\ndef zeige_liste(ueberschrift, namen):\n    print(ueberschrift)\n    for name in namen:\n        print(f\"- {name}\")\n\nbewerbungen = [\n    {\"name\": \"Hartmann\", \"dienstjahre\": 14},\n    {\"name\": \"Kessler\", \"dienstjahre\": 6},\n    {\"name\": \"Lorenz\", \"dienstjahre\": 9},\n]\n\npassende = finde_passende(bewerbungen, 8)\nzeige_liste(\"Mit mindestens acht Dienstjahren:\", passende)\nprint(f\"Anzahl: {len(passende)}\")"
     }
    ]
   }

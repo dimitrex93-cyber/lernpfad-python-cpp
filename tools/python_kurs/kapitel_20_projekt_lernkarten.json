@@ -1,0 +1,149 @@
+{
+ "id": "projekt_lernkarten",
+ "titel": "Kapitel 20: Projekt – Lernkarten-Trainer",
+ "einleitung": "Ein Projekt über mehrere Tage: Du baust einen Lernkarten-Trainer, der Begriffe abfragt, Antworten prüft, mitzählt und die Karten am Ende speichert. Jeden Tag kommt eine Stufe dazu, und jede Stufe baut auf der vorigen auf. Kein Grund zur Panik: Du wächst mit den Aufgaben, nicht gegen sie.",
+ "abschnitte": [
+  {
+   "titel": "Worum es geht",
+   "python": {
+    "text": "Der Lernkarten-Trainer entsteht an mehreren Tagen und wächst mit dem Stoff. Am Mittwoch entsteht die Kartei aus zwei Listen, dazu Ausgeben, Suchen und Aussortieren mit Schleifen. Am Donnerstag wird daraus ein Dictionary, und alles wird in Funktionen verpackt. Am Freitag kommen dauerhaftes Speichern, das Abfangen von Abstürzen und eine Statistik dazu. Das Ziel am Ende: Begriffe abfragen, Antworten prüfen, mitzählen wie oft du richtig lagst und die Karten behalten."
+   },
+   "checkliste": [
+    "Stufe 1: Kartei als zwei Listen, Ausgabe mit Schleife, Suchen und Aussortieren",
+    "Stufe 2: Kartei als Dictionary, Abfrage und Auswertung in Funktionen",
+    "Stufe 3: dauerhaft speichern, Abstürze abfangen, Statistik (folgt am Freitag)"
+   ],
+   "merk": "Ein Projekt, drei Stufen – jede baut auf der vorigen auf."
+  },
+  {
+   "titel": "Stufe 1 – Kartei mit Listen und Schleifen",
+   "python": {
+    "text": "An Tag 3 entsteht die Kartei selbst: zwei Listen, eine für die Begriffe und eine für die Erklärungen. Dazu kommen Ausgeben, nummeriertes Ausgeben, Suchen, Aussortieren und eine kleine Auswertung. Am Ende steht eine Abfrage, die läuft, bis jemand quit tippt."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Schritt 1 — Die Kartei anlegen",
+     "aufgabe": "Eine Lernkarte hat zwei Seiten: vorne ein Begriff, hinten die Erklärung. Python kennt noch keine Karten — aber zwei Listen, die gleich lang sind, tun dasselbe: Was in begriffe an Platz 0 steht, wird in erklaerungen an Platz 0 erklärt. Lege die beiden Listen an und gib aus, wie viele Karten die Kartei hat. Prüfe im selben Atemzug, ob beide Listen wirklich gleich lang sind. Fertig, wenn: zwei Zeilen erscheinen: die Anzahl 5 und ein Satz, der bestätigt, dass beide Listen gleich lang sind.",
+     "tipp": "len() gibt die Länge einer Liste. Zwei Längen vergleicht man mit == — und das Ergebnis ist eine Bedingung, die in ein if passt.",
+     "loesung": "begriffe = ['variable', 'liste', 'index', 'schleife', 'bedingung']\nerklaerungen = [\n    'ein Name, der an einem Wert haengt',\n    'mehrere Werte in einer festen Reihenfolge',\n    'die Nummer eines Platzes in einer Liste',\n    'wiederholt Befehle fuer jedes Element',\n    'eine Frage mit der Antwort True oder False',\n]\n\nprint(len(begriffe))\n\nif len(begriffe) == len(erklaerungen):\n    print('Die Kartei ist in Ordnung: zu jedem Begriff gibt es eine Erklaerung.')\nelse:\n    print('Achtung: die beiden Listen sind verschieden lang.')"
+    },
+    {
+     "titel": "Schritt 2 — Alle Karten ausgeben",
+     "aufgabe": "Jetzt sollen alle Karten erscheinen — Vorderseite und Rückseite in einer Zeile. Das ist der Moment, in dem die Schleife von heute Vormittag gebraucht wird. Eine gewöhnliche for-Schleife über begriffe liefert nur die Vorderseite; du brauchst aber zu jedem Begriff auch die Erklärung am gleichen Platz. Dafür läufst du nicht über die Werte, sondern über die Plätze. Fertig, wenn: fünf Zeilen erscheinen, jede im Muster begriff — erklaerung.",
+     "tipp": "range(len(begriffe)) liefert genau die gültigen Plätze: 0, 1, 2, 3, 4. Innerhalb der Schleife kommst du dann mit begriffe[platz] und erklaerungen[platz] an beide Seiten der Karte.",
+     "loesung": "begriffe = ['variable', 'liste', 'index', 'schleife', 'bedingung']\nerklaerungen = [\n    'ein Name, der an einem Wert haengt',\n    'mehrere Werte in einer festen Reihenfolge',\n    'die Nummer eines Platzes in einer Liste',\n    'wiederholt Befehle fuer jedes Element',\n    'eine Frage mit der Antwort True oder False',\n]\n\nfor platz in range(len(begriffe)):\n    print(f'{begriffe[platz]} — {erklaerungen[platz]}')"
+    },
+    {
+     "titel": "Schritt 3 — Nummeriert und sauber untereinander",
+     "aufgabe": "Eine Kartei ohne Nummern ist unübersichtlich. Gib dieselben fünf Karten noch einmal aus, diesmal durchnummeriert ab 1 — nicht ab 0, denn die Nummer ist für Menschen. Setze eine Überschrift darüber und eine Schlusszeile darunter, die die Anzahl nennt. Beide gehören nicht in die Schleife. Fertig, wenn: eine Überschrift, fünf nummerierte Zeilen (1. bis 5.), eine Schlusszeile mit der Anzahl.",
+     "tipp": "Die Nummer für Menschen ist platz + 1. Was einmal laufen soll, steht ganz links; was je Karte laufen soll, steht vier Leerzeichen weiter rechts.",
+     "loesung": "begriffe = ['variable', 'liste', 'index', 'schleife', 'bedingung']\nerklaerungen = [\n    'ein Name, der an einem Wert haengt',\n    'mehrere Werte in einer festen Reihenfolge',\n    'die Nummer eines Platzes in einer Liste',\n    'wiederholt Befehle fuer jedes Element',\n    'eine Frage mit der Antwort True oder False',\n]\n\nprint('Meine Lernkarten')\n\nfor platz in range(len(begriffe)):\n    nummer = platz + 1\n    print(f'{nummer}. {begriffe[platz]}: {erklaerungen[platz]}')\n\nprint(f'Insgesamt {len(begriffe)} Karten.')"
+    },
+    {
+     "titel": "Schritt 4 — Eine Karte suchen",
+     "aufgabe": "Der Trainer soll eine einzelne Karte heraussuchen können. Lege eine Variable gesucht mit dem Wert 'index' an. Prüfe zuerst, ob dieser Begriff überhaupt in der Kartei steht. Wenn ja, suche seinen Platz und gib die Erklärung aus. Wenn nein, sag es deutlich. Teste dein Programm danach ein zweites Mal mit einem Begriff, den es nicht gibt — zum Beispiel 'funktion'. Fertig, wenn: mit 'index' erscheint die passende Erklärung, mit 'funktion' die Meldung, dass die Karte fehlt. Das Programm stürzt in keinem der beiden Fälle ab.",
+     "tipp": "Erst fragen, dann hineingreifen: if gesucht in begriffe:. Den Platz findest du mit einer Schleife über range(len(begriffe)) und einem if begriffe[platz] == gesucht: darin.",
+     "loesung": "begriffe = ['variable', 'liste', 'index', 'schleife', 'bedingung']\nerklaerungen = [\n    'ein Name, der an einem Wert haengt',\n    'mehrere Werte in einer festen Reihenfolge',\n    'die Nummer eines Platzes in einer Liste',\n    'wiederholt Befehle fuer jedes Element',\n    'eine Frage mit der Antwort True oder False',\n]\n\ngesucht = 'index'\n\nif gesucht in begriffe:\n    for platz in range(len(begriffe)):\n        if begriffe[platz] == gesucht:\n            print(f'{gesucht}: {erklaerungen[platz]}')\nelse:\n    print(f'Zu \"{gesucht}\" gibt es noch keine Karte.')"
+    },
+    {
+     "titel": "Schritt 5 — Eine Karte aussortieren",
+     "aufgabe": "Eine Karte sitzt — sie soll aus der Kartei verschwinden. Sortiere 'liste' aus. Achtung, hier lauert eine Falle. Wenn du den Begriff entfernst, die Erklärung aber stehen lässt, passen Vorder- und Rückseiten nicht mehr zusammen: Ab der Lücke erklärt jede Karte den falschen Begriff. Es gibt keine Fehlermeldung — das Programm läuft weiter und erzählt Unsinn. Entferne deshalb beides am selben Platz. Gib danach alle verbliebenen Karten aus und prüfe, ob die Zuordnung noch stimmt. Fertig, wenn: vier Karten bleiben übrig, jede mit der richtigen Erklärung, und beide Listen sind weiterhin gleich lang.",
+     "tipp": "Suche in einer Schleife erst den Platz des Begriffs und merke ihn dir in einer Variablen. Lösche nicht in der Schleife — eine Liste zu verändern, während man sie durchläuft, bringt sie durcheinander. Erst nach der Schleife entfernst du mit del liste[platz] beide Einträge.",
+     "loesung": "begriffe = ['variable', 'liste', 'index', 'schleife', 'bedingung']\nerklaerungen = [\n    'ein Name, der an einem Wert haengt',\n    'mehrere Werte in einer festen Reihenfolge',\n    'die Nummer eines Platzes in einer Liste',\n    'wiederholt Befehle fuer jedes Element',\n    'eine Frage mit der Antwort True oder False',\n]\n\nweg = 'liste'\ngefunden = -1\n\nfor platz in range(len(begriffe)):\n    if begriffe[platz] == weg:\n        gefunden = platz\n\nif gefunden >= 0:\n    del begriffe[gefunden]\n    del erklaerungen[gefunden]\nelse:\n    print(f'Die Karte \"{weg}\" gibt es gar nicht.')\n\nprint(len(begriffe), len(erklaerungen))\n\nfor platz in range(len(begriffe)):\n    print(f'{begriffe[platz]} — {erklaerungen[platz]}')"
+    },
+    {
+     "titel": "Schritt 6 — Eine kleine Auswertung",
+     "aufgabe": "Zum Schluss soll der Trainer etwas über die Kartei sagen. Baue mit dem Muster leere Liste, Schleife, append() eine Liste aller Begriffslängen auf. Gib dann aus: wie viele Karten es sind, wie lang der längste Begriff ist und wie viele Begriffe länger als sechs Zeichen sind. Das Zählen der langen Begriffe ist der Zähler von heute Nachmittag — er gehört vor die Schleife. Fertig, wenn: drei Zeilen mit Anzahl, größter Länge und der Anzahl langer Begriffe. Die Ausgangslisten sind unverändert.",
+     "tipp": "len('schleife') ergibt 8. max() arbeitet mit einer Liste aus Zahlen. Der Zähler wird vor der Schleife auf 0 gesetzt und im if mit += 1 erhöht.",
+     "loesung": "begriffe = ['variable', 'liste', 'index', 'schleife', 'bedingung']\nerklaerungen = [\n    'ein Name, der an einem Wert haengt',\n    'mehrere Werte in einer festen Reihenfolge',\n    'die Nummer eines Platzes in einer Liste',\n    'wiederholt Befehle fuer jedes Element',\n    'eine Frage mit der Antwort True oder False',\n]\n\nlaengen = []\nlange_begriffe = 0\n\nfor begriff in begriffe:\n    laengen.append(len(begriff))\n    if len(begriff) > 6:\n        lange_begriffe += 1\n\nprint(f'Karten: {len(begriffe)}')\nprint(f'Laengster Begriff: {max(laengen)} Zeichen')\nprint(f'Begriffe ueber 6 Zeichen: {lange_begriffe}')"
+    },
+    {
+     "titel": "Schritt 8 — Eine Karte abfragen",
+     "aufgabe": "Jetzt wird aus der Kartei ein Trainer. Eine echte Lernkarte zeigt zuerst nur die Vorderseite — man überlegt selbst, und erst dann dreht man sie um. Zeig den ersten Begriff und warte, bis der Benutzer Enter drückt. Danach deck die Erklärung auf. Hinweis zum Notebook: Bei input() erscheint unter der Zelle ein Eingabefeld, und die Zelle bleibt mit [] markiert, bis du Enter drückst. Das ist kein Absturz — das Programm wartet auf dich. Fertig, wenn: der Begriff erscheint als Frage, nach Enter steht die Erklärung darunter.",
+     "tipp": "input() darf man auch benutzen, ohne das Ergebnis zu behalten — wenn es nur ums Warten geht. Der Aufforderungstext darf ein f-String sein.",
+     "loesung": "begriffe = ['variable', 'liste', 'index', 'schleife', 'bedingung']\nerklaerungen = [\n    'ein Name, der an einem Wert haengt',\n    'mehrere Werte in einer festen Reihenfolge',\n    'die Nummer eines Platzes in einer Liste',\n    'wiederholt Befehle fuer jedes Element',\n    'eine Frage mit der Antwort True oder False',\n]\n\nplatz = 0\n\ninput(f'{begriffe[platz]} — was bedeutet das? (Enter zeigt die Antwort) ')\nprint(erklaerungen[platz])"
+    },
+    {
+     "titel": "Schritt 9 — Alle Karten durchgehen und mitzählen",
+     "aufgabe": "Eine Karte ist kein Training. Geh alle Karten durch: Begriff zeigen, Enter abwarten, Erklärung aufdecken, dann fragen, ob es gewusst wurde. Zähle mit, wie oft die Antwort j lautet, und gib am Ende das Ergebnis aus — 3 von 5 gewusst. Das ist die Schleife von heute Vormittag und der Zähler aus dem zweiten Block, zusammen in einem Programm. Fertig, wenn: jede der fünf Karten wird abgefragt, am Ende erscheint eine Zeile mit der Trefferzahl.",
+     "tipp": "Der Zähler gehört vor die Schleife. Die Bewertung säuberst du vor dem Vergleich: bewertung.strip().lower() == 'j'.",
+     "loesung": "begriffe = ['variable', 'liste', 'index', 'schleife', 'bedingung']\nerklaerungen = [\n    'ein Name, der an einem Wert haengt',\n    'mehrere Werte in einer festen Reihenfolge',\n    'die Nummer eines Platzes in einer Liste',\n    'wiederholt Befehle fuer jedes Element',\n    'eine Frage mit der Antwort True oder False',\n]\n\nrichtig = 0\n\nfor platz in range(len(begriffe)):\n    print()\n    input(f'{begriffe[platz]} — was bedeutet das? (Enter) ')\n    print(erklaerungen[platz])\n    bewertung = input('Gewusst? (j/n) ')\n    if bewertung.strip().lower() == 'j':\n        richtig += 1\n\nprint()\nprint(f'{richtig} von {len(begriffe)} gewusst.')"
+    }
+   ],
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Schritt 7 — Zugabe — die Kartei als Abfrage vorbereiten",
+     "aufgabe": "Der Trainer soll abfragen: Er zeigt die Vorderseite, wartet auf eine Eingabe und deckt dann die Rückseite auf. Das input() dafür kommt heute im dritten Block. Hier bereitest du es vor: Gib die Karten so aus, dass die Rückseite verdeckt ist — statt der Erklärung erscheint eine Reihe Sterne, genau so viele, wie die Erklärung Zeichen hat. Fertig, wenn: fünf Zeilen, jede mit dem Begriff und dahinter einer Sternenreihe in der Länge der Erklärung.",
+     "tipp": "Ein Text lässt sich vervielfachen: '' 5 ergibt . Die Länge der Erklärung bekommst du mit len().",
+     "loesung": "begriffe = ['variable', 'liste', 'index', 'schleife', 'bedingung']\nerklaerungen = [\n    'ein Name, der an einem Wert haengt',\n    'mehrere Werte in einer festen Reihenfolge',\n    'die Nummer eines Platzes in einer Liste',\n    'wiederholt Befehle fuer jedes Element',\n    'eine Frage mit der Antwort True oder False',\n]\n\nfor platz in range(len(begriffe)):\n    verdeckt = '*' * len(erklaerungen[platz])\n    print(f'{begriffe[platz]}: {verdeckt}')"
+    },
+    {
+     "titel": "Schritt 10 — Nachschlagen, bis jemand quit tippt",
+     "aufgabe": "Zum Schluss die while-Schleife aus dem dritten Block: ein Nachschlagewerk, das so lange fragt, bis der Benutzer quit tippt. Fragt jemand nach einem Begriff, der in der Kartei steht, gib die Erklärung aus. Steht er nicht drin, sag es — aber brich nicht ab. Erst quit beendet. Achtung: Wenn die Schleife nicht aufhört, ist der Stopp-Knopf oben (das Quadrat) dein Notausgang. Fertig, wenn: mehrere Begriffe lassen sich nacheinander nachschlagen, unbekannte werden gemeldet, quit beendet mit einer Abschiedszeile.",
+     "tipp": "Das Muster ist anlegen, prüfen, verändern: gesucht = '' vor der Schleife, while gesucht != 'quit': als Bedingung, und im Körper wird gesucht durch input() neu belegt. Den Platz findest du wie in Schritt 4.",
+     "loesung": "begriffe = ['variable', 'liste', 'index', 'schleife', 'bedingung']\nerklaerungen = [\n    'ein Name, der an einem Wert haengt',\n    'mehrere Werte in einer festen Reihenfolge',\n    'die Nummer eines Platzes in einer Liste',\n    'wiederholt Befehle fuer jedes Element',\n    'eine Frage mit der Antwort True oder False',\n]\n\ngesucht = ''\n\nwhile gesucht != 'quit':\n    print()\n    gesucht = input('Welchen Begriff nachschlagen? (quit beendet) ')\n    if gesucht in begriffe:\n        for platz in range(len(begriffe)):\n            if begriffe[platz] == gesucht:\n                print(erklaerungen[platz])\n    elif gesucht != 'quit':\n        print('Diese Karte gibt es noch nicht.')\n\nprint('Bis zum naechsten Mal.')"
+    }
+   ],
+   "merk": "Zwei Listen, eine Schleife – die Kartei lebt."
+  },
+  {
+   "titel": "Stufe 2 – Dictionary und Funktionen",
+   "python": {
+    "text": "An Tag 4 wird der Trainer aufgeräumt: Aus zwei Listen wird ein Dictionary, der Begriff ist der Schlüssel, die Erklärung der Wert. Alles wandert in Funktionen, die Werte zurückgeben statt Text auszugeben. Am Ende steht ein Menü, das alle Teile zusammenhält."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Schritt 1 — Aus zwei Listen wird eine Kartei",
+     "aufgabe": "Gestern lag deine Kartei in zwei Listen: begriffe und erklaerungen. Das war unbequem — bei jeder Änderung musstest du an zwei Stellen aufräumen, und Schritt 5 ist genau daran fast gescheitert. Heute wird daraus ein Dictionary: Der Begriff ist der Schlüssel, die Erklärung der Wert. Damit gehören beide Seiten einer Karte zusammen, und zwar für immer. Lege die Kartei an, gib aus, wie viele Karten sie hat, und schlage eine Karte nach. Fertig, wenn: zwei Zeilen erscheinen: 5 und darunter die Nummer eines Platzes in einer Liste.",
+     "tipp": "Geschweifte Klammern, Doppelpunkt zwischen Schlüssel und Wert, Komma zwischen den Paaren. len() zählt beim Dictionary die Paare, nicht die Zeichen.",
+     "loesung": "kartei = {\n    'variable': 'ein Name, der an einem Wert haengt',\n    'liste': 'mehrere Werte in einer festen Reihenfolge',\n    'index': 'die Nummer eines Platzes in einer Liste',\n    'schleife': 'wiederholt Befehle fuer jedes Element',\n    'bedingung': 'eine Frage mit der Antwort True oder False',\n}\n\nprint(len(kartei))\nprint(kartei['index'])"
+    },
+    {
+     "titel": "Schritt 2 — Nachschlagen, ohne abzustürzen",
+     "aufgabe": "Mit eckigen Klammern bricht das Programm ab, sobald jemand nach einer Karte fragt, die es nicht gibt. Für einen Trainer, der Eingaben entgegennimmt, ist das untragbar. Schlage zwei Begriffe nach — einen vorhandenen und einen, den es nicht gibt — und sorge dafür, dass beide Zeilen erscheinen, ohne dass das Programm abbricht. Zum fehlenden Begriff soll Diese Karte gibt es noch nicht. stehen. Fertig, wenn: zwei Zeilen erscheinen: die Erklärung zu schleife und darunter Diese Karte gibt es noch nicht.",
+     "tipp": ".get() nimmt einen zweiten Wert: Den liefert es, wenn der Schlüssel fehlt — kartei.get('funktion', 'Ersatztext'). Runde Klammern, denn .get() ist eine Methode.",
+     "loesung": "kartei = {\n    'variable': 'ein Name, der an einem Wert haengt',\n    'liste': 'mehrere Werte in einer festen Reihenfolge',\n    'index': 'die Nummer eines Platzes in einer Liste',\n    'schleife': 'wiederholt Befehle fuer jedes Element',\n    'bedingung': 'eine Frage mit der Antwort True oder False',\n}\n\nprint(kartei.get('schleife', 'Diese Karte gibt es noch nicht.'))\nprint(kartei.get('funktion', 'Diese Karte gibt es noch nicht.'))"
+    },
+    {
+     "titel": "Schritt 3 — Die erste eigene Funktion",
+     "aufgabe": "Das Ausgeben aller Karten brauchst du heute noch mehrmals. Also bekommt es einen Namen. Schreibe eine Funktion zeige_alle(kartei), die eine Überschrift ausgibt, danach jede Karte nummeriert ab 1, und zum Schluss eine Zeile mit der Anzahl. Rufe sie zweimal auf — einmal genügt nicht, um zu zeigen, dass es sich lohnt. Fertig, wenn: der ganze Block erscheint zweimal: Meine Lernkarten, fünf Zeilen von 1. variable: ... bis 5. bedingung: ..., dann 5 Karten.",
+     "tipp": "for begriff, erklaerung in kartei.items(): gibt dir beide Seiten der Karte auf einen Griff. Die Nummer zählst du selbst mit — ein Zähler vor der Schleife, += 1 im Körper. Überschrift und Schlusszeile gehören in die Funktion, aber nicht in die Schleife.",
+     "loesung": "kartei = {\n    'variable': 'ein Name, der an einem Wert haengt',\n    'liste': 'mehrere Werte in einer festen Reihenfolge',\n    'index': 'die Nummer eines Platzes in einer Liste',\n    'schleife': 'wiederholt Befehle fuer jedes Element',\n    'bedingung': 'eine Frage mit der Antwort True oder False',\n}\n\ndef zeige_alle(kartei):\n    print('Meine Lernkarten')\n    nummer = 0\n    for begriff, erklaerung in kartei.items():\n        nummer += 1\n        print(f'{nummer}. {begriff}: {erklaerung}')\n    print(f'{len(kartei)} Karten.')\n\n\nzeige_alle(kartei)\nzeige_alle(kartei)"
+    },
+    {
+     "titel": "Schritt 4 — Eine Karte eintragen — und melden, ob es geklappt hat",
+     "aufgabe": "Jetzt eine Funktion, die nicht nur etwas tut, sondern auch Bescheid gibt. karte_hinzufuegen(kartei, begriff, erklaerung) trägt eine neue Karte ein und gibt True zurück. Gibt es den Begriff schon, ändert sie nichts und gibt False zurück — sonst würde eine alte Erklärung stillschweigend überschrieben. Rufe sie zweimal auf: einmal mit funktion, einmal mit liste. Werte beide Rückgaben mit einem if aus. Fertig, wenn: zwei Zeilen: funktion eingetragen. und darunter liste gibt es schon - nichts geaendert.",
+     "tipp": "if begriff in kartei: fragt nach dem Schlüssel, genau was du hier brauchst. return beendet die Funktion sofort — du brauchst also kein else, wenn das return im if steht. Den Rückgabewert fängst du beim Aufruf auf: erfolg = karte_hinzufuegen(...).",
+     "loesung": "kartei = {\n    'variable': 'ein Name, der an einem Wert haengt',\n    'liste': 'mehrere Werte in einer festen Reihenfolge',\n    'index': 'die Nummer eines Platzes in einer Liste',\n    'schleife': 'wiederholt Befehle fuer jedes Element',\n    'bedingung': 'eine Frage mit der Antwort True oder False',\n}\n\ndef karte_hinzufuegen(kartei, begriff, erklaerung):\n    if begriff in kartei:\n        return False\n    kartei[begriff] = erklaerung\n    return True\n\n\nif karte_hinzufuegen(kartei, 'funktion', 'ein Stueck Programm mit einem Namen'):\n    print('funktion eingetragen.')\nelse:\n    print('funktion gibt es schon - nichts geaendert.')\n\nif karte_hinzufuegen(kartei, 'liste', 'etwas ganz anderes'):\n    print('liste eingetragen.')\nelse:\n    print('liste gibt es schon - nichts geaendert.')"
+    },
+    {
+     "titel": "Schritt 5 — Eine Karte aussortieren",
+     "aufgabe": "Gestern war das Aussortieren der schwierigste Schritt: zwei Listen, zwei Stellen, und eine Falle dazwischen. Heute ist es eine Zeile. Schreibe karte_entfernen(kartei, begriff). Die Funktion nimmt die Karte heraus und gibt die Erklärung zurück, die darauf stand — damit der Aufrufer noch etwas davon hat. Gibt es die Karte nicht, gibt sie None zurück und stürzt nicht ab. Rufe sie zweimal auf und prüfe das Ergebnis jeweils mit einem if. Fertig, wenn: zwei Zeilen: Entfernt: mehrere Werte in einer festen Reihenfolge und darunter Die Karte funktion gab es nicht.",
+     "tipp": ".pop() kennst du vom Dictionary: kartei.pop(begriff, None) nimmt heraus und liefert den Wert — oder None, wenn der Schlüssel fehlt, ganz ohne Absturz. Ob etwas zurückkam, prüfst du mit if erklaerung is not None: oder kurz if erklaerung:.",
+     "loesung": "kartei = {\n    'variable': 'ein Name, der an einem Wert haengt',\n    'liste': 'mehrere Werte in einer festen Reihenfolge',\n    'index': 'die Nummer eines Platzes in einer Liste',\n    'schleife': 'wiederholt Befehle fuer jedes Element',\n    'bedingung': 'eine Frage mit der Antwort True oder False',\n}\n\ndef karte_entfernen(kartei, begriff):\n    return kartei.pop(begriff, None)\n\n\nweg = karte_entfernen(kartei, 'liste')\nif weg:\n    print(f'Entfernt: {weg}')\nelse:\n    print('Die Karte liste gab es nicht.')\n\nweg = karte_entfernen(kartei, 'funktion')\nif weg:\n    print(f'Entfernt: {weg}')\nelse:\n    print('Die Karte funktion gab es nicht.')"
+    },
+    {
+     "titel": "Schritt 6 — Die Auswertung gibt Daten zurück, nicht Text",
+     "aufgabe": "Eine Funktion, die ihr Ergebnis nur ausgibt, ist eine Sackgasse: Man kann nicht damit weiterrechnen. Deshalb wird hier getrennt — rechnen und ausgeben sind zwei Aufgaben. Schreibe auswertung(kartei). Sie gibt ein Dictionary zurück mit drei Angaben: der Anzahl der Karten, dem längsten Begriff und dessen Länge. Sie gibt selbst nichts aus — das macht erst der Aufrufer. Fertig, wenn: zwei Zeilen: das vollständige Ergebnis-Dictionary und darunter Laengster Begriff: bedingung (9 Zeichen).",
+     "tipp": "Such den längsten Begriff mit einer Schleife über kartei: eine Variable vor der Schleife, im Körper vergleichen, ob der aktuelle Begriff länger ist. Das Ergebnis-Dictionary baust du am Ende der Funktion und gibst es mit return zurück. Zugriff darauf danach wie gewohnt über die Schlüssel.",
+     "loesung": "kartei = {\n    'variable': 'ein Name, der an einem Wert haengt',\n    'liste': 'mehrere Werte in einer festen Reihenfolge',\n    'index': 'die Nummer eines Platzes in einer Liste',\n    'schleife': 'wiederholt Befehle fuer jedes Element',\n    'bedingung': 'eine Frage mit der Antwort True oder False',\n}\n\ndef auswertung(kartei):\n    laengster = ''\n    for begriff in kartei:\n        if len(begriff) > len(laengster):\n            laengster = begriff\n    return {\n        'anzahl': len(kartei),\n        'laengster': laengster,\n        'laenge': len(laengster),\n    }\n\n\nergebnis = auswertung(kartei)\nprint(ergebnis)\nprint(f\"Laengster Begriff: {ergebnis['laengster']} ({ergebnis['laenge']} Zeichen)\")"
+    },
+    {
+     "titel": "Schritt 7 — Die Abfrage, verpackt",
+     "aufgabe": "Jetzt die Abfrage von gestern — aber in einer Funktion, und mit return. frage_ab(kartei) geht alle Karten durch: Begriff zeigen, Enter abwarten, Erklärung aufdecken, fragen ob gewusst. Am Ende gibt sie die Zahl der Treffer zurück und gibt selbst nichts darüber aus. Das Ergebnis wertet der Aufrufer aus — bei mindestens der Hälfte gibt er eine Lobzeile aus, sonst eine Aufforderung zum Wiederholen. Fertig, wenn: alle Karten werden abgefragt, danach erscheint je nach Trefferzahl Gut gemacht: 4 von 5. oder Noch einmal ueben: 1 von 5.",
+     "tipp": "Der Trefferzähler gehört vor die Schleife, das return hinter die Schleife. Im Aufrufer: treffer = frage_ab(kartei), dann if treffer >= len(kartei) / 2:.",
+     "loesung": "kartei = {\n    'variable': 'ein Name, der an einem Wert haengt',\n    'liste': 'mehrere Werte in einer festen Reihenfolge',\n    'index': 'die Nummer eines Platzes in einer Liste',\n    'schleife': 'wiederholt Befehle fuer jedes Element',\n    'bedingung': 'eine Frage mit der Antwort True oder False',\n}\n\ndef frage_ab(kartei):\n    treffer = 0\n    for begriff, erklaerung in kartei.items():\n        print()\n        input(f'{begriff} - was bedeutet das? (Enter) ')\n        print(erklaerung)\n        if input('Gewusst? (j/n) ').strip().lower() == 'j':\n            treffer += 1\n    return treffer\n\n\nrichtig = frage_ab(kartei)\n\nif richtig >= len(kartei) / 2:\n    print(f'Gut gemacht: {richtig} von {len(kartei)}.')\nelse:\n    print(f'Noch einmal ueben: {richtig} von {len(kartei)}.')"
+    }
+   ],
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Schritt 8 — Zugabe — ein Menü, das alles zusammenhält",
+     "aufgabe": "Alle Bausteine liegen jetzt als Funktionen vor. Bau daraus ein Programm, das wiederholt fragt, was der Benutzer tun will, und die passende Funktion aufruft: - a — alle Karten anzeigen - f — abfragen - s — Auswertung anzeigen - q — beenden Bei einer unbekannten Eingabe sagt das Programm das und fragt weiter. Das ist die while-Schleife von gestern, die Entscheidung von Dienstag und die Funktionen von heute — in einem Programm. Fertig, wenn: das Menü erscheint wiederholt, jede Auswahl ruft die passende Funktion auf, q beendet mit Bis zum naechsten Mal.",
+     "tipp": "Das Muster ist wahl = '' vor der Schleife, while wahl != 'q': als Bedingung, und im Körper wird wahl durch input() neu belegt. Danach eine if/elif/else-Kette. Die Funktionen aus den Schritten 3, 6 und 7 kopierst du unverändert darüber.",
+     "loesung": "kartei = {\n    'variable': 'ein Name, der an einem Wert haengt',\n    'liste': 'mehrere Werte in einer festen Reihenfolge',\n    'index': 'die Nummer eines Platzes in einer Liste',\n    'schleife': 'wiederholt Befehle fuer jedes Element',\n    'bedingung': 'eine Frage mit der Antwort True oder False',\n}\n\ndef zeige_alle(kartei):\n    print('Meine Lernkarten')\n    nummer = 0\n    for begriff, erklaerung in kartei.items():\n        nummer += 1\n        print(f'{nummer}. {begriff}: {erklaerung}')\n    print(f'{len(kartei)} Karten.')\n\n\ndef auswertung(kartei):\n    laengster = ''\n    for begriff in kartei:\n        if len(begriff) > len(laengster):\n            laengster = begriff\n    return {'anzahl': len(kartei), 'laengster': laengster}\n\n\nwahl = ''\n\nwhile wahl != 'q':\n    print()\n    wahl = input('(a)nzeigen  (s)tatistik  (q)uit: ').strip().lower()\n    if wahl == 'a':\n        zeige_alle(kartei)\n    elif wahl == 's':\n        print(auswertung(kartei))\n    elif wahl != 'q':\n        print('Das kenne ich nicht.')\n\nprint('Bis zum naechsten Mal.')"
+    }
+   ],
+   "merk": "Erst das Dictionary, dann die Funktionen – so wird der Code kurz."
+  }
+ ]
+}
