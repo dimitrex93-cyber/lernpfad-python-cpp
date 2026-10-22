@@ -29,6 +29,383 @@
    },
    "vergleich": "Lokale und globale Variablen funktionieren in beiden Sprachen gleich. C++ hat zusätzlich namespaces (std::). So stoßen Namen nicht zusammen.",
    "merk": "Lokale Variablen schlagen globale. C++: std:: = namespace."
+  },
+  {
+   "titel": "Aufbau einer Funktion: Kopfzeile und Körper",
+   "python": {
+    "text": "Eine Funktion ist kein vierter Baustein. Jedes Programm besteht aus Sequenz, Entscheidung und Schleife. Die Funktion ist Verpackung. Sie fasst fertige Bausteine zusammen und gibt ihnen einen Namen. Stell dir eine Schublade mit Etikett vor. Der Inhalt bleibt derselbe, aber du findest ihn sofort wieder. Die Definition beginnt mit dem Wort def. Danach kommen der Name, ein Klammerpaar und ein Doppelpunkt. Die Zeilen darunter rückst du ein. Diese eingerückten Zeilen heißen Funktionskörper. Beginnt eine Zeile wieder links am Rand, ist die Funktion zu Ende. Eine Funktion ohne Klammern ist nur der Name. Erst der Aufruf mit Klammern lässt den Körper laufen. Drei Begrüßungen waren vorher neun Zeilen. Jetzt sind es fünf Zeilen Definition und zwei Aufrufe. Liegt der Schlüssel morgen in einem anderen Fach, änderst du eine Zeile statt drei.",
+    "code": "def begruessen(name):\n    \"\"\"Begrüßt eine Person und nennt das Schließfach.\"\"\"\n    print(f\"Guten Morgen, {name}.\")\n    print(\"Dein Schlüssel liegt im Fach 3.\")\n\nbegruessen(\"Mara\")\nbegruessen(\"Jonas\")"
+   },
+   "vergleich": "Dreimal hingeschrieben: neun Zeilen und drei Stellen zum Ändern. Einmal verpackt: eine Stelle zum Ändern, beliebig viele Aufrufe.",
+   "merk": "def schreibt den Plan auf, die Klammern führen ihn aus."
+  },
+  {
+   "titel": "Definiert heißt noch nicht ausgeführt",
+   "python": {
+    "text": "Eine Definition ist ein Plan, kein Auftrag. Python liest sie beim Start und merkt sich den Namen mit dem Körper. Sonst passiert nichts. Fehlt der Aufruf, erscheint keine Ausgabe. Die Reihenfolge ist Pflicht. Python arbeitet die Datei von oben nach unten ab. Steht der Aufruf über der Definition, kennt Python den Namen noch nicht. Die Meldung lautet dann NameError. Sie sagt nicht falsch geschrieben und nicht kaputt. Sie sagt: Der Name existiert an dieser Stelle nicht. Drei Zeilen weiter würde er existieren, aber da ist das Programm schon abgestürzt. Dieselbe Meldung kommt bei einem Tippfehler im Namen. Prüfe darum zwei Dinge. Ist der Name richtig geschrieben? Steht die Definition über dem Aufruf? In der Praxis stehen oben alle Definitionen und unten das Programm, das sie benutzt.",
+    "code": "try:\n    begruessen()\nexcept NameError as fehler:\n    print(\"NameError:\", fehler)\n\ndef begruessen():\n    print(\"Guten Morgen.\")\n\nbegruessen()"
+   },
+   "vergleich": "Aufruf über der Definition: Abbruch mit NameError. Definition oben und Aufruf unten: das Programm läuft.",
+   "merk": "Erst definieren, dann aufrufen."
+  },
+  {
+   "titel": "Parameter oder Argument?",
+   "python": {
+    "text": "Eine Funktion, die immer dasselbe tut, hilft nur begrenzt. Drei Namen brauchen drei verschiedene Begrüßungen. In die Klammern kommt alles, was sich von Aufruf zu Aufruf ändert. Was gleich bleibt, steht im Körper. Für die zwei Seiten gibt es zwei Wörter. Ein Parameter ist der Name in der Definition. Er ist ein leeres Fach mit einer Beschriftung. Ein Argument ist der Wert im Aufruf. Er ist das, was du in das Fach legst. Im Beispiel ist name der Parameter und Mara das Argument. Im Körper verhält sich name wie eine ganz normale Variable. Sie enthält genau den Wert aus dem Aufruf. Draußen heißt die Sache vielleicht anders. Drinnen gilt nur der Parameter.",
+    "code": "def begruessen(name):\n    print(f\"Guten Morgen, {name}.\")\n\nbegruessen(\"Mara\")\nbegruessen(\"Jonas\")"
+   },
+   "vergleich": "Parameter steht in der Definition, Argument steht im Aufruf.",
+   "merk": "P wie Plan: Parameter. A wie Ausführung: Argument."
+  },
+  {
+   "titel": "Mehrere Parameter: die Stelle entscheidet",
+   "python": {
+    "text": "Hat eine Funktion mehrere Parameter, braucht jeder beim Aufruf einen Wert. Ohne Namen entscheidet die Stelle. Das erste Argument landet im ersten Parameter, das zweite im zweiten. Solche Werte heißen Positionsargumente. Vertauschst du sie, merkt Python nichts. Beide Werte sind Text, beide passen. Das Programm stürzt nicht ab, es gibt nur Unsinn aus. Ein falscher Raum auf dem Ausgabezettel fällt niemandem auf. Ein Absturz würde auffallen. Fehlt dagegen ein Argument, meldet sich Python deutlich. Der TypeError nennt die Funktion, das fehlende Argument und den Namen des Parameters. Auch zu viele Argumente werden abgelehnt. Die Zahl muss stimmen.",
+    "code": "def melde_ausgabe(geraet, raum):\n    print(f\"{geraet} wurde in Raum {raum} ausgegeben.\")\n\nmelde_ausgabe(\"Laptop\", \"214\")\nmelde_ausgabe(\"214\", \"Laptop\")\n\ntry:\n    melde_ausgabe(\"Laptop\")\nexcept TypeError as fehler:\n    print(\"TypeError:\", fehler)"
+   },
+   "vergleich": "Vertauschte Stellen: kein Absturz, nur ein falsches Ergebnis. Fehlendes Argument: TypeError mit dem Parameternamen.",
+   "merk": "Ohne Namen entscheidet die Stelle, nicht die Bedeutung."
+  },
+  {
+   "titel": "Vorgabewerte",
+   "python": {
+    "text": "Oft hat ein Parameter fast immer denselben Wert. Dann schreibst du ihn in die Definition. Fehlt das Argument beim Aufruf, nimmt Python den Vorgabewert. Der Vorgabewert nimmt keine Möglichkeit weg. Er macht die Angabe nur freiwillig. Wer einen Wert übergibt, überschreibt die Vorgabe. Die Regel ist streng. Parameter mit Vorgabewert stehen hinten. Sonst wäre bei einem Aufruf mit einem Wert nicht klar, welches Fach gemeint ist. Python lehnt eine solche Definition mit SyntaxError ab. Als Vorgabewert eignen sich Zahlen, Texte, True, False und None. Eine Liste als Vorgabewert ist eine Falle. Sie wird nur ein einziges Mal angelegt und sammelt über alle Aufrufe hinweg. Die Lösung ist None als Vorgabe und eine neue Liste im Körper.",
+    "code": "def melde_ausgabe(geraet, raum=\"Lager\"):\n    print(f\"{geraet} wurde in Raum {raum} ausgegeben.\")\n\nmelde_ausgabe(\"Laptop\", \"214\")\nmelde_ausgabe(\"Headset\")\n\ndef sammle(geraet, liste=None):\n    if liste is None:\n        liste = []\n    liste.append(geraet)\n    return liste\n\nprint(sammle(\"Laptop\"))\nprint(sammle(\"Maus\"))"
+   },
+   "vergleich": "Ohne Vorgabewert ist das Argument Pflicht. Mit Vorgabewert ist es freiwillig.",
+   "merk": "Vorgabewerte stehen hinten. Eine Liste nie als Vorgabewert."
+  },
+  {
+   "titel": "Schlüsselwortargumente",
+   "python": {
+    "text": "Die Alternative zur Stelle ist der Name. Du schreibst den Wert mit dem Namen des Parameters in den Aufruf. Dann ist die Reihenfolge gleichgültig. Das Gleichheitszeichen im Aufruf ist keine Zuweisung. Es beschriftet den Wert. Vertauschen kann hier nichts mehr. Beim Mischen gilt eine Regel. Positionsargumente stehen vorn, Schlüsselwortargumente dahinter. Umgekehrt lehnt Python den Aufruf ab. Sonst wäre nicht entscheidbar, welche Stelle ein späterer Wert meint. Je mehr Werte eine Funktion nimmt, desto eher schreibst du sie mit Namen. Ein Aufruf mit drei Wahrheitswerten ist drei Wochen später nicht mehr zu entziffern.",
+    "code": "def melde_ausgabe(geraet, raum, kuerzel=\"EDV\"):\n    print(f\"[{kuerzel}] {geraet} -> Raum {raum}\")\n\nmelde_ausgabe(\"Laptop\", \"214\")\nmelde_ausgabe(raum=\"301\", geraet=\"Tastatur\", kuerzel=\"Lager\")\nmelde_ausgabe(\"Maus\", raum=\"301\")"
+   },
+   "vergleich": "Positionsargument: die Stelle zählt. Schlüsselwortargument: der Name zählt, die Reihenfolge ist egal.",
+   "merk": "Viele Werte im Aufruf immer mit Namen schreiben."
+  },
+  {
+   "titel": "return liefert einen Wert",
+   "python": {
+    "text": "Bisher haben Funktionen etwas getan. Sie haben Text ausgegeben. Jetzt kommt die wichtigere Art. Eine Funktion nimmt Werte, rechnet und gibt ein Ergebnis zurück. Der Unterschied ist wie beim Kollegen mit dem Preis. Ruft er ihn laut in den Raum, hast du ihn gehört. Schreibt er ihn auf einen Zettel, kannst du weiterrechnen. return beendet die Funktion und gibt den Wert an die aufrufende Stelle zurück. Dieser Wert heißt Rückgabewert. Der Aufruf ist danach selbst ein Wert. Er darf rechts vom Gleichheitszeichen stehen. Du kannst ihn speichern, ausgeben oder addieren. Auf dem Bildschirm erscheint dabei nichts. Wer das Ergebnis sehen will, muss es danach selbst ausgeben. Ein Aufruf ohne Zuweisung ist wirkungslos.",
+    "code": "def netto(brutto):\n    return brutto / 1.19\n\npreis = netto(119)\ngesamt = netto(119) + netto(238)\nprint(round(preis, 2))\nprint(round(gesamt, 2))"
+   },
+   "vergleich": "Mit return entsteht ein Wert zum Weiterrechnen. Mit print entsteht nur eine Zeile auf dem Bildschirm.",
+   "merk": "return gibt den Wert an das Programm zurück, nicht an den Bildschirm."
+  },
+  {
+   "titel": "return beendet die Funktion sofort",
+   "python": {
+    "text": "return tut zwei Dinge gleichzeitig. Es liefert den Wert und beendet die Funktion auf der Stelle. Was darunter steht, läuft nicht mehr. Das ist nützlich. Man prüft zuerst die Sonderfälle und steigt früh aus. Dann braucht der Normalfall keine tiefe Verschachtelung. Code nach einem unbedingten return ist toter Code. Er läuft nie und führt die Fehlersuche in die falsche Richtung. Häufig steht return zu früh in einer Schleife. Dann endet die Funktion schon im ersten Durchlauf. Der Unterschied zu break ist wichtig. break verlässt nur die Schleife. return verlässt die ganze Funktion, auch aus einer Schleife heraus. Ein return ohne Wert beendet die Funktion und liefert None.",
+    "code": "def pruefe_alter(alter):\n    if alter < 18:\n        return \"minderjährig\"\n    print(\"Diese Zeile wird bei 15 nie erreicht.\")\n    return \"volljährig\"\n\nprint(pruefe_alter(15))\nprint(pruefe_alter(42))"
+   },
+   "vergleich": "break verlässt die Schleife. return verlässt die Funktion.",
+   "merk": "return liefert den Wert und beendet die Funktion."
+  },
+  {
+   "titel": "Mehrere Werte zurückgeben",
+   "python": {
+    "text": "Eine Funktion gibt genau einen Wert zurück. Dieser eine Wert darf aber eine Sammlung sein. Schreibe mehrere Werte mit Komma hinter return, baut Python daraus ein Tupel. Ein Tupel ist wie eine Liste, nur unveränderlich. Es steht in runden Klammern. Beim Zuweisen darfst du es entpacken. Links stehen dann genauso viele Namen wie rechts Werte. Jeder Name bekommt seinen Wert. Passt die Anzahl nicht, meldet Python einen ValueError. Bei zwei oder drei Werten ist ein Tupel gut. Sobald es mehr werden, ist ein Dictionary die bessere Wahl. Dort trägt jeder Wert seinen Namen, und niemand muss sich die Reihenfolge merken.",
+    "code": "def zerlege(ganzer_name):\n    teile = ganzer_name.split()\n    return teile[0], teile[1]\n\nvorname, nachname = zerlege(\"Mara Beck\")\nprint(vorname)\nprint(nachname)\nprint(zerlege(\"Jonas Ritter\"))\n\ndef baue_datensatz(vorname, nachname, raum):\n    return {\"vorname\": vorname, \"nachname\": nachname, \"raum\": raum}\n\nmara = baue_datensatz(\"Mara\", \"Beck\", 214)\nprint(mara[\"raum\"])"
+   },
+   "vergleich": "Zwei Werte: Tupel mit Entpacken. Mehrere Werte mit verschiedenen Rollen: Dictionary mit Namen.",
+   "merk": "Ein Rückgabewert, beliebig viel Inhalt."
+  },
+  {
+   "titel": "Ohne return kommt None zurück",
+   "python": {
+    "text": "Eine Funktion ohne return gibt trotzdem etwas zurück. Es ist None. None ist der eingebaute Wert für kein Wert. Es ist nicht 0, nicht der leere Text und nicht False. Jeder Aufruf hat ein Ergebnis. Ohne return ist es eben None. Dieselbe Regel erklärt den bekanntesten Listenfehler. sort verändert die Liste an Ort und Stelle und gibt None zurück. Wer das Ergebnis in eine neue Variable legt, hat danach None in der Hand. Die Liste ist trotzdem sortiert. Der Fehler fällt erst später auf, wenn jemand auf das Ergebnis zugreift. Auch print und return werden oft verwechselt. print zeigt etwas auf dem Bildschirm. return gibt etwas an das Programm. Nur der Rückgabewert lässt sich weiterverwenden. Rechnen und Ausgeben trennt man darum besser.",
+    "code": "def begruessen(name):\n    print(f\"Guten Morgen, {name}.\")\n\nergebnis = begruessen(\"Mara\")\nprint(ergebnis)\n\nraeume = [214, 107, 301]\nsortiert = raeume.sort()\nprint(sortiert)\nprint(raeume)"
+   },
+   "vergleich": "print redet mit dem Menschen, return mit dem Programm.",
+   "merk": "Ohne return kommt None zurück. Wer eine Liste verändert, bekommt None."
+  },
+  {
+   "titel": "Namen gelten nur in der Funktion",
+   "python": {
+    "text": "Ein Name in einer Funktion gilt nur dort. Der Parameter ist ein leeres Fach, das beim Aufruf gefüllt wird. Nach dem Ende der Funktion verschwindet es wieder. Eine Variable, die im Körper entsteht, ist lokal. Außerhalb der Funktion gibt es sie nicht. Das ist Absicht. So kann jede Funktion ihre eigenen Namen benutzen, ohne mit anderen zusammenzustoßen. Im Beispiel heißt die Liste draußen kurs und drinnen namen. Es sind zwei Namen für dieselbe Sache. Die Funktion muss den äußeren Namen nicht kennen. Sie arbeitet mit dem, was sie bekommt. Darum funktioniert dieselbe Funktion mit jeder Liste von Namen.",
+    "code": "def zeige_summe(a, b):\n    summe = a + b\n    print(summe)\n\nzeige_summe(2, 3)\n\ntry:\n    print(summe)\nexcept NameError as fehler:\n    print(\"NameError:\", fehler)"
+   },
+   "vergleich": "Im Funktionskörper ist der Name sichtbar. Nach dem Aufruf ist er weg.",
+   "merk": "Was in der Funktion entsteht, gilt nur in der Funktion."
+  },
+  {
+   "titel": "Funktionen rufen Funktionen auf",
+   "python": {
+    "text": "Funktionen dürfen andere Funktionen aufrufen. Das Ergebnis der einen ist die Eingabe der nächsten. So entstehen Ketten aus kleinen Bausteinen. Jeder Baustein ist einzeln lesbar und einzeln prüfbar. Im Beispiel rechnet netto einen Preis um. Die zweite Funktion ruft netto auf und zieht den Rabatt ab. Die zweite Funktion kennt die Formel der ersten nicht. Sie kennt nur ihren Namen und ihren Rückgabewert. Das ist der Vorteil. Ändert sich der Steuersatz, änderst du nur netto. Wichtig ist die Reihenfolge. Eine aufgerufene Funktion muss vorher definiert sein. In der Praxis stehen die kleinen Helfer oben.",
+    "code": "def netto(brutto):\n    return brutto / 1.19\n\ndef mit_rabatt(brutto, prozent):\n    return netto(brutto) * (1 - prozent / 100)\n\nprint(round(netto(119), 2))\nprint(round(mit_rabatt(119, 10), 2))"
+   },
+   "vergleich": "Eine lange Funktion mit allem drin lässt sich nicht einzeln testen. Zwei kleine Funktionen schon.",
+   "merk": "Das Ergebnis der einen Funktion ist die Eingabe der nächsten."
+  },
+  {
+   "titel": "Eine Liste als Argument",
+   "python": {
+    "text": "Eine Zahl oder einen Text zu übergeben, ist harmlos. Bei einer Liste ist es anders. Eine Liste wird nicht kopiert. Die Funktion bekommt den Zugriff auf dieselbe Liste. Drinnen und draußen sind zwei Namen für eine Liste. Ändert die Funktion etwas, ist es auch draußen geändert. Das ist wie ein Schlüssel zum selben Schrank. Es wird kein zweiter Schrank gebaut. Lesen ist harmlos: durchlaufen, zählen, ein Element lesen. Verändern wirkt nach außen: anhängen, entnehmen, sortieren, überschreiben. Im Beispiel entnimmt die Funktion das erste Element. Die Funktion gibt nichts zurück, und die Liste ist trotzdem kürzer. Diese Veränderung ohne Rückgabewert heißt Nebenwirkung. Sie ist praktisch beim Abarbeiten eines Vorrats. Sie ist gefährlich, wenn man sie nicht kennt.",
+    "code": "def streiche_ersten(liste):\n    liste.pop(0)\n\nkurs = [\"Mara\", \"Jonas\", \"Sina\"]\nprint(\"vorher: \", kurs)\nstreiche_ersten(kurs)\nprint(\"nachher:\", kurs)"
+   },
+   "vergleich": "Lesen ist harmlos, Verändern wirkt nach außen.",
+   "merk": "Eine Liste wird geteilt, nicht kopiert."
+  },
+  {
+   "titel": "Eine Kopie übergeben",
+   "python": {
+    "text": "Soll das Original unberührt bleiben, übergibst du eine Kopie. Dafür gibt es eine kurze Schreibweise. Ein Abschnitt von Anfang bis Ende erzeugt eine neue Liste. liste[:] ist eine eigenständige Liste mit denselben Inhalten. Dieselbe Funktion, dasselbe Entnehmen, und das Original bleibt heil. Die Funktion hat nur die Kopie gekürzt. Danach existiert die Kopie nicht mehr, weil sie niemand festgehalten hat. Die Entscheidung trifft der Aufrufer, nicht die Funktion. Zwei Zeichen entscheiden über die Nebenwirkung. Achtung: kopie = liste ist keine Kopie. Das legt nur einen zweiten Namen für dieselbe Liste an. Eine Kopie entsteht erst mit liste[:] oder mit list(liste).",
+    "code": "def streiche_ersten(liste):\n    liste.pop(0)\n\nkurs = [\"Mara\", \"Jonas\", \"Sina\"]\nprint(\"vorher: \", kurs)\nstreiche_ersten(kurs[:])\nprint(\"nachher:\", kurs)\n\nkopie = kurs\nkurs.append(\"Ben\")\nprint(kopie)"
+   },
+   "vergleich": "funktion(liste) arbeitet am Original. funktion(liste[:]) arbeitet an einer Kopie.",
+   "merk": "kopie = liste kopiert nichts. Erst liste[:] oder list(liste) macht eine Kopie."
+  },
+  {
+   "titel": "Lesbare Namen, eine Aufgabe pro Funktion",
+   "python": {
+    "text": "Der Name ist das halbe Werkzeug. Eine Funktion wird oft an Stellen gelesen, an denen ihr Körper nicht zu sehen ist. Dort trägt allein der Name die Information. Darum heißt eine Funktion nach der Tätigkeit. Sie beginnt mit einem Verb. Die Schreibweise ist alles klein, Wörter mit Unterstrich verbunden. Sie heißt snake_case. So sind auch print, len und input benannt. Großbuchstaben am Wortanfang bleiben den Klassen vorbehalten. Eine Funktion tut eine Sache. Wer Berechnen, Drucken und Speichern in einen Namen packt, hat drei Funktionen verklebt. Beim nächsten Mal braucht man vielleicht nur die Berechnung. Auch eingebaute Namen wie list, sum oder max sind schon vergeben. Eine eigene Funktion so zu nennen überdeckt die eingebaute. Der Fehler fällt erst an einer ganz anderen Stelle auf. Ein Docstring in der ersten Körperzeile sagt kurz, was die Funktion tut. Er bleibt im Programm erhalten, ein Kommentar nicht.",
+    "code": "def zeige_teilnehmerliste():\n    \"\"\"Zeigt die Teilnehmerliste an.\"\"\"\n    print(\"Teilnehmerliste angezeigt.\")\n\ndef pruefe_anwesenheit():\n    \"\"\"Prüft die Anwesenheit.\"\"\"\n    print(\"Anwesenheit geprüft.\")\n\nzeige_teilnehmerliste()\npruefe_anwesenheit()\nprint(zeige_teilnehmerliste.__doc__)"
+   },
+   "vergleich": "daten() sagt nichts. zeige_teilnehmer() sagt, was passiert.",
+   "merk": "Eine Funktion heißt nach ihrer Tätigkeit und tut genau eine Sache."
+  },
+  {
+   "titel": "Typische Fehler bei Funktionen",
+   "python": {
+    "text": "Die meisten Fehler bei Funktionen haben wenige Ursachen. Meist ist es eine Kleinigkeit in der Kopfzeile oder ein fehlendes return. Die Checkliste zeigt die häufigen Fälle und ihre Wirkung. Der teuerste Fall steht unten. print und return sehen beim Ausprobieren gleich aus. Der Unterschied zeigt sich erst beim Weiterrechnen. Die letzte Zeile der Ausgabe nennt dann NoneType. Wer diese Meldung sieht, prüft zuerst das return der Funktion.",
+    "code": "def netto_print(brutto):\n    print(brutto / 1.19)\n\ntry:\n    summe = netto_print(119) + netto_print(238)\nexcept TypeError as fehler:\n    print(\"TypeError:\", fehler)"
+   },
+   "merk": "Bei einem TypeError über NoneType prüfst du zuerst, ob die Funktion ein return hat.",
+   "checkliste": [
+    "Klammern beim Aufruf vergessen: Es passiert nichts, und es gibt keine Fehlermeldung.",
+    "Aufruf über der Definition: NameError, weil der Name an dieser Stelle noch nicht existiert.",
+    "Doppelpunkt am Ende der def-Zeile fehlt: SyntaxError, das Programm startet gar nicht.",
+    "Körper falsch eingerückt: IndentationError, oder eine Zeile läuft ungewollt sofort beim Start.",
+    "Positionsargumente vertauscht: kein Absturz, nur ein falsches Ergebnis.",
+    "Zu wenige Argumente: TypeError mit dem Namen des fehlenden Parameters.",
+    "Parameter mit Vorgabewert vorn: SyntaxError schon beim Einlesen der Datei.",
+    "Eine Liste als Vorgabewert: Sie wird nur einmal angelegt und sammelt über alle Aufrufe hinweg.",
+    "print statt return: Der Aufruf liefert None, der Fehler kommt erst beim Weiterrechnen.",
+    "x = liste.sort(): x ist None, die Liste selbst ist aber sortiert.",
+    "kopie = liste: Das ist keine Kopie, sondern ein zweiter Name für dieselbe Liste.",
+    "return zu früh in einer Schleife: Die Funktion endet schon im ersten Durchlauf."
+   ]
+  },
+  {
+   "titel": "Pflichtaufgaben",
+   "python": {
+    "text": "Weitere Pflichtaufgaben aus dem Python-Crashkurs (Tag 4). Schreibe jede Aufgabe in eine eigene Datei und führe sie aus."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Die erste eigene Funktion",
+     "aufgabe": "Schreibe eine Funktion mit dem Namen begruessen, die zwei feste Zeilen ausgibt: Guten Morgen. und darunter Schoen, dass du da bist. Rufe sie danach einmal auf. Fertig, wenn: zwei Zeilen erscheinen — und keine mehr, solange du nur einmal aufrufst.",
+     "tipp": "Die Kopfzeile besteht aus vier Teilen: def, dem Namen, einem leeren Klammerpaar und einem Doppelpunkt. Alles, was zur Funktion gehört, steht darunter um vier Leerzeichen eingerückt. Der Aufruf ist der Name mit Klammern.",
+     "vorgabe": "def begruessen():\n    print('Guten Morgen.')\n    print('Schön, dass du da bist')\n\nbegruessen()"
+    },
+    {
+     "titel": "Eine Schleife in der Verpackung",
+     "aufgabe": "Eine Funktion darf in ihrem Körper alles enthalten, was du bisher gelernt hast. Schreibe zeige_werkzeuge, die eine Liste mit drei Werkzeugnamen anlegt und jeden Eintrag mit einem vorangestellten Bindestrich ausgibt. Benutze dafür eine for-Schleife und einen f-String. Fertig, wenn: drei Zeilen erscheinen, jede beginnt mit einem Bindestrich und einem Leerzeichen.",
+     "tipp": "Alles gehört in den Körper: die Liste, die Schleife und die Ausgabe. Der Schleifenkörper ist dann doppelt eingerückt — vier Leerzeichen für die Funktion, vier weitere für die Schleife.",
+     "vorgabe": "werkzeug = ['Schraubendreher', 'Hammer', 'Zange']\n\ndef zeige_werkzeuge(werkzeug):\n    for tool in werkzeug:\n        print(f\"- {tool}\")\n\nzeige_werkzeuge(werkzeug)"
+    },
+    {
+     "titel": "Die Beschriftung der Verpackung",
+     "aufgabe": "Schreibe eine Funktion zeige_bestand, die die Zeile Bestand: 42 Stueck ausgibt, und gib ihr als allererste Zeile des Körpers einen Docstring in dreifachen Anführungszeichen. Rufe die Funktion auf und gib danach den Docstring selbst aus. Fertig, wenn: zwei Zeilen erscheinen — die Bestandsmeldung und darunter der Beschreibungstext.",
+     "tipp": "Den aufbewahrten Text holst du mit zeige_bestand.__doc__ — zwei Unterstriche vorn, zwei hinten, ohne Klammern. Ein Kommentar mit dem Rautezeichen würde das nicht leisten, der wird nach dem Lesen weggeworfen.",
+     "vorgabe": "def zeige_bestand():\n    \"\"\"das haben wir an schrauben im lager.\"\"\"\n    print(\"Bestand: 42 Stück.\")\n\nzeige_bestand()\nprint(zeige_bestand.__doc__)"
+    },
+    {
+     "titel": "Eine Funktion ruft die nächste",
+     "aufgabe": "Baue einen Wachplan aus zwei Funktionen. zeige_trennlinie gibt eine Zeile aus zwanzig Bindestrichen aus. zeige_wachplan ruft zuerst zeige_trennlinie auf, gibt dann die Überschrift Wachplan Dienstag aus, ruft erneut zeige_trennlinie auf, listet darunter die drei Namen aus der Vorgabe mit zwei führenden Leerzeichen auf und setzt zum Schluss noch eine Trennlinie. Im Hauptprogramm steht nur ein einziger Aufruf. Fertig, wenn: sieben Zeilen erscheinen — Trennlinie, Wachplan Dienstag, Trennlinie, die drei eingerückten Namen, Trennlinie — und im Hauptprogramm genau eine Zeile steht.",
+     "tipp": "Ein Aufruf ist eine ganz gewöhnliche Anweisung — er darf deshalb auch im Körper einer anderen Funktion stehen, eingerückt wie jede andere Zeile. Dieselbe Trennlinie wird dreimal gebraucht, geschrieben wird sie einmal. Beide Definitionen stehen oben, das Hauptprogramm unten.",
+     "vorgabe": "wache = [\"Hartmann\", \"Kessler\", \"Lorenz\"]\n\ndef zeige_trennlinie():\n    print('=' * 20)\n\ndef zeige_wachplan():\n    for name in wache:\n        print(f\"- {name}\")\n\nprint('Wachplan Dienstag')\nzeige_trennlinie()\nzeige_wachplan()\nzeige_trennlinie()\nprint(\"plan ende\")"
+    },
+    {
+     "titel": "Zwei Funktionen, eine Prüfung",
+     "aufgabe": "Schreibe eine Funktion pruefe_fuhrpark, die den Fuhrpark aus der Vorgabe durchgeht und zu jeder Kategorie eine Zeile ausgibt: bei null Fahrzeugen Jeep: nicht verfuegbar, sonst Lkw: 3 einsatzbereit. Zähle im Körper mit, wie viele Kategorien leer sind, und gib nach der Schleife die Zeile 1 Kategorie ohne Fahrzeug. aus. Eine zweite Funktion melde_ende gibt Pruefung beendet. aus. Rufe beide nacheinander auf. Fertig, wenn: fünf Zeilen erscheinen: drei Fahrzeugzeilen, darunter 1 Kategorie ohne Fahrzeug. und zuletzt Pruefung beendet.",
+     "tipp": "Der Zähler wird im Körper vor der Schleife auf 0 gesetzt; stünde er darin, begänne er in jedem Durchgang von vorn. Die Meldezeile danach ist nur eine Ebene eingerückt — vier Leerzeichen für die Funktion, keine weiteren für die Schleife. Über das Dictionary läufst du mit .items() wie in Bereich 6.",
+     "vorgabe": "fuhrpark = {\"Lkw\": 3, \"Jeep\": 0, \"Bus\": 2}"
+    },
+    {
+     "titel": "Drei Namen, ein lesbares Programm",
+     "aufgabe": "Baue einen kleinen Kurstag aus drei Funktionen: pruefe_anwesenheit entscheidet mit einem if, ob der Kurs mit 11 Anwesenden beschlussfähig ist (ab 10 ja), und gibt Kurs ist beschlussfaehig. oder Zu wenige Teilnehmer. aus, zeige_teilnehmerliste gibt drei Namen aus einer Liste mit vorangestelltem Bindestrich aus, melde_kurstagende gibt Kurstag beendet. aus. Rufe alle drei nacheinander auf. Fertig, wenn: fünf Zeilen erscheinen und die letzten drei Zeilen deines Programms sich laut vorgelesen wie ein Satz anhören.",
+     "tipp": "Alle Namen werden klein geschrieben und mit Unterstrichen verbunden — das heißt snake_case und ist in Python die Regel für Funktionen. Jeder Name beginnt mit einem Verb, weil eine Funktion eine Tätigkeit ist."
+    },
+    {
+     "titel": "Vorhersage — definiert ist nicht ausgeführt",
+     "aufgabe": "In der Vorgabe stehen zwei vollständige Funktionen. Eine davon wird ohne Klammern „aufgerufen\". Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage, welche Zeilen erscheinen werden. Übernimm erst danach die Vorgabe und führe aus. Fertig, wenn: nach deiner Vorhersagezeile genau eine weitere Zeile erscheint — und keine Fehlermeldung.",
+     "tipp": "Vergleiche die beiden letzten Zeilen Zeichen für Zeichen. Der Unterschied sind zwei Klammern — und die Klammern sind der Befehl „führ das jetzt aus\".",
+     "vorgabe": "def melde_start():\n    print(\"Start gemeldet.\")\n\ndef melde_ende():\n    print(\"Ende gemeldet.\")\n\nmelde_start\nmelde_ende()"
+    },
+    {
+     "titel": "Ein Wert von außen",
+     "aufgabe": "Schreibe eine Funktion begruesse_teilnehmer, die einen Parameter name hat und damit eine Zeile nach dem Muster Guten Morgen, Hartmann. ausgibt. Rufe sie dreimal mit drei verschiedenen Namen auf. Fertig, wenn: drei verschiedene Begrüßungszeilen erscheinen, obwohl die Ausgabe nur einmal im Code steht.",
+     "tipp": "In die Klammern der Definition kommt der Name des Fachs, in die Klammern des Aufrufs der Wert, der hineingelegt wird. Im Körper verhält sich name wie eine ganz normale Variable und passt in einen f-String."
+    },
+    {
+     "titel": "Eine Funktion in der Schleife",
+     "aufgabe": "Schreibe eine Funktion drucke_namensschild, die zu einem übergebenen Namen ein kleines Schild aus drei Zeilen ausgibt: eine Linie, der eingerückte Name, noch eine Linie. Lege danach eine Liste mit drei Namen an und rufe die Funktion in einer for-Schleife für jeden Namen auf. Fertig, wenn: neun Zeilen erscheinen, also drei vollständige Schilder.",
+     "tipp": "Die Schleifenvariable aus for name in teilnehmer: ist genau das, was in die Klammern des Aufrufs gehört. Die Funktion muss dafür nichts wissen und nichts ändern — sie wird einfach mehrmals mit verschiedenen Werten aufgerufen."
+    },
+    {
+     "titel": "Der Name statt der Stelle",
+     "aufgabe": "Schreibe eine Funktion melde_lehrgang mit den Parametern teilnehmer und lehrgang. Rufe sie zweimal auf und beschrifte beide Male jeden Wert mit dem Parameternamen. Beim zweiten Aufruf drehst du die Reihenfolge der beiden Angaben absichtlich um. Fertig, wenn: beide Zeilen nach dem Muster Hartmann ist fuer Gabelstapler gemeldet. lauten — auch die zweite, obwohl die Aufrufe verschieden aufgebaut sind.",
+     "tipp": "Ein Schlüsselwortargument wird als parametername=wert geschrieben. Das Gleichheitszeichen ist hier keine Zuweisung an eine Variable, sondern die Beschriftung des Wertes."
+    },
+    {
+     "titel": "Ein Wert, der meistens stimmt",
+     "aufgabe": "Schreibe eine Funktion melde_abgabe mit den Parametern geraet und zustand, wobei zustand den Vorgabewert \"in Ordnung\" trägt und die Funktion eine Zeile nach dem Muster Laptop: in Ordnung ausgibt. Rufe sie dreimal auf: zweimal ohne Zustandsangabe, einmal mit. Fertig, wenn: drei Zeilen erscheinen und zwei davon den Zustand in Ordnung melden, ohne dass er im Aufruf steht.",
+     "tipp": "Der Vorgabewert steht in der Definition, direkt hinter dem Parameter: zustand=\"in Ordnung\". Im Aufruf darf die Angabe dann weggelassen werden."
+    },
+    {
+     "titel": "Vorgabewert trifft Schleife",
+     "aufgabe": "Schreibe eine Funktion melde_tankstand mit den Parametern fahrzeug, liter und reserve, wobei reserve den Vorgabewert 20 trägt. Liegt der Tankstand unter der Reserve, gibt die Funktion Lkw: 12 Liter - auftanken aus, sonst Jeep: 45 Liter - in Ordnung. Gehe die Tankstände aus der Vorgabe in einer Schleife durch und rufe die Funktion für jedes Fahrzeug ohne Reserveangabe auf. Hänge danach einen einzelnen Aufruf für den Bus an, bei dem du die Reserve als Schlüsselwortargument auf 25 setzt. Fertig, wenn: vier Zeilen erscheinen und der Bus mit denselben 20 Litern zuerst als Bus: 20 Liter - in Ordnung und danach als Bus: 20 Liter - auftanken gemeldet wird.",
+     "tipp": "Aus .items() kommen in jedem Durchgang zwei Werte, und genau diese beiden gehören in die Klammern des Aufrufs. Den dritten Wert lässt du dort weg — dann greift der Vorgabewert. Im letzten Aufruf schreibst du ihn mit Namen hin: reserve=25.",
+     "vorgabe": "tankstaende = {\"Jeep\": 45, \"Lkw\": 12, \"Bus\": 20}"
+    },
+    {
+     "titel": "Eine Nummer, ein Name, ein Status",
+     "aufgabe": "Schreibe eine Funktion drucke_eintrag mit den Parametern nummer, name und status, wobei status den Vorgabewert \"offen\" trägt und die Funktion eine Zeile nach dem Muster 1. Hartmann [offen] ausgibt. Gehe danach die Bewerberliste aus der Vorgabe in einer Schleife durch und rufe die Funktion für jeden Namen auf. Die Nummer zählst du dabei selbst hoch, beginnend bei 1. Für Kessler — und nur für ihn — übergibst du zusätzlich den Status eingeladen als Schlüsselwortargument. Fertig, wenn: drei Zeilen erscheinen: 1. Hartmann [offen], 2. Kessler [eingeladen] und 3. Lorenz [offen].",
+     "tipp": "Der Zähler ist eine ganz gewöhnliche Variable: vor der Schleife auf 1 setzen, am Ende jedes Durchgangs um eins erhöhen. Welcher der beiden Aufrufe gebraucht wird, entscheidet ein if im Schleifenrumpf — zwei Aufrufe derselben Funktion, einmal mit und einmal ohne dritten Wert.",
+     "vorgabe": "bewerber = [\"Hartmann\", \"Kessler\", \"Lorenz\"]"
+    },
+    {
+     "titel": "Ein Fach bleibt leer",
+     "aufgabe": "Die Vorgabe gibt eine Zeile aus und stürzt dann ab. Lies die Fehlermeldung vollständig — sie nennt die betroffene Funktion, die Art des Problems und sogar den Namen dessen, was fehlt. Repariere den fehlerhaften Aufruf. Fertig, wenn: zwei Zeilen erscheinen und keine Fehlermeldung mehr.",
+     "tipp": "Zähle die Parameter in der Definition und die Argumente im zweiten Aufruf. Python ist hier streng: Die Zahl muss stimmen, und der letzte Teil der Meldung in Anführungszeichen verrät genau, welches Fach leer geblieben ist.",
+     "vorgabe": "def melde_bewerbung(name, stelle):\n    print(f\"{name} bewirbt sich auf {stelle}.\")\n\nmelde_bewerbung(\"Hartmann\", \"Lagerlogistik\")\nmelde_bewerbung(\"Kessler\")"
+    },
+    {
+     "titel": "Vorhersage — zweimal dieselben Werte",
+     "aufgabe": "In der Vorgabe steht derselbe Aufruf zweimal, nur mit vertauschten Werten. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage: Wie viele Ausgabezeilen gibt es, und wie viele Fehlermeldungen? Übernimm erst danach die Vorgabe und führe aus. Fertig, wenn: nach deiner Vorhersagezeile zwei Zeilen erscheinen, von denen die zweite inhaltlich Unsinn ist — ohne dass Python etwas bemängelt.",
+     "tipp": "Frage dich nicht, ob die Werte sinnvoll sind, sondern nur, ob sie passen: Wie viele Argumente verlangt die Funktion, und wie viele bekommt sie? Bedeutung kann Python nicht prüfen.",
+     "vorgabe": "def melde_uebergabe(geraet, raum):\n    print(f\"{geraet} wurde in Raum {raum} uebergeben.\")\n\nmelde_uebergabe(\"Laptop\", \"214\")\nmelde_uebergabe(\"214\", \"Laptop\")"
+    },
+    {
+     "titel": "Ein Dictionary als Argument",
+     "aufgabe": "Schreibe eine Funktion zeige_bestand, die ein Dictionary mit Artikeln und Mengen entgegennimmt und zu jedem Eintrag meldet, ob nachbestellt werden muss. Die Grenze kommt als zweiter Parameter mindestmenge mit dem Vorgabewert 5. Rufe die Funktion zweimal auf — einmal ohne Grenze, einmal mit der Grenze 10 — und trenne beide Durchläufe durch eine Zeile mit drei Bindestrichen. Fertig, wenn: sieben Zeilen erscheinen und die Säge im ersten Durchlauf in Ordnung ist, im zweiten aber nachbestellt werden muss.",
+     "tipp": "Ein Dictionary wird genauso übergeben wie jeder andere Wert — es steht beim Aufruf einfach in den Klammern. Im Körper durchläufst du es mit for artikel, menge in lager.items(): wie in Bereich 6.",
+     "vorgabe": "bestand = {\"Hammer\": 12, \"Zange\": 3, \"Saege\": 5}"
+    },
+    {
+     "titel": "Das erste `return`",
+     "aufgabe": "Schreibe eine Funktion berechne_tagessatz, die aus Stundenzahl und Stundensatz den Tageslohn berechnet und ihn zurückgibt. In der Funktion selbst darf kein print stehen. Rufe sie mit 8 Stunden und einem Stundensatz von 18.5 auf, speichere das Ergebnis in einer Variablen und gib es erst danach in einem vollständigen Satz aus. Fertig, wenn: genau eine Zeile erscheint: Tagessatz: 148.0 Euro",
+     "tipp": "Hinter return steht der Wert, der zurückgehen soll — hier eine Rechnung. Der Aufruf berechne_tagessatz(8, 18.5) ist danach selbst ein Wert und darf rechts vom Gleichheitszeichen stehen wie eine Zahl."
+    },
+    {
+     "titel": "Mehrere Ausgänge",
+     "aufgabe": "Schreibe eine Funktion ermittle_stufe, die aus den Dienstjahren eine Stufe ermittelt: ab 12 Jahren Stufe 3, ab 8 Stufe 2, ab 4 Stufe 1, in allen übrigen Fällen „ohne Stufe\". Jeder Zweig gibt seinen Text mit return zurück. Prüfe die Funktion mit 14, 9 und 2 Dienstjahren. Fertig, wenn: drei Zeilen erscheinen: Stufe 3, Stufe 2, ohne Stufe",
+     "tipp": "Eine Funktion darf mehrere return-Anweisungen haben; jede ist ein eigener Ausgang. Für den letzten Fall brauchst du nicht einmal ein else — wenn kein Zweig vorher gegriffen hat, läuft der Ablauf einfach bis zum letzten return weiter."
+    },
+    {
+     "titel": "Einen Datensatz zurückgeben",
+     "aufgabe": "Schreibe eine Funktion baue_datensatz, die aus Name, Dienstjahren und Lehrgang ein Dictionary baut und dieses zurückgibt. Rufe sie mit Jens Hartmann, 14 Dienstjahren und dem Lehrgang Gabelstapler auf, gib den gelieferten Datensatz einmal vollständig aus und danach nur die Dienstjahre daraus. Fertig, wenn: zwei Zeilen erscheinen, die erste in geschweiften Klammern, die zweite nur 14.",
+     "tipp": "Baue das Dictionary im Körper in einer Variablen auf und gib diese Variable mit return zurück. Aus dem gelieferten Dictionary holst du einen Wert wie gewohnt über den Schlüssel in eckigen Klammern."
+    },
+    {
+     "titel": "Die Falle mit `sort`",
+     "aufgabe": "Schreibe ein Programm, das denselben Vorgang zweimal zeigt. Zuerst der falsche Weg: eine Stundenliste mit sort() sortieren, das Ergebnis in einer Variablen auffangen und beides ausgeben. Danach der richtige Weg: eine zweite Liste mit sorted() sortieren, das Ergebnis auffangen und wieder beides ausgeben. Fertig, wenn: vier Zeilen erscheinen, die erste lautet None, die letzte zeigt eine unsortierte Liste.",
+     "tipp": "Frage dich bei jeder Zeile zweierlei: Was passiert mit der Liste selbst, und was kommt als Rückgabewert heraus? Die beiden Antworten sind bei sort() und bei sorted() genau vertauscht."
+    },
+    {
+     "titel": "Das Ergebnis entscheidet",
+     "aufgabe": "Schreibe eine Funktion ist_geeignet, die Dienstjahre und eine Grenze mindestjahre mit dem Vorgabewert 8 entgegennimmt und True oder False zurückgibt. In der Funktion darf kein print stehen. Gehe danach die Bewerber aus der Vorgabe in einer Schleife durch und setze den Rückgabewert direkt hinter if: Wer geeignet ist, bekommt die Zeile Hartmann: geeignet, wer nicht, die Zeile Kessler: nicht geeignet. Zähle die Geeigneten mit und gib zum Schluss die Zeile 2 von 3 sind geeignet. aus. Fertig, wenn: vier Zeilen erscheinen und die letzte 2 von 3 sind geeignet. lautet.",
+     "tipp": "Hinter return darf ein Vergleich stehen — er wird zuerst ausgerechnet, und das Ergebnis ist bereits True oder False. Ein if mit return True und einem else mit return False tut dasselbe, ist aber drei Zeilen länger. Der Aufruf passt danach ohne Umweg hinter if.",
+     "vorgabe": "bewerber = {\"Hartmann\": 14, \"Kessler\": 6, \"Lorenz\": 9}"
+    },
+    {
+     "titel": "Der erste Treffer genügt",
+     "aufgabe": "Schreibe eine Funktion finde_ersten_mangel, die einen Lagerbestand und eine Mindestmenge entgegennimmt. Sie durchsucht den Bestand und gibt die Bezeichnung des ersten Postens zurück, der unter der Mindestmenge liegt; findet sie keinen, gibt sie den leeren Text \"\" zurück. Rufe sie für den Bestand aus der Vorgabe nacheinander mit den Grenzen 5 und 2 auf und melde das Ergebnis je Grenze in einer Zeile — entweder Grenze 5: zuerst nachbestellen - Weste oder Grenze 2: alle Posten ausreichend. Fertig, wenn: zwei Zeilen erscheinen: Grenze 5: zuerst nachbestellen - Weste und Grenze 2: alle Posten ausreichend.",
+     "tipp": "Hier ist das vorzeitige return ausdrücklich erwünscht: Sobald der erste Treffer feststeht, ist die Funktion fertig und muss nicht weitersuchen. Das zweite return steht nach der Schleife auf derselben Einrückungsebene wie sie — es wird nur erreicht, wenn kein Durchgang vorher ausgestiegen ist. Für die beiden Grenzen genügt eine Schleife über die Liste [5, 2].",
+     "vorgabe": "bestand = {\"Helm\": 24, \"Weste\": 3, \"Stiefel\": 31}"
+    },
+    {
+     "titel": "Vorhersage — was steckt in der Variablen?",
+     "aufgabe": "Die Vorgabe enthält eine Funktion, die ihr Ergebnis ausgibt. Der Aufrufer fängt den Rückgabewert trotzdem in einer Variablen auf und gibt diese aus. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage, was die beiden folgenden Zeilen ausgeben werden. Übernimm erst danach die Vorgabe und führe aus. Fertig, wenn: nach deiner Vorhersagezeile zwei Zeilen erscheinen, von denen die zweite nicht die Zahl der ersten wiederholt.",
+     "tipp": "Suche im Funktionskörper nach einem return. Findest du keins — was bekommt dann die Variable ergebnis? Jeder Aufruf in Python hat ein Ergebnis, auch wenn keins bestimmt wurde.",
+     "vorgabe": "def zeige_tagessatz(stunden, stundensatz):\n    print(stunden * stundensatz)\n\nergebnis = zeige_tagessatz(8, 18.5)\nprint(ergebnis)"
+    },
+    {
+     "titel": "Zwei Zahlen auf dem Bildschirm und trotzdem ein Absturz",
+     "aufgabe": "Die Vorgabe soll die beiden Nettopreise zu 119 und 238 Euro addieren und die Summe melden. Beide Zahlen erscheinen tatsächlich — und dann stürzt das Programm ab. Lies die Fehlermeldung und repariere die Funktion. Danach soll nur noch die Summenzeile erscheinen. Fertig, wenn: genau eine Zeile erscheint: Gesamt netto: 300.0 Euro",
+     "tipp": "Addiert werden nicht die ausgegebenen Zahlen, sondern die Rückgabewerte. Steht in der Meldung das Wort NoneType, prüfe als Erstes, ob die aufgerufene Funktion überhaupt ein return hat.",
+     "vorgabe": "def netto(brutto):\n    print(round(brutto / 1.19, 2))\n\ngesamt = netto(119) + netto(238)\nprint(f\"Gesamt netto: {gesamt} Euro\")"
+    },
+    {
+     "titel": "Eine Liste nur lesen",
+     "aufgabe": "Schreibe eine Funktion zeige_dienstplan, die eine Liste von Namen entgegennimmt und jeden Namen mit vorangestelltem Bindestrich ausgibt. Rufe sie mit einer Liste aus drei Namen auf und gib die Liste danach noch einmal vollständig aus. Fertig, wenn: vier Zeilen erscheinen und die letzte die Liste unverändert zeigt.",
+     "tipp": "Eine Liste wird übergeben wie jeder andere Wert: Sie steht beim Aufruf in den Klammern, in der Definition fängt ein Parameter sie auf. Im Körper verhält sie sich wie jede Liste — du kannst darüber schleifen, als hätte sie dort immer gelegen."
+    },
+    {
+     "titel": "Die Funktion verändert das Original",
+     "aufgabe": "Schreibe eine Funktion trage_nach, die eine Liste und einen Namen entgegennimmt und den Namen an die Liste anhängt. Die Funktion gibt nichts zurück. Gib die Liste vor und nach dem Aufruf aus. Fertig, wenn: zwei Zeilen erscheinen und die zweite einen Eintrag mehr enthält als die erste.",
+     "tipp": "Im Körper genügt eine einzige Zeile mit append(). Kein return, keine Rückgabe — und trotzdem ist die Liste draußen danach länger."
+    },
+    {
+     "titel": "Eine Kopie übergeben",
+     "aufgabe": "Schreibe eine Funktion kuerze_auf_drei, die so lange das letzte Element aus einer Liste entfernt, bis nur noch drei übrig sind, und die gekürzte Liste dann ausgibt. Rufe sie so auf, dass die Originalliste mit fünf Bewerbern unverändert bleibt, und gib das Original danach aus. Fertig, wenn: zwei Zeilen erscheinen — die gekürzte Liste mit drei Namen und darunter das vollständige Original mit fünf.",
+     "tipp": "Die Entscheidung trifft nicht die Funktion, sondern der Aufruf: Zwei Zeichen hinter dem Listennamen erzeugen einen Abschnitt von Anfang bis Ende und damit eine vollständige, eigenständige neue Liste. Für die Schleife eignet sich while mit len().",
+     "vorgabe": "bewerber = [\"Hartmann\", \"Kessler\", \"Lorenz\", \"Brandt\", \"Weiss\"]"
+    },
+    {
+     "titel": "Jedes Fahrzeug nur einmal nennen",
+     "aufgabe": "Schreibe eine Funktion ohne_doppelte, die eine Liste von Fahrzeugnamen entgegennimmt und eine neue Liste zurückgibt, in der jeder Name nur noch einmal vorkommt — in der Reihenfolge des ersten Auftretens. Die übergebene Liste darf dabei nicht verändert werden. Gib jedes Fahrzeug der neuen Liste mit vorangestelltem Bindestrich aus, darunter die Zeile 6 Fahrten mit 3 Fahrzeugen. und zum Schluss die unveränderte Einsatzliste. Fertig, wenn: fünf Zeilen erscheinen: drei Fahrzeugzeilen, die Zeile 6 Fahrten mit 3 Fahrzeugen. und darunter die Einsatzliste mit allen sechs Einträgen.",
+     "tipp": "Das Muster lohnt sich zu merken: leere Liste anlegen, über die übergebene Liste schleifen, vor dem append() mit not in nachsehen, ob der Name in der neuen Liste schon steht, und am Ende die neue Liste zurückgeben. Die übergebene Liste wird dabei nur gelesen.",
+     "vorgabe": "einsatzliste = [\"Lkw 7\", \"Jeep 2\", \"Lkw 7\", \"Bus 1\", \"Jeep 2\", \"Lkw 7\"]"
+    },
+    {
+     "titel": "Eintragen — und melden, ob es geklappt hat",
+     "aufgabe": "Schreibe eine Funktion trage_ein, die eine Wachliste und einen Namen entgegennimmt. Steht der Name schon auf der Liste, gibt sie False zurück und ändert nichts. Sonst hängt sie ihn an und gibt True zurück. Die Funktion gibt selbst nichts aus. Gehe danach die drei Meldungen aus der Vorgabe durch, rufe die Funktion für jede auf und setze den Rückgabewert direkt hinter if: Je nach Ergebnis erscheint Lorenz eingetragen. oder Hartmann steht schon auf der Liste. Gib zum Schluss die Wachliste aus. Fertig, wenn: vier Zeilen erscheinen, die zweite Hartmann steht schon auf der Liste. lautet und die Wachliste am Ende vier Namen enthält.",
+     "tipp": "Die Funktion tut hier beides: Sie verändert die übergebene Liste und gibt etwas zurück. Das return False steht dabei ganz vorn im Körper — danach ist die Funktion beendet, und das append() darunter wird gar nicht mehr erreicht. Der Aufruf passt hinter if, weil er einen Wahrheitswert liefert.",
+     "vorgabe": "wache = [\"Hartmann\", \"Kessler\"]\nmeldungen = [\"Lorenz\", \"Hartmann\", \"Brandt\"]"
+    },
+    {
+     "titel": "Vorhersage — ist das Original danach verändert?",
+     "aufgabe": "Die Vorgabe ruft dieselbe Funktion zweimal auf: einmal mit der Liste, einmal mit einer Kopie. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage, wie die beiden Listen am Ende aussehen. Übernimm erst danach die Vorgabe und führe aus. Fertig, wenn: nach deiner Vorhersagezeile vier Zeilen erscheinen und genau eine der beiden Listen am Ende kürzer ist.",
+     "tipp": "Beide Aufrufe sehen fast gleich aus und unterscheiden sich um drei Zeichen. Frage dich bei jedem: Bekommt die Funktion dieselbe Liste oder eine frische, eigenständige zweite?",
+     "vorgabe": "def erledige_ersten(auftraege):\n    auftrag = auftraege.pop(0)\n    print(f\"erledigt: {auftrag}\")\n\nliste_a = [\"Drucker\", \"Router\", \"Laptop\"]\nliste_b = [\"Drucker\", \"Router\", \"Laptop\"]\n\nerledige_ersten(liste_a)\nerledige_ersten(liste_b[:])\n\nprint(\"liste_a:\", liste_a)\nprint(\"liste_b:\", liste_b)"
+    },
+    {
+     "titel": "Der Vorrat ist nach dem Aufruf verschwunden",
+     "aufgabe": "Die Vorgabe arbeitet alle offenen Aufträge ab und soll danach einen Bericht darüber ausgeben, welche Aufträge anlagen. Sie läuft ohne Fehlermeldung durch, und der Bericht bleibt trotzdem leer. Repariere das Programm, ohne die Funktion zu ändern. Fertig, wenn: fünf Zeilen erscheinen: die Berichtsüberschrift, drei Auftragszeilen und die Liste der erledigten Aufträge.",
+     "tipp": "Die Funktion bearbeitet zwei Listen, und für jede gilt dasselbe: Jede Veränderung wirkt nach außen. Die Schleife läuft, bis der Vorrat leer ist — und genau diesen Vorrat soll der Bericht danach noch aufzählen. Die Lösung besteht aus drei Zeichen im Aufruf.",
+     "vorgabe": "def arbeite_ab(offen, erledigt):\n    while offen:\n        auftrag = offen.pop(0)\n        erledigt.append(auftrag)\n\noffene_auftraege = [\"Drucker\", \"Router\", \"Laptop\"]\nerledigte_auftraege = []\n\narbeite_ab(offene_auftraege, erledigte_auftraege)\n\nprint(\"Bericht - diese Auftraege lagen an:\")\nfor auftrag in offene_auftraege:\n    print(f\"- {auftrag}\")\nprint(f\"erledigt: {erledigte_auftraege}\")"
+    }
+   ]
+  },
+  {
+   "titel": "Vertiefungsaufgaben",
+   "python": {
+    "text": "Weitere Vertiefungsaufgaben aus dem Python-Crashkurs (Tag 4). Schreibe jede Aufgabe in eine eigene Datei und führe sie aus."
+   },
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Zwei Zeilen zu früh und zwei Klammern zu wenig",
+     "aufgabe": "Die Vorgabe soll den Dienstplan zweimal ausgeben. Sie startet nicht. Repariere sie in zwei Schritten mit jeweils einem Lauf dazwischen: Der erste Lauf endet mit einer Fehlermeldung, der zweite läuft durch, gibt aber immer noch zu wenig aus. Fertig, wenn: vier Zeilen erscheinen — der Dienstplan aus zwei Zeilen, zweimal hintereinander.",
+     "tipp": "Python arbeitet die Datei von oben nach unten ab. Lies die erste Fehlermeldung wörtlich: Sie behauptet nicht, der Name sei falsch geschrieben, sondern dass es ihn an dieser Stelle noch nicht gibt. Nimm dir danach die letzte Zeile vor und vergleiche sie mit einem richtigen Aufruf.",
+     "vorgabe": "zeige_dienstplan()\n\ndef zeige_dienstplan():\n    print(\"Fruehdienst: Hartmann\")\n    print(\"Spaetdienst: Kessler\")\n\nzeige_dienstplan"
+    },
+    {
+     "titel": "Einmal Absturz, einmal stiller Unsinn",
+     "aufgabe": "Die Vorgabe soll einen Ausgabezettel mit drei Zeilen erzeugen. Sie enthält zwei Fehler sehr unterschiedlicher Art. Repariere sie in zwei Schritten mit jeweils einem Lauf dazwischen: Der erste Lauf bricht ab, der zweite läuft durch und behauptet trotzdem etwas Falsches. Ändere dabei die Funktion selbst nicht. Fertig, wenn: drei Zeilen erscheinen, in denen die Geräte Laptop, Headset und Beamer in den Räumen 214, 107 und 301 stehen.",
+     "tipp": "Der erste Fehler steht in der letzten Zeile und wird von Python gemeldet; vergleiche das beschriftete Argument zeichenweise mit dem Parameter in der Definition. Den zweiten Fehler meldet niemand — lies die ausgegebenen Zeilen und frage dich, ob sie inhaltlich stimmen können. Gegen Fehler dieser Art hilft, jeden Wert zu beschriften.",
+     "vorgabe": "def melde_ausgabe(geraet, raum):\n    print(f\"{geraet} wurde in Raum {raum} ausgegeben.\")\n\nmelde_ausgabe(\"Laptop\", \"214\")\nmelde_ausgabe(\"107\", \"Headset\")\nmelde_ausgabe(\"Beamer\", raeum=\"301\")"
+    },
+    {
+     "titel": "Gezählt wird nur bis zum ersten Treffer",
+     "aufgabe": "Die Vorgabe soll zählen, wie viele Prüfungen bestanden wurden — bestanden ist alles bis einschließlich Note 4. Sie läuft ohne Fehlermeldung durch und behauptet, es sei genau eine. Finde die Ursache und repariere sie. Fertig, wenn: die Zeile bestanden: 3 erscheint.",
+     "tipp": "return verlässt nicht die Schleife, sondern die ganze Funktion. Was passiert also beim allerersten Durchlauf, wenn die erste Note bereits bestanden ist? Du brauchst einen Zähler, der hochgezählt wird, und ein return an einer Stelle, die erst nach der Schleife erreicht wird.",
+     "vorgabe": "def zaehle_bestandene(noten):\n    for note in noten:\n        if note <= 4:\n            return 1\n    return 0\n\nergebnisse = [2, 5, 3, 4, 6]\nprint(f\"bestanden: {zaehle_bestandene(ergebnisse)}\")"
+    },
+    {
+     "titel": "Eine Funktion benutzt die andere",
+     "aufgabe": "Baue eine Wochenabrechnung aus zwei Funktionen. berechne_tagessatz liefert aus Stunden und Stundensatz den Tageslohn zurück. berechne_woche bekommt eine Liste von Tagesstunden und den Stundensatz, ruft für jeden Tag die erste Funktion auf, summiert deren Rückgabewerte und liefert die Wochensumme zurück. Rufe berechne_woche mit der Wochenliste und einem Stundensatz von 18.5 auf, gib die Wochensumme aus und darunter dieselbe Summe mit zehn Prozent Zuschlag, auf zwei Stellen gerundet. Fertig, wenn: zwei Zeilen erscheinen: Wochenlohn: 740.0 Euro und Mit Zuschlag: 814.0 Euro",
+     "tipp": "In berechne_woche legst du vor der Schleife einen Zähler auf 0 und addierst in jedem Durchlauf den Rückgabewert der anderen Funktion dazu. Das return steht erst nach der Schleife. Dass eine Funktion eine andere aufruft, ist nichts Besonderes — Hauptsache, beide sind vorher definiert.",
+     "vorgabe": "woche = [8, 9, 7, 10, 6]"
+    },
+    {
+     "titel": "Ein eigenes kleines Programm",
+     "aufgabe": "Schreibe ein eigenes Programm zur Bewerbungsverwaltung. Es muss mindestens zwei eigene Funktionen benutzen, von denen mindestens eine etwas mit return zurückgibt. Als Daten dient eine Liste von Dictionaries mit mindestens drei Bewerbern, von denen jeder einen Namen und eine Anzahl Dienstjahre trägt. Das Programm soll die Bewerber mit genügend Dienstjahren ermitteln, sie auflisten und die Anzahl melden. Welche Auswahl du triffst, wie du die Funktionen nennst und welche Grenze du setzt, entscheidest du selbst. Fertig, wenn: dein Programm eine Überschrift, eine Liste der passenden Bewerber und eine Anzahl ausgibt — und wenn du zu jeder deiner Funktionen in einem Satz sagen kannst, ob sie etwas zurückgibt oder etwas tut.",
+     "tipp": "Eine bewährte Aufteilung: Eine Funktion sucht und gibt eine neue Liste mit den Treffern zurück, die andere zeigt eine Liste an und gibt nichts zurück. Innen brauchst du das Muster aus Aufgabe 7.4.04 — leere Liste, Schleife, append(), return — und für den Zugriff auf die Einträge die eckigen Klammern aus Bereich 6."
+    }
+   ]
   }
  ]
 }

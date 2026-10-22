@@ -182,6 +182,257 @@
    }
   },
   {
+   "titel": "Ein Ausschnitt: liste[start:ende]",
+   "python": {
+    "text": "Ein Ausschnitt heißt Slice. Das ist Englisch für Schnitt. Du schreibst den Listennamen und zwei Zahlen in eckige Klammern. Zwischen den Zahlen steht ein Doppelpunkt. liste[1:3] beginnt beim Index 1. Der Index 3 gehört nicht mehr dazu. Die Zahlen sind Schnittkanten zwischen den Fächern. Deshalb liefert liste[1:3] zwei Elemente und nicht drei. Die Regel lautet: Ende minus Start ist die Anzahl. Lässt du eine Zahl weg, setzt Python Anfang oder Ende ein. liste[:2] sind die ersten zwei. liste[2:] ist alles ab dem dritten. Ein Slice ist immer eine Liste, auch mit einem Element. liste[1] ist ein Text. liste[1:2] ist eine Liste mit einem Text darin. Ein Slice meckert nie über zu große Zahlen. liste[1:99] liefert einfach, was noch da ist.",
+    "code": "fahrzeuge = ['lkw', 'jeep', 'transporter', 'bus', 'motorrad']\n\nprint(fahrzeuge[1:3])    # ['jeep', 'transporter']\nprint(fahrzeuge[0:2])    # ['lkw', 'jeep']\nprint(fahrzeuge[:2])     # ['lkw', 'jeep'], Anfang fehlt\nprint(fahrzeuge[2:])     # ['transporter', 'bus', 'motorrad'], Ende fehlt\nprint(fahrzeuge[2:2])    # [], Kante gleich Kante\nprint(fahrzeuge[1:99])   # alles ab jeep, kein Fehler\n\nteil = fahrzeuge[1:2]\nprint(teil, type(teil))              # ['jeep'] <class 'list'>\nprint(fahrzeuge[1], type(fahrzeuge[1]))  # jeep <class 'str'>"
+   },
+   "vergleich": "C++ hat keine Slice-Schreibweise. Dort kopiert man mit zwei Iteratoren oder mit einer Schleife. In Python ist ein Ausschnitt eine neue Liste in einer Zeile. Gleiches Ergebnis, viel weniger Code.",
+   "merk": "Ende minus Start ist die Anzahl. Das Ende gehört nie dazu.",
+   "checkliste": [
+    "liste[start:ende] beginnt bei start",
+    "Das Ende gehört nicht dazu",
+    "liste[:2] sind die ersten zwei",
+    "liste[2:] ist alles ab dem dritten",
+    "Ein Slice ist immer eine Liste, auch mit einem Element",
+    "Zu große Zahlen liefern einfach den Rest"
+   ]
+  },
+  {
+   "titel": "Slicing mit Schritt",
+   "python": {
+    "text": "Ein Slice kennt noch eine dritte Zahl. Sie steht nach dem zweiten Doppelpunkt. Diese Zahl heißt Schrittweite. liste[::2] nimmt jedes zweite Element. liste[1::2] beginnt beim Index 1 und nimmt dann jedes zweite. liste[0:4:2] schneidet erst den Bereich und geht dann in Zweierschritten. Die Schrittweite darf auch negativ sein. liste[::-1] läuft rückwärts durch die ganze Liste. Aus einer Liste wird so eine umgedrehte Kopie. Das Original bleibt unverändert. Ohne Schrittweite ist sie 1. Dann nimmt Python jedes Element. Auch mit Schritt gilt: Das Ende gehört nicht dazu.",
+    "code": "zahlen = [10, 20, 30, 40, 50, 60]\n\nprint(zahlen[::2])     # [10, 30, 50], jedes zweite\nprint(zahlen[1::2])    # [20, 40, 60], jedes zweite ab Index 1\nprint(zahlen[0:4:2])   # [10, 30]\nprint(zahlen[::3])     # [10, 40]\nprint(zahlen[::-1])    # [60, 50, 40, 30, 20, 10], rückwärts\n\nprint(len(zahlen[::2]))  # 3\nprint(zahlen)            # Original unverändert"
+   },
+   "vergleich": "In C++ gibt es keine Schrittweite. Dort schreibt man eine Schleife und erhöht den Zähler um zwei. In Python steht die Zwei einfach im Slice.",
+   "merk": "Die dritte Zahl ist der Schritt. Ohne Angabe ist der Schritt 1.",
+   "checkliste": [
+    "Erste Zahl: Start",
+    "Zweite Zahl: Ende, gehört nicht dazu",
+    "Dritte Zahl: Schrittweite",
+    "liste[::2] nimmt jedes zweite Element",
+    "liste[::-1] läuft rückwärts",
+    "Ohne dritte Zahl ist der Schritt 1"
+   ]
+  },
+  {
+   "titel": "Negative Grenzen im Slice",
+   "python": {
+    "text": "Negative Zahlen zählen von hinten. Das kennst du schon vom Index. Im Slice funktioniert es genauso. liste[-3:] sind die letzten drei. liste[-1:] ist nur das letzte Element. liste[:-2] ist alles außer den letzten zwei. liste[-3:-1] sind der dritte und der zweite von hinten. Der Vorteil: Die Schreibweise bleibt richtig. Sie stimmt auch, wenn die Liste wächst oder schrumpft. Mit len() müsstest du jedes Mal neu rechnen. liste[len(liste)-3:] liefert dasselbe. Aber es ist länger und fehleranfälliger. Achte auf die Richtung: -3 liegt vor -1. Steht der Start hinter dem Ende, kommt eine leere Liste heraus.",
+    "code": "fahrzeuge = ['lkw', 'jeep', 'transporter', 'bus', 'motorrad']\n\nprint(fahrzeuge[-3:])      # ['transporter', 'bus', 'motorrad']\nprint(fahrzeuge[-1:])      # ['motorrad']\nprint(fahrzeuge[:-2])      # ['lkw', 'jeep', 'transporter']\nprint(fahrzeuge[-3:-1])    # ['transporter', 'bus']\nprint(len(fahrzeuge[-3:])) # 3\n\nfahrzeuge.append('anhaenger')\nprint(fahrzeuge[-3:])      # letzte drei, obwohl die Liste gewachsen ist"
+   },
+   "vergleich": "C++ kennt keine negativen Indizes. Dort rechnet man mit size() minus drei. In Python steht die Drei einfach mit Minus im Slice.",
+   "merk": "Negative Zahlen zählen von hinten. Die Schreibweise bleibt richtig, wenn die Liste wächst.",
+   "checkliste": [
+    "liste[-3:] sind die letzten drei",
+    "liste[:-2] ist alles außer den letzten zwei",
+    "Bleibt richtig bei wachsender Liste",
+    "Kein len() und keine Rechnung nötig",
+    "Start hinter dem Ende ergibt eine leere Liste"
+   ]
+  },
+  {
+   "titel": "Slicing erzeugt eine Kopie",
+   "python": {
+    "text": "Jetzt die wichtigste Anwendung des Slicing. Ein Slice über die ganze Liste erzeugt eine Kopie. Die Schreibweise ist liste[:]. Beide Zahlen fehlen, also nimmt Python Anfang und Ende. Das Ergebnis ist eine zweite, eigene Liste. Sie hat dieselben Werte. Aber sie ist ein eigener Behälter. Änderst du die Kopie, bleibt das Original unberührt. Im Beispiel hängt die Kopie bus an. Das Original hat weiter drei Einträge. Eine Kopie entsteht auch mit list(liste). Ohne die eckigen Klammern gibt es keine Kopie. Die Kopie kostet Speicher. Bei einer kurzen Liste merkst du das nicht.",
+    "code": "meine = ['lkw', 'jeep', 'transporter']\nkopie = meine[:]\n\nkopie.append('bus')\nprint(meine)                    # ['lkw', 'jeep', 'transporter']\nprint(kopie)                    # ['lkw', 'jeep', 'transporter', 'bus']\nprint(len(meine), len(kopie))   # 3 4\n\nzweite = list(meine)\nzweite.append('motorrad')\nprint(meine)                    # weiter drei Einträge\nprint(zweite)                   # vier Einträge"
+   },
+   "vergleich": "In C++ kopiert vector b = a den ganzen Inhalt. In Python tut das Gleichheitszeichen das nicht. Dort brauchst du liste[:] oder list(liste).",
+   "merk": "liste[:] gibt dir eine zweite Liste. liste gibt dir nur ein zweites Schild.",
+   "checkliste": [
+    "liste[:] kopiert die ganze Liste",
+    "list(liste) kopiert ebenfalls",
+    "Eine Änderung an der Kopie bleibt ohne Wirkung",
+    "Ohne eckige Klammern entsteht keine Kopie",
+    "Eine Kopie braucht eigenen Speicher"
+   ]
+  },
+  {
+   "titel": "Kopie gegen Referenz: b = a",
+   "python": {
+    "text": "Was passiert bei b = a? Die meisten erwarten zwei Listen. Das ist falsch. Die Zuweisung legt keinen neuen Behälter an. Sie gibt der Liste nur einen zweiten Namen. Danach zeigen beide Namen auf dieselbe Liste. Jede Änderung ist unter beiden Namen sichtbar. Im Beispiel hängt meine bus an. deine hängt motorrad an. Beide Ausgaben sind trotzdem gleich. Es gab nie zwei Listen, nur eine mit zwei Schildern. Dieser Fehler meldet sich nie. Das Programm läuft, und die Ausgabe sieht plausibel aus. Gefunden wird so etwas oft erst Tage später. Dann passen Zahlen nicht mehr zusammen.",
+    "code": "meine = ['lkw', 'jeep', 'transporter']\ndeine = meine\n\nmeine.append('bus')\ndeine.append('motorrad')\n\nprint(meine)   # ['lkw', 'jeep', 'transporter', 'bus', 'motorrad']\nprint(deine)   # genau dasselbe\n\nzweiter_name = meine\nzweiter_name.append('anhaenger')\nprint(meine)   # der Anhänger steht auch hier"
+   },
+   "vergleich": "In C++ legt eine Zuweisung eine Kopie an. Wer dieselbe Liste will, schreibt ein & davor. In Python ist die Zuweisung immer die Referenz.",
+   "merk": "b = a ist ein zweiter Name, keine zweite Liste.",
+   "checkliste": [
+    "b = a legt keine neue Liste an",
+    "Beide Namen zeigen auf denselben Behälter",
+    "Eine Änderung ist über beide Namen sichtbar",
+    "Es gibt keine Fehlermeldung",
+    "Eine Kopie entsteht nur mit liste[:] oder list(liste)"
+   ]
+  },
+  {
+   "titel": "Ein Dictionary anlegen",
+   "python": {
+    "text": "Ein Dictionary ist ein Regal mit beschrifteten Fächern. Geschrieben wird es mit geschweiften Klammern. Innen stehen Paare. Links der Schlüssel, dann ein Doppelpunkt, dann der Wert. Zwischen zwei Paaren steht ein Komma. Der Schlüssel ist die Aufschrift. Der Wert ist der Inhalt. Jeder Schlüssel kommt nur einmal vor. Steht er zweimal da, gewinnt der letzte Wert. Der Platz bleibt vorn. Zwei geschweifte Klammern ohne Inhalt sind ein leeres Dictionary. len() zählt die Paare. Ein Dictionary eignet sich für ein Ding mit mehreren Eigenschaften. Eine Liste eignet sich für viele gleichartige Werte.",
+    "code": "ausweis = {'name': 'Mara Beck', 'abteilung': 'Vertrieb', 'raum': 214}\nprint(ausweis)\nprint(len(ausweis))    # 3 Paare\n\nleer = {}\nprint(leer)            # {}\nprint(len(leer))       # 0\nprint(type(leer))      # <class 'dict'>\n\ndoppelt = {'raum': 214, 'abteilung': 'Vertrieb', 'raum': 301}\nprint(doppelt)         # der letzte Wert gewinnt\nprint(len(doppelt))    # 2, nicht 3"
+   },
+   "vergleich": "dict (Python) und std::unordered_map (C++) sind Geschwister. Beide halten Schlüssel und Werte. Python schreibt einfache geschweifte Klammern, C++ nimmt Paare in doppelten Klammern.",
+   "merk": "Geschweifte Klammern, Doppelpunkt, Komma. Der Schlüssel ist die Aufschrift, der Wert der Inhalt.",
+   "checkliste": [
+    "Geschweifte Klammern, nicht eckige",
+    "Doppelpunkt zwischen Schlüssel und Wert",
+    "Komma zwischen zwei Paaren",
+    "Jeder Schlüssel kommt nur einmal vor",
+    "Ein leeres Dictionary ist {}",
+    "len() zählt die Paare"
+   ]
+  },
+  {
+   "titel": "Zugriff über den Schlüssel",
+   "python": {
+    "text": "Der Zugriff läuft über den Schlüssel. Du schreibst den Namen und den Schlüssel in eckige Klammern. Der Schlüssel steht als Text in Anführungszeichen. Heraus kommt der reine Wert. Ohne Klammern und ohne Anführungszeichen. Mit dem Wert kannst du rechnen oder ihn ausgeben. Er passt auch in einen f-String. Achte dort auf die Anführungszeichen: außen doppelt, innen einfach. Ein Schlüssel darf auch eine Zahl sein. raumbelegung[102] ist dann das Fach mit der Aufschrift 102. Das ist keine Position. Ein Dictionary kennt keine Positionen. ausweis[0] sucht ein Fach mit der Aufschrift 0. Meist gibt es das nicht.",
+    "code": "ausweis = {'name': 'Mara Beck', 'abteilung': 'Vertrieb', 'raum': 214}\n\nprint(ausweis['name'])      # Mara Beck\nprint(ausweis['raum'])      # 214\nprint(f\"{ausweis['name']} sitzt in Raum {ausweis['raum']}.\")\n\nraumbelegung = {101: 'Vertrieb', 102: 'Technik', 214: 'Vertrieb'}\nprint(raumbelegung[102])    # Technik, nicht das dritte Element\nprint(len(raumbelegung))    # 3\n\n# print(raumbelegung[0])    -> KeyError: 0"
+   },
+   "vergleich": "In Python stehen Schlüssel in eckigen Klammern. In C++ auch, aber [] legt fehlende Schlüssel heimlich an. Python bricht stattdessen mit KeyError ab.",
+   "merk": "Eckige Klammern holen etwas heraus. Beim Dictionary entscheidet der Name, nicht die Stelle.",
+   "checkliste": [
+    "Zugriff mit dict['schluessel']",
+    "Der Schlüssel steht in Anführungszeichen",
+    "Eine Zahl als Schlüssel ist keine Position",
+    "dict[0] sucht die Aufschrift 0",
+    "Im f-String außen doppelt, innen einfach"
+   ]
+  },
+  {
+   "titel": "KeyError und der sichere Weg mit get()",
+   "python": {
+    "text": "Ein falscher Schlüssel beendet das Programm. Die Meldung heißt KeyError. Dahinter steht der Schlüssel, den Python gesucht hat. Meist ist es ein Tippfehler. Groß und klein zählt dabei genau. ausweis['Name'] ist nicht ausweis['name']. Manchmal ist ein Feld aber wirklich freiwillig. Dann ist ein Absturz zu hart. Für diesen Fall gibt es get(). get() hängt man mit einem Punkt an das Dictionary. Der Schlüssel steht in runden Klammern. Fehlt der Schlüssel, kommt None zurück. Du kannst auch einen Ersatztext mitgeben. Der erscheint dann statt None. Wichtig: get() liest nur. Es legt kein Fach an.",
+    "code": "ausweis = {'name': 'Mara Beck', 'abteilung': 'Vertrieb', 'raum': 214}\n\nprint(ausweis.get('abteilung'))              # Vertrieb\nprint(ausweis.get('telefon'))                # None\nprint(ausweis.get('telefon', 'nicht hinterlegt'))\nprint(ausweis.get('raum', 0) + 1)            # 215, der Wert ist eine Zahl\nprint(ausweis)                               # unverändert, kein Feld telefon\n\n# print(ausweis['telefon'])   -> KeyError: 'telefon'\n# print(ausweis['Name'])      -> KeyError: 'Name', Groß und klein zählt"
+   },
+   "vergleich": "In C++ wirft at() eine Ausnahme, [] legt heimlich an. Pythons get() ist der bequeme Mittelweg. Es liefert None oder einen selbst gewählten Ersatzwert.",
+   "merk": "dict['x'] bricht ab, dict.get('x') nicht. get() liest nur und legt nichts an.",
+   "checkliste": [
+    "Fehlender Schlüssel: KeyError",
+    "get('x') liefert None",
+    "get('x', ersatz) liefert den Ersatz",
+    "get() nimmt runde Klammern",
+    "get() verändert das Dictionary nicht",
+    "Groß und klein zählt genau"
+   ]
+  },
+  {
+   "titel": "Schlüssel prüfen mit in",
+   "python": {
+    "text": "Vorher nachsehen ist oft klarer als ein Ersatzwert. Das Wort dafür ist in. Es steht zwischen Schlüssel und Dictionary. Das Ergebnis ist True oder False. not in ist die Umkehrung. Achtung: in prüft nur die Schlüssel. Die Werte sieht es nicht. Im Beispiel ist 120 ein Wert im Lager. Trotzdem liefert 120 in lager False. Bei einer Liste war es umgekehrt. Dort prüft in die Elemente, also die Werte. Wer einen Wert prüfen will, schreibt in lager.values(). Zusammen mit if und else ergibt sich ein gutes Muster: erst prüfen, dann anlegen oder erhöhen. So vermeidest du jeden KeyError.",
+    "code": "lager = {'schrauben': 120, 'muttern': 80}\n\nprint('schrauben' in lager)        # True\nprint('nieten' in lager)           # False\nprint('nieten' not in lager)       # True\nprint(120 in lager)                # False, in prüft Schlüssel\nprint(120 in lager.values())       # True, so prüft man Werte\n\nteil = 'duebel'\nif teil in lager:\n    lager[teil] = lager[teil] + 10\nelse:\n    lager[teil] = 10\nprint(lager)   # duebel ist mit 10 dazugekommen"
+   },
+   "vergleich": "In C++ fragt man mit count() oder find(). Beide schauen auf die Schlüssel. Die Werte muss man dort ebenfalls getrennt prüfen.",
+   "merk": "in fragt beim Dictionary nach der Aufschrift des Fachs, nicht nach dem Inhalt.",
+   "checkliste": [
+    "'x' in d prüft den Schlüssel",
+    "'x' not in d ist die Umkehrung",
+    "Werte prüft nur x in d.values()",
+    "Bei der Liste prüft in die Elemente",
+    "Erst prüfen, dann anlegen oder erhöhen"
+   ]
+  },
+  {
+   "titel": "Eintrag hinzufügen und ändern",
+   "python": {
+    "text": "Für neu und für ändern gibt es nur eine Zeile. Du schreibst den Schlüssel in eckige Klammern und weist einen Wert zu. Gibt es den Schlüssel noch nicht, entsteht ein neues Paar. Es landet hinten. Gibt es ihn schon, wird der alte Wert ersetzt. Das Fach bleibt an seinem Platz. Eine Schreibweise, zwei Wirkungen. len() wächst nur bei einem neuen Schlüssel. Oft soll der neue Wert aus dem alten entstehen. Dann steht der Zugriff rechts vom Gleichheitszeichen. Gelesen wird von rechts nach links. Achtung bei Tippfehlern. Ein falscher Schlüssel legt still ein neues Fach an. Die echte Änderung fehlt dann.",
+    "code": "ausweis = {'name': 'Mara Beck', 'abteilung': 'Vertrieb'}\n\nausweis['raum'] = 214\nausweis['telefon'] = '0231 555-0199'\nprint(ausweis)      # zwei neue Paare, hinten angehängt\nprint(len(ausweis)) # 4\n\nausweis['abteilung'] = 'Technik'\nprint(ausweis)      # abteilung bleibt an seinem Platz\nprint(len(ausweis)) # weiter 4\n\nbestand = {'lkw': 3, 'jeep': 7}\nbestand['jeep'] = bestand['jeep'] + 2\nprint(bestand)      # jeep steht jetzt auf 9"
+   },
+   "vergleich": "In C++ tut m[k] = v dasselbe. Aber [] legt dort auch beim Lesen ein Fach an. In Python legt nur die Zuweisung an, nie der lesende Zugriff.",
+   "merk": "d['s'] = wert legt an oder überschreibt. Eine Zeile, zwei Wirkungen.",
+   "checkliste": [
+    "Neuer Schlüssel: das Paar entsteht hinten",
+    "Bekannter Schlüssel: der Wert wird ersetzt",
+    "Das Fach behält seinen Platz",
+    "len() wächst nur bei einem neuen Schlüssel",
+    "Ein Tippfehler legt ein zusätzliches Fach an",
+    "Der alte Wert ist danach verloren"
+   ]
+  },
+  {
+   "titel": "Eintrag löschen mit del und pop()",
+   "python": {
+    "text": "Zum Entfernen gibt es zwei Wege. del wirft das Paar weg. Schlüssel und Wert sind danach fort. del ist eine Anweisung. Es steht vor dem Ausdruck und nimmt keine Klammern. pop() entfernt das Paar und gibt den Wert zurück. Den kannst du in einer Variablen auffangen. Fehlt der Schlüssel, bricht beides mit KeyError ab. pop() darf einen zweiten Wert bekommen. Dann kommt dieser Wert statt eines Fehlers. Das Dictionary bleibt dabei unverändert. Die Entscheidung ist einfach. Brauchst du den Wert noch, nimm pop(). Sonst reicht del.",
+    "code": "lager = {'schrauben': 120, 'muttern': 80, 'duebel': 45}\n\ndel lager['muttern']\nprint(lager)          # {'schrauben': 120, 'duebel': 45}\nprint(len(lager))     # 2\n\nentnommen = lager.pop('schrauben')\nprint(entnommen)      # 120, der Wert ist noch da\nprint(lager)          # {'duebel': 45}\n\nrest = lager.pop('nieten', 0)\nprint(rest)           # 0 statt KeyError\nprint(lager)          # unverändert\n\n# del lager['nieten']  -> KeyError: 'nieten'"
+   },
+   "vergleich": "In C++ heißt das erase(). Es liefert keinen Wert zurück. Wer den Wert braucht, liest ihn vorher. Python kann beides in einem Schritt.",
+   "merk": "del wirft weg, pop() reicht heraus. Der Unterschied ist der Rückgabewert.",
+   "checkliste": [
+    "del d['s'] entfernt das Paar",
+    "del steht ohne Klammern vor dem Ausdruck",
+    "d.pop('s') gibt den Wert zurück",
+    "Fehlender Schlüssel: KeyError",
+    "d.pop('s', ersatz) bricht nicht ab",
+    "Wert noch nötig: pop() nehmen"
+   ]
+  },
+  {
+   "titel": "Über Schlüssel, Werte und Paare laufen",
+   "python": {
+    "text": "Ein Dictionary bietet drei Ansichten an. items() liefert die Paare. keys() liefert nur die Schlüssel. values() liefert nur die Werte. Für items() brauchst du zwei Variablen. Sie stehen durch ein Komma getrennt hinter for. Die erste bekommt den Schlüssel, die zweite den Wert. Das ist das Grundmuster. Wer ein Dictionary direkt durchläuft, bekommt die Schlüssel. keys() ist also nicht nötig. Es macht den Code aber lesbarer. Die Klammern sind Pflicht. keys ohne Klammern endet mit TypeError. Wähle sprechende Namen. fahrzeug und anzahl lesen sich besser als k und v.",
+    "code": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\n\nfor fahrzeug, anzahl in bestand.items():\n    print(f\"{fahrzeug}: {anzahl}\")\n\nprint('---')\n\nfor fahrzeug in bestand.keys():\n    print(fahrzeug)\n\nprint('---')\n\ngesamt = 0\nfor anzahl in bestand.values():\n    gesamt = gesamt + anzahl\nprint(gesamt)     # 11\n\nprint(bestand.items())    # die Paare als Gespann\n# for fahrzeug in bestand.keys:   -> TypeError, Klammern fehlen"
+   },
+   "vergleich": "In C++ läuft man über das Paar und nimmt p.first und p.second. Python packt die beiden Teile direkt in zwei Namen. Das ist kürzer und lesbarer.",
+   "merk": "items() gibt Paare, keys() Schlüssel, values() Werte. Nur items() braucht zwei Namen.",
+   "checkliste": [
+    "items(): die Paare, zwei Variablen",
+    "keys(): nur die Schlüssel",
+    "values(): nur die Werte",
+    "Ohne Zusatz liefert ein Dictionary die Schlüssel",
+    "Klammern nicht vergessen, sonst TypeError",
+    "Sprechende Namen wählen"
+   ]
+  },
+  {
+   "titel": "Sortierte Ausgabe",
+   "python": {
+    "text": "Ein Dictionary gibt die Paare in der Reihenfolge der Eingabe aus. Das ist keine Sortierung. Für Menschen willst du oft Alphabet. Dafür gibt es sorted(). sorted(bestand) liefert die Schlüssel als neue, sortierte Liste. Das Dictionary bleibt unverändert. Über den Schlüssel kommst du weiter an den Wert. sorted(bestand.values()) liefert nur die nackten Zahlen. Die Zuordnung geht dabei verloren. Für jeden Wert einmal nimm sorted(set(...)). set() wirft Doppelte weg, sorted() ordnet. Ein sort() gibt es beim Dictionary nicht. Die Einfügereihenfolge ist ein Protokoll der Eingabe. Sie ersetzt keine Sortierung.",
+    "code": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\n\nfor fahrzeug in sorted(bestand):\n    print(f\"{fahrzeug}: {bestand[fahrzeug]}\")\n\nprint(sorted(bestand))       # ['bus', 'jeep', 'lkw']\nprint(sorted(bestand.values()))  # [1, 3, 7]\nprint(bestand)               # unverändert\n\nabteilungen = {'mara': 'Vertrieb', 'ben': 'Technik', 'ilka': 'Vertrieb'}\nfor abteilung in sorted(set(abteilungen.values())):\n    print(abteilung)         # jeder Wert einmal, in Ordnung\n\n# bestand.sort()   -> AttributeError, ein Dictionary hat kein sort()"
+   },
+   "vergleich": "std::map in C++ ist immer nach Schlüssel sortiert. std::unordered_map ist es nicht. Python sortiert nie von selbst, dafür gibt es sorted().",
+   "merk": "sorted() liefert eine neue Liste. Das Dictionary bleibt, wie es war.",
+   "checkliste": [
+    "sorted(d) sortiert die Schlüssel",
+    "Das Dictionary bleibt unverändert",
+    "sorted(d.values()) verliert die Zuordnung",
+    "sorted(set(d.values())) gibt jeden Wert einmal",
+    "Ein sort() gibt es beim Dictionary nicht",
+    "Einfügereihenfolge ist keine Sortierung"
+   ]
+  },
+  {
+   "titel": "Ein Dictionary im Dictionary",
+   "python": {
+    "text": "Ein Wert darf alles sein. Auch eine Liste oder ein weiteres Dictionary. So entsteht ein Dictionary im Dictionary. Im Beispiel hat raum ein eigenes Dictionary. Der Zugriff läuft dann in zwei Schritten. Erst das äußere Fach, dann das innere. person['raum'] ist das innere Dictionary. person['raum']['nummer'] ist die Zahl darin. Jeder Schritt öffnet genau ein Fach. Fehlt ein Schlüssel unterwegs, kommt ein KeyError. Mehr als zwei Ebenen werden schnell unübersichtlich. Dann ist eine flache Form meist besser.",
+    "code": "person = {\n    'name': 'Mara Beck',\n    'raum': {'gebaeude': 'A', 'nummer': 214}\n}\n\nprint(person['name'])              # Mara Beck\nprint(person['raum'])              # das innere Dictionary\nprint(person['raum']['nummer'])    # 214\nprint(person['raum']['gebaeude'])  # A\n\nperson['raum']['nummer'] = 301\nprint(person['raum']['nummer'])    # 301\n\n# print(person['telefon'])         -> KeyError\n# print(person['raum']['stock'])   -> KeyError im inneren Dictionary"
+   },
+   "vergleich": "In C++ geht das genauso, mit einer map in einer map. Der Zugriff ist doppelt eckig. In Python schreibt man einfach zwei Klammern hintereinander.",
+   "merk": "Jeder Schlüssel öffnet ein Fach. Zwei Schlüssel öffnen zwei Fächer.",
+   "checkliste": [
+    "Ein Wert darf ein Dictionary sein",
+    "Der Zugriff läuft in zwei Schritten",
+    "person['raum']['nummer'] liest die innere Zahl",
+    "Fehlt ein Schlüssel unterwegs: KeyError",
+    "Mehr als zwei Ebenen werden unübersichtlich"
+   ]
+  },
+  {
+   "titel": "Typische Dictionary-Fehler",
+   "python": {
+    "text": "Diese Fehler kosten die meiste Zeit. Viele davon melden sich nicht. Sie liefern still ein falsches Ergebnis. Prüfe deshalb nach jedem Schritt das Dictionary und seine Länge.",
+    "code": "ausweis = {'name': 'Mara Beck', 'raum': 214}\n\n# Falsch: eckige Klammern beim Anlegen\n# kaputt = ['name': 'Mara Beck']   -> SyntaxError\n\n# Falsch: Komma statt Doppelpunkt, das ergibt eine Menge\nmenge = {'name', 'Mara Beck'}\nprint(type(menge))     # <class 'set'>, kein Dictionary\n\n# Falsch: Schlüssel falsch geschrieben\n# print(ausweis['Name'])   -> KeyError: 'Name'\n\n# Falsch: get() für eine Änderung halten\nausweis.get('telefon', 'unbekannt')\nprint(ausweis)         # kein Feld telefon\n\n# Richtig:\nausweis['telefon'] = '0231 555-0199'\nprint(ausweis)\nprint(len(ausweis))    # 3"
+   },
+   "vergleich": "In Python bleiben viele dieser Fehler still. In C++ meldet der Compiler falsche Typen. Einen falschen Schlüssel meldet auch C++ erst beim Laufen.",
+   "merk": "Prüfe Schlüssel, Klammern und die Länge nach jedem Schritt.",
+   "checkliste": [
+    "Eckige statt geschweifter Klammern: SyntaxError",
+    "Komma statt Doppelpunkt: eine Menge, kein Dictionary",
+    "Schlüssel falsch geschrieben: KeyError",
+    "Anführungszeichen um den Schlüssel vergessen: NameError",
+    "get() für eine Änderung halten: das Feld bleibt weg",
+    "Tippfehler beim Zuweisen legt ein neues Fach an",
+    "in für eine Wertprüfung halten: immer False",
+    "{} ist ein Dictionary, die leere Menge heißt set()"
+   ]
+  },
+  {
    "titel": "Pflichtaufgaben",
    "python": {
     "text": "Diese Pflichtaufgaben stammen aus dem Kursnotizbuch und gehören zum Thema dieses Kapitels. Schreibe jede Aufgabe in eine eigene Datei und führe sie aus. Wo eine Lösung vorliegt, kannst du sie nach dem eigenen Versuch aufklappen – erst selbst probieren, dann vergleichen."
@@ -326,6 +577,128 @@
      "tipp": "Was sorted() liefert, muss irgendwo landen, sonst verfällt es. Und .sort() liefert überhaupt nichts — eine Zuweisung davor macht die Liste kaputt.",
      "loesung": "bestand = ['zange', 'hammer', 'saege']\n\ngeordnet = sorted(bestand)\nprint(geordnet)\nprint(bestand)\n\nbestand.sort()\nprint(bestand)",
      "vorgabe": "bestand = ['zange', 'hammer', 'saege']\n\nsorted(bestand)\nprint(bestand)\n\nbestand = bestand.sort()\nprint(bestand)"
+    },
+    {
+     "titel": "Der erste Datensatz",
+     "aufgabe": "Lege einen Personaldatensatz mit drei Angaben an: Name, Dienstgrad und Einheit. Jede Angabe soll eine eigene Beschriftung tragen, damit später erkennbar bleibt, was sie bedeutet. Gib zuerst den gesamten Datensatz aus und darunter die Zahl seiner Einträge. Fertig, wenn: eine Zeile mit geschweiften Klammern erscheint und darunter die Zahl 3.",
+     "tipp": "Geschweifte Klammern außen, zwischen Beschriftung und Wert ein Doppelpunkt, zwischen zwei Paaren ein Komma. Wie viele Paare es geworden sind, beantwortet len() — dieselbe Funktion wie bei der Liste."
+    },
+    {
+     "titel": "Zahlen als Beschriftung",
+     "aufgabe": "Erfasse eine Spindbelegung: Zu jeder Spindnummer gehört ein Nachname. Spind 12 gehört Hartmann, Spind 27 gehört Beck, Spind 103 gehört Kraus; die Nummern sollen genau so im Programm stehen, nicht als Text. Gib die Nachnamen zu Spind 27 und 103 einzeln aus, dann die Zahl der belegten Spinde und zum Schluss den Satz Spind 12 gehoert Hartmann. Fertig, wenn: vier Zeilen erscheinen und die dritte die Zahl 3 ist, obwohl die größte Nummer 103 lautet.",
+     "tipp": "Auch Zahlen dürfen Schlüssel sein, solange sie eine eigene Bedeutung haben und keine fortlaufende Position sind. In den eckigen Klammern steht die Nummer dann ohne Anführungszeichen."
+    },
+    {
+     "titel": "Nachsehen, ohne abzustürzen",
+     "aufgabe": "Lege einen Datensatz mit Name und Dienstgrad an — eine Telefonnummer ist nicht erfasst. Frage nacheinander den Dienstgrad ab, dann die fehlende Telefonnummer, und dann die Telefonnummer noch einmal so, dass statt eines Leerwerts der Text nicht hinterlegt erscheint. Gib zum Schluss den Datensatz selbst aus. Fertig, wenn: vier Zeilen erscheinen, in der zweiten None steht und die letzte weiterhin nur zwei Paare zeigt.",
+     "tipp": "Die Methode heißt .get() und nimmt — weil sie eine Methode ist — runde Klammern. Ein zweiter Wert in diesen Klammern ist der Ersatz für den Fall, dass es den Schlüssel nicht gibt."
+    },
+    {
+     "titel": "Zwei Datensätze vergleichen",
+     "aufgabe": "Zwei Personaldatensätze aus der Vorgabe führen je einen Namen und die Dienstjahre. Gib zu jedem eine Zeile nach dem Muster Hartmann: 14 Dienstjahre aus. Vergleiche danach die beiden Dienstjahrzahlen und melde in einer dritten Zeile, wer länger dabei ist und um wie viele Jahre — nach dem Muster Hartmann ist laenger dabei, und zwar um 8 Jahre. Der Unterschied darf nicht von Hand ausgerechnet im Programm stehen. Fertig, wenn: drei Zeilen erscheinen und die dritte Hartmann ist laenger dabei, und zwar um 8 Jahre. lautet.",
+     "tipp": "Ein Zugriff mit eckigen Klammern liefert den reinen Wert — und mit reinen Werten lässt sich alles tun, was du schon kennst: vergleichen, abziehen, in einen f-String setzen. In der Bedingung hinter if stehen deshalb zwei solche Zugriffe nebeneinander.",
+     "vorgabe": "hartmann = {'name': 'Hartmann', 'dienstjahre': 14}\nkessler = {'name': 'Kessler', 'dienstjahre': 6}"
+    },
+    {
+     "titel": "Ein Fahrauftrag wird ausgewertet",
+     "aufgabe": "Der Fahrauftrag aus der Vorgabe hält Fahrzeug, Fahrer, Ziel und die gefahrenen Kilometer. Gib vier Zeilen aus: erst einen Satz nach dem Muster Lkw 7 faehrt mit Hartmann nach Munster., dann bei mehr als 100 Kilometern Lange Fahrt: Pause einplanen. und sonst Kurze Fahrt., dann die Restkilometer bis zum Tageslimit von 200 nach dem Muster Bis zum Tageslimit bleiben 58 km., und zuletzt 4 Angaben erfasst. Weder die 58 noch die 4 dürfen als Zahl im Programm stehen. Fertig, wenn: vier Zeilen erscheinen, die dritte Bis zum Tageslimit bleiben 58 km. und die vierte 4 Angaben erfasst. lautet.",
+     "tipp": "Drei verschiedene Fragen an denselben Datensatz: In der ersten Zeile werden drei Fächer gelesen, in der Bedingung eines, und in der letzten Zeile wird gar kein Fach geöffnet, sondern das Regal selbst gezählt. Eine Rechnung darf dabei mitten im f-String stehen.",
+     "vorgabe": "auftrag = {'fahrzeug': 'Lkw 7', 'fahrer': 'Hartmann', 'ziel': 'Munster', 'km': 142}"
+    },
+    {
+     "titel": "Reparatur — das Feld, das es nicht gibt",
+     "aufgabe": "Die Vorgabe soll einen Datensatz prüfen und dabei drei Zeilen ausgeben. Sie bricht stattdessen nach der ersten Zeile ab. Führe sie zuerst unverändert aus, lies die letzte Zeile der Fehlermeldung, und ändere dann genau die eine Zeile, die den Abbruch auslöst — ohne den Datensatz zu erweitern. Fehlt die Telefonnummer, soll nicht hinterlegt erscheinen. Fertig, wenn: drei Zeilen erscheinen, die zweite nicht hinterlegt lautet und die dritte wieder Datensatz geprueft ist.",
+     "tipp": "Die Fehlermeldung wird von unten nach oben gelesen: Die letzte Zeile nennt die Art des Fehlers und dahinter den Schlüssel, der gesucht und nicht gefunden wurde. Für optionale Felder gibt es den zweiten, sanfteren Zugriffsweg aus diesem Thema.",
+     "vorgabe": "ausweis = {'name': 'Jens Hartmann', 'dienstgrad': 'Hauptfeldwebel', 'standort': 'Munster'}\nprint(ausweis['name'])\nprint(ausweis['telefon'])\nprint(\"Datensatz geprueft\")"
+    },
+    {
+     "titel": "Vorhersage — ein Schlüssel kommt doppelt vor",
+     "aufgabe": "Unten steht ein Programm, in dem derselbe Schlüssel zweimal geschrieben wurde. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für alle sechs Ausgabezeilen. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Achte besonders auf die zweite Zeile und auf die letzte. Fertig, wenn: nach deiner Vorhersagezeile sechs Zeilen folgen, die zweite davon 2 lautet und die letzte dasselbe zeigt wie die erste.",
+     "tipp": "Jeder Schlüssel kommt in einem Dictionary genau einmal vor — Python meldet keinen Fehler, wenn man es zweimal hinschreibt. Überlege, welcher der beiden Werte gewinnt und an welcher Stelle das Fach danach steht.",
+     "vorgabe": "dienstposten = {'rolle': 'Kraftfahrer', 'rolle': 'Disponent', 'standort': 'Munster'}\nprint(dienstposten)\nprint(len(dienstposten))\nprint(dienstposten.get('rolle'))\nprint(dienstposten.get('fahrerlaubnis'))\nprint(dienstposten.get('fahrerlaubnis', 'keine Angabe'))\nprint(dienstposten)"
+    },
+    {
+     "titel": "Ein Feld dazu, ein Feld geändert",
+     "aufgabe": "Beginne mit einem Datensatz aus Name und Standort. Gib ihn aus, ergänze dann einen Dienstgrad, ändere den Standort und gib den Datensatz erneut aus. Zum Schluss soll die Zahl der Einträge erscheinen. Achte in der zweiten Ausgabe darauf, an welcher Stelle die beiden Änderungen gelandet sind. Fertig, wenn: drei Zeilen erscheinen, die letzte 3 lautet und der neue Dienstgrad in der zweiten Zeile hinten steht.",
+     "tipp": "Für „neu anlegen\" und für „überschreiben\" gibt es denselben Befehl: die Zuweisung mit =. Welche der beiden Wirkungen eintritt, entscheidet Python allein anhand des Schlüssels."
+    },
+    {
+     "titel": "Zugang und Abgang verbuchen",
+     "aufgabe": "Ein Fahrzeugbestand führt 3 Lkw, 7 Jeeps und 1 Bus. Erhöhe die Zahl der Jeeps um zwei und verringere die der Busse um eins, ohne die neuen Zahlen selbst auszurechnen und hinzuschreiben. Gib danach den gesamten Bestand aus und zusätzlich eine Satzzeile mit der neuen Jeep-Zahl. Fertig, wenn: zwei Zeilen erscheinen, im Dictionary 'jeep': 9 und 'bus': 0 stehen und die zweite Zeile Jeeps jetzt: 9 lautet.",
+     "tipp": "Rechts vom Gleichheitszeichen darf derselbe Zugriff noch einmal stehen. Gelesen wird so eine Zeile von rechts nach links: erst rechnen, dann ins Fach legen."
+    },
+    {
+     "titel": "Zwei Arten, etwas herauszunehmen",
+     "aufgabe": "Ein Lagerbestand führt 24 Helme, 18 Westen und 31 Paar Stiefel. Nimm die Westen so heraus, dass ihre Stückzahl danach noch zur Verfügung steht, und gib diese Zahl aus. Entferne die Helme anschließend ersatzlos. Gib nach jedem Schritt den Bestand aus und zum Schluss die Zahl der verbliebenen Posten. Fertig, wenn: vier Zeilen erscheinen: erst 18, dann zwei Dictionaries mit abnehmender Länge und zuletzt die Zahl 1.",
+     "tipp": "Beide Wege entfernen das Paar vollständig. Der Unterschied liegt darin, ob der Wert dabei zurückgegeben wird und sich in einer Variablen auffangen lässt."
+    },
+    {
+     "titel": "Ausbuchen, bis nichts mehr da ist",
+     "aufgabe": "Der Fahrzeugbestand und die drei Ausbuchungen aus der Vorgabe sind gegeben. Gehe die Ausbuchungen der Reihe nach durch. Ist die Kategorie erfasst, ziehe ein Fahrzeug ab und melde bus ausgebucht, Rest: 0. Steht danach eine Null im Fach, entferne den Posten ganz und melde bus ist jetzt nicht mehr erfasst. Ist die Kategorie gar nicht mehr erfasst, melde bus ist nicht erfasst. Gib zum Schluss den Bestand aus. Fertig, wenn: fünf Zeilen erscheinen, die dritte bus ist nicht erfasst lautet und die letzte {'lkw': 3, 'jeep': 6} zeigt.",
+     "tipp": "Im Rumpf der Schleife stecken zwei Entscheidungen ineinander: die äußere fragt mit in, ob es das Fach überhaupt gibt, die innere fragt nach dem Abziehen, ob der Wert jetzt null ist. Das del gehört in die innere — und weil es das Fach entfernt, greift beim nächsten Durchgang der else-Zweig der äußeren.",
+     "vorgabe": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nausbuchungen = ['bus', 'bus', 'jeep']"
+    },
+    {
+     "titel": "Spinde der Reihe nach vergeben",
+     "aufgabe": "Die drei Namen aus der Vorgabe sollen Spinde bekommen, beginnend bei Nummer 10. Stelle ein leeres Dictionary auf und trage in einer Schleife zu jedem Namen die nächste Spindnummer als Schlüssel ein — die Nummern stehen nicht im Programm, sondern werden hochgezählt. Gib danach das gefüllte Dictionary aus, darunter die Zahl der vergebenen Spinde, und prüfe zum Schluss, ob Spind 11 belegt ist: wenn ja die Zeile Spind 11: Beck, sonst Spind 11 ist frei. Fertig, wenn: drei Zeilen erscheinen: {10: 'Hartmann', 11: 'Beck', 12: 'Kraus'}, die Zahl 3 und Spind 11: Beck.",
+     "tipp": "Zwei Dinge laufen gleichzeitig: Die Schleife geht die Namen durch, und eine eigene Variable zählt die Spindnummern hoch. Diese Variable wird vor der Schleife auf 10 gesetzt und am Ende jedes Durchgangs um eins erhöht. In den eckigen Klammern steht dann der Variablenname, nicht eine hingeschriebene Zahl.",
+     "vorgabe": "namen = ['Hartmann', 'Beck', 'Kraus']"
+    },
+    {
+     "titel": "Vorhersage — wonach `in` eigentlich fragt",
+     "aufgabe": "Unten stehen fünf Prüfungen an einem Lagerbestand. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für alle fünf Ergebnisse. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Die vierte und die fünfte Zeile fragen beide nach der Zahl 24 und sind trotzdem nicht dasselbe. Fertig, wenn: nach deiner Vorhersagezeile fünf Wahrheitswerte folgen und die vierte Zeile False lautet, obwohl 24 im Bestand vorkommt.",
+     "tipp": "Bei der Liste prüft in die Elemente. Überlege, was beim Dictionary die Entsprechung dazu ist — die Aufschrift des Fachs oder sein Inhalt.",
+     "vorgabe": "lager = {'helm': 24, 'weste': 18}\nprint('helm' in lager)\nprint('stiefel' in lager)\nprint('stiefel' not in lager)\nprint(24 in lager)\nprint(24 in lager.values())"
+    },
+    {
+     "titel": "Reparatur — ausbuchen, was nicht da ist",
+     "aufgabe": "Die Vorgabe soll einen Posten ausbuchen und danach den Bestand zeigen. Sie bricht ab, bevor überhaupt etwas ausgegeben wird. Führe sie zuerst unverändert aus und lies die Fehlermeldung. Baue sie dann so um, dass sie in beiden Fällen eine sinnvolle Meldung ausgibt — wenn der Posten da ist und wenn er fehlt. Fertig, wenn: zwei Zeilen erscheinen: erst handschuhe sind gar nicht erfasst, dann der unveränderte Bestand mit drei Paaren.",
+     "tipp": "Die Fehlermeldung ist dieselbe wie beim Lesen eines unbekannten Schlüssels — auch das Entfernen verlangt ein Fach, das es gibt. Die Abhilfe steht im Abschnitt über in: vorher nachsehen und beide Fälle behandeln.",
+     "vorgabe": "lager = {'helm': 24, 'weste': 18, 'stiefel': 31}\ndel lager['handschuhe']\nprint(lager)"
+    },
+    {
+     "titel": "Jedes Paar einmal ausgeben",
+     "aufgabe": "Ein Fahrzeugbestand führt 3 Lkw, 7 Jeeps und 1 Bus. Gib zu jeder Kategorie eine Zeile aus, in der die Bezeichnung und die Zahl durch einen Doppelpunkt getrennt stehen. Die Bezeichnungen dürfen im Schleifenteil nicht einzeln hingeschrieben werden. Fertig, wenn: drei Zeilen erscheinen, beginnend mit lkw: 3.",
+     "tipp": "Werden Aufschrift und Inhalt gleichzeitig gebraucht, ist .items() die richtige Ansicht. Hinter for stehen dann zwei Namen, durch ein Komma getrennt."
+    },
+    {
+     "titel": "Alles zusammenzählen",
+     "aufgabe": "Ein Lagerbestand führt 24 Helme, 18 Westen und 31 Paar Stiefel. Ermittle die Gesamtzahl aller Teile, ohne die Zahlen selbst zu addieren, und gib sie aus. Gib darunter die Zahl der Posten aus und zum Schluss eine Zeile, in der beide Zahlen in einem Satz stehen. Fertig, wenn: drei Zeilen erscheinen: 73, 3 und 73 Teile in 3 Kategorien.",
+     "tipp": "Hier zählt nur der Inhalt der Fächer, nicht die Aufschrift — dafür gibt es .values(). Eine Summe braucht vor der Schleife einen Startwert, der bei null beginnt."
+    },
+    {
+     "titel": "In alphabetischer Ordnung ausgeben",
+     "aufgabe": "Gib den Lagerbestand aus Aufgabe 6.3.02 noch einmal aus, diesmal nach den Bezeichnungen sortiert, mit Bezeichnung und Stückzahl in einer Zeile. Gib danach das Dictionary selbst aus und sieh dir an, ob sich dort etwas verändert hat. Fertig, wenn: drei sortierte Zeilen erscheinen, beginnend mit helm: 24, und die vierte Zeile das Dictionary in der ursprünglichen Reihenfolge zeigt.",
+     "tipp": "sorted() aus Bereich 4 arbeitet auch mit den Schlüsseln eines Dictionarys. Den Wert holt man sich im Schleifenrumpf weiterhin über den Schlüssel."
+    },
+    {
+     "titel": "Eine Entscheidung je Durchgang",
+     "aufgabe": "Drei Standorte sind mit ihrer Fahrzeugzahl erfasst: Munster 4, Dortmund 1, Koeln 9. Gib zu jedem Standort eine Zeile aus, die ihn als einsatzbereit meldet, wenn mehr als drei Fahrzeuge dort stehen, und sonst Verstärkung anfordert. In beiden Fällen sollen der Standortname mit großem Anfangsbuchstaben und die Zahl in Klammern erscheinen. Fertig, wenn: drei Zeilen erscheinen und genau die mittlere Verstaerkung noetig (1) enthält.",
+     "tipp": "Innerhalb der Schleife sind die beiden Namen ganz gewöhnliche Variablen — alles, was mit Variablen geht, geht damit: Vergleiche, if/else, f-Strings und Methoden wie .title()."
+    },
+    {
+     "titel": "Die schwachen Standorte sammeln",
+     "aufgabe": "Vier Standorte sind mit ihrer Fahrzeugzahl erfasst: Munster 4, Dortmund 1, Koeln 9, Kiel 2. Gehe sie in einer Schleife durch und sammle die Namen aller Standorte mit weniger als drei Fahrzeugen in einer zunächst leeren Liste, jeweils mit großem Anfangsbuchstaben. Gib danach diese Liste aus und darunter die Zeile 2 von 4 Standorten brauchen Verstaerkung. Beide Zahlen darin werden gezählt, nicht hingeschrieben. Fertig, wenn: zwei Zeilen erscheinen: ['Dortmund', 'Kiel'] und 2 von 4 Standorten brauchen Verstaerkung.",
+     "tipp": "Die Sammelliste wird vor der Schleife angelegt, gefüllt wird sie im if-Zweig mit .append(). Am Ende beantworten zwei len()-Aufrufe die Frage nach beiden Zahlen — einer für die Liste, einer für das Dictionary.",
+     "vorgabe": "standorte = {'munster': 4, 'dortmund': 1, 'koeln': 9, 'kiel': 2}"
+    },
+    {
+     "titel": "Soll und Ist nebeneinanderlegen",
+     "aufgabe": "Zwei Dictionaries aus der Vorgabe führen dieselben drei Posten: das eine den Sollbestand, das andere den tatsächlichen. Gehe den Sollbestand in einer Schleife durch und hole dir zu jedem Posten den Istwert aus dem zweiten Dictionary. Gib je Posten eine Zeile aus: helm: 6 fehlen, wenn zu wenig da ist, stiefel: 1 zu viel, wenn zu viel da ist, und weste: vollstaendig, wenn beide Zahlen gleich sind. Zähle dabei mit, wie viele Teile insgesamt fehlen, und melde das zum Schluss als Insgesamt fehlen 6 Teile. Fertig, wenn: vier Zeilen erscheinen und die letzte Insgesamt fehlen 6 Teile. lautet.",
+     "tipp": "Die Schleife läuft nur über ein Dictionary; das zweite wird im Rumpf mit demselben Schlüssel abgefragt — in den eckigen Klammern steht dann die Schleifenvariable ohne Anführungszeichen. Drei Fälle brauchen if, elif und else, und der Zähler für die fehlenden Teile gehört in den ersten Zweig.",
+     "vorgabe": "soll = {'helm': 30, 'weste': 20, 'stiefel': 30}\nist = {'helm': 24, 'weste': 20, 'stiefel': 31}"
+    },
+    {
+     "titel": "Vorhersage — was die drei Ansichten liefern",
+     "aufgabe": "Unten steht ein Programm, das dasselbe Dictionary auf sechs Arten ausgibt. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für alle sechs Zeilen. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Achte darauf, welche Klammernsorte jeweils erscheint und wo zusätzlich ein Wort vor der Klammer steht. Fertig, wenn: nach deiner Vorhersagezeile sechs Zeilen folgen, von denen drei mit dict_ beginnen und die letzte geschweifte Klammern zeigt.",
+     "tipp": "Überlege für jede Zeile zwei Dinge: Kommen die Aufschriften, die Inhalte oder beides heraus — und in welcher Reihenfolge. Bei .items() hilft die Frage, wie Schlüssel und Wert zusammenbleiben können, wenn sie in einer Zeile stehen.",
+     "vorgabe": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nprint(bestand.keys())\nprint(bestand.values())\nprint(bestand.items())\nprint(sorted(bestand))\nprint(list(bestand))\nprint(bestand)"
+    },
+    {
+     "titel": "Reparatur — die vergessenen Klammern",
+     "aufgabe": "Die Vorgabe soll die drei Fahrzeugbezeichnungen untereinander ausgeben und bricht stattdessen ab, bevor eine einzige Zeile erscheint. Führe sie zuerst unverändert aus und lies die Fehlermeldung. Die Reparatur besteht aus zwei Zeichen. Fertig, wenn: drei Zeilen mit lkw, jeep und bus erscheinen.",
+     "tipp": "Die Meldung sagt, dass etwas nicht durchlaufbar ist — und meint damit nicht das Dictionary, sondern das, was ohne Klammern hinter dem Punkt steht. Ein Aufruf braucht Klammern, auch wenn nichts darin steht.",
+     "vorgabe": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nfor fahrzeug in bestand.keys:\n    print(fahrzeug)"
     }
    ]
   },
@@ -366,6 +739,30 @@
      "aufgabe": "Schreib ein eigenes kleines Programm von der ersten Zeile an. Es gibt dafür keine Vorgabe und keine eine richtige Lösung — nur fünf Dinge, die vorkommen müssen: 1. Eine Liste mit mindestens vier Textwerten anlegen. Wähl selbst ein Thema: Packliste, Werkzeugkiste, Einkauf, Dienstplan. 2. Mindestens einen Wert ergänzen. 3. Mindestens einen Wert entfernen. 4. Die Liste sortieren. 5. Das Ergebnis formatiert ausgeben: eine Überschrift, eine Trennlinie, die Einträge einzeln nummeriert und großgeschrieben, dazu die Anzahl und das letzte Element. Fertig, wenn: Das Programm ohne Fehlermeldung läuft und eine Ausgabe erzeugt, die ein Mensch ohne Python-Kenntnisse lesen kann — also keine eckigen Klammern und keine Anführungszeichen in den nummerierten Zeilen.",
      "tipp": "Die Reihenfolge der Schritte entscheidet über das Ergebnis: Erst ergänzen und entfernen, dann sortieren — sonst steht der neue Wert am falschen Platz. Für die Trennlinie reicht ein Text mal einer Zahl. Und für jede Ausgabezeile ist ein f-String das passende Mittel.",
      "loesung": "besitzer = \"sebastian\"\npackliste = ['stiefel', 'helm', 'weste', 'karte']\n\npackliste.append('kompass')\npackliste.remove('weste')\npackliste.sort()\n\nprint(f\"Packliste von {besitzer.title()}\")\nprint(\"-\" * 30)\nprint(f\"1. {packliste[0].title()}\")\nprint(f\"2. {packliste[1].title()}\")\nprint(f\"3. {packliste[2].title()}\")\nprint(f\"4. {packliste[3].title()}\")\nprint(\"-\" * 30)\nprint(f\"Teile insgesamt: {len(packliste)}\")\nprint(f\"Zuletzt im Alphabet: {packliste[-1].title()}\")"
+    },
+    {
+     "titel": "Vollständigkeitsprüfung eines Datensatzes",
+     "aufgabe": "Ein Personaldatensatz enthält Name, Dienstgrad und Standort. Eine Liste nennt fünf Felder, die eigentlich erfasst sein sollten. Gehe diese Liste durch und gib zu jedem Feld eine Zeile aus — entweder den Wert oder den Hinweis nicht hinterlegt. Zum Schluss soll eine Zeile melden, wie viele Felder tatsächlich erfasst sind und wie viele erwartet wurden. Das Programm darf an keiner Stelle abbrechen. Fertig, wenn: sechs Zeilen erscheinen, zwei davon mit nicht hinterlegt, und die letzte Erfasste Felder: 3 von 5 lautet.",
+     "tipp": "Die Schleifenvariable ist in jedem Durchgang ein Text aus der Liste — und genau dieser Text ist der Schlüssel, der in die runden Klammern von .get() gehört. Dort steht dann ein Variablenname ohne Anführungszeichen, kein geschriebener Schlüssel.",
+     "vorgabe": "ausweis = {'name': 'Jens Hartmann', 'dienstgrad': 'Hauptfeldwebel', 'standort': 'Munster'}\nfelder = ['name', 'dienstgrad', 'standort', 'telefon', 'email']"
+    },
+    {
+     "titel": "Materialausgaben zählen",
+     "aufgabe": "Eine Liste protokolliert sechs Materialausgaben, manche Teile kommen mehrfach vor. Zähle, wie oft jedes Teil ausgegeben wurde, und gib das Ergebnis als Dictionary aus. Darunter soll eine Zeile melden, wie viele Ausgaben insgesamt protokolliert wurden und wie viele verschiedene Teile dabei vorkamen. Die Teilenamen dürfen im Zählteil des Programms nicht hingeschrieben werden. Fertig, wenn: zwei Zeilen erscheinen: {'helm': 3, 'weste': 2, 'stiefel': 1} und darunter 6 Ausgaben, 3 verschiedene Teile.",
+     "tipp": "Fange mit einem leeren Dictionary an und gehe die Liste mit einer for-Schleife durch. In jedem Durchgang ist genau eine Frage zu beantworten: Gibt es das Fach schon? Daraus folgt entweder „um eins erhöhen\" oder „mit 1 anlegen\".",
+     "vorgabe": "ausgaben = ['helm', 'weste', 'helm', 'stiefel', 'helm', 'weste']"
+    },
+    {
+     "titel": "Reparatur — zwei Fehler, zwei Läufe",
+     "aufgabe": "Die Vorgabe soll den Bestand alphabetisch sortiert ausgeben, je Zeile Bezeichnung und Zahl durch Doppelpunkt getrennt. Sie enthält zwei Fehler: einen, der das Programm abbrechen lässt, und einen, der stillschweigend das Falsche ausgibt. Repariere einen nach dem anderen, mit jeweils einem Lauf dazwischen. Fertig, wenn: drei Zeilen erscheinen, beginnend mit bus: 1, und nirgends runde Klammern oder Anführungszeichen in der Ausgabe stehen.",
+     "tipp": "Fang mit dem Abbruch an: Ein Dictionary lässt sich nicht selbst umsortieren, es gibt nur eine sortierte Ansicht darauf. Der zweite Fehler zeigt sich erst danach in der Ausgabe — zwei Dinge auf einmal brauchen zwei Namen, oder man nimmt gleich die Ansicht, die nur die Aufschriften liefert.",
+     "vorgabe": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nbestand.sort()\nfor paar in bestand.items():\n    print(paar)"
+    },
+    {
+     "titel": "Gesamtstunden und Spitzenreiter",
+     "aufgabe": "Vier Personen sind mit ihren Wochenstunden erfasst. Ermittle in einem einzigen Schleifendurchlauf zwei Dinge: die Summe aller Stunden und die Person mit den meisten Stunden. Gib beides in je einer Satzzeile aus, den Namen mit großem Anfangsbuchstaben. Zwei Personen haben dieselbe Höchstzahl — sieh dir an, welche davon gemeldet wird. Fertig, wenn: zwei Zeilen erscheinen: Gesamt: 169 Stunden und Spitze: Beck mit 45 Stunden.",
+     "tipp": "Vor der Schleife werden drei Merker gebraucht: einer für die Summe, einer für die bisher größte Zahl und einer für den Namen, der dazugehört. Im Rumpf wird die aktuelle Zahl mit dem bisherigen Höchstwert verglichen und bei Bedarf beides gemeinsam aktualisiert.",
+     "vorgabe": "stunden = {'hartmann': 38, 'beck': 45, 'kraus': 41, 'wolf': 45}"
     }
    ]
   }

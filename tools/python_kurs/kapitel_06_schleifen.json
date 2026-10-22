@@ -31,6 +31,246 @@
    "merk": "break heißt: raus aus der Schleife. continue heißt: nächste Runde."
   },
   {
+   "titel": "Die for-Schleife: vier Teile und ein Doppelpunkt",
+   "python": {
+    "text": "Eine for-Schleife geht eine Sammlung von vorne bis hinten durch. Eine Sammlung ist eine Liste oder ein Bereich wie range. Die Kopfzeile hat vier Teile: for, einen freien Namen, in und die Sammlung. Am Ende steht ein Doppelpunkt. Darunter kommt der eingerückte Körper. Das liest sich wie ein deutscher Satz: für jedes Fahrzeug in den Fahrzeugen. Vorher musstest du jede Zeile einzeln schreiben. Mit Schleife bleiben es zwei Zeilen, egal wie lang die Liste ist. Das ist wie ein Busfahrer. Er hält an jeder Haltestelle. Die Route bleibt gleich.",
+    "code": "fahrzeuge = [\"lkw\", \"jeep\", \"transporter\", \"bus\"]\n\nfor fahrzeug in fahrzeuge:\n    print(fahrzeug)"
+   },
+   "vergleich": "In C++ heißt die Kopfzeile for (auto fahrzeug : fahrzeuge) und der Block steht in geschweiften Klammern. Python nimmt for fahrzeug in fahrzeuge und den Doppelpunkt. Der Doppelpunkt kündigt den Block an.",
+   "merk": "for, Name, in und Sammlung: mehr braucht die Kopfzeile nicht.",
+   "checkliste": [
+    "for, Name, in und Sammlung bilden die Kopfzeile.",
+    "Der Doppelpunkt am Ende ist Pflicht.",
+    "Der Körper steht eingerückt darunter.",
+    "Die Schleife geht die Sammlung der Reihe nach durch."
+   ]
+  },
+  {
+   "titel": "Einrückung: der Abstand bildet den Körper",
+   "python": {
+    "text": "In Python zeigt der Abstand vom linken Rand, was zur Schleife gehört. Vier Leerzeichen sind eine Ebene. Eine Zeile mit vier Leerzeichen läuft in jedem Durchlauf. Eine Zeile ohne Abstand läuft einmal nach der Schleife. Beides ist gültiger Code. Der Unterschied zeigt sich nur in der Ausgabe. Das ist keine Schönheit, sondern Sprache. In C++ machen das die geschweiften Klammern. Hier machen es die Leerzeichen. Das ist wie bei einer Einkaufsliste. Was unter dem Punkt eingerückt steht, gehört zu diesem Punkt.",
+    "code": "zahlen = [8, 3, 11]\n\nfor zahl in zahlen:\n    print(zahl)\n    print(\"Fertig.\")\n\nprint(\"Alles erledigt.\")"
+   },
+   "vergleich": "C++ markiert den Block mit geschweiften Klammern und erlaubt beliebige Einrückung. Python verlangt vier Leerzeichen je Ebene, sonst bricht es ab.",
+   "merk": "Vier Leerzeichen nach rechts heißen: gehört in die Schleife.",
+   "checkliste": [
+    "Vier Leerzeichen sind eine Einrückungsebene.",
+    "Eingerückte Zeilen laufen in jedem Durchlauf.",
+    "Eine Zeile am linken Rand läuft einmal danach.",
+    "Fehlende Einrückung meldet Python als IndentationError."
+   ]
+  },
+  {
+   "titel": "Die Schleifenvariable: Wert statt Nummer",
+   "python": {
+    "text": "Die Schleifenvariable ist der Name direkt nach dem Wort for. Sie enthält in jedem Durchlauf das nächste Element. Also den Wert, nicht die Nummer der Stelle. Vor dem Durchlauf setzt Python sie neu. Der alte Inhalt wird dabei einfach überschrieben. Der Name ist frei wählbar. Die Liste steht im Plural, die Variable im Singular. Nenne die Variable nie so wie die Liste. Sonst überschreibt der letzte Durchlauf die ganze Liste. Zwischen eckigen Klammern erwartet Python eine Zahl. Wer dort die Schleifenvariable einsetzt, bekommt einen TypeError.",
+    "code": "zahlen = [8, 3, 11]\n\nfor zahl in zahlen:\n    print(f\"Durchlauf mit zahl = {zahl}, verdoppelt: {zahl * 2}\")"
+   },
+   "vergleich": "Auch die C++-Range-for-Schleife gibt das Element, nicht den Index. Brauchst du die Nummer der Stelle, nimmst du in Python range(len(liste)).",
+   "merk": "Die Schleifenvariable trägt den Wert, nicht die Nummer.",
+   "checkliste": [
+    "Die Variable enthält das Element selbst.",
+    "Der Name ist frei wählbar.",
+    "Liste im Plural, Variable im Singular.",
+    "Nicht denselben Namen wie die Liste verwenden."
+   ]
+  },
+  {
+   "titel": "Nach der Schleife: was noch gilt",
+   "python": {
+    "text": "Nach dem letzten Durchlauf ist die Schleife fertig. Das Programm läuft in der nächsten Zeile ohne Einrückung weiter. Die Schleifenvariable verschwindet nicht. Sie behält den Wert des letzten Durchlaufs. Darauf sollte man sich nicht verlassen, es ist nur ein Rest. Eine leere Liste ist kein Fehler. Null Elemente ergeben null Durchläufe. Der Körper läuft dann kein einziges Mal, und Python schweigt. Das ist wie ein leerer Briefkasten: Du schaust hinein und gehst weiter.",
+    "code": "fahrzeuge = [\"lkw\", \"jeep\", \"transporter\"]\n\nfor fahrzeug in fahrzeuge:\n    print(fahrzeug)\n\nprint(\"Nach der Schleife:\", fahrzeug)\n\nleer = []\nfor element in leer:\n    print(element)\n\nprint(\"Leere Liste: null Durchläufe.\")"
+   },
+   "vergleich": "In C++ lebt eine Variable nur in ihrem Block. Pythons Schleifenvariable bleibt nach der Schleife erhalten und zeigt auf das letzte Element.",
+   "merk": "So viele Elemente, so viele Durchläufe. Null Elemente heißt keinmal.",
+   "checkliste": [
+    "Die Zeile hinter der Schleife läuft genau einmal.",
+    "Die Schleifenvariable behält den letzten Wert.",
+    "Auf diesen Rest sollte man sich nicht verlassen.",
+    "Eine leere Liste ergibt null Durchläufe ohne Meldung."
+   ]
+  },
+  {
+   "titel": "range: die drei Formen",
+   "python": {
+    "text": "range erzeugt ganze Zahlen, ohne dass du sie hinschreibst. Es gibt drei Formen. range(5) liefert 0 bis 4. range(2, 5) liefert 2 bis 4. range(0, 10, 2) liefert 0, 2, 4, 6 und 8. Die dritte Zahl ist die Schrittweite. Sie sagt, wie weit von einer Zahl zur nächsten gesprungen wird. Ohne Angabe ist sie 1. Das Ende gehört nie dazu. Die 5 ist nur die Grenze, kein Mitglied der Folge. Ende minus Start ergibt die Anzahl. Das ist wie eine Grenze im Sport. Die Linie gehört nicht mehr zum Spielfeld.",
+    "code": "print(list(range(5)))\nprint(list(range(2, 5)))\nprint(list(range(0, 10, 2)))\nprint(len(range(5)))\n\nfor zahl in range(1, 4):\n    print(zahl)"
+   },
+   "vergleich": "range(5) entspricht in C++ der Schleife for (int i = 0; i < 5; i++). Start, Ende und Schritt stehen in Python in einer Klammer.",
+   "merk": "Das Ende gehört nicht dazu: range(2, 5) liefert 2, 3 und 4.",
+   "checkliste": [
+    "range(ende) beginnt bei 0.",
+    "range(start, ende) beginnt beim Startwert.",
+    "Die dritte Zahl ist die Schrittweite.",
+    "Ende minus Start ergibt die Anzahl der Zahlen."
+   ]
+  },
+  {
+   "titel": "range rückwärts und leere Folgen",
+   "python": {
+    "text": "Mit einer negativen Schrittweite zählt range rückwärts. range(10, 0, -2) liefert 10, 8, 6, 4 und 2. Ohne Minus zählt Python aufwärts und kommt hinten nie an. range(5, 1) ist deshalb leer, aber kein Fehler. Die Schleife läuft dann kein einziges Mal. Auch range(3, 3) ist leer. Eine Schleife ohne Ausgabe ist selten kaputt. Meistens ist ihr Bereich leer oder die Richtung passt nicht. Zur Kontrolle gibst du list(range(...)) aus. Das ist wie beim Aufzug: Ohne Knopf nach unten fährt er nicht in den Keller.",
+    "code": "print(list(range(10, 0, -2)))\nprint(list(range(10, 0, -1)))\nprint(list(range(5, 1)))\nprint(list(range(3, 3)))\n\nfor zahl in range(3, 0, -1):\n    print(zahl)"
+   },
+   "vergleich": "In C++ schreibst du i-- oder i -= 2 in den Schleifenkopf. In Python steht die negative Zahl als dritte Angabe in range.",
+   "merk": "Rückwärts zählen braucht ein Minus in der Schrittweite.",
+   "checkliste": [
+    "Negative Schrittweite zählt rückwärts.",
+    "Start größer als Ende ergibt eine leere Folge.",
+    "Eine leere Folge ist kein Fehler.",
+    "Zur Kontrolle list(range(...)) ausgeben."
+   ]
+  },
+  {
+   "titel": "Schleife und if: prüfen in jedem Durchlauf",
+   "python": {
+    "text": "Ein if darf in den Schleifenkörper. Dann wird es in jedem Durchlauf neu geprüft. Bei sechs Elementen gibt es sechs Entscheidungen. Jede sieht einen anderen Wert. Ein Block im anderen Block heißt Verschachtelung. Jede Ebene rückt vier Leerzeichen weiter ein. Ebene eins läuft einmal je Durchlauf. Ebene zwei läuft nur, wenn die Bedingung stimmt. Wer den if-Körper nur vier Leerzeichen einrückt, nimmt ihn aus dem if heraus. Die Zeile läuft dann immer. Das ist wie ein Sieb. Die Schleife schüttet alles hinein, das if behält die großen Stücke.",
+    "code": "zahlen = [12, 7, 30, 3, 48, 23]\n\nfor zahl in zahlen:\n    if zahl > 20:\n        print(f\"{zahl} ist groß.\")\n    else:\n        print(f\"{zahl} ist klein.\")"
+   },
+   "vergleich": "In C++ steht das if im Block der Schleife, ebenfalls mit geschweiften Klammern. Die Prüfung läuft in beiden Sprachen je Durchlauf.",
+   "merk": "Ein if in der Schleife wird je Durchlauf geprüft, nicht einmal.",
+   "checkliste": [
+    "Das if steht eingerückt im Schleifenkörper.",
+    "Der if-Körper rückt noch eine Ebene weiter ein.",
+    "Acht Leerzeichen heißen: nur bei erfüllter Bedingung.",
+    "Vier Leerzeichen zu wenig lässt die Zeile immer laufen."
+   ]
+  },
+  {
+   "titel": "Mitzählen und aufsummieren",
+   "python": {
+    "text": "Ein Zähler ist eine Variable, die vor der Schleife auf 0 steht. Im Körper zählt sie die Treffer. summe += zahl ist die Kurzform von summe = summe + zahl. Das heißt: alten Wert nehmen, etwas dazuzählen, Ergebnis zurücklegen. Vorbereiten vor der Schleife, verändern in der Schleife, ausgeben danach. Steht die Null im Körper, wird sie in jedem Durchlauf zurückgesetzt. Am Ende bleibt dann nur der letzte Wert. Das fällt nicht auf, weil keine Fehlermeldung kommt. Das ist wie ein Kassenbon: Du addierst jeden Posten, nicht nur den letzten.",
+    "code": "zahlen = [12, 7, 30, 3, 48, 23]\n\nanzahl = 0\nsumme = 0\n\nfor zahl in zahlen:\n    if zahl > 20:\n        anzahl += 1\n        summe += zahl\n\nprint(f\"{anzahl} Werte über 20, zusammen {summe}\")"
+   },
+   "vergleich": "In C++ schreibst du anzahl++ oder summe += zahl. Der Ort bleibt gleich: Die Variable entsteht vor der Schleife.",
+   "merk": "Vorbereiten vor der Schleife, verändern in der Schleife, ausgeben danach.",
+   "checkliste": [
+    "Der Zähler startet vor der Schleife bei 0.",
+    "Im Körper wird er um eins erhöht.",
+    "+= ist die Kurzform für Wert plus etwas.",
+    "Steht die Null im Körper, ist das Ergebnis falsch."
+   ]
+  },
+  {
+   "titel": "Filtern: aus einer Liste eine neue bauen",
+   "python": {
+    "text": "Filtern heißt: aus einer Liste die passenden Elemente auswählen. Sie landen in einer zweiten Liste, die vorher leer ist. Die alte Liste bleibt dabei unverändert. Der Aufbau ist immer gleich. Leere Liste vor der Schleife, if im Körper, append im if. append hängt einen Wert ans Ende der Liste. Die Zeile grosse = [] gehört nach oben, nicht in die Schleife. Sonst ist die Liste in jedem Durchlauf wieder leer. Das ist wie ein Korb beim Ernten. Du legst nur die reifen Früchte hinein. Die anderen bleiben am Strauch.",
+    "code": "zahlen = [12, 7, 30, 3, 48, 23]\n\ngrosse = []\n\nfor zahl in zahlen:\n    if zahl > 20:\n        grosse.append(zahl)\n\nprint(grosse)\nprint(len(zahlen), len(grosse))"
+   },
+   "vergleich": "In C++ füllst du einen vector mit push_back. Python nutzt append auf einer Liste. Das Muster ist dasselbe.",
+   "merk": "Leere Liste vor der Schleife, if im Körper, append im if.",
+   "checkliste": [
+    "Die Zielliste entsteht vor der Schleife.",
+    "append hängt einen einzelnen Wert an.",
+    "Die Ausgangsliste bleibt vollständig.",
+    "Mit len prüfen, wie viele Treffer es gibt."
+   ]
+  },
+  {
+   "titel": "input liefert Text, int macht Zahlen",
+   "python": {
+    "text": "input zeigt eine Frage und wartet auf Enter. Das Programm hält an, bis jemand tippt. Die Antwort ist immer ein Text, auch bei Ziffern. Aus 25 wird also der Text 25. Rechnen geht damit nicht. int macht daraus eine ganze Zahl, float eine Kommazahl. In der Praxis schreibst du int(input(...)) in einer Zeile. Wer die Antwort nicht zuweist, hat umsonst gefragt. Ein Leerzeichen am Ende der Frage trennt Frage und Antwort. Das ist wie ein Formular: Was du einträgst, ist zuerst nur Schrift.",
+    "code": "eingabe = \"25\"\nprint(type(eingabe))\nprint(eingabe + \"5\")\n\nzahl = int(eingabe)\nprint(type(zahl))\nprint(zahl + 5)"
+   },
+   "vergleich": "C++ liest mit cin und kennt den Typ vorher. Python liest immer Text und wandelt danach mit int oder float um.",
+   "merk": "input liefert Text. int macht daraus eine Zahl.",
+   "checkliste": [
+    "input wartet auf Enter.",
+    "Die Antwort ist immer ein Text.",
+    "int und float wandeln den Text um.",
+    "Ohne Zuweisung ist die Antwort verloren."
+   ]
+  },
+  {
+   "titel": "while: anlegen, prüfen, verändern",
+   "python": {
+    "text": "while wiederholt den Körper, solange eine Bedingung wahr ist. Die Bedingung wird vor jedem Durchlauf geprüft. Auch vor dem ersten. Deshalb sind null Durchläufe möglich. Drei Schritte gehören dazu: anlegen, prüfen, verändern. Die Variable entsteht vor der Schleife. Die Bedingung steht in der while-Zeile. Im Körper wird die Variable verändert. Fehlt der dritte Schritt, läuft die Schleife ewig. while nutzt man, wenn die Anzahl der Runden nicht feststeht. Das ist wie eine Treppe: Jede Stufe bringt dich näher ans Ziel.",
+    "code": "zahl = 1\nwhile zahl <= 5:\n    print(zahl)\n    zahl += 1\n\nprint(\"fertig\")"
+   },
+   "vergleich": "C++ schreibt while (zahl <= 5) mit Klammern und Block. Python nimmt den Doppelpunkt wie bei if.",
+   "merk": "Anlegen, prüfen, verändern. Fehlt ein Schritt, läuft die Schleife nie oder ewig.",
+   "checkliste": [
+    "Die Bedingung wird vor jedem Durchlauf geprüft.",
+    "Null Durchläufe sind möglich.",
+    "Die Variable entsteht vor der Schleife.",
+    "Im Körper muss sie sich ändern."
+   ]
+  },
+  {
+   "titel": "while mit Abbruchbedingung: bis quit",
+   "python": {
+    "text": "Oft soll eine Schleife laufen, bis der Benutzer stoppt. Dafür legst du die Antwortvariable vor der Schleife an. Der Startwert muss die Schleife beginnen lassen, ein leerer Text eignet sich. Im Körper kommt die neue Antwort. Die Bedingung prüft auf ein vereinbartes Wort wie quit. Erst danach wandelst du die Zahl um. Sonst stürzt int beim Wort quit ab. Hier kommt die Antwort aus einer Liste, damit der Code ohne Tastatur läuft. Im echten Programm steht dort input. Das ist wie ein Gespräch: Es endet, wenn jemand Auf Wiedersehen sagt.",
+    "code": "antworten = [\"hallo\", \"wie geht es\", \"quit\"]\nnachricht = \"\"\nnummer = 0\n\nwhile nachricht != \"quit\":\n    nachricht = antworten[nummer]\n    nummer += 1\n    if nachricht != \"quit\":\n        print(nachricht)\n\nprint(\"Programm beendet.\")"
+   },
+   "vergleich": "In C++ liest du mit cin in einen string und vergleichst mit ==. Dieselbe Bedingung, dieselbe Schleife.",
+   "merk": "Die Variable der Bedingung muss vor der Schleife existieren.",
+   "checkliste": [
+    "Startwert so wählen, dass die Schleife beginnt.",
+    "Ein vereinbartes Wort beendet den Dialog.",
+    "Erst prüfen, dann umwandeln.",
+    "Sonst scheitert int am Abbruchwort."
+   ]
+  },
+  {
+   "titel": "Endlosschleife: erkennen und beenden",
+   "python": {
+    "text": "Eine for-Schleife endet von selbst, weil die Sammlung zu Ende geht. Eine while-Schleife endet nur, wenn die Bedingung falsch wird. Dafür muss der Körper etwas tun. Fehlt die Veränderung, läuft das Programm immer weiter. Das nennt man Endlosschleife. Sie ist kein Absturz, das Programm rechnet einfach weiter und gibt immer dasselbe aus. Mit Strg und C brichst du ab. Python meldet dann KeyboardInterrupt. Häufige Ursachen: Veränderung vergessen, eine Ebene zu weit links, oder die falsche Variable verändert. Das ist wie ein Hamsterrad: Ohne Ausstieg dreht es immer weiter.",
+    "code": "zahl = 1\nwhile zahl <= 3:\n    print(zahl)\n    zahl += 1\n\nprint(\"Ende\")\n\n# Ohne die Zeile zahl += 1\n# würde diese Schleife ewig laufen."
+   },
+   "vergleich": "Auch C++ kennt die Endlosschleife. Dort hilft Strg und C genauso, und der Abbruch beendet das Programm sofort.",
+   "merk": "Ohne Veränderung im Körper wird die Bedingung nie falsch.",
+   "checkliste": [
+    "Die Bedingung muss irgendwann falsch werden.",
+    "Die Veränderung gehört in den Körper.",
+    "Falsche Einrückung erzeugt oft eine Endlosschleife.",
+    "Strg und C beendet mit KeyboardInterrupt."
+   ]
+  },
+  {
+   "titel": "break und continue: die Schleife steuern",
+   "python": {
+    "text": "break verlässt die Schleife sofort. Der Rest des Durchlaufs wird nicht mehr ausgeführt. Danach läuft die Zeile hinter der Schleife. continue überspringt nur den Rest der laufenden Runde. Dann beginnt der nächste Durchlauf. Beide wirken immer auf die innerste Schleife. while True mit break ist eine bewusste Endlosschleife. Sie endet nur über den Ausstieg im Körper. In einer while-Schleife gehört die Veränderung vor jedes continue. Sonst dreht sich die Schleife ohne Ausgabe im Kreis. Das ist wie eine Tür: break geht hinaus, continue geht nur einen Schritt zurück.",
+    "code": "for zahl in [1, 2, 3, 4, 5, 6]:\n    if zahl == 4:\n        break\n    print(\"break:\", zahl)\n\nfor zahl in [1, 2, 3, 4, 5, 6]:\n    if zahl % 2 == 0:\n        continue\n    print(\"continue:\", zahl)"
+   },
+   "vergleich": "break und continue heißen in C++ genauso und wirken genauso. Beide gelten nur für die innerste Schleife.",
+   "merk": "break heißt raus aus der Schleife, continue heißt nächste Runde.",
+   "checkliste": [
+    "break beendet die ganze Schleife.",
+    "continue beendet nur den laufenden Durchlauf.",
+    "while True braucht ein break im Körper.",
+    "Bei while gehört die Zählererhöhung vor continue."
+   ]
+  },
+  {
+   "titel": "Verschachtelte Schleifen",
+   "python": {
+    "text": "Eine Schleife darf in einer anderen Schleife stehen. Das nennt man verschachtelt. Die innere Schleife läuft für jeden Durchlauf der äußeren komplett durch. Bei drei äußeren und drei inneren Runden sind es neun. Die Einrückung zeigt die Zugehörigkeit. Vier Leerzeichen für die äußere Ebene, acht für die innere. break verlässt nur die innerste Schleife. Wer beide verlassen will, merkt sich den Abbruch in einer eigenen Variable. Das ist wie ein Kalender: Für jede Woche gehst du alle sieben Tage durch.",
+    "code": "wochen = [1, 2, 3]\ntage = [\"Mo\", \"Di\"]\n\nfor woche in wochen:\n    for tag in tage:\n        print(f\"Woche {woche}, Tag {tag}\")"
+   },
+   "vergleich": "In C++ stehen zwei for-Schleifen ineinander, jede mit eigenem Block. Python nimmt dafür zwei Einrückungsebenen.",
+   "merk": "Außen eine Runde, innen alle Runden: 3 mal 3 ergibt 9.",
+   "checkliste": [
+    "Die innere Schleife läuft je äußerem Durchlauf.",
+    "Jede Ebene rückt vier Leerzeichen weiter ein.",
+    "break wirkt nur in der innersten Schleife.",
+    "Die Anzahl der Durchläufe multipliziert sich."
+   ]
+  },
+  {
+   "titel": "Typische Fehler bei Schleifen",
+   "python": {
+    "text": "Drei Fehler treten bei Schleifen am häufigsten auf. Erstens: der Doppelpunkt fehlt. Dann meldet Python SyntaxError, und das Programm startet nicht. Zweitens: die Einrückung fehlt. Dann kommt IndentationError, ebenfalls vor dem Start. Drittens: eine Zeile ist zu weit eingerückt. Diesen Fehler meldet Python nicht. Das Programm läuft und gibt etwas mehrfach aus. Wenn eine Ausgabe öfter erscheint als erwartet, ist fast immer eine Zeile zu weit rechts. Ein vierter Fall: Die Schleifenvariable wird für eine Zahl gehalten. Das ergibt einen TypeError. Das ist wie ein Reißverschluss: Ein Zahn daneben, und es klemmt.",
+    "code": "zahlen = [8, 3, 11]\n\nfor zahl in zahlen:\n    print(zahl)\n\nprint(\"Einmal am Ende - so ist es richtig.\")\n\n# Steht die letzte Zeile vier Leerzeichen weiter rechts,\n# erscheint sie dreimal statt einmal."
+   },
+   "vergleich": "C++ meldet fehlende Klammern beim Übersetzen. Python prüft die Einrückung. Der stille Fehler ist in beiden Sprachen der teuerste.",
+   "merk": "Doppelpunkt und Einrückung brechen ab. Eine zu weite Einrückung läuft still falsch.",
+   "checkliste": [
+    "Doppelpunkt am Ende der Kopfzeile.",
+    "Vier Leerzeichen für den Körper.",
+    "Zu weit eingerückte Zeilen laufen mehrfach.",
+    "Die Schleifenvariable ist keine Zahl."
+   ]
+  },
+  {
    "titel": "Pflichtaufgaben",
    "python": {
     "text": "Weitere Pflichtaufgaben aus dem Python-Crashkurs (Tag 2 und 3). Schreibe jede Aufgabe in eine eigene Datei und führe sie aus."

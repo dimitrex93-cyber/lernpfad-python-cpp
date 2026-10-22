@@ -52,13 +52,11 @@ Seit v1.0.0 sind die beiden Sprachen getrennt: **`w` öffnet den Python-Kurs**,
 **`c` den C++-Kurs**. Jeder Kurs erklärt eine Sprache für sich – Erklärung,
 Codebeispiel und Merksatz pro Abschnitt.
 
-- **Python-Kurs:** `tools/python_kurs/` – 19 Kapitel, 147 Abschnitte. Die
-  Kapitel 2–8 enthalten zusätzlich **133 Pflicht- und 25
-  Vertiefungsaufgaben** aus dem Python-Crashkurs (Tag 1–3) – alle mit Lösung
-  aus den offiziellen Lösungssammlungen (`aufgaben_pflicht` /
-  `aufgaben_vertiefung`); Reparatur- und
-  Vorhersage-Aufgaben tragen zusätzlich den fehlerhaften Ausgangscode als
-  `vorgabe`.
+- **Python-Kurs:** `tools/python_kurs/` – 19 Kapitel, 196 Abschnitte. Die
+  Kapitel 2–9 enthalten zusätzlich **220 Übungsaufgaben** aus dem Python-Crashkurs
+  (Tag 1–4); 158 davon mit Lösung aus den offiziellen Lösungssammlungen, Tag 4
+  noch ohne (`aufgaben_pflicht` / `aufgaben_vertiefung`). Reparatur- und
+  Vorhersage-Aufgaben tragen den fehlerhaften Ausgangscode als `vorgabe`.
 - **C++-Kurs:** `tools/cpp_kurs/` – 19 Kapitel, 121 Abschnitte, dazu 71
   Aufgaben (29 Pflicht-/Vertiefungsblöcke) mit vollständigen, kompilierten
   Lösungen. Themen, die nur Python betreffen (f-Strings, Listenmethoden),
