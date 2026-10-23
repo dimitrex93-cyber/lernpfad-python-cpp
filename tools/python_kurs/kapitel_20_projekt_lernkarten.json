@@ -144,6 +144,47 @@
     }
    ],
    "merk": "Erst das Dictionary, dann die Funktionen – so wird der Code kurz."
+  },
+  {
+   "titel": "Stufe 3 – Kartei dauerhaft speichern",
+   "python": {
+    "text": "An Tag 5 bekommt der Trainer ein Gedächtnis: Die Kartei wird in eine Datei geschrieben und beim Start wieder eingelesen. Dazu kommt der Umgang mit dem ersten Start, an dem es noch keine Datei gibt, und mit einer kaputten Zeile, die nicht das ganze Programm umwerfen darf. Am Ende steht der fertige Trainer und die Zugabe, sich zu merken, was schon saß."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Schritt 1 — Die Kartei in eine Datei schreiben",
+     "aufgabe": "Bisher war dein Trainer vergesslich: Zelle neu gestartet, Kartei weg. Das ändert sich jetzt. Schreibe eine Funktion speichern(kartei, dateiname), die jede Karte in eine Zeile schreibt — Begriff und Erklärung durch ein Semikolon getrennt: variable;ein Name, der an einem Wert haengt Ruf sie auf und gib danach den Inhalt der Datei zur Kontrolle wieder aus. Warum ein Semikolon und kein Komma? In manchen Erklärungen kommen Kommas vor — beim Zerlegen wäre dann nicht mehr klar, wo die Erklärung anfängt. Fertig, wenn: fünf Zeilen erscheinen, die erste lautet variable;ein Name, der an einem Wert haengt.",
+     "tipp": "Bau die Zeilen in einer Schleife über .items() in einer Liste zusammen und mach daraus mit \"\\n\".join(zeilen) einen einzigen Text. Den schreibst du mit Path(dateiname).write_text(text, encoding='utf-8')."
+    },
+    {
+     "titel": "Schritt 2 — Die Kartei aus der Datei zurückholen",
+     "aufgabe": "Schreiben allein nützt nichts — es muss auch zurückkommen. Schreibe laden(dateiname). Die Funktion liest die Datei, zerlegt jede Zeile am Semikolon und baut daraus wieder ein Dictionary, das sie zurückgibt. Prüfe danach, ob wirklich dasselbe herauskommt wie vorher hineinging. Fertig, wenn: drei Zeilen: die Anzahl 5, die Erklärung zu schleife und zuletzt True als Beweis, dass geladene und ursprüngliche Kartei gleich sind.",
+     "tipp": ".splitlines() zerlegt den Dateitext in eine Liste von Zeilen. Jede Zeile zerlegst du mit zeile.split(';') in zwei Teile — Teil 0 ist der Begriff, Teil 1 die Erklärung. Das Dictionary baust du wie gewohnt: leer anlegen, in der Schleife füllen, am Ende return."
+    },
+    {
+     "titel": "Schritt 3 — Der erste Start, an dem es noch nichts gibt",
+     "aufgabe": "Jetzt die Stelle, an der jedes Programm dieser Art einmal abstürzt: Beim allerersten Start gibt es die Datei noch nicht. Bau laden() so um, dass es diesen Fall abfängt. Gibt es die Datei nicht, meldet die Funktion das und gibt eine leere Kartei zurück — statt mit einem FileNotFoundError abzubrechen. Ruf sie zweimal auf: einmal mit einem Dateinamen, den es nicht gibt, und einmal mit deiner echten Datei. Fertig, wenn: vier Zeilen: Noch keine Kartei vorhanden - ich fange leer an., dann 0, dann 5, dann True.",
+     "tipp": "Leg den Lesevorgang in ein try, und fang FileNotFoundError in einem except ab. Im except gibst du die Meldung aus und return {} — ein leeres Dictionary. Wichtig: Nur das Lesen gehört in den try-Block, nicht die ganze Funktion."
+    },
+    {
+     "titel": "Schritt 4 — Eine kaputte Zeile wirft nicht alles um",
+     "aufgabe": "Eine Datei, die ein Programm schreibt, kann ein Mensch von Hand ändern — und dabei etwas kaputt machen. Fehlt in einer Zeile das Semikolon, bricht dein laden() mit einem IndexError ab und die ganze Kartei ist verloren, wegen einer einzigen Zeile. Bau laden() so um, dass es kaputte Zeilen überspringt, dabei mitzählt und am Ende meldet, wie viele es waren. Die Vorgabe legt dir eine Datei mit zwei unbrauchbaren Zeilen an. Fertig, wenn: drei Zeilen: 2 Zeile(n) uebersprungen., dann 3, dann die Nummer eines Platzes in einer Liste.",
+     "tipp": "Das try gehört in die Schleife, um das Zerlegen einer einzelnen Zeile. Im except IndexError: erhöhst du einen Zähler und machst mit continue weiter. Der Zähler gehört vor die Schleife, die Meldung hinter sie — und nur, wenn er größer als null ist."
+    },
+    {
+     "titel": "Schritt 5 — Der fertige Trainer",
+     "aufgabe": "Jetzt alles zusammen. Bau das Programm, das am Montag noch unvorstellbar war: 1. Beim Start wird die Kartei geladen — ist keine da, beginnt sie leer. 2. Ein Menü fragt wiederholt, was zu tun ist: (a) anzeigen, (n) neue Karte, (q) beenden. 3. Nach jeder neuen Karte wird gespeichert. 4. Beim Beenden erscheint, wie viele Karten in der Datei stehen. Die Funktionen speichern() und laden() aus den Schritten davor kopierst du unverändert nach oben. Fertig, wenn: das Menü läuft wiederholt, eine neue Karte landet sofort in der Datei, und q beendet mit Gespeichert: 6 Karten. Bis zum naechsten Mal.",
+     "tipp": "Das Muster kennst du von Mittwoch: wahl = '' vor der Schleife, while wahl != 'q':, im Körper wahl = input(...) und danach eine if/elif/else-Kette. Für die neue Karte brauchst du zwei input()-Aufrufe — Begriff und Erklärung."
+    }
+   ],
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Schritt 6 — Zugabe — merken, was du schon konntest",
+     "aufgabe": "Der Trainer kann jetzt Karten behalten. Was er noch nicht behält, ist dein Ergebnis. Erweitere ihn: Nach jeder Abfragerunde wird die Trefferzahl in einer zweiten Datei verlauf.txt angehängt — eine Runde je Zeile, im Muster 4 von 5. Beim Start liest das Programm die Datei und meldet, wie oft schon geübt wurde und wie der beste Lauf war. Gibt es die Datei noch nicht, ist das kein Fehler, sondern der erste Tag. Fertig, wenn: beim Start erscheint Bisher 3 Runden, bester Lauf: 5 von 5. — und nach einer neuen Runde steht eine Zeile mehr in der Datei.",
+     "tipp": "Anhängen geht ohne neuen Befehl: alten Inhalt lesen, die neue Zeile mit \\n anhängen, alles zurückschreiben. Für den besten Lauf zerlegst du jede Zeile mit split(' von ') und nimmst Teil 0 als Zahl — int() nicht vergessen. Das try/except um das Lesen ist dasselbe wie in Schritt 3."
+    }
+   ],
+   "merk": "Erst schreiben, dann lesen – und beim Lesen mit Fehlern rechnen."
   }
  ]
 }

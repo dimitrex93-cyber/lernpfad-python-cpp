@@ -7,7 +7,7 @@
    "titel": "Dateien lesen",
    "python": {
     "text": "Fast jedes echte Skript arbeitet mit Dateien. In Python öffnest du eine Datei mit open(). Nutze den with-Block: Er schließt die Datei automatisch. Das ist wie beim Heimkommen – die Tür fällt hinter dir zu. read() liest den ganzen Inhalt. readlines() gibt alle Zeilen als Liste zurück. readline() liest nur eine Zeile. Fehlt die Datei, wirft Python einen Fehler: FileNotFoundError. Fange ihn mit try/except ab. Das ist dein Sicherheitsnetz. Achtung: In Dateien steht Text. Brauchst du Zahlen, wandle sie um: int() oder float().",
-    "code": "# daten.txt einlesen\nwith open(\"daten.txt\", encoding=\"utf-8\") as datei:\n    inhalt = datei.read()          # komplett als String\n    zeilen = datei.readlines()     # als Liste (nach read leer!)\n\n# Zeile für Zeile (speicherschonend bei großen Dateien)\nwith open(\"daten.txt\", encoding=\"utf-8\") as datei:\n    for zeile in datei:\n        print(zeile.strip())       # strip() entfernt \\n\n\n# Fehler abfangen:\ntry:\n    with open(\"fehlt.txt\") as f:\n        print(f.read())\nexcept FileNotFoundError:\n    print(\"Datei existiert nicht!\")"
+    "code": "# Beispieldatei anlegen, damit das Beispiel sofort laeuft\nimport os\nwith open(\"daten.txt\", \"w\", encoding=\"utf-8\") as datei:\n    datei.write(\"eins\\nzwei\\ndrei\\n\")\n\n# Komplett einlesen (Vorsicht: danach ist der Zeiger am Ende)\nwith open(\"daten.txt\", encoding=\"utf-8\") as datei:\n    inhalt = datei.read()\n\n# Zeile fuer Zeile (speicherschonend bei grossen Dateien)\nwith open(\"daten.txt\", encoding=\"utf-8\") as datei:\n    for zeile in datei:\n        print(zeile.strip())       # strip() entfernt den Zeilenumbruch\n\n# Fehler abfangen:\ntry:\n    with open(\"fehlt.txt\") as f:\n        print(f.read())\nexcept FileNotFoundError:\n    print(\"Datei existiert nicht!\")\n\nos.remove(\"daten.txt\")"
    },
    "vergleich": "Python: with open() mit read oder readlines. Die Datei schließt sich automatisch. C++: ifstream mit getline. Prüfe mit if (!datei). RAII schließt die Datei selbst. RAII heißt: Das Objekt räumt von allein auf.",
    "merk": "Immer prüfen, ob die Datei da ist. Python: try/except FileNotFoundError. C++: if (!datei)."
@@ -25,7 +25,7 @@
    "titel": "Module und Imports – Code teilen",
    "python": {
     "text": "Python teilt Code in Module auf. Ein Modul ist eine .py-Datei. Denke an Legosteine: Du baust Großes aus kleinen Teilen. import math lädt die Standard-Bibliothek. Das sind fertige Werkzeuge von Python. from datetime import datetime holt gezielt einen Namen. Eigene Module? import hilfsfunktionen lädt deine zweite Datei. Wichtig: Code außerhalb von Funktionen läuft beim Import sofort mit. Schütze ihn mit if __name__ == \"__main__\":. Dann startet er nur beim direkten Aufruf.",
-    "code": "# hilfsfunktionen.py\n\ndef verdopple(x):\n    return x * 2\n\n# Nur beim DIREKTEN Start ausführen, nicht beim Import:\nif __name__ == \"__main__\":\n    print(verdopple(21))   # 42\n\n# main.py\nimport hilfsfunktionen\nfrom math import sqrt\n\nprint(hilfsfunktionen.verdopple(5))   # 10\nprint(sqrt(16))                       # 4.0"
+    "code": "import os\n\n# Ein eigenes Modul ist einfach eine .py-Datei mit Funktionen darin.\nwith open(\"hilfsfunktionen.py\", \"w\", encoding=\"utf-8\") as f:\n    f.write(\"def verdopple(x):\\n    return x * 2\\n\")\n\nimport hilfsfunktionen\nprint(hilfsfunktionen.verdopple(5))    # 10\n\nfrom math import sqrt\nprint(sqrt(16))                        # 4.0\n\n# Der Guard sorgt dafuer, dass Testcode nur beim direkten Start laeuft:\nif __name__ == \"__main__\":\n    print(\"Dieses Programm wurde direkt gestartet.\")\n\nos.remove(\"hilfsfunktionen.py\")"
    },
    "vergleich": "Python: import Modul oder from Modul import name. Dazu der __name__-Guard. C++: #include mit Header-Dateien und #pragma once. Deklaration und Definition sind getrennt.",
    "merk": "Python: der __name__-Guard. C++: #pragma once und Prototypen im Header."
@@ -38,6 +38,311 @@
    },
    "vergleich": "Der Fahrplan ist in beiden Sprachen gleich: verstehen, planen, bauen, testen. Python: python3 notiz.py. C++: g++ -Wall -Wextra und dann ausführen.",
    "merk": "Erstes Projekt: eine Notiz-App mit Dateien. Sie deckt Lesen, Schreiben, Funktionen, Fehler und den Build ab."
+  },
+  {
+   "titel": "Warum Dateien: Daten bleiben",
+   "python": {
+    "text": "Bisher war am Programmende alles weg. Die Werte standen nur im Arbeitsspeicher. Der Arbeitsspeicher (RAM) ist der Schreibtisch des Computers. Er wird beim Programmende geleert. Die Festplatte ist der Aktenschrank. Was dort liegt, ist am nächsten Morgen noch da. Eine Datei ist ein Behälter auf der Festplatte. In ihr steht Text. Ein Programm liest diesen Text beim nächsten Start wieder ein. So merkt sich ein Programm den Punktestand. Oder die Liste der Teilnehmer. Ohne Datei beginnt jedes Programm bei null. Mit Datei beginnt es beim letzten Stand. Das ist der Unterschied zwischen einer Übung und einem Werkzeug.",
+    "code": "import shutil\nimport tempfile\nfrom pathlib import Path\n\nordner = Path(tempfile.mkdtemp(prefix=\"kurs_\"))\npfad = ordner / \"punktestand.txt\"\n\n# schreiben: der Wert landet auf der Festplatte\npfad.write_text(\"Punkte: 42\\n\", encoding=\"utf-8\")\n\n# lesen: ein neues Programm findet den Wert wieder\nprint(pfad.read_text(encoding=\"utf-8\"), end=\"\")\n\nshutil.rmtree(ordner)\n"
+   },
+   "merk": "Der Arbeitsspeicher ist der Schreibtisch, die Festplatte der Aktenschrank.",
+   "checkliste": [
+    "Arbeitsspeicher: beim Programmende geleert",
+    "Festplatte: Daten bleiben erhalten",
+    "Datei: Text auf der Festplatte",
+    "Lesen holt den letzten Stand zurück"
+   ]
+  },
+  {
+   "titel": "Der Pfad: Path statt Zeichenkette",
+   "python": {
+    "text": "Ein Pfad ist die Wegbeschreibung zu einer Datei. Er nennt alle Ordner bis zur Datei. Ein relativer Pfad beginnt beim Ordner des Programms. Ein absoluter Pfad beginnt ganz oben, beim Laufwerk oder bei der Wurzel. Für Pfade bringt Python das Modul pathlib mit. Darin liegt die Klasse Path. Du importierst sie einmal oben im Programm. Danach baust du jeden Pfad mit Path(). Ein Path-Objekt weiß etwas über sich selbst. name ist der Dateiname. suffix ist die Endung. parent ist der Ordner darüber. Unter Windows trennt der Rückwärtsschrägstrich die Ordner. In Python leitet dieses Zeichen aber Sonderzeichen ein. Aus einem n wird dann ein Zeilenumbruch. Darum schreibst du Windows-Pfade als rohe Zeichenkette. Das kleine r vor dem Anführungszeichen macht daraus rohen Text. Oder du nimmst den normalen Schrägstrich. Der funktioniert auf jedem System.",
+    "code": "import shutil\nimport tempfile\nfrom pathlib import Path\n\nordner = Path(tempfile.mkdtemp(prefix=\"kurs_\"))\npfad = ordner / \"daten\" / \"notizen.txt\"\n\nprint(pfad.name)\nprint(pfad.suffix)\nprint(pfad.parent.name)\nprint(pfad.is_absolute())\n\nkaputt = \"C:\\neu\\test.txt\"\nroh = r\"C:\\neu\\test.txt\"\nprint(len(kaputt), len(roh))\n\nshutil.rmtree(ordner)\n"
+   },
+   "vergleich": "Ein Path-Objekt kennt name, suffix und parent. Ein reiner Text kennt nur sich selbst. Pfade setzt du mit dem Schrägstrich zusammen: ordner / 'datei.txt'. Das gilt auf jedem Betriebssystem.",
+   "merk": "Windows-Pfade als rohe Zeichenkette r'...' oder mit Schrägstrichen, nie nackt mit Rückwärtsschrägstrich.",
+   "checkliste": [
+    "Relativer Pfad: ab dem Ordner des Programms",
+    "Absoluter Pfad: ab Laufwerk oder Wurzel",
+    "name, suffix, parent: Teile des Pfades",
+    "Windows: r vor das Anführungszeichen"
+   ]
+  },
+  {
+   "titel": "Datei öffnen und wieder schließen: with",
+   "python": {
+    "text": "Die eingebaute Funktion open() öffnet eine Datei. Der zweite Parameter ist der Modus. r heißt lesen. w heißt schreiben. a heißt anhängen. Dazu kommt encoding='utf-8'. open() gibt ein Dateiobjekt zurück. Dieses Objekt hat die Methode read(). read() liest den ganzen Inhalt als einen Text. Eine offene Datei muss wieder geschlossen werden. Sonst bleiben Daten im Puffer hängen. Der with-Block erledigt das von selbst. Er schließt die Datei am Ende des Blocks. Auch wenn dazwischen ein Fehler auftritt. Das ist wie eine Tür, die hinter dir zufällt. Du musst nicht mehr daran denken. Darum steht in jedem Beispiel dieses Kurses with.",
+    "code": "import shutil\nimport tempfile\nfrom pathlib import Path\n\nordner = Path(tempfile.mkdtemp(prefix=\"kurs_\"))\npfad = ordner / \"daten.txt\"\npfad.write_text(\"Zeile eins\\nZeile zwei\\n\", encoding=\"utf-8\")\n\nwith open(pfad, \"r\", encoding=\"utf-8\") as datei:\n    inhalt = datei.read()\n    print(inhalt, end=\"\")\n\nprint(\"Datei geschlossen:\", datei.closed)\n\nshutil.rmtree(ordner)\n"
+   },
+   "vergleich": "read_text() öffnet, liest und schließt in einer Zeile. with open() braucht drei Zeilen, zeigt aber den Modus deutlich.",
+   "merk": "with open(...) as datei schließt die Datei am Blockende von selbst."
+  },
+  {
+   "titel": "Zeilen lesen: readlines, splitlines, Schleife",
+   "python": {
+    "text": "Meist steht in jeder Zeile ein eigener Datensatz. Ein Name, ein Messwert, ein Termin. Drei Werkzeuge helfen dabei. readlines() liest alle Zeilen in eine Liste. Der Zeilenumbruch bleibt am Ende jeder Zeile stehen. splitlines() zerlegt einen fertigen Text in Zeilen. Es entfernt die Umbrüche dabei. Am Ende entsteht kein leerer Eintrag. split() mit dem Umbruch macht das anders. Es hängt am Ende einen leeren Eintrag an. Eine Schleife über das Dateiobjekt liest Zeile für Zeile. Bei großen Dateien ist das sparsam. Denn es liegt immer nur eine Zeile im Speicher. strip() entfernt Leerzeichen und Umbrüche an beiden Enden. Nutze es bei Dateien, die ein Mensch geschrieben hat. Unsichtbare Leerzeichen am Zeilenende sieht niemand. Ein Vergleich schlägt dann trotzdem fehl. repr() macht solche Zeichen sichtbar.",
+    "code": "import shutil\nimport tempfile\nfrom pathlib import Path\n\nordner = Path(tempfile.mkdtemp(prefix=\"kurs_\"))\npfad = ordner / \"woche.txt\"\npfad.write_text(\"Montag: Einkaufen\\nDienstag: Sport\\nMittwoch: Lesen\\n\", encoding=\"utf-8\")\n\nwith open(pfad, encoding=\"utf-8\") as datei:\n    print(datei.readlines())\n\ninhalt = pfad.read_text(encoding=\"utf-8\")\nprint(inhalt.splitlines())\n\nfor zeile in inhalt.splitlines():\n    print(\"->\", zeile.strip())\n\nprint(repr(\"  Dienstag: Sport   \\n\"))\n\nshutil.rmtree(ordner)\n"
+   },
+   "vergleich": "readlines() liefert die Liste mit Umbruch am Ende, splitlines() ohne. split('\n') erzeugt zusätzlich einen leeren Eintrag.",
+   "merk": "splitlines() entfernt die Umbrüche, readlines() behält sie.",
+   "checkliste": [
+    "readlines(): Liste mit Zeilenumbruch",
+    "splitlines(): Liste ohne Zeilenumbruch",
+    "for zeile in datei: eine Zeile nach der anderen",
+    "strip(): säubert beide Enden"
+   ]
+  },
+  {
+   "titel": "Zeichenkodierung: encoding UTF-8",
+   "python": {
+    "text": "Auf der Festplatte stehen keine Buchstaben, sondern Zahlen. Welche Zahl für welches Zeichen steht, sagt die Zeichenkodierung. UTF-8 ist die Kodierung, die alle Zeichen kennt. Auch Umlaute und das ß. Windows nutzt ohne Angabe eine ältere, regionale Kodierung. Dann kommt der Text als Buchstabensalat an. Oder Python bricht mit UnicodeDecodeError ab. Darum steht encoding='utf-8' in jedem Lese- und Schreibaufruf. Das ist keine Verzierung. Es ist der Grund, dass Umlaute überall ankommen. Eine Datei kann auf einem Rechner richtig aussehen. Auf einem anderen ist sie falsch. Die Angabe kostet ein Wort und spart einen Nachmittag Fehlersuche.",
+    "code": "import shutil\nimport tempfile\nfrom pathlib import Path\n\nordner = Path(tempfile.mkdtemp(prefix=\"kurs_\"))\npfad = ordner / \"gruesse.txt\"\n\npfad.write_text(\"Schöne Grüße aus Köln\\n\", encoding=\"utf-8\")\nprint(pfad.read_text(encoding=\"utf-8\"), end=\"\")\n\nprint(len(pfad.read_bytes()), \"Bytes auf der Festplatte\")\n\nshutil.rmtree(ordner)\n"
+   },
+   "merk": "encoding='utf-8' gehört in jeden Aufruf, sonst gehen Umlaute verloren.",
+   "checkliste": [
+    "Datei speichert Zahlen, keine Buchstaben",
+    "UTF-8 kennt Umlaute und ß",
+    "Ohne Angabe nutzt Windows eine alte Kodierung",
+    "encoding='utf-8' in jedem Aufruf"
+   ]
+  },
+  {
+   "titel": "Arbeitsverzeichnis und FileNotFoundError",
+   "python": {
+    "text": "Ein relativer Pfad gilt ab dem Arbeitsverzeichnis. Das ist der Ordner, aus dem das Programm gestartet wurde. Nicht der Ordner, in dem die Programmdatei liegt. Meist sind beide gleich. Aber nicht immer. Startest du das Programm aus einem anderen Ordner, sucht Python dort. Dann fehlt die Datei. Der häufigste Fehler beim Lesen heißt FileNotFoundError. Die Datei gibt es nicht. Vier Ursachen sind typisch. Der Name ist falsch geschrieben. Die Datei liegt woanders. Der Windows-Pfad ist zerlegt. Oder die Datei soll erst noch entstehen. Die letzte Zeile des Tracebacks nennt den gesuchten Pfad wörtlich. Das ist die genaueste Information, die du bekommst. Prüfe vorher mit exists(), ob es die Datei gibt. exists() gibt True oder False zurück.",
+    "code": "import shutil\nimport tempfile\nfrom pathlib import Path\n\nordner = Path(tempfile.mkdtemp(prefix=\"kurs_\"))\nprint(\"Arbeitsverzeichnis:\", Path.cwd().name)\n\npfad = ordner / \"gibt_es_nicht.txt\"\nprint(\"Vorhanden?\", pfad.exists())\n\ntry:\n    inhalt = pfad.read_text(encoding=\"utf-8\")\nexcept FileNotFoundError:\n    print(\"Noch keine Daten da, ich fange bei null an.\")\n    inhalt = \"\"\n\nprint(\"Startwert:\", repr(inhalt))\nshutil.rmtree(ordner)\n"
+   },
+   "merk": "Fehlt die Datei, nennt die letzte Traceback-Zeile den Pfad, den Python gesucht hat.",
+   "checkliste": [
+    "Relativer Pfad ab Arbeitsverzeichnis",
+    "Programmordner und Arbeitsordner sind oft, aber nicht immer gleich",
+    "FileNotFoundError: Datei fehlt oder Pfad ist falsch",
+    "exists() prüft vorher ohne Fehler"
+   ]
+  },
+  {
+   "titel": "Datei schreiben: write_text und Modus w",
+   "python": {
+    "text": "Das Gegenstück zu read_text() heißt write_text(). Es schreibt einen Text in die Datei. Gibt es die Datei noch nicht, legt es sie an. Gibt es sie schon, ersetzt es den ganzen Inhalt. Auch open() mit dem Modus w schreibt. Und auch w ersetzt den ganzen Inhalt. Es hängt nichts an. Es fragt nicht nach. Es gibt kein Zurück. Zwei Zeilen geschrieben, eine steht danach in der Datei. Das ist die wichtigste Warnung dieses Themas. write_text() gibt die Anzahl der Zeichen zurück. Das ist eine bequeme Kontrolle. Und write_text() setzt keinen Zeilenumbruch. Den schreibst du selbst als Umbruchzeichen.",
+    "code": "import shutil\nimport tempfile\nfrom pathlib import Path\n\nordner = Path(tempfile.mkdtemp(prefix=\"kurs_\"))\npfad = ordner / \"merkzettel.txt\"\n\nanzahl = pfad.write_text(\"Milch kaufen\\n\", encoding=\"utf-8\")\nprint(anzahl, \"Zeichen geschrieben\")\n\nwith open(pfad, \"w\", encoding=\"utf-8\") as datei:\n    datei.write(\"Brot kaufen\\n\")\n\nprint(pfad.read_text(encoding=\"utf-8\"), end=\"\")\nprint(\"Milch ist weg, weil w ersetzt.\")\n\nshutil.rmtree(ordner)\n"
+   },
+   "vergleich": "write_text() ist eine Zeile. open(..., 'w') braucht einen with-Block. Beide ersetzen den alten Inhalt vollständig.",
+   "merk": "write_text() und Modus w ersetzen den ganzen Inhalt, ohne Rückfrage."
+  },
+  {
+   "titel": "Anhängen mit Modus a",
+   "python": {
+    "text": "Für ein Logbuch soll der alte Inhalt bleiben. Dafür gibt es den Modus a. a heißt anhängen. open(pfad, 'a') schreibt neue Zeichen hinter den alten Inhalt. Die Datei wird dabei nicht geleert. Gibt es sie noch nicht, legt Python sie an. In pathlib gibt es keinen solchen Befehl. write_text() kennt nur Ersetzen. Darum nimmst du für Anhängen open() mit a. Und du setzt den Zeilenumbruch selbst. Sonst klebt der neue Eintrag am alten. Nach dem Schreiben ist die Datei wieder geschlossen. Der with-Block sorgt dafür.",
+    "code": "import shutil\nimport tempfile\nfrom pathlib import Path\n\nordner = Path(tempfile.mkdtemp(prefix=\"kurs_\"))\npfad = ordner / \"logbuch.txt\"\n\nwith open(pfad, \"a\", encoding=\"utf-8\") as datei:\n    datei.write(\"Erster Eintrag\\n\")\n\nwith open(pfad, \"a\", encoding=\"utf-8\") as datei:\n    datei.write(\"Zweiter Eintrag\\n\")\n\nprint(pfad.read_text(encoding=\"utf-8\"), end=\"\")\nshutil.rmtree(ordner)\n"
+   },
+   "vergleich": "Modus a hängt an, Modus w ersetzt. Bei a bleibt der alte Inhalt, bei w ist er weg.",
+   "merk": "Anhängen geht mit open(pfad, 'a') und write. write_text() kann das nicht."
+  },
+  {
+   "titel": "Überschreiben gegen ergänzen",
+   "python": {
+    "text": "Vor dem Schreiben kommt eine Frage. Soll der alte Inhalt weg? Dann ist write_text() richtig. Soll er bleiben? Dann musst du ihn vorher lesen. Anhängen ohne den Modus a geht in drei Schritten. Erst lesen. Dann den alten Text und den neuen vereinen. Dann einmal schreiben. Das Ergebnis sieht aus wie Anhängen. Der Weg ist ein vollständiges Überschreiben mit mehr Text. Drei Punkte sind wichtig. Lies den alten Inhalt vor dem Schreiben. Danach ist er weg. Der alte Text muss mit einem Umbruch enden. Sonst klebt der neue Eintrag an. Gibt es die Datei noch nicht, scheitert read_text(). Dann hilft exists(). exists() gibt True oder False zurück. So startet das Programm beim ersten Lauf mit einem leeren Text.",
+    "code": "import shutil\nimport tempfile\nfrom pathlib import Path\n\nordner = Path(tempfile.mkdtemp(prefix=\"kurs_\"))\npfad = ordner / \"tagebuch.txt\"\n\npfad.write_text(\"Erster Eintrag\\n\", encoding=\"utf-8\")\n\nalt = pfad.read_text(encoding=\"utf-8\") if pfad.exists() else \"\"\npfad.write_text(alt + \"Zweiter Eintrag\\n\", encoding=\"utf-8\")\n\nprint(pfad.read_text(encoding=\"utf-8\"), end=\"\")\nshutil.rmtree(ordner)\n"
+   },
+   "merk": "Anhängen ohne Modus a heißt: lesen, vereinen, schreiben.",
+   "checkliste": [
+    "Alten Inhalt vor dem Schreiben lesen",
+    "Alter Text endet mit Umbruch",
+    "Datei fehlt: exists() prüfen",
+    "Danach einmal schreiben"
+   ]
+  },
+  {
+   "titel": "Zeilenumbrüche richtig setzen",
+   "python": {
+    "text": "Eine Datei hat selten nur eine Zeile. Zwei Wege führen zu mehreren Zeilen. Bei zwei oder drei festen Zeilen schreibst du die Umbrüche direkt in den Text. Bei einer Liste nimmst du join(). Der Ausdruck verbindet die Einträge mit einem Umbruch dazwischen. Zwischen je zwei Einträgen steht ein Umbruch. Hinter dem letzten nicht. Darum hängst du am Ende noch einen Umbruch an. Dann endet die Datei sauber. join() ist nicht an Umbrüche gebunden. Das Trennzeichen steht vorn. Es kann auch ein Komma sein. Der Aufbau bleibt gleich: Trenner, Punkt, join, Liste. Wichtig: Schreibe nicht in einer Schleife. Sonst steht am Ende nur der letzte Wert in der Datei.",
+    "code": "import shutil\nimport tempfile\nfrom pathlib import Path\n\nzeilen = [\"Montag: Einkaufen\", \"Dienstag: Sport\", \"Mittwoch: Lesen\"]\ntext = \"\\n\".join(zeilen) + \"\\n\"\nprint(repr(text))\n\nordner = Path(tempfile.mkdtemp(prefix=\"kurs_\"))\npfad = ordner / \"woche.txt\"\nanzahl = pfad.write_text(text, encoding=\"utf-8\")\nprint(anzahl, \"Zeichen\")\nprint(pfad.read_text(encoding=\"utf-8\"), end=\"\")\n\nshutil.rmtree(ordner)\n"
+   },
+   "vergleich": "write_text() hängt keinen Umbruch an, print() schon. Darum endet jede geschriebene Zeile mit einem eigenen Umbruch.",
+   "merk": "Viele Zeilen: sammeln, mit join verbinden, einmal schreiben.",
+   "checkliste": [
+    "join setzt den Umbruch nur zwischen die Einträge",
+    "Am Ende ein zusätzlicher Umbruch",
+    "Trennzeichen steht vor join",
+    "Nicht in der Schleife schreiben"
+   ]
+  },
+  {
+   "titel": "Ordner anlegen mit mkdir",
+   "python": {
+    "text": "write_text() legt die Datei an. Einen Ordner legt es nicht an. Fehlt ein Ordner auf dem Weg, bricht das Programm ab. Der Fehler heißt dann FileNotFoundError, obwohl du schreiben willst. Gemeint ist der Ordner, nicht die Datei. Die Lösung heißt mkdir(). mkdir() legt einen Ordner an. exist_ok=True macht einen vorhandenen Ordner zum Nicht-Ereignis. Ohne diese Angabe bricht mkdir() mit FileExistsError ab. Denn beim zweiten Start ist der Ordner immer da. parents=True legt auch alle fehlenden Ordner darüber an. Pfade setzt du mit dem Schrägstrich zusammen. ordner / 'januar.txt' ergibt den Pfad zur Datei im Ordner. Das klappt auf jedem Betriebssystem.",
+    "code": "import shutil\nimport tempfile\nfrom pathlib import Path\n\nordner = Path(tempfile.mkdtemp(prefix=\"kurs_\"))\nziel = ordner / \"auswertung\" / \"januar\"\n\nziel.mkdir(parents=True, exist_ok=True)\nziel.mkdir(parents=True, exist_ok=True)   # zweiter Aufruf: kein Fehler\n\npfad = ziel / \"bericht.txt\"\npfad.write_text(\"Testbericht\\n\", encoding=\"utf-8\")\nprint(pfad.read_text(encoding=\"utf-8\"), end=\"\")\nprint(\"Ordner da:\", ziel.exists())\n\nshutil.rmtree(ordner)\n"
+   },
+   "merk": "Dateien entstehen beim Schreiben von selbst, Ordner nicht. mkdir(exist_ok=True) hilft.",
+   "checkliste": [
+    "mkdir() legt einen Ordner an",
+    "exist_ok=True: vorhandener Ordner ist kein Fehler",
+    "parents=True: legt auch die Ordner darüber an",
+    "ordner / 'datei.txt' setzt den Pfad zusammen"
+   ]
+  },
+  {
+   "titel": "Module importieren: import und from",
+   "python": {
+    "text": "Ein Modul ist eine Datei mit Python-Code. Andere Programme holen sich diesen Code. Dafür gibt es import. Es gibt vier Schreibweisen. import modul lässt den Modulnamen stehen. Der Aufruf heißt dann modul.funktion(). Das ist die sichere Standardform. from modul import funktion holt nur diesen einen Namen. Der Modulname verschwindet aus dem Aufruf. import modul as kurz vergibt einen Zweitnamen, einen Alias. Das lohnt bei langen Namen. from modul import stern holt alle Namen. Das ist zu vermeiden. Es überschreibt gleichnamige eigene Namen ohne Warnung. Findet Python die Datei nicht, meldet es ModuleNotFoundError. Der Punkt liest sich als aus. modul.funktion() heißt also: die Funktion aus dem Modul.",
+    "code": "import math\nimport random as rnd\nfrom datetime import date\n\nprint(math.sqrt(16))\nrnd.seed(7)\nprint(rnd.randint(1, 6))\nprint(date(2026, 3, 2))\n\n# import werkzeuge.py  -> ModuleNotFoundError, die Endung gehört nicht dazu\n"
+   },
+   "vergleich": "from modul import name ist kürzer, import modul ist klarer. Der Stern ist die Form, die man nicht nimmt.",
+   "merk": "Im Zweifel import modul. Der Punkt vor dem Namen zeigt, woher er kommt.",
+   "checkliste": [
+    "Modulname: Dateiname ohne .py",
+    "import modul: Aufruf mit modul.funktion()",
+    "from modul import name: nur dieser Name",
+    "as: Zweitname für lange Modulnamen"
+   ]
+  },
+  {
+   "titel": "Ein eigenes Modul in mehreren Dateien",
+   "python": {
+    "text": "Jede Python-Datei ist schon ein Modul. Der Modulname ist der Dateiname ohne die Endung. Zwei Dateien im selben Ordner genügen. Die eine enthält die Funktionen. Die andere importiert sie und ruft sie auf. Python sucht zuerst im Ordner der gestarteten Datei. Darum gehören beide Dateien nebeneinander. Beim Import führt Python die Moduldatei einmal von oben nach unten aus. Steht dort ein print außerhalb einer Funktion, erscheint es schon beim Import. Eine Moduldatei enthält darum nur Definitionen. Eine Zeile sieht man in fremdem Code oft: if __name__ gleich __main__. Sie trennt den Test vom Import. Beim direkten Start ist __name__ gleich __main__. Beim Import heißt es wie das Modul. Dann läuft der Block darunter nicht. Eigene Dateien dürfen nicht heißen wie ein Standardmodul. Eine Datei random.py verdeckt das Zufallsmodul.",
+    "code": "import shutil\nimport sys\nimport tempfile\nfrom pathlib import Path\n\nordner = Path(tempfile.mkdtemp(prefix=\"kurs_\"))\n\n# die Moduldatei entsteht hier, damit das Beispiel überall läuft\n(ordner / \"werkzeuge.py\").write_text(\n    '\"\"\"Kleine Helfer.\"\"\"\\n'\n    \"\\n\"\n    \"def netto(brutto):\\n\"\n    \"    return round(brutto / 1.19, 2)\\n\"\n    \"\\n\"\n    'if __name__ == \"__main__\":\\n'\n    '    print(\"Direkt gestartet:\", netto(119))\\n',\n    encoding=\"utf-8\",\n)\n\nsys.path.insert(0, str(ordner))\nimport werkzeuge\n\nprint(werkzeuge.netto(119))\nprint(\"Modulname beim Import:\", werkzeuge.__name__)\n\nsys.path.remove(str(ordner))\nshutil.rmtree(ordner)\n"
+   },
+   "merk": "Modul und Programm liegen im selben Ordner. Der Modulname ist der Dateiname ohne .py.",
+   "checkliste": [
+    "Moduldatei und Programm im selben Ordner",
+    "Import führt die Moduldatei einmal aus",
+    "Moduldatei enthält nur Definitionen",
+    "__name__ ist beim Start __main__, beim Import der Modulname"
+   ]
+  },
+  {
+   "titel": "Die Standardbibliothek: pathlib und os",
+   "python": {
+    "text": "Python bringt hunderte fertige Module mit. Diese Sammlung heißt Standardbibliothek. Du musst nichts installieren. pathlib kennst du schon. Es beschreibt Pfade und liest und schreibt Dateien. os greift auf das Betriebssystem zu. os.listdir() gibt alle Namen in einem Ordner zurück. Path(ordner).glob('*.txt') sucht Dateien nach einem Muster. Die Methode stat() liefert Größe und Änderungszeit. pathlib ist der moderne Weg für Pfade. os brauchst du für alles, was das Betriebssystem selbst betrifft. Bevor du etwas Aufwendiges selbst baust, sieh in der Standardbibliothek nach. Die Wahrscheinlichkeit ist hoch, dass es das schon gibt. Und das fertige Modul ist besser getestet.",
+    "code": "import os\nimport shutil\nimport tempfile\nfrom pathlib import Path\n\nordner = Path(tempfile.mkdtemp(prefix=\"kurs_\"))\n(ordner / \"a.txt\").write_text(\"eins\\n\", encoding=\"utf-8\")\n(ordner / \"b.txt\").write_text(\"zwei\\n\", encoding=\"utf-8\")\n\nprint(sorted(os.listdir(ordner)))\n\nfor pfad in sorted(Path(ordner).glob(\"*.txt\")):\n    print(pfad.name, pfad.stat().st_size, \"Bytes\")\n\nshutil.rmtree(ordner)\n"
+   },
+   "merk": "Erst in der Standardbibliothek nachsehen, dann selbst schreiben.",
+   "checkliste": [
+    "Standardbibliothek: ohne Installation nutzbar",
+    "os.listdir(): Namen im Ordner",
+    "Path.glob(): Dateien nach Muster suchen",
+    "stat(): Größe einer Datei"
+   ]
+  },
+  {
+   "titel": "Typische Fehler beim Arbeiten mit Dateien",
+   "python": {
+    "text": "Diese Fehler kosten am meisten Zeit. encoding weglassen: Auf dem eigenen Rechner geht es gut. Auf einem anderen werden aus Umlauten Fragezeichen. Windows-Pfad ohne r: Aus dem n wird ein Umbruch. Der Pfad ist still kaputt. Vergessen, dass alles Text ist: zwei Zahltexte werden aneinandergehängt. Rechnen geht erst nach int(). strip() auslassen: Der Vergleich schlägt fehl. Die Ausgabe sieht trotzdem richtig aus. split() mit Umbruch statt splitlines(): Am Ende steht ein leerer Eintrag. int() auf diesen Eintrag bricht mit ValueError ab. In einer Schleife schreiben: In der Datei steht nur der letzte Wert. Ordner fehlt: FileNotFoundError beim Schreiben. mkdir(exist_ok=True) hilft. Auf echte Daten schreiben: Nimm eine Testdatei mit harmlosem Namen.",
+    "code": "import shutil\nimport tempfile\nfrom pathlib import Path\n\nordner = Path(tempfile.mkdtemp(prefix=\"kurs_\"))\n\n# falsch: in der Schleife schreiben\nfalsch = ordner / \"falsch.txt\"\nfor wert in [\"10\", \"20\", \"30\"]:\n    falsch.write_text(wert + \"\\n\", encoding=\"utf-8\")\nprint(\"falsch:\", repr(falsch.read_text(encoding=\"utf-8\")))\n\n# richtig: sammeln und einmal schreiben\nrichtig = ordner / \"richtig.txt\"\nzeilen = []\nfor wert in [\"10\", \"20\", \"30\"]:\n    zeilen.append(wert)\nrichtig.write_text(\"\\n\".join(zeilen) + \"\\n\", encoding=\"utf-8\")\nprint(\"richtig:\", repr(richtig.read_text(encoding=\"utf-8\")))\n\nshutil.rmtree(ordner)\n"
+   },
+   "merk": "Die meisten Fehler beim Lesen kommen vom Pfad, nicht vom Inhalt.",
+   "checkliste": [
+    "encoding='utf-8' nie weglassen",
+    "Windows-Pfad nur als rohe Zeichenkette",
+    "Aus Dateien kommt Text, erst int() macht Zahlen",
+    "Nicht in der Schleife schreiben",
+    "Ordner vorher mit mkdir anlegen"
+   ]
+  },
+  {
+   "titel": "Pflichtaufgaben",
+   "python": {
+    "text": "Weitere Aufgaben aus dem Python-Crashkurs (Tag 5). Schreibe jede Aufgabe in eine eigene Datei und führe sie aus."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Erst anlegen, dann lesen",
+     "aufgabe": "Lege mit pathlib eine Datei dienstplan.txt an, die drei Zeilen enthält — Montag, Dienstag und Mittwoch mit je einer Tätigkeit. Lies die Datei danach im selben Programm wieder ein und gib ihren Inhalt aus, ohne dass am Ende eine Leerzeile entsteht. Fertig, wenn: genau drei Zeilen erscheinen und keine vierte, leere Zeile darunter steht.",
+     "tipp": "from pathlib import Path steht einmal oben im Programm. Danach bekommt write_text() den ganzen Text mit \\n an den richtigen Stellen, und read_text() holt ihn zurück. Beide Aufrufe brauchen encoding='utf-8'. Gegen die zusätzliche Leerzeile hilft end=\"\" im print().",
+     "vorgabe": "import pathlib\n\nfrom pathlib import Path\n\nPath ('notiz.txt').write_text(\"hier\\nsteht\\nmein\\ntext\", encoding='utf-8')\nprint(end=\"\")\n\nPath ('notiz.txt').read_text(encoding='utf-8')"
+    },
+    {
+     "titel": "Unsichtbares sichtbar machen",
+     "aufgabe": "Lege eine Datei teilnehmer.txt an, in deren erster Zeile vor und hinter Jens Hartmann jeweils zwei Leerzeichen stehen. Lies die erste Zeile heraus und gib sie zweimal mit repr() aus: einmal roh und einmal gesäubert. Prüfe danach mit zwei if/else-Blöcken, ob die Zeile ohne und mit strip() gleich \"Jens Hartmann\" ist. Fertig, wenn: vier Zeilen erscheinen und die Vergleiche gegensätzlich ausfallen — ohne strip() kein Treffer, mit strip() ein Treffer.",
+     "tipp": "repr() zeigt eine Zeichenkette so, wie sie wirklich ist: mit Anführungszeichen und sichtbarem Leerraum. Die erste Zeile holst du über den Index [0] aus der Liste, die splitlines() liefert.",
+     "vorgabe": "from pathlib import Path\n\nPath ('teilnehmer.txt').write_text(\"  Jens\\n    Hartmann\\n  \", encoding='utf-8')\nprint(end=\"\")\n\nPath ('teilnehmer.txt').read_text(encoding='utf-8')\nprint(repr(len('teilnehmer.txt')))\nprint(repr('teilnehmer.txt'))"
+    },
+    {
+     "titel": "Rechnen mit dem, was in der Datei steht",
+     "aufgabe": "Lege eine Datei tankfuellung.txt mit vier Tankfüllungen in Litern an, je eine pro Zeile. Lies sie zeilenweise ein, zähle die Werte zusammen und zähle mit, wie viele es waren. Gib Summe, Anzahl und Durchschnitt aus. Fertig, wenn: drei Zeilen erscheinen und der Durchschnitt als Kommazahl ausgegeben wird.",
+     "tipp": "Alles, was aus einer Datei kommt, ist Text — \"45\" + \"60\" ergäbe \"4560\". Vor dem Addieren steht deshalb int(), und davor sicherheitshalber strip(). Zwei Zähler, die vor der Schleife auf 0 gesetzt werden, genügen."
+    },
+    {
+     "titel": "Lange Dienste herausfiltern",
+     "aufgabe": "Die Vorgabe legt dir die Datei dienstzeiten.txt an: fünf Zeilen, in jeder stehen Wochentag und geleistete Stunden, getrennt durch ein Semikolon. Lies die Datei ein, gehe sie Zeile für Zeile durch und sammle die Tage mit mehr als 8 Stunden in einer Liste. Gib danach die Anzahl dieser Tage aus und darunter ihre Namen in einer einzigen Zeile, durch Komma und Leerzeichen getrennt. Fertig, wenn: zwei Zeilen erscheinen: Lange Dienste: 2 und Betroffen: Montag, Mittwoch.",
+     "tipp": "split(\";\") zerlegt eine Zeile am Semikolon und liefert eine Liste — genau wie split(\"\\n\") am Zeilenumbruch, nur mit einem anderen Trennzeichen. Aus \"Montag;9\" wird so ['Montag', '9']: Der Tag steht an Stelle [0], die Stunden an Stelle [1], und vor dem Vergleich muss int() daraus eine Zahl machen. Die gesammelten Namen setzt \", \".join(...) am Ende zu einer Zeile zusammen.",
+     "vorgabe": "from pathlib import Path\n\npfad = Path('dienstzeiten.txt')\npfad.write_text(\"Montag;9\\nDienstag;7\\nMittwoch;11\\nDonnerstag;8\\nFreitag;6\\n\", encoding='utf-8')"
+    },
+    {
+     "titel": "Zählen, was ausgegeben wurde",
+     "aufgabe": "Die Vorgabe legt dir die Datei materialausgabe.txt an — sechs Zeilen, in jeder ein ausgegebener Gegenstand, manche mehrfach. Lies die Datei ein und zähle in einem Dictionary mit, wie oft jeder Gegenstand vorkommt. Gib danach jeden Gegenstand mit seiner Anzahl in einer eigenen Zeile in der Form Helm: 3 aus und darunter, wie viele verschiedene Gegenstände es waren. Fertig, wenn: drei Zeilen mit Gegenstand und Anzahl erscheinen und darunter Verschiedene Gegenstaende: 3.",
+     "tipp": "Das Dictionary beginnt leer: zaehler = {}. Für jede Zeile fragst du mit zaehler.get(gegenstand, 0) den bisherigen Stand ab — kommt der Gegenstand zum ersten Mal vor, liefert .get() die 0 — und schreibst den um eins erhöhten Wert zurück. len() zählt am Ende die Schlüssel des Dictionarys.",
+     "vorgabe": "from pathlib import Path\n\npfad = Path('materialausgabe.txt')\npfad.write_text(\"Helm\\nWeste\\nHelm\\nFunkgeraet\\nWeste\\nHelm\\n\", encoding='utf-8')"
+    },
+    {
+     "titel": "Vorhersage — `splitlines()` gegen `split(\"\\n\")`",
+     "aufgabe": "Eine Datei zeilen_test.txt enthält drei Farben, je eine pro Zeile, und endet mit einem Zeilenumbruch. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage, wie viele Einträge splitlines() und wie viele split(\"\\n\") liefern. Erst danach legst du die Datei an, zerlegst sie auf beide Arten und lässt dir jeweils die Liste und ihre Länge ausgeben. Fertig, wenn: nach deiner Vorhersagezeile zwei Listen mit ihren Längen erscheinen: 3 bei splitlines(), 4 bei split(\"\\n\").",
+     "tipp": "Die Datei endet mit einem Zeilenumbruch. Überlege, was hinter diesem letzten Umbruch noch steht — und ob das ein Eintrag ist oder keiner."
+    },
+    {
+     "titel": "Die Datei, die es nicht gibt",
+     "aufgabe": "Die Vorgabe soll den Urlaubsplan anlegen und sofort wieder ausgeben. Sie legt die Datei an, stürzt aber beim Lesen ab. Führe sie zuerst unverändert aus, lies die letzte Zeile der Meldung und behebe die Ursache. Fertig, wenn: zwei Zeilen erscheinen: Mai: Nordsee und Juli: Harz.",
+     "tipp": "Die letzte Zeile der Fehlermeldung nennt den gesuchten Dateinamen wörtlich. Vergleiche ihn Buchstabe für Buchstabe mit dem Namen, der zwei Zeilen darüber geschrieben wurde. Am sichersten ist es, nicht zweimal einen Namen zu tippen, sondern die Variable zu benutzen, die den Pfad schon enthält.",
+     "vorgabe": "from pathlib import Path\n\npfad = Path('urlaubsliste.txt')\npfad.write_text(\"Mai: Nordsee\\nJuli: Harz\\n\", encoding='utf-8')\n\ninhalt = Path('urlaubliste.txt').read_text(encoding='utf-8')\nprint(inhalt, end=\"\")"
+    },
+    {
+     "titel": "Schreiben und nachsehen",
+     "aufgabe": "Schreibe eine einzelne Zeile in eine Datei merkliste.txt und fange den Rückgabewert von write_text() in einer Variablen auf. Gib zuerst aus, wie viele Zeichen geschrieben wurden, und lies danach die Datei wieder ein, um das Ergebnis zu prüfen. Fertig, wenn: zuerst eine Zeile mit der Zeichenzahl erscheint und darunter der geschriebene Text.",
+     "tipp": "write_text() gibt die Anzahl der geschriebenen Zeichen zurück — das Ergebnis lässt sich wie bei jeder Funktion einer Variablen zuweisen. Der abschließende \\n zählt dabei als ein Zeichen mit."
+    },
+    {
+     "titel": "Von der Liste in die Datei",
+     "aufgabe": "Lege eine Liste mit drei Gerätenamen an. Verbinde sie mit \"\\n\".join(...) zu einer einzigen Zeichenkette, hänge den abschließenden Zeilenumbruch an und gib die fertige Zeichenkette zur Kontrolle mit repr() aus. Schreibe sie danach in geraeteliste.txt, lies die Datei wieder ein und lass dir die Zeilenliste und ihre Länge ausgeben. Fertig, wenn: die repr()-Ausgabe mit \\n' endet und die eingelesene Liste genau drei Einträge hat.",
+     "tipp": "join() setzt das Trennzeichen zwischen die Einträge, nicht dahinter — hinter dem letzten Eintrag steht deshalb nichts. Das abschließende + \"\\n\" ist kein Schönheitsfehler, sondern Absicht."
+    },
+    {
+     "titel": "Vorhersage — zweimal schreiben",
+     "aufgabe": "Ein Programm schreibt zwei Meldungen nacheinander in dieselbe Datei notiz.txt. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage, was danach in der Datei steht. Erst danach schreibst du beide Meldungen, liest die Datei ein, gibst sie aus und lässt dir die Zahl der Zeilen ausgeben. Fertig, wenn: nach deiner Vorhersagezeile nur die zuletzt geschriebene Meldung erscheint und darunter Zeilen in der Datei: 1.",
+     "tipp": "write_text() heißt „schreiben\", nicht „ergänzen\". Überlege, was mit dem ersten Text geschieht, wenn der zweite an dieselbe Stelle geschrieben wird — und ob Python vorher nachfragt."
+    },
+    {
+     "titel": "Ergänzen, ohne zu verlieren",
+     "aufgabe": "Die Vorgabe legt dir die Datei inventar.txt mit zwei Posten an und stellt zwei weitere in der Liste nachschub bereit. Hänge die neuen Posten an die Datei an, ohne die vorhandenen zu verlieren: Lies den alten Inhalt einmal, hänge in einer Schleife die neuen Zeilen daran und schreibe einmal. Lies die Datei danach zur Kontrolle wieder ein, gib sie aus und darunter die Zahl der Posten. Fertig, wenn: vier Zeilen erscheinen, beginnend mit Zelt und endend mit Isomatte, und darunter Posten insgesamt: 4.",
+     "tipp": "Einen Befehl zum Anhängen gibt es in pathlib nicht — es bleibt beim Muster lesen, vereinen, schreiben. Entscheidend ist, dass das Schreiben nach der Schleife steht: In der Schleife wächst nur die Textvariable, Zeile für Zeile mit text += posten + \"\\n\". Das Zurücklesen am Ende ist die Probe, ob wirklich alles in der Datei gelandet ist.",
+     "vorgabe": "from pathlib import Path\n\npfad = Path('inventar.txt')\npfad.write_text(\"Zelt\\nFeldbett\\n\", encoding='utf-8')\nnachschub = [\"Schlafsack\", \"Isomatte\"]"
+    },
+    {
+     "titel": "Ein Bericht aus dem Dictionary",
+     "aufgabe": "In der Vorgabe steht ein Dictionary fahrzeuge mit drei Kennungen und ihren Kilometerständen. Baue daraus in einer Schleife eine Liste von Zeilen der Form Wolf: 12400 km und zähle in derselben Schleife die Kilometer zusammen. Schreibe die Zeilen mit einem Aufruf in die Datei kilometerstand.txt, lies sie zur Kontrolle wieder ein und gib sie aus. Darunter kommt die Gesamtstrecke. Fertig, wenn: drei Zeilen mit Kennung und Kilometerstand erscheinen und darunter Gesamt: 36600 km.",
+     "tipp": "Zwei Dinge wachsen in derselben Schleife mit: die Liste der Zeilen durch append() und die Summe durch +=. Die Zeile selbst baust du am bequemsten mit einem f-String, der Schlüssel und Wert zusammensetzt. Die fertige Liste wird danach mit \"\\n\".join(...) zu einem einzigen Text verbunden — das abschließende + \"\\n\" nicht vergessen.",
+     "vorgabe": "fahrzeuge = {\"Wolf\": 12400, \"Fuchs\": 8900, \"Unimog\": 15300}"
+    },
+    {
+     "titel": "Erst der Ordner, dann die Datei",
+     "aufgabe": "Schreibe einen Monatsbericht in die Datei januar.txt innerhalb eines Ordners berichte, der noch nicht existiert. Lege den Ordner dafür zuerst an und setze den Pfad zur Datei mit dem /-Operator zusammen. Gib zur Kontrolle den Ordnernamen, den Dateinamen und den Inhalt aus. Fertig, wenn: drei Zeilen erscheinen und das Programm auch beim zweiten Ausführen nicht abbricht.",
+     "tipp": "Dateien entstehen beim Schreiben von selbst, Ordner nicht. mkdir() legt den Ordner an — und exist_ok=True sorgt dafür, dass ein bereits vorhandener Ordner kein Fehler ist. Das ist beim zweiten Programmstart immer der Fall."
+    },
+    {
+     "titel": "Drei Schichten geschrieben, eine übrig",
+     "aufgabe": "Die Vorgabe soll ein Schichtbuch mit drei Einträgen anlegen. Sie läuft ohne Fehlermeldung durch — in der Datei steht hinterher trotzdem nur ein einziger Eintrag. Führe sie zuerst unverändert aus, sieh dir die Zeilenzahl an und baue sie dann so um, dass alle drei Schichten erhalten bleiben. Die Liste bleibt dabei unverändert. Fertig, wenn: drei Zeilen erscheinen und darunter Zeilen in der Datei: 3.",
+     "tipp": "Der Fehler steckt nicht in der Schleife, sondern darin, dass in der Schleife geschrieben wird. Die Zeilen liegen bereits als Liste vor — damit lässt sich die Schleife ganz streichen und durch einen einzigen Schreibaufruf ersetzen.",
+     "vorgabe": "from pathlib import Path\n\nschichten = [\"Fruehschicht: Meier\", \"Spaetschicht: Kowalski\", \"Nachtschicht: Brandt\"]\n\npfad = Path('schichtbuch.txt')\nfor eintrag in schichten:\n    pfad.write_text(eintrag + \"\\n\", encoding='utf-8')\n\nprint(pfad.read_text(encoding='utf-8'), end=\"\")\nprint(\"Zeilen in der Datei:\", len(pfad.read_text(encoding='utf-8').splitlines()))"
+    }
+   ]
+  },
+  {
+   "titel": "Vertiefungsaufgaben",
+   "python": {
+    "text": "Weitere Aufgaben aus dem Python-Crashkurs (Tag 5). Schreibe jede Aufgabe in eine eigene Datei und führe sie aus."
+   },
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Eine Auswertung in einer Funktion",
+     "aufgabe": "Schreibe eine Funktion werkstatt_auswerten(dateiname), die eine Zahlendatei einliest und ein Dictionary mit vier Einträgen zurückgibt: anzahl, summe, groesster und durchschnitt. Leere Zeilen sollen dabei übersprungen werden. Die Vorgabe legt dir die Datei werkstatt.txt an, die zwischen den Zahlen eine Leerzeile enthält. Rufe die Funktion damit auf und gib das Ergebnis Eintrag für Eintrag aus. Fertig, wenn: vier Zeilen erscheinen, anzahl 4 beträgt und das Programm trotz der Leerzeile nicht abbricht.",
+     "tipp": "Sammle die Zahlen zuerst in einer Liste; dann erledigen len(), sum() und max() den Rest. Die Leerzeile erkennst du nach dem Säubern daran, dass nichts übrig bleibt — if sauber != \"\": lässt nur die echten Werte durch. Über ein Dictionary kannst du mit for name in ergebnis: genauso laufen wie über eine Liste.",
+     "vorgabe": "from pathlib import Path\n\npfad = Path('werkstatt.txt')\npfad.write_text(\"12\\n\\n19\\n7\\n22\\n\", encoding='utf-8')"
+    },
+    {
+     "titel": "Ein Wachbuch, das mitwächst",
+     "aufgabe": "Schreibe eine Funktion eintragen(dateiname, zeile), die eine Zeile an eine Datei anhängt und dabei auch dann funktioniert, wenn es die Datei noch gar nicht gibt. Prüfe dafür mit exists(), ob schon etwas vorhanden ist, und gib beim allerersten Mal Neues Wachbuch wird angelegt. aus. Trage danach drei Meldungen ein und gib das Wachbuch zum Schluss durchnummeriert aus, gefolgt von der Gesamtzahl der Einträge. Fertig, wenn: zuerst die Meldung über das neue Wachbuch erscheint, danach drei nummerierte Zeilen und zuletzt Eintraege insgesamt: 3.",
+     "tipp": "exists() liefert True oder False und passt damit direkt hinter ein if. Gibt es die Datei noch nicht, ist der „alte Inhalt\" eine leere Zeichenkette \"\" — damit funktioniert das Zusammensetzen unverändert. Für die Nummerierung genügt ein Zähler, der vor der Schleife auf 1 gesetzt und in jedem Durchlauf erhöht wird."
+    }
+   ]
   }
  ]
 }

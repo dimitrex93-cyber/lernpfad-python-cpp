@@ -20,6 +20,248 @@
    },
    "vergleich": "Beide Sprachen: Fange gezielt und zeige Meldungen. Verschlucke keine Fehler im Stillen. C++ hat einen Extra-Trick: RAII. Ressourcen räumen sich dabei selbst auf.",
    "merk": "Fange nur Fehler, die du behandeln kannst. Verschlucke nie alles. In C++ räumen RAII-Objekte Ressourcen selbst auf."
+  },
+  {
+   "titel": "try und except: die Grundform",
+   "python": {
+    "text": "Ein Fehler, der beim Laufen auftritt, heißt Ausnahme. Auf Englisch heißt sie Exception. Ohne Schutz bricht das Programm sofort ab. Dieses Vorsorgen heißt abfangen. Hinter try: steht eingerückt der gefährliche Code. Hinter except Fehlertyp: steht eingerückt die Reaktion. Die Einrückung entscheidet, was zu welchem Block gehört. Ein Punkt ist wichtig: Nach einem Fehler läuft der Rest des try-Blocks nicht mehr. Python springt sofort in den except-Block. Darum gehört in den try-Block nur, was wirklich schiefgehen kann.",
+    "code": "try:\n    print(\"Schritt 1 im try-Block\")\n    zahl = int(\"abc\")\n    print(\"Schritt 2 wird uebersprungen\")\nexcept ValueError:\n    print(\"Im except-Block gelandet\")\n\nprint(\"Nach dem try/except geht es normal weiter\")\n"
+   },
+   "vergleich": "C++ schreibt try und catch, Python try und except. Der Ablauf ist derselbe.",
+   "merk": "try ist der Versuch, except die Rettung. Nur die riskante Zeile gehört hinein.",
+   "checkliste": [
+    "try: der Code, der schiefgehen darf",
+    "except: die Reaktion auf den Fehler",
+    "Nach dem Fehler läuft der Rest des try-Blocks nicht mehr",
+    "Nach dem except geht das Programm normal weiter"
+   ]
+  },
+  {
+   "titel": "Diese vier Fehler fängst du im Kurs",
+   "python": {
+    "text": "Nicht jeder Fehler hat denselben Namen. Python nennt den Typ in der letzten Zeile des Tracebacks. Vier Typen reichen für fast alles im Kurs. ValueError: Der Text ist keine Zahl, etwa bei int von zwoelf. FileNotFoundError: Die Datei gibt es nicht. ZeroDivisionError: Irgendwo wird durch null geteilt. KeyError: Der Schlüssel steht nicht im Dictionary. Wer den Typ kennt, schreibt einen passenden except-Zweig.",
+    "code": "from pathlib import Path\n\ntry:\n    int(\"zwoelf\")\nexcept ValueError:\n    print(\"ValueError: Das ist keine Zahl.\")\n\ntry:\n    Path(\"gibt_es_nicht.txt\").read_text(encoding=\"utf-8\")\nexcept FileNotFoundError:\n    print(\"FileNotFoundError: Die Datei fehlt.\")\n\ntry:\n    print(10 / 0)\nexcept ZeroDivisionError:\n    print(\"ZeroDivisionError: Durch null teilt man nicht.\")\n\npreise = {\"Brot\": 3.5}\ntry:\n    print(preise[\"Milch\"])\nexcept KeyError:\n    print(\"KeyError: Der Schluessel steht nicht im Dictionary.\")\n"
+   },
+   "merk": "ValueError, FileNotFoundError, ZeroDivisionError und KeyError decken fast alles ab.",
+   "checkliste": [
+    "ValueError: int oder float bekommt Text, der keine Zahl ist",
+    "FileNotFoundError: die Datei gibt es nicht",
+    "ZeroDivisionError: es wird durch null geteilt",
+    "KeyError: der Schlüssel steht nicht im Dictionary"
+   ]
+  },
+  {
+   "titel": "Mehrere except-Zweige in einem try",
+   "python": {
+    "text": "Ein try darf mehrere except-Zweige haben. Python prüft sie von oben nach unten. Ausgeführt wird genau ein Zweig. Nämlich der erste, dessen Typ zum Fehler passt. Das folgende Beispiel wertet eine Datei aus. Vier Aufrufe gehen vier verschiedene Wege. Beim ersten klappt alles, und der else-Block kommt dran. Bei den anderen greift je ein anderer except-Zweig.",
+    "code": "from pathlib import Path\n\n\ndef auswerten(datei_name, teiler_text):\n    try:\n        inhalt = Path(datei_name).read_text(encoding=\"utf-8\")\n        zahl = int(inhalt.strip())\n        teiler = int(teiler_text)\n        ergebnis = zahl / teiler\n    except FileNotFoundError:\n        print(\"Die Datei gibt es nicht:\", datei_name)\n    except ValueError:\n        print(\"Das ist keine Zahl.\")\n    except ZeroDivisionError:\n        print(\"Durch null kann man nicht teilen.\")\n    else:\n        print(\"Ergebnis:\", ergebnis)\n\n\nPath(\"zahl.txt\").write_text(\"100\\n\", encoding=\"utf-8\")\n\nauswerten(\"zahl.txt\", \"4\")\nauswerten(\"zahl.txt\", \"0\")\nauswerten(\"zahl.txt\", \"vier\")\nauswerten(\"fehlt.txt\", \"4\")\n\nPath(\"zahl.txt\").unlink()\n"
+   },
+   "vergleich": "C++ schreibt für jeden Fehlertyp ein eigenes catch. Auch dort gewinnt der erste passende Block.",
+   "merk": "Viele except-Zweige, genau einer läuft.",
+   "checkliste": [
+    "Ein try, mehrere except-Zweige",
+    "Python prüft von oben nach unten",
+    "Genau ein Zweig wird ausgeführt",
+    "Der else-Block läuft nur bei Erfolg"
+   ]
+  },
+  {
+   "titel": "Reihenfolge: das Spezielle steht oben",
+   "python": {
+    "text": "Die Reihenfolge der Zweige ist keine Geschmacksfrage. Ein Fehlertyp kann eine besondere Art eines anderen sein. FileNotFoundError ist eine besondere Art von OSError. Steht OSError oben, fängt er den Fehler zuerst ab. Der Zweig für FileNotFoundError läuft dann nie. Die Regel heißt: vom Speziellen zum Allgemeinen. Der genaue Typ steht oben, der allgemeine darunter.",
+    "code": "from pathlib import Path\n\n\ndef falsche_reihenfolge():\n    try:\n        Path(\"fehlt.txt\").read_text(encoding=\"utf-8\")\n    except OSError:\n        print(\"Falsch: der allgemeine Zweig kommt zuerst dran.\")\n    except FileNotFoundError:\n        print(\"Diese Zeile erscheint nie.\")\n\n\ndef richtige_reihenfolge():\n    try:\n        Path(\"fehlt.txt\").read_text(encoding=\"utf-8\")\n    except FileNotFoundError:\n        print(\"Richtig: Die Datei fehlt.\")\n    except OSError:\n        print(\"Richtig: ein anderer Dateifehler.\")\n\n\nfalsche_reihenfolge()\nrichtige_reihenfolge()\n"
+   },
+   "merk": "Erst der genaue Fehlertyp, dann der allgemeine. Sonst läuft der genaue Zweig nie.",
+   "checkliste": [
+    "Python prüft die Zweige von oben nach unten",
+    "Höchstens ein Zweig wird ausgeführt",
+    "Der spezielle Typ steht über dem allgemeinen",
+    "FileNotFoundError ist eine Art von OSError"
+   ]
+  },
+  {
+   "titel": "except Exception fängt zu viel",
+   "python": {
+    "text": "Hinter except darf der Typ fehlen. Dann fängt der Zweig jeden Fehler. except Exception fängt fast jeden Fehler. Beides sieht bequem aus. Es ist die gefährlichste Zeile für Anfänger. Das Beispiel enthält einen Tippfehler: Es steht wrt statt wert. Das nackte except schluckt ihn. Das Programm läuft durch und liefert ein falsches Ergebnis. Mit benanntem Typ erscheint der NameError sofort. Er nennt sogar den richtigen Namen.",
+    "code": "werte = [\"10\", \"20\", \"30\"]\n\n\ndef summe_mit_nacktem_except():\n    summe = 0\n    for wert in werte:\n        try:\n            summe += int(wrt)\n        except:\n            pass\n    return summe\n\n\ndef summe_mit_valueerror():\n    summe = 0\n    for wert in werte:\n        try:\n            summe += int(wrt)\n        except ValueError:\n            pass\n    return summe\n\n\nprint(\"Mit nacktem except:\", summe_mit_nacktem_except())\n\ntry:\n    print(\"Mit ValueError:\", summe_mit_valueerror())\nexcept NameError as fehler:\n    print(\"Jetzt sichtbar:\", fehler)\n"
+   },
+   "vergleich": "C++ fängt mit catch und drei Punkten alles. Das ist dieselbe Falle.",
+   "merk": "Ein except ohne Typ verschluckt auch deine eigenen Tippfehler.",
+   "checkliste": [
+    "except ValueError fängt genau einen Typ",
+    "except Exception fängt fast alles",
+    "except ohne Typ fängt wirklich alles",
+    "Ein verschluckter Fehler rechnet still falsch"
+   ]
+  },
+  {
+   "titel": "else und finally",
+   "python": {
+    "text": "Der else-Block steht hinter allen except-Zweigen. Er läuft nur, wenn kein Fehler kam. Dort steht die Arbeit mit dem Ergebnis. Der finally-Block läuft immer. Egal ob ein Fehler kam oder nicht. Darum steht dort das Aufräumen. Die Reihenfolge ist fest: try, dann alle except, dann else, dann finally. else gehört zum try, nicht zum if. Es heißt hier: wenn alles gutging.",
+    "code": "def pruefe(eingabe):\n    try:\n        zahl = int(eingabe)\n    except ValueError:\n        print(eingabe, \"ist keine Zahl.\")\n    else:\n        print(eingabe, \"ist die Zahl\", zahl)\n    finally:\n        print(\"Pruefung beendet.\")\n\n\npruefe(\"12\")\npruefe(\"zwoelf\")\n"
+   },
+   "merk": "else läuft nur bei Erfolg. finally läuft immer.",
+   "checkliste": [
+    "try: nur die riskante Zeile",
+    "except: die Reaktion auf den Fehler",
+    "else: die Arbeit mit dem Ergebnis",
+    "finally: läuft immer, auch bei einem Fehler"
+   ]
+  },
+  {
+   "titel": "pass: den Fehler still übergehen",
+   "python": {
+    "text": "Manchmal ist die richtige Reaktion: gar keine. pass ist die Anweisung, die nichts tut. Sie steht dort, wo Python einen Block erwartet. Im except-Block heißt sie: Fehler bemerkt, Fehler übergangen, weiter im Programm. Stilles Übergehen ist nur bei erwarteten und harmlosen Fehlern erlaubt. Wird das Ergebnis dadurch falsch, zähle die Fälle mit. Die zweite Fassung im Beispiel macht genau das.",
+    "code": "woerter = [\"12\", \"sieben\", \"30\", \"\", \"5\"]\n\nsumme = 0\nfor wort in woerter:\n    try:\n        summe += int(wort)\n    except ValueError:\n        pass\n\nprint(\"Summe der echten Zahlen:\", summe)\n\nsumme = 0\nuebersprungen = 0\nfor wort in woerter:\n    try:\n        summe += int(wort)\n    except ValueError:\n        uebersprungen += 1\n\nprint(\"Summe:\", summe)\nprint(\"Uebersprungen:\", uebersprungen)\n"
+   },
+   "merk": "pass übergeht den Fehler still. Nur wenn das Ergebnis dadurch nicht falsch wird.",
+   "checkliste": [
+    "pass ist die Anweisung, die nichts tut",
+    "Im except-Block heißt pass: weiter im Programm",
+    "Erlaubt nur bei erwarteten, harmlosen Fehlern",
+    "Sonst übersprungene Fälle mitzählen"
+   ]
+  },
+  {
+   "titel": "Fehler weiterreichen mit raise",
+   "python": {
+    "text": "Manchmal kann eine Funktion den Fehler nicht selbst lösen. Dann reicht sie ihn weiter. raise wirft einen Fehler. Du kannst raise mit einem eigenen Text benutzen. Im except-Block wirft raise ohne Typ denselben Fehler erneut. Der Aufrufer bekommt ihn dann zu sehen. So entscheidet die Stelle, die es besser weiß. Die Funktion selbst bleibt still.",
+    "code": "def teile(zahl, teiler):\n    if teiler == 0:\n        raise ValueError(\"Teiler darf nicht null sein\")\n    return zahl / teiler\n\n\ndef lies(pfad):\n    try:\n        with open(pfad, encoding=\"utf-8\") as datei:\n            return datei.read()\n    except FileNotFoundError:\n        print(\"Datei fehlt. Ich reiche den Fehler weiter.\")\n        raise\n\n\ntry:\n    print(\"Ergebnis:\", teile(10, 2))\n    print(\"Ergebnis:\", teile(10, 0))\nexcept ValueError as fehler:\n    print(\"Abgefangen:\", fehler)\n\ntry:\n    lies(\"gibt_es_nicht.txt\")\nexcept FileNotFoundError as fehler:\n    print(\"Oben angekommen:\", fehler)\n"
+   },
+   "vergleich": "C++ wirft mit throw, Python mit raise. Beide reichen den Fehler nach oben.",
+   "merk": "raise wirft einen Fehler. raise ohne Typ im except-Block reicht ihn weiter.",
+   "checkliste": [
+    "raise wirft einen Fehler",
+    "raise mit Text gibt eine eigene Meldung",
+    "raise ohne Typ im except-Block reicht weiter",
+    "Der Aufrufer muss den Fehler behandeln"
+   ]
+  },
+  {
+   "titel": "Eigene Fehlermeldungen, die helfen",
+   "python": {
+    "text": "Eine Meldung wie Fehler hilft niemandem. Eine gute Meldung sagt, was nicht ging. Sie sagt auch, was der Benutzer tun soll. Und sie nennt den Wert, der Probleme macht. Dann findet man die Ursache schnell. Im Beispiel steht der Wert in der Meldung. So weiß der Benutzer sofort, was er falsch gemacht hat.",
+    "code": "def alter_pruefen(text):\n    try:\n        alter = int(text)\n    except ValueError:\n        print(\"Eingabe war\", text, \"- bitte nur Ziffern eingeben.\")\n        return None\n    if alter < 0:\n        print(\"Alter\", alter, \"ist negativ - bitte eine Zahl ab 0 eingeben.\")\n        return None\n    return alter\n\n\nprint(\"Ergebnis:\", alter_pruefen(\"siebenundzwanzig\"))\nprint(\"Ergebnis:\", alter_pruefen(\"-3\"))\nprint(\"Ergebnis:\", alter_pruefen(\"27\"))\n"
+   },
+   "merk": "Eine gute Meldung nennt Ursache, schuldigen Wert und den nächsten Schritt.",
+   "checkliste": [
+    "Was ist schiefgegangen",
+    "Welcher Wert war schuld",
+    "Was soll der Benutzer jetzt tun"
+   ]
+  },
+  {
+   "titel": "Erst prüfen oder erst versuchen: LBYL und EAFP",
+   "python": {
+    "text": "Für Dateien gibt es zwei Stile. LBYL heißt: prüfe erst, dann riskiere. Du fragst mit exists(), ob die Datei da ist. EAFP heißt: versuche erst, fange den Fehler danach. In Python ist EAFP meist der bessere Stil. Der Grund ist einfach. Zwischen Prüfung und Zugriff kann etwas passieren. Die Datei kann in dieser Sekunde verschwinden. Dann hilft nur noch das try/except.",
+    "code": "from pathlib import Path\n\npfad = Path(\"protokoll.txt\")\n\n# LBYL: erst pruefen, dann lesen\nif pfad.exists():\n    print(\"LBYL:\", pfad.read_text(encoding=\"utf-8\").strip())\nelse:\n    print(\"LBYL: Datei fehlt, ich fange bei null an.\")\n\n# EAFP: einfach versuchen und den Fehler fangen\ntry:\n    inhalt = pfad.read_text(encoding=\"utf-8\")\nexcept FileNotFoundError:\n    print(\"EAFP: Datei fehlt, ich fange bei null an.\")\nelse:\n    print(\"EAFP:\", inhalt.strip())\n"
+   },
+   "merk": "LBYL prüft vorher, EAFP versucht und fängt. In Python ist EAFP meist besser.",
+   "checkliste": [
+    "LBYL: look before you leap, prüfe erst",
+    "EAFP: versuche erst, fange den Fehler danach",
+    "Eine Prüfung kann veralten, ein except nicht"
+   ]
+  },
+  {
+   "titel": "Eine Datei mit einer kaputten Zeile auswerten",
+   "python": {
+    "text": "In echten Dateien steht selten nur Brauchbares. Eine Zeile ist leer, eine enthält ein Wort. Ein try um die ganze Datei wäre hier falsch. Dann wäre nach der ersten kaputten Zeile Schluss. Das try gehört in die Schleife. So betrifft ein Fehler nur einen Durchlauf. Die guten Zeilen summierst du im else-Zweig. Die kaputten sammelst du in einer Liste.",
+    "code": "from pathlib import Path\n\npfad = Path(\"verbrauch_kapitel11.txt\")\npfad.write_text(\"42\\nk.A.\\n37\\n\\n51\\nfehlt\\n\", encoding=\"utf-8\")\n\nsumme = 0\ngut = 0\nverworfen = []\nzeilen = pfad.read_text(encoding=\"utf-8\").splitlines()\n\nfor zeile in zeilen:\n    try:\n        wert = int(zeile.strip())\n    except ValueError:\n        verworfen.append(zeile)\n    else:\n        summe += wert\n        gut += 1\n\nprint(\"Summe:\", summe)\nprint(\"Verwertbar:\", gut, \"von\", len(zeilen))\nprint(\"Verworfen:\", verworfen)\n\npfad.unlink()\n"
+   },
+   "merk": "Das try gehört in die Schleife. Sonst ist nach der ersten kaputten Zeile Schluss.",
+   "checkliste": [
+    "try in die Schleife, nicht um die ganze Datei",
+    "Nur die Umwandlung steht im try-Block",
+    "Summieren und zählen im else-Zweig",
+    "Kaputte Zeilen in einer Liste sammeln"
+   ]
+  },
+  {
+   "titel": "Typische Fehler beim Abfangen",
+   "python": {
+    "text": "Diese Fehler kosten am meisten Zeit. Ein nacktes except verschluckt auch Tippfehler. Zu viel im try-Block sorgt für falsche Meldungen. Ein falscher Fehlertyp lässt den Zweig nie greifen. Allgemein vor speziell lässt den genauen Zweig nie laufen. Wer else für sonst hält, baut den Block an die falsche Stelle. Und Fehler hilft niemandem als Meldung. Abgefangen wird nur, worauf es eine sinnvolle Antwort gibt.",
+    "code": "from pathlib import Path\n\npfad = Path(\"soll.txt\")\npfad.write_text(\"48\\n\", encoding=\"utf-8\")\neingabe = \"sechsundvierzig\"\n\n# Falsch: zwei Umwandlungen in einem try, die Meldung raet\ntry:\n    soll = int(pfad.read_text(encoding=\"utf-8\").strip())\n    ist = int(eingabe)\n    print(\"Fehlend:\", soll - ist)\nexcept ValueError:\n    print(\"Falsch: Die Datei enthaelt keine Zahl.\")\n\n# Richtig: nur die riskante Zeile im try, die Meldung nennt den Wert\ntry:\n    ist = int(eingabe)\nexcept ValueError:\n    print(\"Richtig:\", eingabe, \"ist keine Zahl.\")\n\npfad.unlink()\n"
+   },
+   "merk": "Fange nur ab, was du behandeln kannst. Alles andere darf das Programm anhalten.",
+   "checkliste": [
+    "Nacktes except schreiben: verschluckt auch Tippfehler",
+    "Zu viel in den try-Block packen: der Rest fällt aus",
+    "Falschen Fehlertyp abfangen: der Zweig greift nie",
+    "Allgemeinen Typ über den genauen stellen: der genaue läuft nie",
+    "else für sonst halten: es heißt wenn alles gutging",
+    "Nichtssagende Meldung ausgeben: Fehler hilft niemandem"
+   ]
+  },
+  {
+   "titel": "Pflichtaufgaben",
+   "python": {
+    "text": "Weitere Aufgaben aus dem Python-Crashkurs (Tag 5). Schreibe jede Aufgabe in eine eigene Datei und führe sie aus."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Wenn aus Text keine Zahl wird",
+     "aufgabe": "In einer Variablen steht die Angabe \"acht\" statt einer Ziffernfolge. Rechne die Dienstjahre in Monate um, fange den dabei entstehenden Fehler ab und gib stattdessen einen verständlichen Hinweis aus. Nach dem try/except soll das Programm sichtbar weiterlaufen. Fertig, wenn: zwei Zeilen erscheinen, die erste ein Hinweis auf die fehlende Zahl, die zweite die Meldung, dass es weitergeht.",
+     "tipp": "Der Fehlertyp heißt ValueError; er entsteht, sobald int() auf etwas trifft, das keine ganze Zahl ist. Hinter try: steht eingerückt der riskante Teil, hinter except ValueError: die Reaktion."
+    },
+    {
+     "titel": "Die Datei, die noch nicht da ist",
+     "aufgabe": "Versuche, eine Datei bewerbung.txt zu lesen, die es im Ordner nicht gibt. Fange den Fehler ab und gib eine verständliche Meldung aus. Danach soll das Programm weiterlaufen. Fertig, wenn: zwei Zeilen erscheinen und kein Traceback.",
+     "tipp": "Der Fehlertyp beim Lesen heißt FileNotFoundError. In den try-Block gehört nur das, was wirklich schiefgehen kann — hier also das Lesen und die Ausgabe des gelesenen Inhalts."
+    },
+    {
+     "titel": "Durchschnitt ohne Werte",
+     "aufgabe": "Eine Messreihe ist leer geblieben — die Liste enthält keinen einzigen Wert. Berechne trotzdem Summe und Anzahl, versuche den Durchschnitt zu bilden und fange den dabei entstehenden Fehler mit einer passenden Meldung ab. Gib danach außerhalb von try/except eine letzte Zeile aus, dass die Auswertung beendet ist. Fertig, wenn: zwei Zeilen erscheinen und das Programm nicht abbricht.",
+     "tipp": "Der Fehlertyp heißt ZeroDivisionError. Er entsteht nicht durch einen Tippfehler, sondern durch die Daten: len() einer leeren Liste ergibt 0, und durch null lässt sich nicht teilen."
+    },
+    {
+     "titel": "Unbrauchbares überspringen und mitzählen",
+     "aufgabe": "Lege eine Liste mit fünf Rohwerten an, von denen zwei keine Zahlen sind. Zähle die brauchbaren Werte zusammen und zähle zugleich mit, wie viele Einträge übersprungen werden mussten. Gib am Ende beides aus. Fertig, wenn: zwei Zeilen erscheinen: die Summe der echten Zahlen und die Anzahl der übersprungenen Einträge.",
+     "tipp": "Das try/except steht innerhalb der Schleife — dann betrifft ein Fehler nur den einen Durchlauf, und die Schleife macht beim nächsten Eintrag weiter. Statt pass genügt hier ein Zähler, der im except-Block erhöht wird."
+    },
+    {
+     "titel": "Bilanz über eine unsaubere Datei",
+     "aufgabe": "Die Vorgabe legt dir die Datei verbrauch.txt an: sechs Zeilen, von denen drei keine Zahl enthalten — darunter eine völlig leere. Lies die Datei, versuche jede Zeile in eine Zahl zu verwandeln und fange den ValueError ab. Die unbrauchbaren Zeilen sammelst du in einer Liste, die brauchbaren summierst du im else-Zweig und zählst sie mit. Gib am Ende drei Zeilen aus: die Summe, wie viele von wie vielen Zeilen verwertbar waren, und die verworfenen Zeilen als Liste. Fertig, wenn: drei Zeilen erscheinen: Summe: 130, Verwertbar: 3 von 6 und Verworfen: ['k.A.', '', 'fehlt'].",
+     "tipp": "Das try steht in der Schleife, sonst wäre nach der ersten unbrauchbaren Zeile Schluss. In den try-Block gehört nur die Umwandlung; das Summieren und das Mitzählen gehören in den else-Zweig, der nur bei Erfolg läuft. Die leere Zeile ist dabei kein Sonderfall: int(\"\") löst denselben ValueError aus wie int(\"fehlt\").",
+     "vorgabe": "from pathlib import Path\n\npfad = Path('verbrauch.txt')\npfad.write_text(\"42\\nk.A.\\n37\\n\\n51\\nfehlt\\n\", encoding='utf-8')"
+    },
+    {
+     "titel": "Eine Funktion, die immer eine Zahl zurückgibt",
+     "aufgabe": "Schreibe eine Funktion zahl_oder_null(text), die int(text) versucht und das Ergebnis zurückgibt — scheitert die Umwandlung, gibt sie stattdessen 0 zurück. Laufe damit in einer Schleife über die Liste rohwerte aus der Vorgabe und sammle die Ergebnisse in einer neuen Liste. Gib diese Liste aus, danach ihre Summe und ihren größten Wert. Fertig, wenn: drei Zeilen erscheinen: [18, 0, 25, 0, 31], Summe: 74 und Groesster: 31.",
+     "tipp": "Ein return darf im try-Block ebenso stehen wie im except-Block — die Funktion verlässt in beiden Fällen ihre Arbeit mit einem Wert, nur eben mit einem anderen. Weil sie dadurch immer eine Zahl liefert, braucht der Rest des Programms kein try mehr: sum() und max() arbeiten auf einer Liste, in der keine Zeichenkette mehr steckt.",
+     "vorgabe": "rohwerte = [\"18\", \"k.A.\", \"25\", \"\", \"31\"]"
+    },
+    {
+     "titel": "Drei Fehler, drei Zweige, eine Funktion",
+     "aufgabe": "Lege zuerst eine Datei mit drei Tageskilometerwerten an. Schreibe dann eine Funktion tagesschnitt(dateiname, tage_text), die diese Datei einliest, alle Werte summiert, die Angabe der Tage umwandelt und den Schnitt berechnet. Fange alle drei Fehlertypen des Kurses in eigenen Zweigen ab und gib das Ergebnis im else-Block aus. Rufe die Funktion danach viermal auf, sodass jeder Zweig genau einmal an die Reihe kommt. Fertig, wenn: vier Zeilen erscheinen — eine mit dem Ergebnis und drei verschiedene Fehlermeldungen.",
+     "tipp": "Ein try darf mehrere except-Zweige haben; Python prüft sie von oben nach unten und führt genau einen aus. Die vier Aufrufe unterscheiden sich nur in den Werten, die du übergibst: eine gültige Tageszahl, die Null, ein Wort statt einer Zahl und ein Dateiname, den es nicht gibt."
+    },
+    {
+     "titel": "Ein `except`, das zu viel verschluckt",
+     "aufgabe": "Die Vorgabe soll drei Zahlen zusammenzählen und meldet am Ende die Summe 0. Sie läuft ohne jede Fehlermeldung durch. Führe sie zuerst unverändert aus, ersetze dann das nackte except: durch den genauen Fehlertyp, führe erneut aus und behebe zuletzt, was dadurch sichtbar wird. Fertig, wenn: eine Zeile erscheint: Summe: 100.",
+     "tipp": "Der except-Zweig soll nur für den einen Fehler zuständig sein, den er auch behandeln kann: ValueError bei einer missglückten Umwandlung. Sobald der Typ dasteht, meldet Python beim nächsten Lauf etwas ganz anderes — und diese Meldung nennt sogar den Namen, der gemeint war.",
+     "vorgabe": "werte = [\"30\", \"45\", \"25\"]\nsumme = 0\n\nfor wert in werte:\n    try:\n        summe += int(wrt)\n    except:\n        pass\n\nprint(\"Summe:\", summe)"
+    },
+    {
+     "titel": "Die Meldung, die den Falschen beschuldigt",
+     "aufgabe": "Die Vorgabe liest eine einwandfreie Zahl aus einer Datei und vergleicht sie mit einem eingegebenen Istwert. Sie meldet, die Datei enthalte keine Zahl — was nachweislich nicht stimmt. Finde heraus, warum die Meldung falsch ist, und baue das Programm so um, dass im try-Block nur noch die wirklich riskante Zeile steht und der Erfolgsfall im else-Block landet. Fertig, wenn: eine Zeile erscheint, die den tatsächlichen Verursacher nennt und seinen Wert mit ausgibt.",
+     "tipp": "Im try-Block stehen zwei Umwandlungen, und beide können denselben Fehlertyp auslösen. Der except-Zweig kann deshalb gar nicht wissen, welche der beiden gescheitert ist — er rät. Nimm heraus, was nicht scheitern kann, und schreibe die Meldung so, dass sie den übergebenen Wert mit ausgibt.",
+     "vorgabe": "from pathlib import Path\n\npfad = Path('sollstaerke.txt')\npfad.write_text(\"48\\n\", encoding='utf-8')\n\neingabe = \"sechsundvierzig\"\n\ntry:\n    soll = int(pfad.read_text(encoding='utf-8').strip())\n    ist = int(eingabe)\n    print(\"Fehlend:\", soll - ist)\nexcept ValueError:\n    print(\"Die Datei enthaelt keine Zahl.\")"
+    }
+   ]
+  },
+  {
+   "titel": "Vertiefungsaufgaben",
+   "python": {
+    "text": "Weitere Aufgaben aus dem Python-Crashkurs (Tag 5). Schreibe jede Aufgabe in eine eigene Datei und führe sie aus."
+   },
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Eine Auswertung, die nichts umwirft",
+     "aufgabe": "Schreibe eine Funktion auswerten(dateiname), die eine Stundenliste einliest und Summe, Schnitt und die Zahl der übersprungenen Zeilen ausgibt. Alle drei Fehlerlagen sollen sauber behandelt werden: fehlende Datei, unbrauchbare Zeile, keine einzige verwertbare Zeile. Lege danach zwei Dateien an — eine mit gemischtem Inhalt, eine ohne jede Zahl — und rufe die Funktion dreimal auf, zuletzt mit einem Dateinamen, den es nicht gibt. Fertig, wenn: drei Zeilen erscheinen, für jeden der drei Fälle eine, und das Programm bis zum Ende durchläuft.",
+     "tipp": "Hier gehören drei kleine try-Blöcke an verschiedene Stellen statt eines großen: einer um das Lesen, einer in der Schleife um die Umwandlung, einer um die Division. Fehlt die Datei, lohnt sich die weitere Arbeit nicht — dann beendet ein return die Funktion sofort. In der Schleife kannst du den else-Block nutzen, um nur die gelungenen Umwandlungen zu zählen."
+    }
+   ]
   }
  ]
 }

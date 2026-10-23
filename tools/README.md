@@ -52,10 +52,10 @@ Seit v1.0.0 sind die beiden Sprachen getrennt: **`w` öffnet den Python-Kurs**,
 **`c` den C++-Kurs**. Jeder Kurs erklärt eine Sprache für sich – Erklärung,
 Codebeispiel und Merksatz pro Abschnitt.
 
-- **Python-Kurs:** `tools/python_kurs/` – 20 Kapitel, 199 Abschnitte, 238 Aufgaben,
-  alle mit Lösung aus den offiziellen Lösungssammlungen (Tag 1–4). Reparatur- und
-  Vorhersage-Aufgaben tragen den fehlerhaften Ausgangscode als `vorgabe`. Kapitel 20
-  enthält das mehrteilige Projekt „Lernkarten-Trainer" (Stufe 1 und 2).
+- **Python-Kurs:** `tools/python_kurs/` – 21 Kapitel, 246 Abschnitte, 292 Aufgaben;
+  238 mit Lösung aus den offiziellen Lösungssammlungen (Tag 1–4), Tag 5 noch offen.
+  Reparatur- und Vorhersage-Aufgaben tragen den fehlerhaften Ausgangscode als `vorgabe`.
+  Kapitel 20: Projekt „Lernkarten-Trainer" (Stufe 1–3); Kapitel 21: Zusatzprojekte.
 - **C++-Kurs:** `tools/cpp_kurs/` – 19 Kapitel, 121 Abschnitte, dazu 71
   Aufgaben (29 Pflicht-/Vertiefungsblöcke) mit vollständigen, kompilierten
   Lösungen. Themen, die nur Python betreffen (f-Strings, Listenmethoden),

@@ -1,0 +1,80 @@
+{
+ "id": "zusatzprojekte",
+ "titel": "Kapitel 21: Zusatzprojekte – Zahlenraten und Schere, Stein, Papier",
+ "einleitung": "Zwei kleine Spiele als Übungsprojekte: erst ein Zahlenratespiel mit Zufallszahl und begrenzten Versuchen, dann Schere, Stein, Papier mit Eingabeprüfung und Best-of-Five. Beide brauchen nur while, Bedingungen und input – und beide bringen dich dazu, Eingaben zu misstrauen.",
+ "abschnitte": [
+  {
+   "titel": "Zwei Spiele, ein Zweck",
+   "python": {
+    "text": "Beide Projekte üben dasselbe Handwerk: eine Schleife, die erst endet, wenn eine Bedingung erfüllt ist, Eingaben, die geprüft werden müssen, und Zähler, die den Spielstand halten. Beim Zahlenraten ist das Ergebnis eine Zahl, bei Schere, Stein, Papier ein Vergleich. Wer beides baut, hat die Grundlagen aus Kapitel 5 und 6 wirklich angewendet."
+   },
+   "checkliste": [
+    "Zahlenraten: Zufallszahl, Raten in der Schleife, begrenzte Versuche",
+    "Schere, Stein, Papier: Eingabe prüfen, Runde werten, Best-of-Five"
+   ],
+   "merk": "Ein Spiel ist eine Schleife mit Bedingung, Zähler und geprüfter Eingabe."
+  },
+  {
+   "titel": "Projekt 1 – Zahlenraten",
+   "python": {
+    "text": "Zuerst ein Spiel, das sich eine Zahl merkt und dich raten lässt. Danach bekommt es ein Limit an Versuchen, und zum Schluss eine Zugabe, die auch Tippfehler statt Zahlen verkraftet."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Schritt 1 — Eine Zahl, die niemand kennt",
+     "aufgabe": "Der Computer denkt sich eine Zahl zwischen 1 und 100 aus. Du rätst, er sagt nur zu hoch oder zu niedrig. Mehr ist das Spiel nicht — und es ist seit Jahrzehnten die erste Übung, die angehende Programmierer schreiben. Fang klein an: Lass den Computer eine Zahl ziehen, frage einmal nach einem Tipp und sag, ob er zu hoch, zu niedrig oder richtig war. Damit du prüfen kannst, ob dein Programm stimmt, gib die gesuchte Zahl vorerst mit aus — das fliegt in Schritt 2 wieder raus. Fertig, wenn: die gezogene Zahl erscheint, danach die Frage, und nach deiner Eingabe genau eine der drei Zeilen Zu niedrig., Zu hoch. oder Richtig!",
+     "tipp": "import random holt das Modul, random.randint(1, 100) liefert eine ganze Zufallszahl von 1 bis 100 — beide Grenzen gehören dazu, anders als bei range(). Die Eingabe ist Text und muss mit int() umgewandelt werden."
+    },
+    {
+     "titel": "Schritt 2 — Raten, bis es sitzt",
+     "aufgabe": "Ein Versuch ist kein Spiel. Lass den Benutzer so lange raten, bis er die Zahl trifft, und nimm die Kontrollausgabe wieder heraus. Zähle dabei mit, wie viele Versuche er gebraucht hat, und gib das am Ende aus. Fertig, wenn: die Frage wiederholt sich nach jedem falschen Tipp, und zum Schluss erscheint Richtig! Du hast 4 Versuche gebraucht.",
+     "tipp": "Das Muster ist anlegen, prüfen, verändern: Ein tipp = 0 vor der Schleife, while tipp != gesucht: als Bedingung, und im Körper wird tipp durch die Eingabe neu belegt. Der Zähler gehört ebenfalls vor die Schleife und wird im Körper um eins erhöht."
+    },
+    {
+     "titel": "Schritt 3 — Sieben Versuche, mehr nicht",
+     "aufgabe": "Unbegrenzt raten ist langweilig. Gib dem Spieler sieben Versuche — danach ist Schluss, und das Programm verrät die Zahl. Das Spiel endet jetzt also aus zwei Gründen: getroffen oder Versuche alle. Beide müssen in der Bedingung stehen, und danach muss das Programm unterscheiden, welcher der beiden Fälle eingetreten ist. Übrigens: Sieben Versuche reichen für 1 bis 100 immer — wenn man richtig rät. Wer jedes Mal die Mitte nimmt, halbiert den übrigen Bereich. Das ist dasselbe Prinzip, nach dem man ein Wort im Wörterbuch sucht. Fertig, wenn: nach dem siebten falschen Tipp erscheint Aufgebraucht. Gesucht war 42. — bei einem Treffer davor stattdessen Richtig! Du hast 4 von 7 Versuchen gebraucht.",
+     "tipp": "Zwei Abbruchgründe verbindest du mit and: while tipp != gesucht and versuche < 7:. Hinter and beginnt immer eine neue, vollständige Bedingung. Nach der Schleife entscheidest du mit einem if tipp == gesucht:, welche Schlusszeile kommt."
+    }
+   ],
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Schritt 4 — Zugabe — wer tippt schon Zahlen",
+     "aufgabe": "Dein Programm stürzt ab, sobald jemand zwölf oder gar nichts eingibt — int() kann damit nichts anfangen und wirft einen ValueError. Fang das ab: Eine unbrauchbare Eingabe kostet keinen Versuch, sondern bekommt eine freundliche Rückmeldung, und das Spiel läuft weiter. Merk dir außerdem alle Tipps in einer Liste und gib sie am Ende aus. Fertig, wenn: nach der Eingabe zwölf erscheint Das ist keine Zahl. Versuch es nochmal., der Versuchszähler bleibt stehen, und zum Schluss folgt eine Zeile wie Deine Tipps: [50, 25, 42].",
+     "tipp": "Leg int(input(...)) in einen try-Block. Ins except ValueError: kommt die Meldung und ein continue — damit springt die Schleife sofort in den nächsten Durchlauf, bevor der Zähler erhöht wird. Achte darauf, dass versuche += 1 nach dem try steht."
+    }
+   ],
+   "merk": "Reagieren statt abstürzen: Eingaben prüfen, bevor gerechnet wird."
+  },
+  {
+   "titel": "Projekt 2 – Schere, Stein, Papier",
+   "python": {
+    "text": "Dann das zweite Spiel: eine Runde gegen den Computer, nur gültige Eingaben zählen, und am Ende gewinnt, wer zuerst drei Siege hat."
+   },
+   "aufgaben_pflicht": [
+    {
+     "titel": "Schritt 5 — Eine Runde Schere, Stein, Papier",
+     "aufgabe": "Zweites Spiel, zweites Werkzeug aus dem Zufallsmodul: random.choice() zieht ein Element aus einer Liste. Schreib eine Runde: Der Spieler tippt schere, stein oder papier, der Computer zieht zufällig, beide Wahlen werden angezeigt, und dann steht da, wer gewonnen hat. Die Regeln als Tabelle — mehr Fälle gibt es nicht: | Spieler | schlägt | |---|---| | schere | papier | | stein | schere | | papier | stein | Fertig, wenn: zwei Zeilen mit beiden Wahlen und darunter genau eine der drei Zeilen Du gewinnst., Der Computer gewinnt. oder Unentschieden.",
+     "tipp": "random.choice(['schere', 'stein', 'papier']) zieht eine der drei Möglichkeiten. Für den Gewinner brauchst du drei Siegbedingungen, verbunden mit or — und hinter jedem or beginnt eine neue, vollständige Bedingung: spieler == 'schere' and computer == 'papier'. Säubere die Eingabe mit .strip().lower()."
+    },
+    {
+     "titel": "Schritt 6 — Nur gültige Eingaben zählen",
+     "aufgabe": "Tippt jemand banane, spielt dein Programm trotzdem — und der Spieler verliert garantiert, weil banane nichts schlägt. Das ist kein Spiel, das ist eine Falle. Prüfe die Eingabe, bevor gespielt wird: Steht sie nicht in der Liste der drei Möglichkeiten, bekommt der Spieler eine Rückmeldung und es wird neu gefragt — so lange, bis etwas Gültiges kommt. Fertig, wenn: nach der Eingabe banane erscheint banane kenne ich nicht. und die Frage kommt erneut; erst eine gültige Eingabe startet die Runde.",
+     "tipp": "Das ist wieder anlegen, prüfen, verändern: spieler = '' vor der Schleife, while spieler not in moeglich: als Bedingung. Im Körper wird gefragt, und wenn die Eingabe nicht passt, kommt die Meldung. Achte darauf, dass die Meldung nicht auch beim gültigen Durchlauf erscheint."
+    },
+    {
+     "titel": "Schritt 7 — Wer zuerst drei Siege hat",
+     "aufgabe": "Jetzt ein richtiges Match: Es wird so lange gespielt, bis einer drei Siege hat. Nach jeder Runde erscheint der Punktestand. Dafür brauchst du zwei Zähler und eine Schleife um das ganze Spiel herum. Die Gewinnerprüfung von eben bleibt, wie sie ist — sie erhöht nur noch zusätzlich den passenden Zähler. Das ist der Schritt, an dem sich zeigt, ob die Einrückung sitzt: Die Eingabeprüfung aus Schritt 6 ist jetzt eine Schleife in einer Schleife. Fertig, wenn: nach jeder Runde steht da Stand: 2 zu 1, und am Ende genau eine der beiden Zeilen Du gewinnst das Match 3 zu 1. oder Der Computer gewinnt das Match 3 zu 2.",
+     "tipp": "Die äußere Schleife lautet while punkte_spieler < 3 and punkte_computer < 3:. Alles, was eine Runde ausmacht, wird vier Leerzeichen eingerückt — die Eingabeprüfung darin dann acht. Unentschieden zählt für niemanden."
+    }
+   ],
+   "aufgaben_vertiefung": [
+    {
+     "titel": "Schritt 8 — Zugabe — womit gewinnt der Computer eigentlich",
+     "aufgabe": "Zum Abschluss eine kleine Auswertung, die alles von dieser Woche benutzt. Merk dir in einem Dictionary, wie oft der Computer jede der drei Möglichkeiten gezogen hat, und gib das nach dem Match aus — sortiert, mit der häufigsten zuerst wäre schön, alphabetisch genügt. Gib außerdem aus, welche Wahlen du selbst benutzt hast — dafür ist eine Menge das richtige Werkzeug, denn Doppelte interessieren hier nicht. Fertig, wenn: nach dem Match erscheint eine Zeile je Möglichkeit im Muster papier: 2, und darunter Du hast benutzt: ['papier', 'schere', 'stein'].",
+     "tipp": "Das Dictionary legst du vor der äußeren Schleife mit allen drei Möglichkeiten auf 0 an — dann musst du beim Hochzählen nicht prüfen, ob der Schlüssel schon da ist. Für deine eigenen Wahlen legst du vor der Schleife eine leere Menge an und sammelst mit .add(). Ausgeben mit sorted(), sonst ist die Reihenfolge beliebig."
+    }
+   ],
+   "merk": "Zähler für beide Seiten, Schleife bis einer drei hat."
+  }
+ ]
+}

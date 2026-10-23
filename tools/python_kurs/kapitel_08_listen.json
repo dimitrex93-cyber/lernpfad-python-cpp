@@ -433,6 +433,194 @@
    ]
   },
   {
+   "titel": "Tupel anlegen: runde Klammern und das Komma",
+   "python": {
+    "text": "Ein Tupel ist ein Behälter für mehrere Werte. Es steht in runden Klammern. Die Werte trennst du mit Kommas. Beim Lesen ist es wie eine Liste. Der Index beginnt bei null. len() zählt die Werte. Ein Tupel mit nur einem Wert braucht ein Komma. ('lkw',) ist ein Tupel. ('lkw') ist nur ein Text in Klammern. Ein leeres Tupel ist (). Bei zwei Werten steht das Komma ohnehin da. Dann stellt sich die Frage nicht.",
+    "code": "abmessungen = (200, 50)\n\nprint(abmessungen)      # (200, 50)\nprint(abmessungen[0])   # 200\nprint(abmessungen[1])   # 50\nprint(len(abmessungen)) # 2\n\neinzeln = ('lkw',)\nleer = ()\nkein_tupel = ('lkw')\n\nprint(einzeln, len(einzeln))        # ('lkw',) 1\nprint(leer, len(leer))              # () 0\nprint(kein_tupel, len(kein_tupel))  # lkw 3\nprint(type(einzeln))                # <class 'tuple'>\nprint(type(kein_tupel))             # <class 'str'>"
+   },
+   "merk": "Eckige Klammern ändern sich, runde stehen fest. Ein einzelner Wert braucht ein Komma dahinter.",
+   "checkliste": [
+    "Tupel steht in runden Klammern",
+    "Werte durch Kommas getrennt",
+    "Index ab null wie bei der Liste",
+    "Ein Wert braucht ein Komma: ('lkw',)",
+    "('lkw') ist nur ein Text",
+    "Leeres Tupel: ()"
+   ]
+  },
+  {
+   "titel": "Tupel lesen und entpacken",
+   "python": {
+    "text": "Beim Lesen verhält sich ein Tupel wie eine Liste. Der Index beginnt bei null. Negative Indizes zählen von hinten. len() zählt die Werte. Du kannst die Werte auch in Namen verteilen. Das nennt man entpacken. Links stehen die Namen mit Komma. Rechts steht das Tupel. Die Anzahl muss zusammenpassen. Auch items() liefert Paare. Die Schleife packt jedes Paar in zwei Namen.",
+    "code": "punkt = (120, 45)\n\nprint(punkt[0])    # 120\nprint(punkt[1])    # 45\nprint(punkt[-1])   # 45\nprint(len(punkt))  # 2\n\nx, y = punkt\nprint(x)           # 120\nprint(y)           # 45\n\nbestand = {'lkw': 3, 'bus': 1}\nfor fahrzeug, anzahl in bestand.items():\n    print(fahrzeug, anzahl)\n\nprint('---')\nfor fahrzeug in bestand.items():\n    print(fahrzeug)   # das ganze Paar auf einmal"
+   },
+   "merk": "Ein Tupel liest sich wie eine Liste. Zwei Werte passen in zwei Namen.",
+   "checkliste": [
+    "Index und negative Indizes wie bei der Liste",
+    "len() zählt die Werte",
+    "x, y = punkt verteilt zwei Werte auf zwei Namen",
+    "items() liefert Paare",
+    "Zwei Namen im for entpacken das Paar"
+   ]
+  },
+  {
+   "titel": "Unveränderlich: was das praktisch bedeutet",
+   "python": {
+    "text": "Ein Tupel lässt sich nach dem Anlegen nicht ändern. Kein Wert wird ersetzt. Keiner kommt hinzu. Keiner fällt weg. Der Versuch endet mit TypeError. append() gibt es bei einem Tupel nicht. Der Versuch endet mit AttributeError. Gesperrt ist der Inhalt, nicht der Name. Du darfst der Variablen ein neues Tupel zuweisen. Das alte bleibt liegen. Nur schaut niemand mehr hin. Ein Plus erzeugt ebenfalls ein neues Tupel.",
+    "code": "abmessungen = (200, 50)\n\n# abmessungen[0] = 250     -> TypeError, tuple unterstuetzt keine Zuweisung\n# abmessungen.append(300)  -> AttributeError, ein Tupel hat kein append\n\nabmessungen = (400, 100)\nprint(abmessungen)   # (400, 100), neuer Name, neues Tupel\n\ntupel = (1, 2, 3)\nprint(tupel + (4,))  # (1, 2, 3, 4), ein neues Tupel\nprint(tupel)         # (1, 2, 3), das alte bleibt\n\ntext = 'lkw'\nprint(text.title())  # Lkw, auch ein Text liefert eine neue Fassung\nprint(text)          # lkw"
+   },
+   "merk": "Gesperrt ist der Inhalt, nicht der Name. Ein neues Tupel darfst du jederzeit zuweisen.",
+   "checkliste": [
+    "tupel[0] = wert: TypeError",
+    "tupel.append(wert): AttributeError",
+    "tupel = (400, 100): erlaubt",
+    "tupel + (4,): neues Tupel, das alte bleibt",
+    "Unveränderbar heißt nicht konstant"
+   ]
+  },
+  {
+   "titel": "Tupel in der Schleife und wann Tupel statt Liste",
+   "python": {
+    "text": "Eine for-Schleife läuft über ein Tupel wie über eine Liste. min(), max(), sum() und len() arbeiten genauso. Deshalb fallen Tupel im Alltag kaum auf. Gelesen wird meistens. Ein Tupel sagt: Diese Werte gehören zusammen. Sie ändern sich nicht. Nimm ein Tupel für feste Werte. Beispiele sind eine Koordinate, eine Farbe und eine Auflösung. Nimm eine Liste für Daten, die wachsen. Ein Punkt ist ein Punkt, kein wachsender Datenbestand.",
+    "code": "abmessungen = (200, 50, 120)\n\nfor mass in abmessungen:\n    print(mass)\n\nprint(min(abmessungen), max(abmessungen), sum(abmessungen))  # 50 200 370\n\nkoordinate = (12, 40)\nfarbe = (255, 128, 0)\naufloesung = (1920, 1080)\nprint(koordinate)\nprint(farbe)\nprint(aufloesung)"
+   },
+   "merk": "Feste Werte gehören ins Tupel, wachsende Daten in die Liste.",
+   "checkliste": [
+    "for läuft über ein Tupel wie über eine Liste",
+    "min, max, sum und len arbeiten unverändert",
+    "Tupel für Koordinaten, Farben und Auflösungen",
+    "Tupel für Werte, die zusammengehören",
+    "Liste für Daten, die wachsen"
+   ]
+  },
+  {
+   "titel": "Comprehension: die Kurzform der Schleife",
+   "python": {
+    "text": "Das Muster leere Liste, Schleife, append() ist sehr häufig. Dafür gibt es eine Kurzform. Sie heißt List Comprehension. Alles steht in einer eckigen Klammer. Vorn steht die Rechnung. Dahinter steht for und die Quelle. Ein Doppelpunkt kommt nicht vor. Eine Einrückung gibt es auch nicht. Das Ergebnis ist eine ganz normale Liste. Die Ausgangsliste bleibt unberührt. Eine Comprehension baut immer eine neue Liste.",
+    "code": "quadrate = []\n\nfor zahl in range(1, 11):\n    quadrate.append(zahl ** 2)\n\nprint(quadrate)\n\nkurz = [zahl ** 2 for zahl in range(1, 11)]\nprint(kurz)\nprint(quadrate == kurz)   # True, gleiches Ergebnis\n\nzahlen = [1, 2, 3]\ndoppelt = [x * 2 for x in zahlen]\nprint(doppelt)            # [2, 4, 6]\nprint(zahlen)             # [1, 2, 3], unveraendert\n\nnamen = ['anna', 'bernd', 'clara']\nprint([name.title() for name in namen])   # ['Anna', 'Bernd', 'Clara']"
+   },
+   "merk": "Erst das Ergebnis, dann for, dann die Bedingung. Alles in eine eckige Klammer.",
+   "checkliste": [
+    "Vorn die Rechnung, dahinter for",
+    "Kein Doppelpunkt, keine Einrückung",
+    "Ergebnis ist eine normale Liste",
+    "Die Quelle bleibt unverändert",
+    "Drei Zeilen werden zu einer"
+   ]
+  },
+  {
+   "titel": "Comprehension mit Bedingung",
+   "python": {
+    "text": "Ein if am Ende filtert die Werte. Es steht hinter der Schleife. Ein Doppelpunkt fehlt auch hier. Nur passende Werte kommen in die neue Liste. Der Rest fällt weg. Das ist dieselbe Arbeit wie eine Schleife mit if. Beide Wege liefern dieselbe Liste. Ein Vergleich zeigt das. Der Ausdruck lautet: Rechnung, for, if, Bedingung.",
+    "code": "zahlen = [12, 7, 30, 3, 48, 23]\n\ngrosse_lang = []\nfor zahl in zahlen:\n    if zahl > 20:\n        grosse_lang.append(zahl)\n\ngrosse_kurz = [zahl for zahl in zahlen if zahl > 20]\n\nprint(grosse_lang)                 # [30, 48, 23]\nprint(grosse_kurz)                 # [30, 48, 23]\nprint(grosse_lang == grosse_kurz)  # True\n\ngerade = [zahl for zahl in range(1, 11) if zahl % 2 == 0]\nprint(gerade)                      # [2, 4, 6, 8, 10]\n\nprint([zahl for zahl in zahlen if zahl <= 23])  # [12, 7, 3, 23]"
+   },
+   "merk": "Das if steht hinter dem for und filtert. Auch hier ohne Doppelpunkt.",
+   "checkliste": [
+    "if steht am Ende der eckigen Klammer",
+    "Kein Doppelpunkt nach der Bedingung",
+    "Nur passende Werte landen in der Liste",
+    "Gleiches Ergebnis wie Schleife mit if",
+    "Reihenfolge: Rechnung, for, if"
+   ]
+  },
+  {
+   "titel": "Comprehension über ein Dictionary",
+   "python": {
+    "text": "Ein Dictionary bietet drei Ansichten an. items() liefert die Paare. keys() liefert die Schlüssel. values() liefert die Werte. In einer Comprehension funktionieren alle drei. Über items() brauchst du zwei Namen. Die Schleife entpackt jedes Paar. Die eckige Klammer baut daraus eine Liste. Aus den Werten wird so eine Liste mit Doppelten. Erst set() macht daraus die verschiedenen Werte.",
+    "code": "abteilungen = {'mara': 'Vertrieb', 'ben': 'Technik', 'ilka': 'Vertrieb', 'tom': 'Lager'}\n\nnamen = [name for name in abteilungen]\nprint(namen)                     # ['mara', 'ben', 'ilka', 'tom']\n\nwerte = [abteilung for abteilung in abteilungen.values()]\nprint(werte)                     # ['Vertrieb', 'Technik', 'Vertrieb', 'Lager']\nprint(len(werte))                # 4\n\npaare = [f'{name}: {abteilung}' for name, abteilung in abteilungen.items()]\nfor zeile in paare:\n    print(zeile)\n\nprint(sorted(set(abteilungen.values())))   # ['Lager', 'Technik', 'Vertrieb']"
+   },
+   "merk": "Über ein Dictionary läuft die Comprehension mit keys(), values() oder items().",
+   "checkliste": [
+    "Ohne Zusatz liefert ein Dictionary die Schlüssel",
+    "values() liefert die Werte",
+    "items() liefert Paare, dafür zwei Namen",
+    "Die Comprehension baut daraus eine Liste",
+    "Verschiedene Werte erst mit set()"
+   ]
+  },
+  {
+   "titel": "Wann eine Comprehension zu viel ist",
+   "python": {
+    "text": "Kurz ist nicht automatisch besser. Eine Comprehension trägt eine Rechnung und eine Bedingung. Mehr passt nicht gut hinein. Bei zwei Bedingungen wird die Zeile unleserlich. Eine Ausgabe gehört überhaupt nicht hinein. Dann ist die lange Form klarer. Eine Comprehension, die man zweimal lesen muss, hat ihren Zweck verfehlt. Ab zwei Bedingungen schreibst du lieber die Schleife.",
+    "code": "zahlen = [12, 7, 30, 3, 48, 23]\n\n# Zwei Bedingungen: die lange Form bleibt lesbar\nauswahl = []\nfor zahl in zahlen:\n    if zahl > 10 and zahl < 40:\n        auswahl.append(zahl)\nprint(auswahl)     # [12, 30, 23]\n\n# Eine Bedingung: die Kurzform ist klar\nprint([zahl for zahl in zahlen if zahl > 20])   # [30, 48, 23]\n\n# Mit Ausgabe: die Schleife ist noetig\nfor zahl in zahlen:\n    if zahl > 20:\n        print(f'gross: {zahl}')"
+   },
+   "merk": "Eine Rechnung und eine Bedingung passen in die Kurzform. Mehr gehört in eine Schleife.",
+   "checkliste": [
+    "Eine Rechnung und eine Bedingung: Kurzform",
+    "Zwei Bedingungen: lange Form",
+    "Ausgabe im Körper: lange Form",
+    "Zweimal lesen müssen heißt: zu kurz gedacht"
+   ]
+  },
+  {
+   "titel": "Menge anlegen: Doppelte fallen weg",
+   "python": {
+    "text": "Eine Menge schreibst du mit geschweiften Klammern. Jeder Wert kommt höchstens einmal vor. Doppelte verschwinden ohne Fehlermeldung. Eine Menge hat keine Reihenfolge. Einen Index gibt es nicht. set() macht aus einer Liste eine Menge. Die Liste bleibt dabei unberührt. Achtung: {} ist ein leeres Dictionary. Die leere Menge heißt set(). Gib eine Menge immer mit sorted() aus.",
+    "code": "lehrgang = {'Meier', 'Schulz', 'Meier', 'Kaya'}\nprint(len(lehrgang))       # 3, das zweite Meier ist weg\nprint(sorted(lehrgang))    # ['Kaya', 'Meier', 'Schulz']\n\nanwesend = ['Meier', 'Schulz', 'Meier', 'Kaya', 'Schulz']\nverschieden = set(anwesend)\nprint(len(anwesend))       # 5 Meldungen\nprint(len(verschieden))    # 3 Personen\nprint(sorted(verschieden)) # ['Kaya', 'Meier', 'Schulz']\n\nprint(type(set()))         # <class 'set'>\nprint(type({}))            # <class 'dict'>"
+   },
+   "merk": "Geschweifte Klammern mit Werten sind eine Menge. Leer sind sie ein Dictionary.",
+   "checkliste": [
+    "Menge steht in geschweiften Klammern",
+    "Jeder Wert höchstens einmal",
+    "Doppelte fallen ohne Meldung weg",
+    "Keine Reihenfolge, kein Index",
+    "set(liste) baut eine Menge, die Liste bleibt",
+    "Leere Menge: set(), nicht {}"
+   ]
+  },
+  {
+   "titel": "Mengen rechnen: Vereinigung, Schnitt und Differenz",
+   "python": {
+    "text": "Drei Zeichen verbinden zwei Mengen. Der senkrechte Strich vereinigt. Das Und-Zeichen bildet den Schnitt. Der Minus-Strich zieht ab. Die Vereinigung nimmt alle Werte aus beiden Mengen. Der Schnitt nimmt nur die gemeinsamen. Die Differenz nimmt die Werte der ersten Menge ohne die zweite. Bei Minus zählt die Reihenfolge. Alle drei liefern eine neue Menge. Die Ausgangsmengen bleiben unverändert.",
+    "code": "sanitaet = {'Meier', 'Schulz', 'Kaya', 'Noll'}\nfunk = {'Kaya', 'Noll', 'Berg'}\n\nprint(sorted(sanitaet | funk))  # ['Berg', 'Kaya', 'Meier', 'Noll', 'Schulz']\nprint(sorted(sanitaet & funk))  # ['Kaya', 'Noll']\nprint(sorted(sanitaet - funk))  # ['Meier', 'Schulz']\nprint(sorted(funk - sanitaet))  # ['Berg']\n\nprint(sorted(sanitaet))         # unveraendert\nprint(sorted(funk))             # unveraendert\n\nsoll = {'lkw', 'jeep', 'bus'}\nist = {'lkw', 'jeep'}\nprint(sorted(soll - ist))       # ['bus'], das fehlt noch\nprint(sorted(ist - soll))       # [], nichts liegt zu viel da"
+   },
+   "merk": "Strich vereinigt, Und schneidet, Minus zieht ab. Bei Minus zählt die Reihenfolge.",
+   "checkliste": [
+    "Senkrechter Strich: alle Werte aus beiden Mengen",
+    "Und-Zeichen: nur die gemeinsamen Werte",
+    "Minus: Werte der ersten Menge ohne die zweite",
+    "soll minus ist heißt: das fehlt noch",
+    "ist minus soll heißt: das liegt zu viel da",
+    "Alle drei liefern eine neue Menge"
+   ]
+  },
+  {
+   "titel": "Menge gegen Liste: Reihenfolge und Prüfen",
+   "python": {
+    "text": "Die Leitfrage lautet: Kommt es auf Reihenfolge und Doppelte an? Wenn ja, nimm eine Liste. Wenn nein, nimm eine Menge. add() fügt einen Wert hinzu. Ein vorhandener Wert wird nicht doppelt aufgenommen. discard() entfernt und schweigt. remove() bricht mit KeyError ab, wenn der Wert fehlt. Ein Durchlauf über die Menge braucht sorted(). Danach hast du wieder eine Liste mit Index.",
+    "code": "lehrgang = set()\nlehrgang.add('Meier')\nlehrgang.add('Schulz')\nlehrgang.add('Meier')\nprint(sorted(lehrgang), len(lehrgang))   # ['Meier', 'Schulz'] 2\n\nlehrgang.discard('Kaya')   # schweigt, Kaya ist nicht da\nlehrgang.discard('Schulz')\nprint(sorted(lehrgang))    # ['Meier']\nprint('Meier' in lehrgang) # True\n\n# lehrgang.remove('Kaya')  -> KeyError, Kaya fehlt\n\nfuhrpark = {'lkw', 'jeep', 'bus'}\n# print(fuhrpark[0])       -> TypeError, not subscriptable\ngeordnet = sorted(fuhrpark)\nprint(type(geordnet))      # <class 'list'>\nprint(geordnet[0])         # bus"
+   },
+   "merk": "Reihenfolge und Doppelte: Liste. Nur welche Werte vorkommen: Menge.",
+   "checkliste": [
+    "add() statt append()",
+    "discard() entfernt und schweigt",
+    "remove() wirft KeyError, wenn der Wert fehlt",
+    "in prüft sehr schnell",
+    "Kein Index, Ausgabe über sorted()",
+    "sorted(menge) liefert eine Liste"
+   ]
+  },
+  {
+   "titel": "Typische Fehler bei Tupel, Comprehension und Menge",
+   "python": {
+    "text": "Diese Fehler kosten die meiste Zeit. Manche melden sich nicht. Sie liefern still ein falsches Ergebnis. Prüfe im Zweifel den Typ mit type(). Lies eine Fehlermeldung von unten nach oben. Die letzte Zeile nennt Fehlerart und Grund.",
+    "code": "tupel = ('lkw',)\ntext = ('lkw')\nprint(len(tupel))   # 1\nprint(len(text))    # 3, das ist kein Tupel\n\n# tupel[0] = 'bus'     -> TypeError\n# tupel.append('bus')  -> AttributeError\n\nmenge = {'lkw', 'jeep'}\n# print(menge[0])      -> TypeError, not subscriptable\nprint(sorted(menge))   # ['jeep', 'lkw']\n\nprint(type({}))        # <class 'dict'>, keine leere Menge\nprint(type(set()))     # <class 'set'>\n\n# [x ** 2 for x in range(3):]  -> SyntaxError, Doppelpunkt\n# [for x in range(3) x ** 2]   -> SyntaxError, falsche Reihenfolge"
+   },
+   "merk": "Prüfe den Typ und lies die Fehlermeldung von unten nach oben.",
+   "checkliste": [
+    "('lkw') ist kein Tupel, erst ('lkw',) ist eines",
+    "Ein Tupel ändern: TypeError",
+    "append() auf einem Tupel: AttributeError",
+    "Doppelpunkt in der Comprehension: SyntaxError",
+    "Reihenfolge vertauscht: SyntaxError",
+    "{} ist ein Dictionary, die leere Menge heißt set()",
+    "menge[0]: TypeError, not subscriptable",
+    "Menge ohne sorted() ausgeben: Reihenfolge wechselt",
+    "remove() statt discard(): KeyError",
+    "Eine Liste in eine Menge stecken: TypeError, unhashable type"
+   ]
+  },
+  {
    "titel": "Pflichtaufgaben",
    "python": {
     "text": "Diese Pflichtaufgaben stammen aus dem Kursnotizbuch und gehören zum Thema dieses Kapitels. Schreibe jede Aufgabe in eine eigene Datei und führe sie aus. Wo eine Lösung vorliegt, kannst du sie nach dem eigenen Versuch aufklappen – erst selbst probieren, dann vergleichen."
@@ -721,6 +909,57 @@
      "tipp": "Die Meldung sagt, dass etwas nicht durchlaufbar ist — und meint damit nicht das Dictionary, sondern das, was ohne Klammern hinter dem Punkt steht. Ein Aufruf braucht Klammern, auch wenn nichts darin steht.",
      "vorgabe": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nfor fahrzeug in bestand.keys:\n    print(fahrzeug)",
      "loesung": "bestand = {'lkw': 3, 'jeep': 7, 'bus': 1}\nfor fahrzeug in bestand.keys():\n    print(fahrzeug)"
+    },
+    {
+     "titel": "Ein Tupel anlegen und lesen",
+     "aufgabe": "Lege zwei zusammengehörige Maße in einem Tupel ab: 200 und 50. Gib danach vier Zeilen aus — das ganze Tupel, den ersten Wert, den letzten Wert und die Anzahl der Werte. Fertig, wenn: vier Zeilen erscheinen: (200, 50), 200, 50 und 2.",
+     "tipp": "Ein Tupel schreibt sich wie eine Liste, nur mit runden statt eckigen Klammern. Beim Lesen verhält es sich genau wie eine Liste: Index ab null, negative Indizes von hinten, len() für die Anzahl."
+    },
+    {
+     "titel": "Ein Tupel in der Schleife",
+     "aufgabe": "Eine Bildschirmeinstellung besteht aus Breite, Höhe und Bildwiederholrate: 1920, 1080 und 60. Lege sie als Tupel ab, gib jeden Wert in einer eigenen Zeile aus, und darunter eine beschriftete Zeile mit kleinstem Wert, größtem Wert und Summe. Fertig, wenn: drei Zahlen untereinander erscheinen und darunter eine Zeile mit 60, 1920 und 3060.",
+     "tipp": "Für die for-Schleife macht es keinen Unterschied, ob sie über eine Liste oder ein Tupel läuft. min(), max() und sum() arbeiten ebenfalls unverändert."
+    },
+    {
+     "titel": "Vorhersage — das Komma macht das Tupel",
+     "aufgabe": "Unten stehen zwei Zuweisungen, die fast gleich aussehen: einmal mit Komma hinter dem Wert, einmal ohne. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für Länge und Typ beider Werte. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile zwei Zeilen erscheinen: einmal Länge 1 mit , einmal Länge 3 mit .",
+     "tipp": "Ohne Komma sind die runden Klammern bloße Rechenklammern und ändern gar nichts. Überleg dir, was len() dann zählt.",
+     "vorgabe": "einzeln = ('lkw',)\nfalsch = ('lkw')\n\nprint(einzeln, len(einzeln), type(einzeln))\nprint(falsch, len(falsch), type(falsch))"
+    },
+    {
+     "titel": "Doppelte wegwerfen",
+     "aufgabe": "Im Wachbuch stehen sechs Dienstgrad-Meldungen, einige mehrfach. Baue aus der Liste eine Menge und gib drei Zeilen aus: die Anzahl der Meldungen, die Anzahl der verschiedenen Dienstgrade und die verschiedenen Dienstgrade alphabetisch sortiert. Fertig, wenn: drei Zeilen erscheinen: 6, 3 und ['Gefreiter', 'Hauptmann', 'Oberleutnant'].",
+     "tipp": "set(liste) baut aus einer Sammlung eine Menge und wirft dabei alle Wiederholungen weg. Für die dritte Zeile legst du sorted() darum — eine Menge hat keine verlässliche Reihenfolge.",
+     "vorgabe": "meldungen = ['Gefreiter', 'Hauptmann', 'Gefreiter', 'Oberleutnant', 'Hauptmann', 'Gefreiter']"
+    },
+    {
+     "titel": "Eine Menge aufbauen und abfragen",
+     "aufgabe": "Lege eine leere Menge werkzeuge an. Füge nacheinander 'Zange', 'Hammer', 'Zange' und 'Schraubendreher' hinzu. Entferne danach 'Säge' — die gar nicht dabei ist, das Programm darf deswegen nicht abstürzen — und anschließend 'Hammer'. Gib zum Schluss drei Zeilen aus: die Menge sortiert, ihre Anzahl und ob 'Zange' noch enthalten ist. Fertig, wenn: drei Zeilen erscheinen: ['Schraubendreher', 'Zange'], 2 und True.",
+     "tipp": "Die leere Menge heißt set() — {} wäre ein leeres Dictionary. Hinzugefügt wird mit add(), entfernt mit discard(): Das schweigt, wenn der Wert gar nicht da ist."
+    },
+    {
+     "titel": "Wachbuch auswerten",
+     "aufgabe": "Im Wachbuch stehen sechs Einträge, manche Soldaten mehrfach. Durchlaufe die Liste mit einer for-Schleife und sammle die Namen dabei in einer Menge, die du vorher leer anlegst. Gib danach zuerst eine Zählzeile aus und darunter jeden Namen in einer eigenen Zeile, alphabetisch sortiert. Fertig, wenn: zuerst die Zeile 6 Einträge, 4 verschiedene Soldaten. erscheint und darunter vier Namen untereinander: Berg, Kaya, Meier, Noll.",
+     "tipp": "Zwei Dinge hintereinander: erst füllen, dann auswerten. Das Füllen ist das bekannte Schleifenmuster aus Thema 3 — nur steht add() statt append() da, und die Menge beginnt mit set() statt []. Für die Zählzeile brauchst du zwei len()-Aufrufe in einem f-String.",
+     "vorgabe": "wachbuch = ['Kaya', 'Meier', 'Noll', 'Kaya', 'Berg', 'Meier']"
+    },
+    {
+     "titel": "Zwei Lehrgänge vergleichen",
+     "aufgabe": "Für den Sanitätslehrgang und den Funklehrgang liegen zwei Namenslisten vor, teils mit denselben Leuten. Mach aus beiden Listen Mengen und gib drei beschriftete Zeilen aus: wer auf beiden Lehrgängen war, wer nur auf dem Sanitätslehrgang war und wer nur auf dem Funklehrgang war. Die Namen stehen jeweils als sortierte Liste hinter der Beschriftung. Fertig, wenn: drei Zeilen erscheinen: Beide Lehrgänge: ['Kaya', 'Noll'], Nur Sanität: ['Meier', 'Schulz'] und Nur Funk: ['Berg'].",
+     "tipp": "Drei Zeichen, drei Fragen: &amp; liefert die Schnittmenge („auf beiden\"), - die Differenz („nur hier, nicht dort\"). Bei - kommt es auf die Reihenfolge an — a - b ist etwas anderes als b - a. Jede Ausgabe wieder durch sorted().",
+     "vorgabe": "sanitaet_liste = ['Meier', 'Kaya', 'Noll', 'Schulz']\nfunk_liste = ['Kaya', 'Berg', 'Noll']"
+    },
+    {
+     "titel": "Doppelmeldungen im Funkverkehr",
+     "aufgabe": "Sechs Funkkennungen gehen nacheinander ein. Durchlaufe sie und entscheide für jede: Ist die Kennung schon bekannt, gib sie mit dem Zusatz Doppelmeldung aus; ist sie neu, nimm sie in die Menge der bekannten Kennungen auf und gib sie mit dem Zusatz neu aus. Zähle am Ende, wie viele verschiedene Kennungen eingegangen sind. Fertig, wenn: sechs Zeilen im Muster A1: neu beziehungsweise A1: Doppelmeldung erscheinen — in dieser Folge: A1: neu, B2: neu, A1: Doppelmeldung, C3: neu, B2: Doppelmeldung, A1: Doppelmeldung — und darunter die Zeile 3 verschiedene Kennungen.",
+     "tipp": "Hier gehören zwei Dinge zusammen: die Menge als Gedächtnis und ein if im Schleifenkörper. Die Prüfung lautet if kennung in bekannt:. Wichtig ist die Reihenfolge im else-Zweig: erst prüfen, dann aufnehmen — wer zuerst aufnimmt, findet jede Kennung sofort als bekannt vor.",
+     "vorgabe": "kennungen = ['A1', 'B2', 'A1', 'C3', 'B2', 'A1']"
+    },
+    {
+     "titel": "Welche Verwendungen sind besetzt?",
+     "aufgabe": "Ein Dictionary ordnet fünf Soldaten je eine Verwendung zu; mehrere Soldaten können dieselbe Verwendung haben. Daneben steht eine Menge der Verwendungen, die auf dem Dienstposten gebraucht werden. Gib drei Zeilen aus: eine Zählzeile, die besetzten Verwendungen und die, für die niemand eingeteilt ist. Fertig, wenn: drei Zeilen erscheinen: 5 Soldaten in 3 Verwendungen., Besetzt: ['Fahrer', 'Funker', 'Sanitäter'] und Nicht besetzt: ['Koch'].",
+     "tipp": "zuordnung.values() liefert alle fünf Verwendungen — mit Wiederholungen. set(...) darum macht daraus die verschiedenen. Für die letzte Zeile ziehst du die besetzten von den gebrauchten ab; achte auf die Richtung. Beachte außerdem: gebraucht ist schon eine Menge, da musst du nichts mehr umwandeln.",
+     "vorgabe": "zuordnung = {'Meier': 'Fahrer', 'Kaya': 'Funker', 'Noll': 'Fahrer', 'Berg': 'Sanitäter', 'Schulz': 'Funker'}\ngebraucht = {'Fahrer', 'Funker', 'Sanitäter', 'Koch'}"
     }
    ]
   },
@@ -789,6 +1028,34 @@
      "tipp": "Vor der Schleife werden drei Merker gebraucht: einer für die Summe, einer für die bisher größte Zahl und einer für den Namen, der dazugehört. Im Rumpf wird die aktuelle Zahl mit dem bisherigen Höchstwert verglichen und bei Bedarf beides gemeinsam aktualisiert.",
      "vorgabe": "stunden = {'hartmann': 38, 'beck': 45, 'kraus': 41, 'wolf': 45}",
      "loesung": "stunden = {'hartmann': 38, 'beck': 45, 'kraus': 41, 'wolf': 45}\ngesamt = 0\nspitze = 0\nspitzenname = ''\nfor person, stundenzahl in stunden.items():\n    gesamt = gesamt + stundenzahl\n    if stundenzahl > spitze:\n        spitze = stundenzahl\n        spitzenname = person\nprint(f\"Gesamt: {gesamt} Stunden\")\nprint(f\"Spitze: {spitzenname.title()} mit {spitze} Stunden\")"
+    },
+    {
+     "titel": "Die erste Comprehension",
+     "aufgabe": "Erzeuge die Quadratzahlen von 1 bis 7 in einer Liste — und zwar in einer einzigen Zeile, ohne leere Liste und ohne append(). Gib danach die Liste und ihre Länge aus. Fertig, wenn: [1, 4, 9, 16, 25, 36, 49] erscheint und darunter die Zahl 7.",
+     "tipp": "Erst das, was herauskommen soll; dann die Schleife. Kein Doppelpunkt, keine Einrückung — alles in eine eckige Klammer. Das Quadrat schreibt sich zahl 2."
+    },
+    {
+     "titel": "Comprehension mit Bedingung",
+     "aufgabe": "Hole aus einer Liste von sechs Zahlen alle Werte über 20 heraus — in einer einzigen Zeile. Gib danach die neue Liste und die unveränderte Ausgangsliste aus. Fertig, wenn: zuerst [30, 48, 23] erscheint und darunter die vollständige Ausgangsliste mit allen sechs Zahlen.",
+     "tipp": "Das if wird hinten angehängt — ebenfalls ohne Doppelpunkt. Ganz vorn steht diesmal nichts Gerechnetes, sondern das Element selbst.",
+     "vorgabe": "zahlen = [12, 7, 30, 3, 48, 23]"
+    },
+    {
+     "titel": "Zwei Fehler in sieben Zeilen",
+     "aufgabe": "Die Vorgabe soll drei Namen groß begonnen in einer Liste sammeln und die zulässigen Dateiendungen um .pdf erweitern. Sie enthält zwei verschiedene Fehler: einen, der das Programm gar nicht erst starten lässt, und einen, der es mitten im Lauf abbricht. Repariere sie nacheinander mit jeweils einem Lauf dazwischen. Fertig, wenn: zwei Zeilen erscheinen: ['Anna', 'Bernd', 'Clara'] und ('.txt', '.csv', '.pdf').",
+     "tipp": "Der erste Fehler steckt in der Reihenfolge innerhalb der eckigen Klammer. Der zweite liegt daran, dass zulaessig keine Liste ist — ein neues Tupel entsteht mit +, und ein einzelnes Element braucht sein Komma.",
+     "vorgabe": "zulaessig = ('.txt', '.csv')\nnamen = ['anna', 'bernd', 'clara']\n\ngross = [for name in namen name.title()]\n\nzulaessig.append('.pdf')\n\nprint(gross)\nprint(zulaessig)"
+    },
+    {
+     "titel": "Zwei Fehler in neun Zeilen",
+     "aufgabe": "Die Vorgabe soll einen Materialvorrat ohne Doppelte führen: 'Decke', 'Helm', noch einmal 'Decke'. Danach soll der Vorrat sortiert erscheinen, darunter das alphabetisch erste Stück und zuletzt die Anzahl. Die Vorgabe enthält zwei verschiedene Fehler, die beide erst beim Lauf auffallen — einer bricht sofort ab, der andere erst nach der ersten Ausgabezeile. Repariere sie nacheinander mit jeweils einem Lauf dazwischen. Die Zeile mit dem ersten Stück darfst du dafür umschreiben; der Vorrat selbst muss eine Menge bleiben. Fertig, wenn: drei Zeilen erscheinen: ['Decke', 'Helm'], Decke und 2.",
+     "tipp": "Der erste Fehler steht in der allerersten Zeile und ist die Falle dieses Themas: Geschweifte Klammern ohne Inhalt sind keine leere Menge. Der zweite Fehler ist ein Zugriff, den es bei Mengen grundsätzlich nicht gibt — sorted() liefert dagegen etwas, auf dem er wieder erlaubt ist.",
+     "vorgabe": "vorrat = {}\n\nvorrat.add('Decke')\nvorrat.add('Helm')\nvorrat.add('Decke')\n\nprint(sorted(vorrat))\nprint(vorrat[0])\nprint(len(vorrat))"
+    },
+    {
+     "titel": "Lagerabgleich als Funktion",
+     "aufgabe": "Schreibe eine Funktion abgleich(soll, ist), die zwei Listen entgegennimmt und drei beschriftete Zeilen ausgibt: was noch fehlt, was zu viel da ist und was übereinstimmt — jeweils als sortierte Liste. Rufe die Funktion danach zweimal auf: zuerst mit der Soll-Liste ['Helm', 'Decke', 'Spaten', 'Kanister'] und der Ist-Liste ['Decke', 'Helm', 'Taschenlampe'], dann gib eine Trennzeile --- aus und rufe sie ein zweites Mal mit ['Karte', 'Kompass'] und ['Kompass', 'Karte'] auf. Fertig, wenn: sieben Zeilen erscheinen: Fehlt noch: ['Kanister', 'Spaten'], Zu viel da: ['Taschenlampe'], Stimmt überein: ['Decke', 'Helm'], dann ---, dann Fehlt noch: [], Zu viel da: [] und Stimmt überein: ['Karte', 'Kompass'].",
+     "tipp": "Die Funktion bekommt Listen herein und braucht Mengen zum Rechnen — wandle beide gleich zu Beginn des Funktionskörpers um und arbeite danach nur noch mit den Mengen. „Fehlt noch\" ist soll_menge - ist_menge, „zu viel da\" dieselbe Rechnung andersherum, „stimmt überein\" die Schnittmenge. Die Funktion gibt selbst aus und braucht kein return."
     }
    ]
   }
