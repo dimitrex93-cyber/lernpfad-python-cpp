@@ -202,51 +202,60 @@
     {
      "titel": "Wenn aus Text keine Zahl wird",
      "aufgabe": "In einer Variablen steht die Angabe \"acht\" statt einer Ziffernfolge. Rechne die Dienstjahre in Monate um, fange den dabei entstehenden Fehler ab und gib stattdessen einen verständlichen Hinweis aus. Nach dem try/except soll das Programm sichtbar weiterlaufen. Fertig, wenn: zwei Zeilen erscheinen, die erste ein Hinweis auf die fehlende Zahl, die zweite die Meldung, dass es weitergeht.",
-     "tipp": "Der Fehlertyp heißt ValueError; er entsteht, sobald int() auf etwas trifft, das keine ganze Zahl ist. Hinter try: steht eingerückt der riskante Teil, hinter except ValueError: die Reaktion."
+     "tipp": "Der Fehlertyp heißt ValueError; er entsteht, sobald int() auf etwas trifft, das keine ganze Zahl ist. Hinter try: steht eingerückt der riskante Teil, hinter except ValueError: die Reaktion.",
+     "loesung": "eingabe = \"acht\"\n\ntry:\n    jahre = int(eingabe)\n    print(\"Das sind\", jahre * 12, \"Monate.\")\nexcept ValueError:\n    print(\"Das war keine Zahl - bitte die Dienstjahre in Ziffern angeben.\")\n\nprint(\"Die Erfassung laeuft weiter.\")"
     },
     {
      "titel": "Die Datei, die noch nicht da ist",
      "aufgabe": "Versuche, eine Datei bewerbung.txt zu lesen, die es im Ordner nicht gibt. Fange den Fehler ab und gib eine verständliche Meldung aus. Danach soll das Programm weiterlaufen. Fertig, wenn: zwei Zeilen erscheinen und kein Traceback.",
-     "tipp": "Der Fehlertyp beim Lesen heißt FileNotFoundError. In den try-Block gehört nur das, was wirklich schiefgehen kann — hier also das Lesen und die Ausgabe des gelesenen Inhalts."
+     "tipp": "Der Fehlertyp beim Lesen heißt FileNotFoundError. In den try-Block gehört nur das, was wirklich schiefgehen kann — hier also das Lesen und die Ausgabe des gelesenen Inhalts.",
+     "loesung": "from pathlib import Path\n\npfad = Path('bewerbung.txt')\n\ntry:\n    inhalt = pfad.read_text(encoding='utf-8')\n    print(inhalt, end=\"\")\nexcept FileNotFoundError:\n    print(\"Die Datei bewerbung.txt gibt es noch nicht.\")\n\nprint(\"Das Programm laeuft weiter.\")"
     },
     {
      "titel": "Durchschnitt ohne Werte",
      "aufgabe": "Eine Messreihe ist leer geblieben — die Liste enthält keinen einzigen Wert. Berechne trotzdem Summe und Anzahl, versuche den Durchschnitt zu bilden und fange den dabei entstehenden Fehler mit einer passenden Meldung ab. Gib danach außerhalb von try/except eine letzte Zeile aus, dass die Auswertung beendet ist. Fertig, wenn: zwei Zeilen erscheinen und das Programm nicht abbricht.",
-     "tipp": "Der Fehlertyp heißt ZeroDivisionError. Er entsteht nicht durch einen Tippfehler, sondern durch die Daten: len() einer leeren Liste ergibt 0, und durch null lässt sich nicht teilen."
+     "tipp": "Der Fehlertyp heißt ZeroDivisionError. Er entsteht nicht durch einen Tippfehler, sondern durch die Daten: len() einer leeren Liste ergibt 0, und durch null lässt sich nicht teilen.",
+     "loesung": "messwerte = []\nsumme = sum(messwerte)\nanzahl = len(messwerte)\n\ntry:\n    durchschnitt = summe / anzahl\n    print(\"Durchschnitt:\", durchschnitt)\nexcept ZeroDivisionError:\n    print(\"Keine Werte erfasst - es gibt keinen Durchschnitt.\")\n\nprint(\"Auswertung beendet.\")"
     },
     {
      "titel": "Unbrauchbares überspringen und mitzählen",
      "aufgabe": "Lege eine Liste mit fünf Rohwerten an, von denen zwei keine Zahlen sind. Zähle die brauchbaren Werte zusammen und zähle zugleich mit, wie viele Einträge übersprungen werden mussten. Gib am Ende beides aus. Fertig, wenn: zwei Zeilen erscheinen: die Summe der echten Zahlen und die Anzahl der übersprungenen Einträge.",
-     "tipp": "Das try/except steht innerhalb der Schleife — dann betrifft ein Fehler nur den einen Durchlauf, und die Schleife macht beim nächsten Eintrag weiter. Statt pass genügt hier ein Zähler, der im except-Block erhöht wird."
+     "tipp": "Das try/except steht innerhalb der Schleife — dann betrifft ein Fehler nur den einen Durchlauf, und die Schleife macht beim nächsten Eintrag weiter. Statt pass genügt hier ein Zähler, der im except-Block erhöht wird.",
+     "loesung": "rohwerte = [\"120\", \"einhundert\", \"95\", \"\", \"80\"]\nsumme = 0\nuebersprungen = 0\n\nfor wert in rohwerte:\n    try:\n        summe += int(wert)\n    except ValueError:\n        uebersprungen += 1\n\nprint(\"Summe:\", summe)\nprint(\"Uebersprungen:\", uebersprungen)"
     },
     {
      "titel": "Bilanz über eine unsaubere Datei",
      "aufgabe": "Die Vorgabe legt dir die Datei verbrauch.txt an: sechs Zeilen, von denen drei keine Zahl enthalten — darunter eine völlig leere. Lies die Datei, versuche jede Zeile in eine Zahl zu verwandeln und fange den ValueError ab. Die unbrauchbaren Zeilen sammelst du in einer Liste, die brauchbaren summierst du im else-Zweig und zählst sie mit. Gib am Ende drei Zeilen aus: die Summe, wie viele von wie vielen Zeilen verwertbar waren, und die verworfenen Zeilen als Liste. Fertig, wenn: drei Zeilen erscheinen: Summe: 130, Verwertbar: 3 von 6 und Verworfen: ['k.A.', '', 'fehlt'].",
      "tipp": "Das try steht in der Schleife, sonst wäre nach der ersten unbrauchbaren Zeile Schluss. In den try-Block gehört nur die Umwandlung; das Summieren und das Mitzählen gehören in den else-Zweig, der nur bei Erfolg läuft. Die leere Zeile ist dabei kein Sonderfall: int(\"\") löst denselben ValueError aus wie int(\"fehlt\").",
-     "vorgabe": "from pathlib import Path\n\npfad = Path('verbrauch.txt')\npfad.write_text(\"42\\nk.A.\\n37\\n\\n51\\nfehlt\\n\", encoding='utf-8')"
+     "vorgabe": "from pathlib import Path\n\npfad = Path('verbrauch.txt')\npfad.write_text(\"42\\nk.A.\\n37\\n\\n51\\nfehlt\\n\", encoding='utf-8')",
+     "loesung": "from pathlib import Path\n\npfad = Path('verbrauch.txt')\npfad.write_text(\"42\\nk.A.\\n37\\n\\n51\\nfehlt\\n\", encoding='utf-8')\n\nzeilen = pfad.read_text(encoding='utf-8').splitlines()\nsumme = 0\ngezaehlt = 0\nverworfen = []\nfor zeile in zeilen:\n    try:\n        wert = int(zeile.strip())\n    except ValueError:\n        verworfen.append(zeile.strip())\n    else:\n        summe += wert\n        gezaehlt += 1\n\nprint(\"Summe:\", summe)\nprint(f\"Verwertbar: {gezaehlt} von {len(zeilen)}\")\nprint(\"Verworfen:\", verworfen)"
     },
     {
      "titel": "Eine Funktion, die immer eine Zahl zurückgibt",
      "aufgabe": "Schreibe eine Funktion zahl_oder_null(text), die int(text) versucht und das Ergebnis zurückgibt — scheitert die Umwandlung, gibt sie stattdessen 0 zurück. Laufe damit in einer Schleife über die Liste rohwerte aus der Vorgabe und sammle die Ergebnisse in einer neuen Liste. Gib diese Liste aus, danach ihre Summe und ihren größten Wert. Fertig, wenn: drei Zeilen erscheinen: [18, 0, 25, 0, 31], Summe: 74 und Groesster: 31.",
      "tipp": "Ein return darf im try-Block ebenso stehen wie im except-Block — die Funktion verlässt in beiden Fällen ihre Arbeit mit einem Wert, nur eben mit einem anderen. Weil sie dadurch immer eine Zahl liefert, braucht der Rest des Programms kein try mehr: sum() und max() arbeiten auf einer Liste, in der keine Zeichenkette mehr steckt.",
-     "vorgabe": "rohwerte = [\"18\", \"k.A.\", \"25\", \"\", \"31\"]"
+     "vorgabe": "rohwerte = [\"18\", \"k.A.\", \"25\", \"\", \"31\"]",
+     "loesung": "def zahl_oder_null(text):\n    try:\n        return int(text)\n    except ValueError:\n        return 0\n\n\nrohwerte = [\"18\", \"k.A.\", \"25\", \"\", \"31\"]\nzahlen = []\nfor wert in rohwerte:\n    zahlen.append(zahl_oder_null(wert))\n\nprint(zahlen)\nprint(\"Summe:\", sum(zahlen))\nprint(\"Groesster:\", max(zahlen))"
     },
     {
      "titel": "Drei Fehler, drei Zweige, eine Funktion",
      "aufgabe": "Lege zuerst eine Datei mit drei Tageskilometerwerten an. Schreibe dann eine Funktion tagesschnitt(dateiname, tage_text), die diese Datei einliest, alle Werte summiert, die Angabe der Tage umwandelt und den Schnitt berechnet. Fange alle drei Fehlertypen des Kurses in eigenen Zweigen ab und gib das Ergebnis im else-Block aus. Rufe die Funktion danach viermal auf, sodass jeder Zweig genau einmal an die Reihe kommt. Fertig, wenn: vier Zeilen erscheinen — eine mit dem Ergebnis und drei verschiedene Fehlermeldungen.",
-     "tipp": "Ein try darf mehrere except-Zweige haben; Python prüft sie von oben nach unten und führt genau einen aus. Die vier Aufrufe unterscheiden sich nur in den Werten, die du übergibst: eine gültige Tageszahl, die Null, ein Wort statt einer Zahl und ein Dateiname, den es nicht gibt."
+     "tipp": "Ein try darf mehrere except-Zweige haben; Python prüft sie von oben nach unten und führt genau einen aus. Die vier Aufrufe unterscheiden sich nur in den Werten, die du übergibst: eine gültige Tageszahl, die Null, ein Wort statt einer Zahl und ein Dateiname, den es nicht gibt.",
+     "loesung": "from pathlib import Path\n\n\ndef tagesschnitt(dateiname, tage_text):\n    try:\n        inhalt = Path(dateiname).read_text(encoding='utf-8')\n        gesamt = 0\n        for zeile in inhalt.splitlines():\n            gesamt += int(zeile.strip())\n        tage = int(tage_text)\n        schnitt = gesamt / tage\n    except FileNotFoundError:\n        print(\"Datei nicht gefunden:\", dateiname)\n    except ValueError:\n        print(\"Hier steht keine Zahl, wo eine stehen muesste.\")\n    except ZeroDivisionError:\n        print(\"Null Tage - dafuer gibt es keinen Schnitt.\")\n    else:\n        print(\"Schnitt pro Tag:\", schnitt)\n\n\nPath('kilometer.txt').write_text(\"120\\n90\\n150\\n\", encoding='utf-8')\n\ntagesschnitt('kilometer.txt', \"3\")\ntagesschnitt('kilometer.txt', \"0\")\ntagesschnitt('kilometer.txt', \"drei\")\ntagesschnitt('fahrtenbuch.txt', \"3\")"
     },
     {
      "titel": "Ein `except`, das zu viel verschluckt",
      "aufgabe": "Die Vorgabe soll drei Zahlen zusammenzählen und meldet am Ende die Summe 0. Sie läuft ohne jede Fehlermeldung durch. Führe sie zuerst unverändert aus, ersetze dann das nackte except: durch den genauen Fehlertyp, führe erneut aus und behebe zuletzt, was dadurch sichtbar wird. Fertig, wenn: eine Zeile erscheint: Summe: 100.",
      "tipp": "Der except-Zweig soll nur für den einen Fehler zuständig sein, den er auch behandeln kann: ValueError bei einer missglückten Umwandlung. Sobald der Typ dasteht, meldet Python beim nächsten Lauf etwas ganz anderes — und diese Meldung nennt sogar den Namen, der gemeint war.",
-     "vorgabe": "werte = [\"30\", \"45\", \"25\"]\nsumme = 0\n\nfor wert in werte:\n    try:\n        summe += int(wrt)\n    except:\n        pass\n\nprint(\"Summe:\", summe)"
+     "vorgabe": "werte = [\"30\", \"45\", \"25\"]\nsumme = 0\n\nfor wert in werte:\n    try:\n        summe += int(wrt)\n    except:\n        pass\n\nprint(\"Summe:\", summe)",
+     "loesung": "werte = [\"30\", \"45\", \"25\"]\nsumme = 0\n\nfor wert in werte:\n    try:\n        summe += int(wert)\n    except ValueError:\n        pass\n\nprint(\"Summe:\", summe)"
     },
     {
      "titel": "Die Meldung, die den Falschen beschuldigt",
      "aufgabe": "Die Vorgabe liest eine einwandfreie Zahl aus einer Datei und vergleicht sie mit einem eingegebenen Istwert. Sie meldet, die Datei enthalte keine Zahl — was nachweislich nicht stimmt. Finde heraus, warum die Meldung falsch ist, und baue das Programm so um, dass im try-Block nur noch die wirklich riskante Zeile steht und der Erfolgsfall im else-Block landet. Fertig, wenn: eine Zeile erscheint, die den tatsächlichen Verursacher nennt und seinen Wert mit ausgibt.",
      "tipp": "Im try-Block stehen zwei Umwandlungen, und beide können denselben Fehlertyp auslösen. Der except-Zweig kann deshalb gar nicht wissen, welche der beiden gescheitert ist — er rät. Nimm heraus, was nicht scheitern kann, und schreibe die Meldung so, dass sie den übergebenen Wert mit ausgibt.",
-     "vorgabe": "from pathlib import Path\n\npfad = Path('sollstaerke.txt')\npfad.write_text(\"48\\n\", encoding='utf-8')\n\neingabe = \"sechsundvierzig\"\n\ntry:\n    soll = int(pfad.read_text(encoding='utf-8').strip())\n    ist = int(eingabe)\n    print(\"Fehlend:\", soll - ist)\nexcept ValueError:\n    print(\"Die Datei enthaelt keine Zahl.\")"
+     "vorgabe": "from pathlib import Path\n\npfad = Path('sollstaerke.txt')\npfad.write_text(\"48\\n\", encoding='utf-8')\n\neingabe = \"sechsundvierzig\"\n\ntry:\n    soll = int(pfad.read_text(encoding='utf-8').strip())\n    ist = int(eingabe)\n    print(\"Fehlend:\", soll - ist)\nexcept ValueError:\n    print(\"Die Datei enthaelt keine Zahl.\")",
+     "loesung": "from pathlib import Path\n\npfad = Path('sollstaerke.txt')\npfad.write_text(\"48\\n\", encoding='utf-8')\n\neingabe = \"sechsundvierzig\"\nsoll = int(pfad.read_text(encoding='utf-8').strip())\n\ntry:\n    ist = int(eingabe)\nexcept ValueError:\n    print(\"Die Eingabe ist keine Zahl:\", eingabe)\nelse:\n    print(\"Fehlend:\", soll - ist)"
     }
    ]
   },
@@ -259,7 +268,8 @@
     {
      "titel": "Eine Auswertung, die nichts umwirft",
      "aufgabe": "Schreibe eine Funktion auswerten(dateiname), die eine Stundenliste einliest und Summe, Schnitt und die Zahl der übersprungenen Zeilen ausgibt. Alle drei Fehlerlagen sollen sauber behandelt werden: fehlende Datei, unbrauchbare Zeile, keine einzige verwertbare Zeile. Lege danach zwei Dateien an — eine mit gemischtem Inhalt, eine ohne jede Zahl — und rufe die Funktion dreimal auf, zuletzt mit einem Dateinamen, den es nicht gibt. Fertig, wenn: drei Zeilen erscheinen, für jeden der drei Fälle eine, und das Programm bis zum Ende durchläuft.",
-     "tipp": "Hier gehören drei kleine try-Blöcke an verschiedene Stellen statt eines großen: einer um das Lesen, einer in der Schleife um die Umwandlung, einer um die Division. Fehlt die Datei, lohnt sich die weitere Arbeit nicht — dann beendet ein return die Funktion sofort. In der Schleife kannst du den else-Block nutzen, um nur die gelungenen Umwandlungen zu zählen."
+     "tipp": "Hier gehören drei kleine try-Blöcke an verschiedene Stellen statt eines großen: einer um das Lesen, einer in der Schleife um die Umwandlung, einer um die Division. Fehlt die Datei, lohnt sich die weitere Arbeit nicht — dann beendet ein return die Funktion sofort. In der Schleife kannst du den else-Block nutzen, um nur die gelungenen Umwandlungen zu zählen.",
+     "loesung": "from pathlib import Path\n\n\ndef auswerten(dateiname):\n    try:\n        inhalt = Path(dateiname).read_text(encoding='utf-8')\n    except FileNotFoundError:\n        print(dateiname, \"- Datei nicht gefunden, nichts auszuwerten.\")\n        return\n\n    summe = 0\n    gezaehlt = 0\n    uebersprungen = 0\n    for zeile in inhalt.splitlines():\n        try:\n            summe += int(zeile.strip())\n        except ValueError:\n            uebersprungen += 1\n        else:\n            gezaehlt += 1\n\n    try:\n        schnitt = summe / gezaehlt\n    except ZeroDivisionError:\n        print(dateiname, \"- keine verwertbare Zeile dabei.\")\n    else:\n        print(dateiname, \"- Summe:\", summe, \"Schnitt:\", schnitt, \"Uebersprungen:\", uebersprungen)\n\n\nPath('stunden.txt').write_text(\"8\\n7\\nkrank\\n9\\n\", encoding='utf-8')\nPath('ausfall.txt').write_text(\"krank\\nurlaub\\n\", encoding='utf-8')\n\nauswerten('stunden.txt')\nauswerten('ausfall.txt')\nauswerten('lehrgang.txt')"
     }
    ]
   }

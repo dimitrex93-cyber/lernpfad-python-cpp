@@ -94,7 +94,7 @@
   {
    "titel": "Entfernen: del, pop() und remove()",
    "python": {
-    "text": "Zum Entfernen gibt es drei Befehle. del arbeitet über die Position. del ist ein Schlüsselwort, es steht vor dem Ausdruck und hat keine Klammern. Der Wert ist danach weg. pop() entfernt das letzte Element und gibt es zurück. Du kannst es in einer Variablen auffangen. pop(0) nimmt das erste Element. remove() sucht über den Wert. Die Position musst du nicht kennen. remove() trifft nur das erste Vorkommen. Steht der Wert zweimal in der Liste, bleibt der zweite stehen. Findet remove() den Wert nicht, bricht das Programm mit ValueError ab. pop() auf einer leeren Liste endet mit IndexError: pop from empty list. Die Entscheidung läuft über zwei Fragen: Kenne ich Position oder Wert? Brauche ich das Entfernte noch?",
+    "text": "Zum Entfernen gibt es drei Befehle. del arbeitet über die Position. del ist ein Schlüsselwort, es steht vor dem Ausdruck und hat keine Klammern. Der Wert ist danach weg. pop() entfernt das letzte Element und gibt es zurück. Du kannst es in einer Variablen auffangen. pop(0) nimmt das erste Element. remove() sucht über den Wert. Die Position musst du nicht kennen. remove() trifft nur das erste Vorkommen. Steht der Wert zweimal in der Liste, bleibt der zweite stehen. Findet remove() den Wert nicht, bricht das Programm mit ValueError ab. pop() auf einer leeren Liste endet mit IndexError: pop from empty list. Die Entscheidung läuft über zwei Fragen: Kenne ich Position oder Wert? Brauche ich das Entfernte noch? Wenn du die Liste behalten, aber alle Einträge loswerden willst, nimmst du clear(). Danach ist die Liste leer, existiert aber weiter.",
     "code": "namen = ['mueller', 'schmidt', 'weber']\n\ndel namen[0]\nprint(namen)      # ['schmidt', 'weber']\n\nletzter = namen.pop()\nprint(letzter)    # weber\nprint(namen)      # ['schmidt']\n\nnamen.remove('schmidt')\nprint(namen)      # []\nprint(len(namen)) # 0\n\n# leere = []\n# leere.pop()    -> IndexError: pop from empty list\n# namen.remove('schulz')  -> ValueError: x not in list"
    },
    "vergleich": "Pythons pop() gibt das Element zurück, C++ pop_back() nicht. del und erase arbeiten beide über die Position.",
@@ -105,7 +105,8 @@
     "Bestimmte Position, Wert wird gebraucht: liste.pop(i)",
     "Nur der Wert bekannt: liste.remove(wert), trifft das erste Vorkommen",
     "Wert nicht in der Liste: remove() bricht mit ValueError ab",
-    "Liste ist leer: pop() bricht mit IndexError ab"
+    "Liste ist leer: pop() bricht mit IndexError ab",
+    "clear() – macht die Liste leer und behält sie selbst"
    ]
   },
   {
@@ -234,7 +235,7 @@
   {
    "titel": "Slicing erzeugt eine Kopie",
    "python": {
-    "text": "Jetzt die wichtigste Anwendung des Slicing. Ein Slice über die ganze Liste erzeugt eine Kopie. Die Schreibweise ist liste[:]. Beide Zahlen fehlen, also nimmt Python Anfang und Ende. Das Ergebnis ist eine zweite, eigene Liste. Sie hat dieselben Werte. Aber sie ist ein eigener Behälter. Änderst du die Kopie, bleibt das Original unberührt. Im Beispiel hängt die Kopie bus an. Das Original hat weiter drei Einträge. Eine Kopie entsteht auch mit list(liste). Ohne die eckigen Klammern gibt es keine Kopie. Die Kopie kostet Speicher. Bei einer kurzen Liste merkst du das nicht.",
+    "text": "Jetzt die wichtigste Anwendung des Slicing. Ein Slice über die ganze Liste erzeugt eine Kopie. Die Schreibweise ist liste[:]. Beide Zahlen fehlen, also nimmt Python Anfang und Ende. Das Ergebnis ist eine zweite, eigene Liste. Sie hat dieselben Werte. Aber sie ist ein eigener Behälter. Änderst du die Kopie, bleibt das Original unberührt. Im Beispiel hängt die Kopie bus an. Das Original hat weiter drei Einträge. Eine Kopie entsteht auch mit list(liste). Ohne die eckigen Klammern gibt es keine Kopie. Die Kopie kostet Speicher. Bei einer kurzen Liste merkst du das nicht. Neben dem Ausschnitt gibt es copy(): kopie = liste.copy() erzeugt ebenfalls eine flache Kopie.",
     "code": "meine = ['lkw', 'jeep', 'transporter']\nkopie = meine[:]\n\nkopie.append('bus')\nprint(meine)                    # ['lkw', 'jeep', 'transporter']\nprint(kopie)                    # ['lkw', 'jeep', 'transporter', 'bus']\nprint(len(meine), len(kopie))   # 3 4\n\nzweite = list(meine)\nzweite.append('motorrad')\nprint(meine)                    # weiter drei Einträge\nprint(zweite)                   # vier Einträge"
    },
    "vergleich": "In C++ kopiert vector b = a den ganzen Inhalt. In Python tut das Gleichheitszeichen das nicht. Dort brauchst du liste[:] oder list(liste).",
@@ -250,7 +251,7 @@
   {
    "titel": "Kopie gegen Referenz: b = a",
    "python": {
-    "text": "Was passiert bei b = a? Die meisten erwarten zwei Listen. Das ist falsch. Die Zuweisung legt keinen neuen Behälter an. Sie gibt der Liste nur einen zweiten Namen. Danach zeigen beide Namen auf dieselbe Liste. Jede Änderung ist unter beiden Namen sichtbar. Im Beispiel hängt meine bus an. deine hängt motorrad an. Beide Ausgaben sind trotzdem gleich. Es gab nie zwei Listen, nur eine mit zwei Schildern. Dieser Fehler meldet sich nie. Das Programm läuft, und die Ausgabe sieht plausibel aus. Gefunden wird so etwas oft erst Tage später. Dann passen Zahlen nicht mehr zusammen.",
+    "text": "Was passiert bei b = a? Die meisten erwarten zwei Listen. Das ist falsch. Die Zuweisung legt keinen neuen Behälter an. Sie gibt der Liste nur einen zweiten Namen. Danach zeigen beide Namen auf dieselbe Liste. Jede Änderung ist unter beiden Namen sichtbar. Im Beispiel hängt meine bus an. deine hängt motorrad an. Beide Ausgaben sind trotzdem gleich. Es gab nie zwei Listen, nur eine mit zwei Schildern. Dieser Fehler meldet sich nie. Das Programm läuft, und die Ausgabe sieht plausibel aus. Gefunden wird so etwas oft erst Tage später. Dann passen Zahlen nicht mehr zusammen. Neben dem Ausschnitt gibt es copy(): kopie = liste.copy() erzeugt ebenfalls eine flache Kopie.",
     "code": "meine = ['lkw', 'jeep', 'transporter']\ndeine = meine\n\nmeine.append('bus')\ndeine.append('motorrad')\n\nprint(meine)   # ['lkw', 'jeep', 'transporter', 'bus', 'motorrad']\nprint(deine)   # genau dasselbe\n\nzweiter_name = meine\nzweiter_name.append('anhaenger')\nprint(meine)   # der Anhänger steht auch hier"
    },
    "vergleich": "In C++ legt eine Zuweisung eine Kopie an. Wer dieselbe Liste will, schreibt ein & davor. In Python ist die Zuweisung immer die Referenz.",
@@ -913,53 +914,62 @@
     {
      "titel": "Ein Tupel anlegen und lesen",
      "aufgabe": "Lege zwei zusammengehörige Maße in einem Tupel ab: 200 und 50. Gib danach vier Zeilen aus — das ganze Tupel, den ersten Wert, den letzten Wert und die Anzahl der Werte. Fertig, wenn: vier Zeilen erscheinen: (200, 50), 200, 50 und 2.",
-     "tipp": "Ein Tupel schreibt sich wie eine Liste, nur mit runden statt eckigen Klammern. Beim Lesen verhält es sich genau wie eine Liste: Index ab null, negative Indizes von hinten, len() für die Anzahl."
+     "tipp": "Ein Tupel schreibt sich wie eine Liste, nur mit runden statt eckigen Klammern. Beim Lesen verhält es sich genau wie eine Liste: Index ab null, negative Indizes von hinten, len() für die Anzahl.",
+     "loesung": "abmessungen = (200, 50)\n\nprint(abmessungen)\nprint(abmessungen[0])\nprint(abmessungen[-1])\nprint(len(abmessungen))"
     },
     {
      "titel": "Ein Tupel in der Schleife",
      "aufgabe": "Eine Bildschirmeinstellung besteht aus Breite, Höhe und Bildwiederholrate: 1920, 1080 und 60. Lege sie als Tupel ab, gib jeden Wert in einer eigenen Zeile aus, und darunter eine beschriftete Zeile mit kleinstem Wert, größtem Wert und Summe. Fertig, wenn: drei Zahlen untereinander erscheinen und darunter eine Zeile mit 60, 1920 und 3060.",
-     "tipp": "Für die for-Schleife macht es keinen Unterschied, ob sie über eine Liste oder ein Tupel läuft. min(), max() und sum() arbeiten ebenfalls unverändert."
+     "tipp": "Für die for-Schleife macht es keinen Unterschied, ob sie über eine Liste oder ein Tupel läuft. min(), max() und sum() arbeiten ebenfalls unverändert.",
+     "loesung": "aufloesung = (1920, 1080, 60)\n\nfor wert in aufloesung:\n    print(wert)\n\nprint(f\"Kleinster: {min(aufloesung)}, Größter: {max(aufloesung)}, Summe: {sum(aufloesung)}\")"
     },
     {
      "titel": "Vorhersage — das Komma macht das Tupel",
      "aufgabe": "Unten stehen zwei Zuweisungen, die fast gleich aussehen: einmal mit Komma hinter dem Wert, einmal ohne. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage für Länge und Typ beider Werte. Erst danach übernimmst du die Zeilen aus der Vorgabe und führst aus. Fertig, wenn: nach deiner Vorhersagezeile zwei Zeilen erscheinen: einmal Länge 1 mit , einmal Länge 3 mit .",
      "tipp": "Ohne Komma sind die runden Klammern bloße Rechenklammern und ändern gar nichts. Überleg dir, was len() dann zählt.",
-     "vorgabe": "einzeln = ('lkw',)\nfalsch = ('lkw')\n\nprint(einzeln, len(einzeln), type(einzeln))\nprint(falsch, len(falsch), type(falsch))"
+     "vorgabe": "einzeln = ('lkw',)\nfalsch = ('lkw')\n\nprint(einzeln, len(einzeln), type(einzeln))\nprint(falsch, len(falsch), type(falsch))",
+     "loesung": "print(\"Erwartet: mit Komma ein Tupel der Länge 1, ohne Komma ein Text der Länge 3\")\n\neinzeln = ('lkw',)\nfalsch = ('lkw')\n\nprint(einzeln, len(einzeln), type(einzeln))\nprint(falsch, len(falsch), type(falsch))"
     },
     {
      "titel": "Doppelte wegwerfen",
      "aufgabe": "Im Wachbuch stehen sechs Dienstgrad-Meldungen, einige mehrfach. Baue aus der Liste eine Menge und gib drei Zeilen aus: die Anzahl der Meldungen, die Anzahl der verschiedenen Dienstgrade und die verschiedenen Dienstgrade alphabetisch sortiert. Fertig, wenn: drei Zeilen erscheinen: 6, 3 und ['Gefreiter', 'Hauptmann', 'Oberleutnant'].",
      "tipp": "set(liste) baut aus einer Sammlung eine Menge und wirft dabei alle Wiederholungen weg. Für die dritte Zeile legst du sorted() darum — eine Menge hat keine verlässliche Reihenfolge.",
-     "vorgabe": "meldungen = ['Gefreiter', 'Hauptmann', 'Gefreiter', 'Oberleutnant', 'Hauptmann', 'Gefreiter']"
+     "vorgabe": "meldungen = ['Gefreiter', 'Hauptmann', 'Gefreiter', 'Oberleutnant', 'Hauptmann', 'Gefreiter']",
+     "loesung": "meldungen = ['Gefreiter', 'Hauptmann', 'Gefreiter', 'Oberleutnant', 'Hauptmann', 'Gefreiter']\n\nverschieden = set(meldungen)\n\nprint(len(meldungen))\nprint(len(verschieden))\nprint(sorted(verschieden))"
     },
     {
      "titel": "Eine Menge aufbauen und abfragen",
      "aufgabe": "Lege eine leere Menge werkzeuge an. Füge nacheinander 'Zange', 'Hammer', 'Zange' und 'Schraubendreher' hinzu. Entferne danach 'Säge' — die gar nicht dabei ist, das Programm darf deswegen nicht abstürzen — und anschließend 'Hammer'. Gib zum Schluss drei Zeilen aus: die Menge sortiert, ihre Anzahl und ob 'Zange' noch enthalten ist. Fertig, wenn: drei Zeilen erscheinen: ['Schraubendreher', 'Zange'], 2 und True.",
-     "tipp": "Die leere Menge heißt set() — {} wäre ein leeres Dictionary. Hinzugefügt wird mit add(), entfernt mit discard(): Das schweigt, wenn der Wert gar nicht da ist."
+     "tipp": "Die leere Menge heißt set() — {} wäre ein leeres Dictionary. Hinzugefügt wird mit add(), entfernt mit discard(): Das schweigt, wenn der Wert gar nicht da ist.",
+     "loesung": "werkzeuge = set()\n\nwerkzeuge.add('Zange')\nwerkzeuge.add('Hammer')\nwerkzeuge.add('Zange')\nwerkzeuge.add('Schraubendreher')\n\nwerkzeuge.discard('Säge')\nwerkzeuge.discard('Hammer')\n\nprint(sorted(werkzeuge))\nprint(len(werkzeuge))\nprint('Zange' in werkzeuge)"
     },
     {
      "titel": "Wachbuch auswerten",
      "aufgabe": "Im Wachbuch stehen sechs Einträge, manche Soldaten mehrfach. Durchlaufe die Liste mit einer for-Schleife und sammle die Namen dabei in einer Menge, die du vorher leer anlegst. Gib danach zuerst eine Zählzeile aus und darunter jeden Namen in einer eigenen Zeile, alphabetisch sortiert. Fertig, wenn: zuerst die Zeile 6 Einträge, 4 verschiedene Soldaten. erscheint und darunter vier Namen untereinander: Berg, Kaya, Meier, Noll.",
      "tipp": "Zwei Dinge hintereinander: erst füllen, dann auswerten. Das Füllen ist das bekannte Schleifenmuster aus Thema 3 — nur steht add() statt append() da, und die Menge beginnt mit set() statt []. Für die Zählzeile brauchst du zwei len()-Aufrufe in einem f-String.",
-     "vorgabe": "wachbuch = ['Kaya', 'Meier', 'Noll', 'Kaya', 'Berg', 'Meier']"
+     "vorgabe": "wachbuch = ['Kaya', 'Meier', 'Noll', 'Kaya', 'Berg', 'Meier']",
+     "loesung": "wachbuch = ['Kaya', 'Meier', 'Noll', 'Kaya', 'Berg', 'Meier']\n\nsoldaten = set()\nfor name in wachbuch:\n    soldaten.add(name)\n\nprint(f\"{len(wachbuch)} Einträge, {len(soldaten)} verschiedene Soldaten.\")\n\nfor name in sorted(soldaten):\n    print(name)"
     },
     {
      "titel": "Zwei Lehrgänge vergleichen",
      "aufgabe": "Für den Sanitätslehrgang und den Funklehrgang liegen zwei Namenslisten vor, teils mit denselben Leuten. Mach aus beiden Listen Mengen und gib drei beschriftete Zeilen aus: wer auf beiden Lehrgängen war, wer nur auf dem Sanitätslehrgang war und wer nur auf dem Funklehrgang war. Die Namen stehen jeweils als sortierte Liste hinter der Beschriftung. Fertig, wenn: drei Zeilen erscheinen: Beide Lehrgänge: ['Kaya', 'Noll'], Nur Sanität: ['Meier', 'Schulz'] und Nur Funk: ['Berg'].",
      "tipp": "Drei Zeichen, drei Fragen: &amp; liefert die Schnittmenge („auf beiden\"), - die Differenz („nur hier, nicht dort\"). Bei - kommt es auf die Reihenfolge an — a - b ist etwas anderes als b - a. Jede Ausgabe wieder durch sorted().",
-     "vorgabe": "sanitaet_liste = ['Meier', 'Kaya', 'Noll', 'Schulz']\nfunk_liste = ['Kaya', 'Berg', 'Noll']"
+     "vorgabe": "sanitaet_liste = ['Meier', 'Kaya', 'Noll', 'Schulz']\nfunk_liste = ['Kaya', 'Berg', 'Noll']",
+     "loesung": "sanitaet = set(['Meier', 'Kaya', 'Noll', 'Schulz'])\nfunk = set(['Kaya', 'Berg', 'Noll'])\n\nprint(f\"Beide Lehrgänge: {sorted(sanitaet & funk)}\")\nprint(f\"Nur Sanität: {sorted(sanitaet - funk)}\")\nprint(f\"Nur Funk: {sorted(funk - sanitaet)}\")"
     },
     {
      "titel": "Doppelmeldungen im Funkverkehr",
      "aufgabe": "Sechs Funkkennungen gehen nacheinander ein. Durchlaufe sie und entscheide für jede: Ist die Kennung schon bekannt, gib sie mit dem Zusatz Doppelmeldung aus; ist sie neu, nimm sie in die Menge der bekannten Kennungen auf und gib sie mit dem Zusatz neu aus. Zähle am Ende, wie viele verschiedene Kennungen eingegangen sind. Fertig, wenn: sechs Zeilen im Muster A1: neu beziehungsweise A1: Doppelmeldung erscheinen — in dieser Folge: A1: neu, B2: neu, A1: Doppelmeldung, C3: neu, B2: Doppelmeldung, A1: Doppelmeldung — und darunter die Zeile 3 verschiedene Kennungen.",
      "tipp": "Hier gehören zwei Dinge zusammen: die Menge als Gedächtnis und ein if im Schleifenkörper. Die Prüfung lautet if kennung in bekannt:. Wichtig ist die Reihenfolge im else-Zweig: erst prüfen, dann aufnehmen — wer zuerst aufnimmt, findet jede Kennung sofort als bekannt vor.",
-     "vorgabe": "kennungen = ['A1', 'B2', 'A1', 'C3', 'B2', 'A1']"
+     "vorgabe": "kennungen = ['A1', 'B2', 'A1', 'C3', 'B2', 'A1']",
+     "loesung": "kennungen = ['A1', 'B2', 'A1', 'C3', 'B2', 'A1']\n\nbekannt = set()\nfor kennung in kennungen:\n    if kennung in bekannt:\n        print(f\"{kennung}: Doppelmeldung\")\n    else:\n        bekannt.add(kennung)\n        print(f\"{kennung}: neu\")\n\nprint(f\"{len(bekannt)} verschiedene Kennungen.\")"
     },
     {
      "titel": "Welche Verwendungen sind besetzt?",
      "aufgabe": "Ein Dictionary ordnet fünf Soldaten je eine Verwendung zu; mehrere Soldaten können dieselbe Verwendung haben. Daneben steht eine Menge der Verwendungen, die auf dem Dienstposten gebraucht werden. Gib drei Zeilen aus: eine Zählzeile, die besetzten Verwendungen und die, für die niemand eingeteilt ist. Fertig, wenn: drei Zeilen erscheinen: 5 Soldaten in 3 Verwendungen., Besetzt: ['Fahrer', 'Funker', 'Sanitäter'] und Nicht besetzt: ['Koch'].",
      "tipp": "zuordnung.values() liefert alle fünf Verwendungen — mit Wiederholungen. set(...) darum macht daraus die verschiedenen. Für die letzte Zeile ziehst du die besetzten von den gebrauchten ab; achte auf die Richtung. Beachte außerdem: gebraucht ist schon eine Menge, da musst du nichts mehr umwandeln.",
-     "vorgabe": "zuordnung = {'Meier': 'Fahrer', 'Kaya': 'Funker', 'Noll': 'Fahrer', 'Berg': 'Sanitäter', 'Schulz': 'Funker'}\ngebraucht = {'Fahrer', 'Funker', 'Sanitäter', 'Koch'}"
+     "vorgabe": "zuordnung = {'Meier': 'Fahrer', 'Kaya': 'Funker', 'Noll': 'Fahrer', 'Berg': 'Sanitäter', 'Schulz': 'Funker'}\ngebraucht = {'Fahrer', 'Funker', 'Sanitäter', 'Koch'}",
+     "loesung": "zuordnung = {'Meier': 'Fahrer', 'Kaya': 'Funker', 'Noll': 'Fahrer', 'Berg': 'Sanitäter', 'Schulz': 'Funker'}\ngebraucht = {'Fahrer', 'Funker', 'Sanitäter', 'Koch'}\n\nbesetzt = set(zuordnung.values())\n\nprint(f\"{len(zuordnung)} Soldaten in {len(besetzt)} Verwendungen.\")\nprint(f\"Besetzt: {sorted(besetzt)}\")\nprint(f\"Nicht besetzt: {sorted(gebraucht - besetzt)}\")"
     }
    ]
   },
@@ -1032,30 +1042,35 @@
     {
      "titel": "Die erste Comprehension",
      "aufgabe": "Erzeuge die Quadratzahlen von 1 bis 7 in einer Liste — und zwar in einer einzigen Zeile, ohne leere Liste und ohne append(). Gib danach die Liste und ihre Länge aus. Fertig, wenn: [1, 4, 9, 16, 25, 36, 49] erscheint und darunter die Zahl 7.",
-     "tipp": "Erst das, was herauskommen soll; dann die Schleife. Kein Doppelpunkt, keine Einrückung — alles in eine eckige Klammer. Das Quadrat schreibt sich zahl 2."
+     "tipp": "Erst das, was herauskommen soll; dann die Schleife. Kein Doppelpunkt, keine Einrückung — alles in eine eckige Klammer. Das Quadrat schreibt sich zahl 2.",
+     "loesung": "quadrate = [zahl ** 2 for zahl in range(1, 8)]\n\nprint(quadrate)\nprint(len(quadrate))"
     },
     {
      "titel": "Comprehension mit Bedingung",
      "aufgabe": "Hole aus einer Liste von sechs Zahlen alle Werte über 20 heraus — in einer einzigen Zeile. Gib danach die neue Liste und die unveränderte Ausgangsliste aus. Fertig, wenn: zuerst [30, 48, 23] erscheint und darunter die vollständige Ausgangsliste mit allen sechs Zahlen.",
      "tipp": "Das if wird hinten angehängt — ebenfalls ohne Doppelpunkt. Ganz vorn steht diesmal nichts Gerechnetes, sondern das Element selbst.",
-     "vorgabe": "zahlen = [12, 7, 30, 3, 48, 23]"
+     "vorgabe": "zahlen = [12, 7, 30, 3, 48, 23]",
+     "loesung": "zahlen = [12, 7, 30, 3, 48, 23]\n\ngrosse = [zahl for zahl in zahlen if zahl > 20]\n\nprint(grosse)\nprint(zahlen)"
     },
     {
      "titel": "Zwei Fehler in sieben Zeilen",
      "aufgabe": "Die Vorgabe soll drei Namen groß begonnen in einer Liste sammeln und die zulässigen Dateiendungen um .pdf erweitern. Sie enthält zwei verschiedene Fehler: einen, der das Programm gar nicht erst starten lässt, und einen, der es mitten im Lauf abbricht. Repariere sie nacheinander mit jeweils einem Lauf dazwischen. Fertig, wenn: zwei Zeilen erscheinen: ['Anna', 'Bernd', 'Clara'] und ('.txt', '.csv', '.pdf').",
      "tipp": "Der erste Fehler steckt in der Reihenfolge innerhalb der eckigen Klammer. Der zweite liegt daran, dass zulaessig keine Liste ist — ein neues Tupel entsteht mit +, und ein einzelnes Element braucht sein Komma.",
-     "vorgabe": "zulaessig = ('.txt', '.csv')\nnamen = ['anna', 'bernd', 'clara']\n\ngross = [for name in namen name.title()]\n\nzulaessig.append('.pdf')\n\nprint(gross)\nprint(zulaessig)"
+     "vorgabe": "zulaessig = ('.txt', '.csv')\nnamen = ['anna', 'bernd', 'clara']\n\ngross = [for name in namen name.title()]\n\nzulaessig.append('.pdf')\n\nprint(gross)\nprint(zulaessig)",
+     "loesung": "zulaessig = ('.txt', '.csv')\nnamen = ['anna', 'bernd', 'clara']\n\ngross = [name.title() for name in namen]\n\nzulaessig = zulaessig + ('.pdf',)\n\nprint(gross)\nprint(zulaessig)"
     },
     {
      "titel": "Zwei Fehler in neun Zeilen",
      "aufgabe": "Die Vorgabe soll einen Materialvorrat ohne Doppelte führen: 'Decke', 'Helm', noch einmal 'Decke'. Danach soll der Vorrat sortiert erscheinen, darunter das alphabetisch erste Stück und zuletzt die Anzahl. Die Vorgabe enthält zwei verschiedene Fehler, die beide erst beim Lauf auffallen — einer bricht sofort ab, der andere erst nach der ersten Ausgabezeile. Repariere sie nacheinander mit jeweils einem Lauf dazwischen. Die Zeile mit dem ersten Stück darfst du dafür umschreiben; der Vorrat selbst muss eine Menge bleiben. Fertig, wenn: drei Zeilen erscheinen: ['Decke', 'Helm'], Decke und 2.",
      "tipp": "Der erste Fehler steht in der allerersten Zeile und ist die Falle dieses Themas: Geschweifte Klammern ohne Inhalt sind keine leere Menge. Der zweite Fehler ist ein Zugriff, den es bei Mengen grundsätzlich nicht gibt — sorted() liefert dagegen etwas, auf dem er wieder erlaubt ist.",
-     "vorgabe": "vorrat = {}\n\nvorrat.add('Decke')\nvorrat.add('Helm')\nvorrat.add('Decke')\n\nprint(sorted(vorrat))\nprint(vorrat[0])\nprint(len(vorrat))"
+     "vorgabe": "vorrat = {}\n\nvorrat.add('Decke')\nvorrat.add('Helm')\nvorrat.add('Decke')\n\nprint(sorted(vorrat))\nprint(vorrat[0])\nprint(len(vorrat))",
+     "loesung": "vorrat = set()\n\nvorrat.add('Decke')\nvorrat.add('Helm')\nvorrat.add('Decke')\n\nprint(sorted(vorrat))\nprint(sorted(vorrat)[0])\nprint(len(vorrat))"
     },
     {
      "titel": "Lagerabgleich als Funktion",
      "aufgabe": "Schreibe eine Funktion abgleich(soll, ist), die zwei Listen entgegennimmt und drei beschriftete Zeilen ausgibt: was noch fehlt, was zu viel da ist und was übereinstimmt — jeweils als sortierte Liste. Rufe die Funktion danach zweimal auf: zuerst mit der Soll-Liste ['Helm', 'Decke', 'Spaten', 'Kanister'] und der Ist-Liste ['Decke', 'Helm', 'Taschenlampe'], dann gib eine Trennzeile --- aus und rufe sie ein zweites Mal mit ['Karte', 'Kompass'] und ['Kompass', 'Karte'] auf. Fertig, wenn: sieben Zeilen erscheinen: Fehlt noch: ['Kanister', 'Spaten'], Zu viel da: ['Taschenlampe'], Stimmt überein: ['Decke', 'Helm'], dann ---, dann Fehlt noch: [], Zu viel da: [] und Stimmt überein: ['Karte', 'Kompass'].",
-     "tipp": "Die Funktion bekommt Listen herein und braucht Mengen zum Rechnen — wandle beide gleich zu Beginn des Funktionskörpers um und arbeite danach nur noch mit den Mengen. „Fehlt noch\" ist soll_menge - ist_menge, „zu viel da\" dieselbe Rechnung andersherum, „stimmt überein\" die Schnittmenge. Die Funktion gibt selbst aus und braucht kein return."
+     "tipp": "Die Funktion bekommt Listen herein und braucht Mengen zum Rechnen — wandle beide gleich zu Beginn des Funktionskörpers um und arbeite danach nur noch mit den Mengen. „Fehlt noch\" ist soll_menge - ist_menge, „zu viel da\" dieselbe Rechnung andersherum, „stimmt überein\" die Schnittmenge. Die Funktion gibt selbst aus und braucht kein return.",
+     "loesung": "def abgleich(soll, ist):\n    soll_menge = set(soll)\n    ist_menge = set(ist)\n    print(f\"Fehlt noch: {sorted(soll_menge - ist_menge)}\")\n    print(f\"Zu viel da: {sorted(ist_menge - soll_menge)}\")\n    print(f\"Stimmt überein: {sorted(soll_menge & ist_menge)}\")\n\n\nabgleich(['Helm', 'Decke', 'Spaten', 'Kanister'], ['Decke', 'Helm', 'Taschenlampe'])\nprint('---')\nabgleich(['Karte', 'Kompass'], ['Kompass', 'Karte'])"
     }
    ]
   }

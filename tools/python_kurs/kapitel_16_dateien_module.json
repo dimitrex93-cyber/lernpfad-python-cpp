@@ -249,79 +249,93 @@
      "titel": "Erst anlegen, dann lesen",
      "aufgabe": "Lege mit pathlib eine Datei dienstplan.txt an, die drei Zeilen enthält — Montag, Dienstag und Mittwoch mit je einer Tätigkeit. Lies die Datei danach im selben Programm wieder ein und gib ihren Inhalt aus, ohne dass am Ende eine Leerzeile entsteht. Fertig, wenn: genau drei Zeilen erscheinen und keine vierte, leere Zeile darunter steht.",
      "tipp": "from pathlib import Path steht einmal oben im Programm. Danach bekommt write_text() den ganzen Text mit \\n an den richtigen Stellen, und read_text() holt ihn zurück. Beide Aufrufe brauchen encoding='utf-8'. Gegen die zusätzliche Leerzeile hilft end=\"\" im print().",
-     "vorgabe": "import pathlib\n\nfrom pathlib import Path\n\nPath ('notiz.txt').write_text(\"hier\\nsteht\\nmein\\ntext\", encoding='utf-8')\nprint(end=\"\")\n\nPath ('notiz.txt').read_text(encoding='utf-8')"
+     "vorgabe": "import pathlib\n\nfrom pathlib import Path\n\nPath ('notiz.txt').write_text(\"hier\\nsteht\\nmein\\ntext\", encoding='utf-8')\nprint(end=\"\")\n\nPath ('notiz.txt').read_text(encoding='utf-8')",
+     "loesung": "from pathlib import Path\n\npfad = Path('dienstplan.txt')\npfad.write_text(\"Montag: Wache\\nDienstag: Ausbildung\\nMittwoch: Materialpflege\\n\", encoding='utf-8')\n\ninhalt = pfad.read_text(encoding='utf-8')\nprint(inhalt, end=\"\")"
     },
     {
      "titel": "Unsichtbares sichtbar machen",
      "aufgabe": "Lege eine Datei teilnehmer.txt an, in deren erster Zeile vor und hinter Jens Hartmann jeweils zwei Leerzeichen stehen. Lies die erste Zeile heraus und gib sie zweimal mit repr() aus: einmal roh und einmal gesäubert. Prüfe danach mit zwei if/else-Blöcken, ob die Zeile ohne und mit strip() gleich \"Jens Hartmann\" ist. Fertig, wenn: vier Zeilen erscheinen und die Vergleiche gegensätzlich ausfallen — ohne strip() kein Treffer, mit strip() ein Treffer.",
      "tipp": "repr() zeigt eine Zeichenkette so, wie sie wirklich ist: mit Anführungszeichen und sichtbarem Leerraum. Die erste Zeile holst du über den Index [0] aus der Liste, die splitlines() liefert.",
-     "vorgabe": "from pathlib import Path\n\nPath ('teilnehmer.txt').write_text(\"  Jens\\n    Hartmann\\n  \", encoding='utf-8')\nprint(end=\"\")\n\nPath ('teilnehmer.txt').read_text(encoding='utf-8')\nprint(repr(len('teilnehmer.txt')))\nprint(repr('teilnehmer.txt'))"
+     "vorgabe": "from pathlib import Path\n\nPath ('teilnehmer.txt').write_text(\"  Jens\\n    Hartmann\\n  \", encoding='utf-8')\nprint(end=\"\")\n\nPath ('teilnehmer.txt').read_text(encoding='utf-8')\nprint(repr(len('teilnehmer.txt')))\nprint(repr('teilnehmer.txt'))",
+     "loesung": "from pathlib import Path\n\npfad = Path('teilnehmer.txt')\npfad.write_text(\"  Jens Hartmann  \\nMara Sommer\\n\", encoding='utf-8')\n\nzeilen = pfad.read_text(encoding='utf-8').splitlines()\nerste = zeilen[0]\nprint(repr(erste))\nprint(repr(erste.strip()))\n\nif erste == \"Jens Hartmann\":\n    print(\"Ohne strip: Treffer\")\nelse:\n    print(\"Ohne strip: kein Treffer\")\n\nif erste.strip() == \"Jens Hartmann\":\n    print(\"Mit strip: Treffer\")\nelse:\n    print(\"Mit strip: kein Treffer\")"
     },
     {
      "titel": "Rechnen mit dem, was in der Datei steht",
      "aufgabe": "Lege eine Datei tankfuellung.txt mit vier Tankfüllungen in Litern an, je eine pro Zeile. Lies sie zeilenweise ein, zähle die Werte zusammen und zähle mit, wie viele es waren. Gib Summe, Anzahl und Durchschnitt aus. Fertig, wenn: drei Zeilen erscheinen und der Durchschnitt als Kommazahl ausgegeben wird.",
-     "tipp": "Alles, was aus einer Datei kommt, ist Text — \"45\" + \"60\" ergäbe \"4560\". Vor dem Addieren steht deshalb int(), und davor sicherheitshalber strip(). Zwei Zähler, die vor der Schleife auf 0 gesetzt werden, genügen."
+     "tipp": "Alles, was aus einer Datei kommt, ist Text — \"45\" + \"60\" ergäbe \"4560\". Vor dem Addieren steht deshalb int(), und davor sicherheitshalber strip(). Zwei Zähler, die vor der Schleife auf 0 gesetzt werden, genügen.",
+     "loesung": "from pathlib import Path\n\npfad = Path('tankfuellung.txt')\npfad.write_text(\"45\\n60\\n38\\n57\\n\", encoding='utf-8')\n\nsumme = 0\nanzahl = 0\nfor zeile in pfad.read_text(encoding='utf-8').splitlines():\n    summe += int(zeile.strip())\n    anzahl += 1\n\nprint(\"Summe:\", summe)\nprint(\"Anzahl:\", anzahl)\nprint(\"Durchschnitt:\", summe / anzahl)"
     },
     {
      "titel": "Lange Dienste herausfiltern",
      "aufgabe": "Die Vorgabe legt dir die Datei dienstzeiten.txt an: fünf Zeilen, in jeder stehen Wochentag und geleistete Stunden, getrennt durch ein Semikolon. Lies die Datei ein, gehe sie Zeile für Zeile durch und sammle die Tage mit mehr als 8 Stunden in einer Liste. Gib danach die Anzahl dieser Tage aus und darunter ihre Namen in einer einzigen Zeile, durch Komma und Leerzeichen getrennt. Fertig, wenn: zwei Zeilen erscheinen: Lange Dienste: 2 und Betroffen: Montag, Mittwoch.",
      "tipp": "split(\";\") zerlegt eine Zeile am Semikolon und liefert eine Liste — genau wie split(\"\\n\") am Zeilenumbruch, nur mit einem anderen Trennzeichen. Aus \"Montag;9\" wird so ['Montag', '9']: Der Tag steht an Stelle [0], die Stunden an Stelle [1], und vor dem Vergleich muss int() daraus eine Zahl machen. Die gesammelten Namen setzt \", \".join(...) am Ende zu einer Zeile zusammen.",
-     "vorgabe": "from pathlib import Path\n\npfad = Path('dienstzeiten.txt')\npfad.write_text(\"Montag;9\\nDienstag;7\\nMittwoch;11\\nDonnerstag;8\\nFreitag;6\\n\", encoding='utf-8')"
+     "vorgabe": "from pathlib import Path\n\npfad = Path('dienstzeiten.txt')\npfad.write_text(\"Montag;9\\nDienstag;7\\nMittwoch;11\\nDonnerstag;8\\nFreitag;6\\n\", encoding='utf-8')",
+     "loesung": "from pathlib import Path\n\npfad = Path('dienstzeiten.txt')\npfad.write_text(\"Montag;9\\nDienstag;7\\nMittwoch;11\\nDonnerstag;8\\nFreitag;6\\n\", encoding='utf-8')\n\nbetroffen = []\nfor zeile in pfad.read_text(encoding='utf-8').splitlines():\n    teile = zeile.split(\";\")\n    if int(teile[1]) > 8:\n        betroffen.append(teile[0])\n\nprint(\"Lange Dienste:\", len(betroffen))\nprint(\"Betroffen:\", \", \".join(betroffen))"
     },
     {
      "titel": "Zählen, was ausgegeben wurde",
      "aufgabe": "Die Vorgabe legt dir die Datei materialausgabe.txt an — sechs Zeilen, in jeder ein ausgegebener Gegenstand, manche mehrfach. Lies die Datei ein und zähle in einem Dictionary mit, wie oft jeder Gegenstand vorkommt. Gib danach jeden Gegenstand mit seiner Anzahl in einer eigenen Zeile in der Form Helm: 3 aus und darunter, wie viele verschiedene Gegenstände es waren. Fertig, wenn: drei Zeilen mit Gegenstand und Anzahl erscheinen und darunter Verschiedene Gegenstaende: 3.",
      "tipp": "Das Dictionary beginnt leer: zaehler = {}. Für jede Zeile fragst du mit zaehler.get(gegenstand, 0) den bisherigen Stand ab — kommt der Gegenstand zum ersten Mal vor, liefert .get() die 0 — und schreibst den um eins erhöhten Wert zurück. len() zählt am Ende die Schlüssel des Dictionarys.",
-     "vorgabe": "from pathlib import Path\n\npfad = Path('materialausgabe.txt')\npfad.write_text(\"Helm\\nWeste\\nHelm\\nFunkgeraet\\nWeste\\nHelm\\n\", encoding='utf-8')"
+     "vorgabe": "from pathlib import Path\n\npfad = Path('materialausgabe.txt')\npfad.write_text(\"Helm\\nWeste\\nHelm\\nFunkgeraet\\nWeste\\nHelm\\n\", encoding='utf-8')",
+     "loesung": "from pathlib import Path\n\npfad = Path('materialausgabe.txt')\npfad.write_text(\"Helm\\nWeste\\nHelm\\nFunkgeraet\\nWeste\\nHelm\\n\", encoding='utf-8')\n\nzaehler = {}\nfor zeile in pfad.read_text(encoding='utf-8').splitlines():\n    gegenstand = zeile.strip()\n    zaehler[gegenstand] = zaehler.get(gegenstand, 0) + 1\n\nfor gegenstand in zaehler:\n    print(f\"{gegenstand}: {zaehler[gegenstand]}\")\nprint(\"Verschiedene Gegenstaende:\", len(zaehler))"
     },
     {
      "titel": "Vorhersage — `splitlines()` gegen `split(\"\\n\")`",
      "aufgabe": "Eine Datei zeilen_test.txt enthält drei Farben, je eine pro Zeile, und endet mit einem Zeilenumbruch. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage, wie viele Einträge splitlines() und wie viele split(\"\\n\") liefern. Erst danach legst du die Datei an, zerlegst sie auf beide Arten und lässt dir jeweils die Liste und ihre Länge ausgeben. Fertig, wenn: nach deiner Vorhersagezeile zwei Listen mit ihren Längen erscheinen: 3 bei splitlines(), 4 bei split(\"\\n\").",
-     "tipp": "Die Datei endet mit einem Zeilenumbruch. Überlege, was hinter diesem letzten Umbruch noch steht — und ob das ein Eintrag ist oder keiner."
+     "tipp": "Die Datei endet mit einem Zeilenumbruch. Überlege, was hinter diesem letzten Umbruch noch steht — und ob das ein Eintrag ist oder keiner.",
+     "loesung": "print(\"Erwartet: splitlines ergibt 3 Eintraege, split ergibt 4 Eintraege\")\n\nfrom pathlib import Path\n\npfad = Path('zeilen_test.txt')\npfad.write_text(\"rot\\ngelb\\ngruen\\n\", encoding='utf-8')\n\ninhalt = pfad.read_text(encoding='utf-8')\nmit_splitlines = inhalt.splitlines()\nmit_split = inhalt.split(\"\\n\")\n\nprint(mit_splitlines)\nprint(len(mit_splitlines))\nprint(mit_split)\nprint(len(mit_split))"
     },
     {
      "titel": "Die Datei, die es nicht gibt",
      "aufgabe": "Die Vorgabe soll den Urlaubsplan anlegen und sofort wieder ausgeben. Sie legt die Datei an, stürzt aber beim Lesen ab. Führe sie zuerst unverändert aus, lies die letzte Zeile der Meldung und behebe die Ursache. Fertig, wenn: zwei Zeilen erscheinen: Mai: Nordsee und Juli: Harz.",
      "tipp": "Die letzte Zeile der Fehlermeldung nennt den gesuchten Dateinamen wörtlich. Vergleiche ihn Buchstabe für Buchstabe mit dem Namen, der zwei Zeilen darüber geschrieben wurde. Am sichersten ist es, nicht zweimal einen Namen zu tippen, sondern die Variable zu benutzen, die den Pfad schon enthält.",
-     "vorgabe": "from pathlib import Path\n\npfad = Path('urlaubsliste.txt')\npfad.write_text(\"Mai: Nordsee\\nJuli: Harz\\n\", encoding='utf-8')\n\ninhalt = Path('urlaubliste.txt').read_text(encoding='utf-8')\nprint(inhalt, end=\"\")"
+     "vorgabe": "from pathlib import Path\n\npfad = Path('urlaubsliste.txt')\npfad.write_text(\"Mai: Nordsee\\nJuli: Harz\\n\", encoding='utf-8')\n\ninhalt = Path('urlaubliste.txt').read_text(encoding='utf-8')\nprint(inhalt, end=\"\")",
+     "loesung": "from pathlib import Path\n\npfad = Path('urlaubsliste.txt')\npfad.write_text(\"Mai: Nordsee\\nJuli: Harz\\n\", encoding='utf-8')\n\ninhalt = pfad.read_text(encoding='utf-8')\nprint(inhalt, end=\"\")"
     },
     {
      "titel": "Schreiben und nachsehen",
      "aufgabe": "Schreibe eine einzelne Zeile in eine Datei merkliste.txt und fange den Rückgabewert von write_text() in einer Variablen auf. Gib zuerst aus, wie viele Zeichen geschrieben wurden, und lies danach die Datei wieder ein, um das Ergebnis zu prüfen. Fertig, wenn: zuerst eine Zeile mit der Zeichenzahl erscheint und darunter der geschriebene Text.",
-     "tipp": "write_text() gibt die Anzahl der geschriebenen Zeichen zurück — das Ergebnis lässt sich wie bei jeder Funktion einer Variablen zuweisen. Der abschließende \\n zählt dabei als ein Zeichen mit."
+     "tipp": "write_text() gibt die Anzahl der geschriebenen Zeichen zurück — das Ergebnis lässt sich wie bei jeder Funktion einer Variablen zuweisen. Der abschließende \\n zählt dabei als ein Zeichen mit.",
+     "loesung": "from pathlib import Path\n\npfad = Path('merkliste.txt')\nanzahl = pfad.write_text(\"Sanitaetskasten pruefen\\n\", encoding='utf-8')\n\nprint(anzahl, \"Zeichen geschrieben\")\nprint(pfad.read_text(encoding='utf-8'), end=\"\")"
     },
     {
      "titel": "Von der Liste in die Datei",
      "aufgabe": "Lege eine Liste mit drei Gerätenamen an. Verbinde sie mit \"\\n\".join(...) zu einer einzigen Zeichenkette, hänge den abschließenden Zeilenumbruch an und gib die fertige Zeichenkette zur Kontrolle mit repr() aus. Schreibe sie danach in geraeteliste.txt, lies die Datei wieder ein und lass dir die Zeilenliste und ihre Länge ausgeben. Fertig, wenn: die repr()-Ausgabe mit \\n' endet und die eingelesene Liste genau drei Einträge hat.",
-     "tipp": "join() setzt das Trennzeichen zwischen die Einträge, nicht dahinter — hinter dem letzten Eintrag steht deshalb nichts. Das abschließende + \"\\n\" ist kein Schönheitsfehler, sondern Absicht."
+     "tipp": "join() setzt das Trennzeichen zwischen die Einträge, nicht dahinter — hinter dem letzten Eintrag steht deshalb nichts. Das abschließende + \"\\n\" ist kein Schönheitsfehler, sondern Absicht.",
+     "loesung": "from pathlib import Path\n\ngeraete = [\"Funkgeraet\", \"Nachtsichtgeraet\", \"Kompass\"]\ntext = \"\\n\".join(geraete) + \"\\n\"\nprint(repr(text))\n\npfad = Path('geraeteliste.txt')\npfad.write_text(text, encoding='utf-8')\n\nzeilen = pfad.read_text(encoding='utf-8').splitlines()\nprint(zeilen)\nprint(\"Zeilen:\", len(zeilen))"
     },
     {
      "titel": "Vorhersage — zweimal schreiben",
      "aufgabe": "Ein Programm schreibt zwei Meldungen nacheinander in dieselbe Datei notiz.txt. Schreibe zuerst als allererste Zeile deines Programms einen print()-Aufruf mit deiner Vorhersage, was danach in der Datei steht. Erst danach schreibst du beide Meldungen, liest die Datei ein, gibst sie aus und lässt dir die Zahl der Zeilen ausgeben. Fertig, wenn: nach deiner Vorhersagezeile nur die zuletzt geschriebene Meldung erscheint und darunter Zeilen in der Datei: 1.",
-     "tipp": "write_text() heißt „schreiben\", nicht „ergänzen\". Überlege, was mit dem ersten Text geschieht, wenn der zweite an dieselbe Stelle geschrieben wird — und ob Python vorher nachfragt."
+     "tipp": "write_text() heißt „schreiben\", nicht „ergänzen\". Überlege, was mit dem ersten Text geschieht, wenn der zweite an dieselbe Stelle geschrieben wird — und ob Python vorher nachfragt.",
+     "loesung": "print(\"Erwartet: in der Datei steht am Ende nur eine Zeile, naemlich die zuletzt geschriebene\")\n\nfrom pathlib import Path\n\npfad = Path('notiz.txt')\npfad.write_text(\"Erste Meldung\\n\", encoding='utf-8')\npfad.write_text(\"Zweite Meldung\\n\", encoding='utf-8')\n\ninhalt = pfad.read_text(encoding='utf-8')\nprint(inhalt, end=\"\")\nprint(\"Zeilen in der Datei:\", len(inhalt.splitlines()))"
     },
     {
      "titel": "Ergänzen, ohne zu verlieren",
      "aufgabe": "Die Vorgabe legt dir die Datei inventar.txt mit zwei Posten an und stellt zwei weitere in der Liste nachschub bereit. Hänge die neuen Posten an die Datei an, ohne die vorhandenen zu verlieren: Lies den alten Inhalt einmal, hänge in einer Schleife die neuen Zeilen daran und schreibe einmal. Lies die Datei danach zur Kontrolle wieder ein, gib sie aus und darunter die Zahl der Posten. Fertig, wenn: vier Zeilen erscheinen, beginnend mit Zelt und endend mit Isomatte, und darunter Posten insgesamt: 4.",
      "tipp": "Einen Befehl zum Anhängen gibt es in pathlib nicht — es bleibt beim Muster lesen, vereinen, schreiben. Entscheidend ist, dass das Schreiben nach der Schleife steht: In der Schleife wächst nur die Textvariable, Zeile für Zeile mit text += posten + \"\\n\". Das Zurücklesen am Ende ist die Probe, ob wirklich alles in der Datei gelandet ist.",
-     "vorgabe": "from pathlib import Path\n\npfad = Path('inventar.txt')\npfad.write_text(\"Zelt\\nFeldbett\\n\", encoding='utf-8')\nnachschub = [\"Schlafsack\", \"Isomatte\"]"
+     "vorgabe": "from pathlib import Path\n\npfad = Path('inventar.txt')\npfad.write_text(\"Zelt\\nFeldbett\\n\", encoding='utf-8')\nnachschub = [\"Schlafsack\", \"Isomatte\"]",
+     "loesung": "from pathlib import Path\n\npfad = Path('inventar.txt')\npfad.write_text(\"Zelt\\nFeldbett\\n\", encoding='utf-8')\nnachschub = [\"Schlafsack\", \"Isomatte\"]\n\ntext = pfad.read_text(encoding='utf-8')\nfor posten in nachschub:\n    text += posten + \"\\n\"\npfad.write_text(text, encoding='utf-8')\n\nprint(pfad.read_text(encoding='utf-8'), end=\"\")\nprint(\"Posten insgesamt:\", len(pfad.read_text(encoding='utf-8').splitlines()))"
     },
     {
      "titel": "Ein Bericht aus dem Dictionary",
      "aufgabe": "In der Vorgabe steht ein Dictionary fahrzeuge mit drei Kennungen und ihren Kilometerständen. Baue daraus in einer Schleife eine Liste von Zeilen der Form Wolf: 12400 km und zähle in derselben Schleife die Kilometer zusammen. Schreibe die Zeilen mit einem Aufruf in die Datei kilometerstand.txt, lies sie zur Kontrolle wieder ein und gib sie aus. Darunter kommt die Gesamtstrecke. Fertig, wenn: drei Zeilen mit Kennung und Kilometerstand erscheinen und darunter Gesamt: 36600 km.",
      "tipp": "Zwei Dinge wachsen in derselben Schleife mit: die Liste der Zeilen durch append() und die Summe durch +=. Die Zeile selbst baust du am bequemsten mit einem f-String, der Schlüssel und Wert zusammensetzt. Die fertige Liste wird danach mit \"\\n\".join(...) zu einem einzigen Text verbunden — das abschließende + \"\\n\" nicht vergessen.",
-     "vorgabe": "fahrzeuge = {\"Wolf\": 12400, \"Fuchs\": 8900, \"Unimog\": 15300}"
+     "vorgabe": "fahrzeuge = {\"Wolf\": 12400, \"Fuchs\": 8900, \"Unimog\": 15300}",
+     "loesung": "from pathlib import Path\n\nfahrzeuge = {\"Wolf\": 12400, \"Fuchs\": 8900, \"Unimog\": 15300}\n\nzeilen = []\ngesamt = 0\nfor name in fahrzeuge:\n    zeilen.append(f\"{name}: {fahrzeuge[name]} km\")\n    gesamt += fahrzeuge[name]\n\npfad = Path('kilometerstand.txt')\npfad.write_text(\"\\n\".join(zeilen) + \"\\n\", encoding='utf-8')\n\nprint(pfad.read_text(encoding='utf-8'), end=\"\")\nprint(f\"Gesamt: {gesamt} km\")"
     },
     {
      "titel": "Erst der Ordner, dann die Datei",
      "aufgabe": "Schreibe einen Monatsbericht in die Datei januar.txt innerhalb eines Ordners berichte, der noch nicht existiert. Lege den Ordner dafür zuerst an und setze den Pfad zur Datei mit dem /-Operator zusammen. Gib zur Kontrolle den Ordnernamen, den Dateinamen und den Inhalt aus. Fertig, wenn: drei Zeilen erscheinen und das Programm auch beim zweiten Ausführen nicht abbricht.",
-     "tipp": "Dateien entstehen beim Schreiben von selbst, Ordner nicht. mkdir() legt den Ordner an — und exist_ok=True sorgt dafür, dass ein bereits vorhandener Ordner kein Fehler ist. Das ist beim zweiten Programmstart immer der Fall."
+     "tipp": "Dateien entstehen beim Schreiben von selbst, Ordner nicht. mkdir() legt den Ordner an — und exist_ok=True sorgt dafür, dass ein bereits vorhandener Ordner kein Fehler ist. Das ist beim zweiten Programmstart immer der Fall.",
+     "loesung": "from pathlib import Path\n\nordner = Path('berichte')\nordner.mkdir(exist_ok=True)\n\npfad = ordner / 'januar.txt'\npfad.write_text(\"Januar: 14 Einsaetze\\n\", encoding='utf-8')\n\nprint(\"Ordner:\", pfad.parent.name)\nprint(\"Datei:\", pfad.name)\nprint(pfad.read_text(encoding='utf-8'), end=\"\")"
     },
     {
      "titel": "Drei Schichten geschrieben, eine übrig",
      "aufgabe": "Die Vorgabe soll ein Schichtbuch mit drei Einträgen anlegen. Sie läuft ohne Fehlermeldung durch — in der Datei steht hinterher trotzdem nur ein einziger Eintrag. Führe sie zuerst unverändert aus, sieh dir die Zeilenzahl an und baue sie dann so um, dass alle drei Schichten erhalten bleiben. Die Liste bleibt dabei unverändert. Fertig, wenn: drei Zeilen erscheinen und darunter Zeilen in der Datei: 3.",
      "tipp": "Der Fehler steckt nicht in der Schleife, sondern darin, dass in der Schleife geschrieben wird. Die Zeilen liegen bereits als Liste vor — damit lässt sich die Schleife ganz streichen und durch einen einzigen Schreibaufruf ersetzen.",
-     "vorgabe": "from pathlib import Path\n\nschichten = [\"Fruehschicht: Meier\", \"Spaetschicht: Kowalski\", \"Nachtschicht: Brandt\"]\n\npfad = Path('schichtbuch.txt')\nfor eintrag in schichten:\n    pfad.write_text(eintrag + \"\\n\", encoding='utf-8')\n\nprint(pfad.read_text(encoding='utf-8'), end=\"\")\nprint(\"Zeilen in der Datei:\", len(pfad.read_text(encoding='utf-8').splitlines()))"
+     "vorgabe": "from pathlib import Path\n\nschichten = [\"Fruehschicht: Meier\", \"Spaetschicht: Kowalski\", \"Nachtschicht: Brandt\"]\n\npfad = Path('schichtbuch.txt')\nfor eintrag in schichten:\n    pfad.write_text(eintrag + \"\\n\", encoding='utf-8')\n\nprint(pfad.read_text(encoding='utf-8'), end=\"\")\nprint(\"Zeilen in der Datei:\", len(pfad.read_text(encoding='utf-8').splitlines()))",
+     "loesung": "from pathlib import Path\n\nschichten = [\"Fruehschicht: Meier\", \"Spaetschicht: Kowalski\", \"Nachtschicht: Brandt\"]\n\npfad = Path('schichtbuch.txt')\npfad.write_text(\"\\n\".join(schichten) + \"\\n\", encoding='utf-8')\n\nprint(pfad.read_text(encoding='utf-8'), end=\"\")\nprint(\"Zeilen in der Datei:\", len(pfad.read_text(encoding='utf-8').splitlines()))"
     }
    ]
   },
@@ -335,12 +349,14 @@
      "titel": "Eine Auswertung in einer Funktion",
      "aufgabe": "Schreibe eine Funktion werkstatt_auswerten(dateiname), die eine Zahlendatei einliest und ein Dictionary mit vier Einträgen zurückgibt: anzahl, summe, groesster und durchschnitt. Leere Zeilen sollen dabei übersprungen werden. Die Vorgabe legt dir die Datei werkstatt.txt an, die zwischen den Zahlen eine Leerzeile enthält. Rufe die Funktion damit auf und gib das Ergebnis Eintrag für Eintrag aus. Fertig, wenn: vier Zeilen erscheinen, anzahl 4 beträgt und das Programm trotz der Leerzeile nicht abbricht.",
      "tipp": "Sammle die Zahlen zuerst in einer Liste; dann erledigen len(), sum() und max() den Rest. Die Leerzeile erkennst du nach dem Säubern daran, dass nichts übrig bleibt — if sauber != \"\": lässt nur die echten Werte durch. Über ein Dictionary kannst du mit for name in ergebnis: genauso laufen wie über eine Liste.",
-     "vorgabe": "from pathlib import Path\n\npfad = Path('werkstatt.txt')\npfad.write_text(\"12\\n\\n19\\n7\\n22\\n\", encoding='utf-8')"
+     "vorgabe": "from pathlib import Path\n\npfad = Path('werkstatt.txt')\npfad.write_text(\"12\\n\\n19\\n7\\n22\\n\", encoding='utf-8')",
+     "loesung": "from pathlib import Path\n\n\ndef werkstatt_auswerten(dateiname):\n    zeilen = Path(dateiname).read_text(encoding='utf-8').splitlines()\n    werte = []\n    for zeile in zeilen:\n        sauber = zeile.strip()\n        if sauber != \"\":\n            werte.append(int(sauber))\n\n    ergebnis = {}\n    ergebnis[\"anzahl\"] = len(werte)\n    ergebnis[\"summe\"] = sum(werte)\n    ergebnis[\"groesster\"] = max(werte)\n    ergebnis[\"durchschnitt\"] = sum(werte) / len(werte)\n    return ergebnis\n\n\npfad = Path('werkstatt.txt')\npfad.write_text(\"12\\n\\n19\\n7\\n22\\n\", encoding='utf-8')\n\nauswertung = werkstatt_auswerten('werkstatt.txt')\nfor name in auswertung:\n    print(name, \"=\", auswertung[name])"
     },
     {
      "titel": "Ein Wachbuch, das mitwächst",
      "aufgabe": "Schreibe eine Funktion eintragen(dateiname, zeile), die eine Zeile an eine Datei anhängt und dabei auch dann funktioniert, wenn es die Datei noch gar nicht gibt. Prüfe dafür mit exists(), ob schon etwas vorhanden ist, und gib beim allerersten Mal Neues Wachbuch wird angelegt. aus. Trage danach drei Meldungen ein und gib das Wachbuch zum Schluss durchnummeriert aus, gefolgt von der Gesamtzahl der Einträge. Fertig, wenn: zuerst die Meldung über das neue Wachbuch erscheint, danach drei nummerierte Zeilen und zuletzt Eintraege insgesamt: 3.",
-     "tipp": "exists() liefert True oder False und passt damit direkt hinter ein if. Gibt es die Datei noch nicht, ist der „alte Inhalt\" eine leere Zeichenkette \"\" — damit funktioniert das Zusammensetzen unverändert. Für die Nummerierung genügt ein Zähler, der vor der Schleife auf 1 gesetzt und in jedem Durchlauf erhöht wird."
+     "tipp": "exists() liefert True oder False und passt damit direkt hinter ein if. Gibt es die Datei noch nicht, ist der „alte Inhalt\" eine leere Zeichenkette \"\" — damit funktioniert das Zusammensetzen unverändert. Für die Nummerierung genügt ein Zähler, der vor der Schleife auf 1 gesetzt und in jedem Durchlauf erhöht wird.",
+     "loesung": "from pathlib import Path\n\n\ndef eintragen(dateiname, zeile):\n    pfad = Path(dateiname)\n    if pfad.exists():\n        alt = pfad.read_text(encoding='utf-8')\n    else:\n        print(\"Neues Wachbuch wird angelegt.\")\n        alt = \"\"\n    pfad.write_text(alt + zeile + \"\\n\", encoding='utf-8')\n\n\neintragen('wachbuch.txt', \"Tor kontrolliert\")\neintragen('wachbuch.txt', \"Streife gelaufen\")\neintragen('wachbuch.txt', \"Uebergabe erledigt\")\n\nzeilen = Path('wachbuch.txt').read_text(encoding='utf-8').splitlines()\nnummer = 1\nfor zeile in zeilen:\n    print(nummer, zeile)\n    nummer += 1\nprint(\"Eintraege insgesamt:\", len(zeilen))"
     }
    ]
   }
