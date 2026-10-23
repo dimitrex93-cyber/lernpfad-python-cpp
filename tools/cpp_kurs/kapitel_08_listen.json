@@ -1,7 +1,7 @@
 {
  "id": "listen",
  "titel": "Kapitel 8: Listen, Vektoren und Maps",
- "einleitung": "Einzelne Werte sind langweilig. Sammlungen machen Programme stark. Du lernst die Liste aus Python kennen. Du lernst den vector aus C++ kennen. Das sind Behälter für viele Werte. Am Ende lernst du dict und map kennen. Das sind Nachschlagewerke wie ein Wörterbuch.",
+ "einleitung": "Einzelne Werte sind langweilig. Sammlungen machen Programme stark. Du lernst die Liste aus Python kennen. Du lernst den vector aus C++ kennen. Das sind Behälter für viele Werte. Am Ende lernst du dict und map kennen. Das sind Nachschlagewerke wie ein Wörterbuch. Teile dieses Kapitels beruhen auf dem Wikibooks-Buch C++-Programmierung (de.wikibooks.org), Lizenz CC BY-SA 4.0; für den Lernpfad bearbeitet und gekürzt.",
  "abschnitte": [
   {
    "titel": "Listen: mehrere Werte in einer Variable",
@@ -152,6 +152,70 @@
    },
    "vergleich": "Beide Sprachen ordnen Zahlen nach Größe und Text nach Zeichencode. In beiden steht Groß vor Klein. Einheitliche Schreibweise spart Überraschungen.",
    "merk": "Zahlen nach Größe, Text alphabetisch, Groß vor Klein. Zahlen in Anführungszeichen sind Text."
+  },
+  {
+   "titel": "Ein Feld ist eine feste Reihe von Fächern",
+   "cpp": {
+    "text": "In C++ heißt die feste Reihe Feld oder array. Du legst sie mit Typ, Name und Größe an. int messwerte[4] heißt: vier Fächer für ganze Zahlen. Die Größe steht in eckigen Klammern. Sie steht schon beim Übersetzen fest. Der Zugriff läuft über den Index, genau wie beim vector. Die Zählung beginnt bei 0. Das letzte Fach hat also den Index 3. Mit geschweiften Klammern füllst du das Feld sofort. Ein einzelnes Fach benutzt du wie eine normale Variable.",
+    "code": "#include <iostream>\n\nint main() {\n    int messwerte[4] = {12, 7, 30, 5};   // vier Fächer, feste Größe\n\n    std::cout << messwerte[0] << std::endl;   // 12\n    std::cout << messwerte[3] << std::endl;   // 5\n\n    messwerte[1] = 9;                   // Fach ersetzen\n\n    int summe = 0;\n    for (int i = 0; i < 4; ++i) {\n        summe += messwerte[i];\n    }\n    std::cout << \"Summe: \" << summe << std::endl;\n    return 0;\n}"
+   },
+   "vergleich": "Python hat kein Feld mit fester Größe, eine Liste wächst einfach. In C++ legst du die Anzahl beim Anlegen fest. Danach bleibt sie gleich.",
+   "merk": "Typ, Name, Größe in eckigen Klammern: fertig ist das Feld.",
+   "checkliste": [
+    "Anlegen: int feld[4];",
+    "Sofort füllen: int feld[4] = {12, 7, 30, 5};",
+    "Alles Nullen: int feld[4] = {};",
+    "Gültige Indizes: 0 bis 3",
+    "Anzahl der Fächer: sizeof(feld) / sizeof(feld[0])"
+   ]
+  },
+  {
+   "titel": "Die Größe steht fest, die Grenzen prüft niemand",
+   "cpp": {
+    "text": "Ein Feld kennt seine eigene Größe nicht. Es gibt keine Methode size(). Die Anzahl rechnest du dir aus. sizeof(feld) liefert die Größe in Byte. Geteilt durch sizeof(feld[0]) ergibt das die Anzahl. Achtung: Der Index wird nicht geprüft. feld[4] bei vier Fächern ist undefiniertes Verhalten. Das Programm stürzt vielleicht ab. Vielleicht rechnet es auch still falsch. Ohne Initialisierung steht Müll im Feld. Mit leeren geschweiften Klammern wird alles zu 0. Eine range-for-Schleife läuft immer über alle Fächer.",
+    "code": "#include <iostream>\n\nint main() {\n    int felder[5] = {1, 2, 3, 4, 5};\n    int leer[5] = {};                 // alle fünf Fächer sind 0\n\n    int anzahl = sizeof(felder) / sizeof(felder[0]);\n    std::cout << \"Byte: \" << sizeof(felder) << std::endl;\n    std::cout << \"Werte: \" << anzahl << std::endl;\n\n    for (int wert : felder) {         // range-for über alle Fächer\n        std::cout << wert << \" \";\n    }\n    std::cout << std::endl;\n\n    std::cout << \"Erstes leeres Fach: \" << leer[0] << std::endl;\n\n    // felder[5] = 99;   // Index zu groß: undefiniertes Verhalten!\n    return 0;\n}"
+   },
+   "vergleich": "Python prüft jeden Zugriff und meldet IndexError. C++ prüft bei Feldern gar nichts. Der Fehler zeigt sich später an einer anderen Stelle.",
+   "merk": "Ein Feld prüft keine Grenzen. Die Anzahl rechnest du mit sizeof aus.",
+   "checkliste": [
+    "Feld hat keine size-Methode",
+    "sizeof(feld) ergibt Byte, nicht Fächer",
+    "Anzahl: sizeof(feld) / sizeof(feld[0])",
+    "Index gleich Anzahl: undefiniertes Verhalten",
+    "Ohne Initialisierung steht Müll im Feld"
+   ]
+  },
+  {
+   "titel": "Ein Feld an eine Funktion übergeben",
+   "cpp": {
+    "text": "Ein Feld kannst du nicht als Ganzes übergeben. C++ gibt nur die Adresse des ersten Fachs weiter. Im Parameter steht deshalb ein Zeiger: const int* werte. Die Schreibweise const int werte[] bedeutet genau dasselbe. Die Funktion braucht die Anzahl also extra. In der Funktion ist werte nur ein Zeiger. sizeof(werte) liefert dort acht Byte, die Größe eines Zeigers. Im main sind es sechzehn Byte für vier ints. Mit const versprichst du: Die Funktion ändert nichts. Das Feld selbst bleibt im main liegen.",
+    "code": "#include <iostream>\n\n// const int werte[] bedeutet hier dasselbe wie const int* werte.\nint summe(const int* werte, int anzahl) {\n    std::cout << \"sizeof Zeiger: \" << sizeof(werte) << std::endl;\n\n    int s = 0;\n    for (int i = 0; i < anzahl; ++i) {\n        s += werte[i];\n    }\n    return s;\n}\n\nint main() {\n    int messwerte[4] = {12, 7, 30, 5};\n\n    std::cout << \"sizeof im main: \" << sizeof(messwerte) << std::endl;\n\n    int ergebnis = summe(messwerte, 4);\n    std::cout << \"Summe: \" << ergebnis << std::endl;\n    return 0;\n}"
+   },
+   "vergleich": "Python übergibt die Liste als Verweis, len() klappt auch in der Funktion. C++ übergibt einen Zeiger und vergisst die Anzahl.",
+   "merk": "Feld und Anzahl gehören zusammen, sonst kennt die Funktion die Länge nicht.",
+   "checkliste": [
+    "Parameter: const int werte[]",
+    "Zusätzlicher Parameter für die Anzahl",
+    "sizeof im Parameter ergibt die Zeigergröße",
+    "const schützt die Werte vor Änderung",
+    "Größenangabe in den Klammern wird ignoriert"
+   ]
+  },
+  {
+   "titel": "Feld oder vector: die Wahl",
+   "cpp": {
+    "text": "Ein Feld ist klein und schnell. Es passt, wenn die Anzahl feststeht. Zum Beispiel sieben Wochentage. Ein vector ist besser, wenn die Anzahl wächst. Er kennt seine Größe mit size(). Er prüft mit at() die Grenzen. Er räumt seinen Speicher selbst auf. Ein Feld muss das nicht: Es liegt im Block, bis der Block endet. Nimm im Zweifel den vector. Ein Feld lohnt sich nur bei fester Größe und viel Rechnerei.",
+    "code": "#include <iostream>\n#include <vector>\n\nint main() {\n    int tage[7] = {1, 2, 3, 4, 5, 6, 7};    // immer sieben\n    std::vector<int> werte = {12, 7, 30};   // darf wachsen\n\n    werte.push_back(5);\n\n    std::cout << \"Feld: \" << sizeof(tage) / sizeof(tage[0]) << \" Werte\" << std::endl;\n    std::cout << \"vector: \" << werte.size() << \" Werte\" << std::endl;\n    return 0;\n}"
+   },
+   "vergleich": "Python nimmt immer eine Liste, die wächst von allein. In C++ wählst du: Feld für feste Größe, vector für alles, was sich ändert.",
+   "merk": "Feste Anzahl: Feld. Wachsende Anzahl: vector.",
+   "checkliste": [
+    "Anzahl steht fest: Feld",
+    "Anzahl wächst: vector",
+    "Größe abfragen: sizeof beim Feld, size() beim vector",
+    "Grenzen prüfen: at() beim vector, gar nicht beim Feld",
+    "Feld an eine Funktion: Anzahl zusätzlich übergeben"
+   ]
   },
   {
    "titel": "Pflichtaufgaben",

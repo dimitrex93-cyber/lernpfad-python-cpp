@@ -1,7 +1,7 @@
 {
  "id": "speicher",
  "titel": "Kapitel 12: Speicher und Pointer (C++)",
- "einleitung": "Hier lernst du den größten Unterschied zwischen C++ und Python kennen. Wer verwaltet den Speicher? Python macht das für dich. C++ gibt dir die Kontrolle. Dafür trägst du die Verantwortung. So schaust du dem Computer unter die Haube.",
+ "einleitung": "Hier lernst du den größten Unterschied zwischen C++ und Python kennen. Wer verwaltet den Speicher? Python macht das für dich. C++ gibt dir die Kontrolle. Dafür trägst du die Verantwortung. So schaust du dem Computer unter die Haube. Teile dieses Kapitels beruhen auf dem Wikibooks-Buch C++-Programmierung (de.wikibooks.org), Lizenz CC BY-SA 4.0; für den Lernpfad bearbeitet und gekürzt.",
  "abschnitte": [
   {
    "titel": "Automatische Speicherverwaltung in Python",
@@ -29,6 +29,118 @@
    },
    "vergleich": "Python: python3 startet sofort. Fehler suchst du mit pdb. C++: Erst kompilieren, dann starten. Fehler suchst du mit gdb. Große Projekte baust du mit CMake. -Wall und -Wextra sind Pflicht.",
    "merk": "C++-Build: g++ -std=c++17 -Wall -Wextra. Fehler suchen: pdb (Python) oder gdb (C++)."
+  },
+  {
+   "titel": "Vier Speicherbereiche im Programm",
+   "cpp": {
+    "text": "Ein C++-Programm nutzt vier Speicherbereiche. Der Programmspeicher hält den Code selbst. Der globale Speicher hält Variablen außerhalb aller Funktionen. Der Stack (Stapel) hält lokale Variablen. Der Heap (Halde) hält Speicher aus new. Globale Variablen leben bis zum Programmende. Lokale Variablen verschwinden am Blockende. Heap-Speicher lebt, bis du ihn freigibst. Im Beispiel siehst du die drei Datenspeicher nebeneinander. Die Adressen sind bei jedem Lauf anders.",
+    "code": "#include <iostream>\n\nint globale_zahl = 100;          // globaler Speicher\n\nvoid zeige(const char* name, const void* adresse) {\n    std::cout << name << \" liegt bei \" << adresse << std::endl;\n}\n\nint main() {\n    int lokal = 5;               // Stack\n    int* heap = new int(7);      // Heap\n\n    zeige(\"global\", static_cast<const void*>(&globale_zahl));\n    zeige(\"stack \", static_cast<const void*>(&lokal));\n    zeige(\"heap  \", static_cast<const void*>(heap));\n\n    std::cout << \"Groesse int: \" << sizeof(int) << \" Byte\" << std::endl;\n    std::cout << \"Werte: \" << globale_zahl << \" \" << lokal << \" \" << *heap << std::endl;\n\n    delete heap;                 // Heap selbst freigeben\n    return 0;\n}"
+   },
+   "vergleich": "Python kennt diese Bereiche auch, zeigt sie dir aber nie. In C++ entscheidest du selbst, wo ein Wert liegt.",
+   "merk": "Code, global, Stack, Heap: vier Bereiche mit vier Lebensdauern.",
+   "checkliste": [
+    "Ich kann die vier Speicherbereiche aufzählen.",
+    "Ich weiß, wo globale und wo lokale Variablen liegen.",
+    "Ich erkenne im Beispiel, welche Adresse zum Heap gehört."
+   ]
+  },
+  {
+   "titel": "Der Stack: zuletzt rein, zuerst raus",
+   "cpp": {
+    "text": "Der Stack ist ein Stapel. Was zuletzt dazukommt, geht zuerst wieder weg. Das Prinzip heißt LIFO: last in, first out. Jeder Funktionsaufruf legt seine Daten oben auf den Stapel. Am Funktionsende ist dieser Speicher sofort wieder frei. Deshalb darfst du keine Adresse auf eine lokale Variable zurückgeben. Diese Adresse zeigt nach dem Ende ins Leere. Der Stack ist außerdem klein, meist nur ein Megabyte. Große Felder gehören deshalb auf den Heap.",
+    "code": "#include <iostream>\n\nvoid mit_lokalem_feld() {\n    int feld[4] = {1, 2, 3, 4};   // liegt auf dem Stack\n    std::cout << \"Feld im Stack: \" << static_cast<const void*>(feld) << std::endl;\n    std::cout << \"Erstes Element: \" << feld[0] << std::endl;\n}                                  // hier ist der Speicher wieder frei\n\nint main() {\n    int a = 1;\n    {\n        int b = 2;                 // nur in diesem Block gueltig\n        std::cout << \"innen: \" << a + b << std::endl;\n    }                              // b ist jetzt weg\n    std::cout << \"aussen: \" << a << std::endl;\n\n    mit_lokalem_feld();\n    std::cout << \"Stack ist meist nur 1 MB gross\" << std::endl;\n    return 0;\n}"
+   },
+   "vergleich": "Python legt alles auf dem Heap ab und räumt mit Zählern auf. C++ nutzt für lokale Werte den kleinen, schnellen Stack.",
+   "merk": "Stack heißt Stapel: lokal, begrenzt, am Blockende automatisch weg.",
+   "checkliste": [
+    "Ich kann LIFO mit eigenen Worten erklären.",
+    "Ich weiß, warum eine Adresse auf eine lokale Variable nichts taugt.",
+    "Ich lege große Felder auf den Heap, nicht auf den Stack."
+   ]
+  },
+  {
+   "titel": "Der Heap lebt länger als die Funktion",
+   "cpp": {
+    "text": "Mit new holst du Speicher vom Heap. Dieser Speicher gehört keinem Block und keiner Funktion. Er lebt weiter, bis du ihn mit delete zurückgibst. Darum darf eine Funktion einen Heap-Zeiger zurückgeben. Der Aufrufer benutzt den Speicher danach einfach weiter. Am besten verpackst du ihn in std::unique_ptr. Dann wandert das Eigentum automatisch zum Aufrufer. Und der Speicher wird beim letzten Besitzer frei.",
+    "code": "#include <iostream>\n#include <memory>\n\nstd::unique_ptr<int[]> zahlen_erzeugen(int anzahl) {\n    auto feld = std::make_unique<int[]>(anzahl);\n    for (int i = 0; i < anzahl; ++i) {\n        feld[i] = (i + 1) * 10;\n    }\n    return feld;                  // Eigentum wandert zum Aufrufer\n}\n\nvoid stack_versuch() {\n    int lokal = 99;\n    std::cout << \"lokal in der Funktion: \" << lokal << std::endl;\n}                                 // lokal ist hier zu Ende\n\nint main() {\n    auto feld = zahlen_erzeugen(3);\n    std::cout << \"nach der Funktion: \" << feld[0] << \" \" << feld[2] << std::endl;\n\n    stack_versuch();\n\n    int* roh = new int(5);        // ohne unique_ptr: selbst aufraeumen\n    std::cout << \"roh: \" << *roh << std::endl;\n    delete roh;\n    return 0;\n}"
+   },
+   "vergleich": "Python: Ein Objekt lebt, solange jemand darauf zeigt. C++: Heap-Speicher lebt, bis du ihn freigibst.",
+   "merk": "Heap-Speicher überlebt das Funktionsende. Der Eigentümer gibt ihn frei.",
+   "checkliste": [
+    "Ich kann erklären, warum ein Heap-Zeiger nach der Funktion gültig bleibt.",
+    "Ich gebe Eigentum mit std::unique_ptr weiter, statt rohe Zeiger zu tauschen.",
+    "Ich weiß, dass ein roher new-Zeiger den Aufrufer zum delete verpflichtet."
+   ]
+  },
+  {
+   "titel": "new und delete immer paarweise",
+   "cpp": {
+    "text": "new legt ein Objekt an und ruft dabei den Konstruktor auf. delete ruft den Destruktor auf und gibt den Speicher zurück. Für ein Feld nimmst du new mit eckigen Klammern. Dann brauchst du auch delete mit eckigen Klammern. Passt das nicht zusammen, ist das Verhalten undefiniert. Bei einem Feld laufen die Destruktoren von hinten nach vorne. Fehlt der Speicher, wirft new eine Ausnahme vom Typ std::bad_alloc. Fange sie mit try und catch ab, wenn die Größe unbekannt ist.",
+    "code": "#include <iostream>\n#include <string>\n\nclass Ding {\npublic:\n    explicit Ding(const std::string& name) : name_(name) {\n        std::cout << \"gebaut: \" << name_ << std::endl;\n    }\n    ~Ding() {\n        std::cout << \"zerstoert: \" << name_ << std::endl;\n    }\n\nprivate:\n    std::string name_;\n};\n\nint main() {\n    Ding* eins = new Ding(\"eins\");\n    delete eins;                    // Destruktor, dann Speicher frei\n\n    Ding* viele = new Ding[2]{Ding(\"zwei\"), Ding(\"drei\")};   // Feld mit new\n    delete[] viele;                 // Feld: delete mit eckigen Klammern\n\n    return 0;\n}"
+   },
+   "vergleich": "Python: del löscht nur einen Namen, den Speicher räumt der Zähler. C++: delete arbeitet wirklich auf dem Speicher.",
+   "merk": "new mit delete, new mit Klammern mit delete mit Klammern. Sonst nichts.",
+   "checkliste": [
+    "Ich paare new mit delete und new[] mit delete[].",
+    "Ich weiß, dass der Konstruktor bei new und der Destruktor bei delete läuft.",
+    "Ich kann std::bad_alloc mit try und catch abfangen."
+   ]
+  },
+  {
+   "titel": "Ein Zeiger speichert eine Adresse",
+   "cpp": {
+    "text": "Jede Variable hat einen Platz im Speicher. Dieser Platz hat eine Nummer, die Speicheradresse. Ein Zeiger (Pointer) ist eine Variable für so eine Adresse. Das Und-Zeichen holt die Adresse einer Variablen. Der Stern holt den Wert hinter der Adresse. Das nennt man dereferenzieren. Zwei Sterne bedeuten: Zeiger auf einen Zeiger. nullptr heißt, der Zeiger zeigt auf nichts. Vor dem Dereferenzieren prüfst du deshalb auf nullptr. Ein const vor dem Typ schützt den Wert. Ein const hinter dem Stern schützt die Adresse.",
+    "code": "#include <iostream>\n\nint main() {\n    int x = 23;\n    int* p = &x;                  // p speichert die Adresse von x\n    int** pp = &p;                // Zeiger auf einen Zeiger\n\n    std::cout << \"Wert: \" << x << std::endl;\n    std::cout << \"ueber p: \" << *p << std::endl;\n    std::cout << \"ueber pp: \" << **pp << std::endl;\n    std::cout << \"gleiche Adresse: \" << (p == &x ? \"ja\" : \"nein\") << std::endl;\n\n    *p = 42;                      // aendert x selbst\n    std::cout << \"x ist \" << x << std::endl;\n\n    const int* lesen = &x;        // Wert nicht aenderbar\n    int* const fest = &x;         // Adresse nicht aenderbar\n    *fest = 7;                    // erlaubt: Wert aendern\n    std::cout << \"lesen \" << *lesen << \" fest \" << *fest << std::endl;\n\n    int* leer = nullptr;          // zeigt auf nichts\n    if (leer == nullptr) {\n        std::cout << \"leer zeigt nirgendwohin\" << std::endl;\n    }\n    std::cout << \"Groesse eines Zeigers: \" << sizeof(p) << \" Byte\" << std::endl;\n    return 0;\n}"
+   },
+   "vergleich": "Python hat keine Zeiger. Objekte sind dort schon Referenzen, doch du siehst nie eine Adresse.",
+   "merk": "Und-Zeichen gibt die Adresse, Stern gibt den Wert dahinter, nullptr heißt kein Ziel.",
+   "checkliste": [
+    "Ich kann Adresse nehmen und dereferenzieren sicher unterscheiden.",
+    "Ich prüfe einen Zeiger vor dem Dereferenzieren auf nullptr.",
+    "Ich kenne den Unterschied zwischen const vor und hinter dem Stern."
+   ]
+  },
+  {
+   "titel": "Zeigerarithmetik zählt in Typgrößen",
+   "cpp": {
+    "text": "Mit einem Zeiger kannst du rechnen, aber anders als mit Zahlen. p plus 1 heißt ein Element weiter, nicht ein Byte. Bei int sind das vier Byte. Der Compiler kennt die Größe des Typs hinter dem Zeiger. Darum rechnet er automatisch richtig. Die Differenz zweier Zeiger ergibt die Anzahl der Elemente. Rechnen darfst du nur innerhalb eines Feldes. Hinter dem letzten Element ist Schluss. Sonst liest du fremden Speicher.",
+    "code": "#include <iostream>\n\nint main() {\n    int feld[4] = {10, 20, 30, 40};\n    int* p = feld;                // Feldname ist die Adresse des ersten Elements\n\n    std::cout << \"erster Wert: \" << *p << std::endl;\n    std::cout << \"p plus 1 zeigt auf: \" << *(p + 1) << std::endl;\n    std::cout << \"Abstand in Byte: \"\n              << (reinterpret_cast<const char*>(p + 1) - reinterpret_cast<const char*>(p))\n              << std::endl;\n    std::cout << \"Abstand in Elementen: \" << (p + 3 - p) << std::endl;\n\n    int summe = 0;\n    for (int* lauf = feld; lauf != feld + 4; ++lauf) {\n        summe += *lauf;\n    }\n    std::cout << \"Summe: \" << summe << std::endl;\n    return 0;\n}"
+   },
+   "vergleich": "Python: for x in liste erledigt das Zählen. C++: Der Zeiger läuft selbst durch das Feld und du bestimmst das Ende.",
+   "merk": "p plus 1 heißt ein Element weiter, nicht ein Byte. Nur im Feld rechnen.",
+   "checkliste": [
+    "Ich weiß, dass p plus 1 um sizeof(Typ) Byte springt.",
+    "Ich beende eine Zeigerschleife mit feld plus Anzahl.",
+    "Ich rechne nie über das Feldende hinaus."
+   ]
+  },
+  {
+   "titel": "Eine Referenz ist ein zweiter Name",
+   "cpp": {
+    "text": "Eine Referenz ist ein anderer Name für dieselbe Variable. Du erkennst sie am Und-Zeichen im Typ. int& r = x bedeutet: r und x sind dasselbe. Beide haben dieselbe Adresse. Eine Referenz musst du beim Anlegen initialisieren. Danach kannst du sie nicht auf ein anderes Objekt umbiegen. Eine Zuweisung ändert immer den Wert, nie das Ziel. Eine const-Referenz liest nur und nimmt auch Literale an. Eine Referenz als Rückgabetyp ist gefährlich. Sie darf nie auf eine lokale Variable zeigen.",
+    "code": "#include <iostream>\n#include <string>\n\nvoid tausche(int& a, int& b) {   // Referenzen: kein Stern noetig\n    int hilfe = a;\n    a = b;\n    b = hilfe;\n}\n\nvoid zeigt(const std::string& text) {   // const-Referenz: lesen ohne Kopie\n    std::cout << text << \" hat \" << text.size() << \" Zeichen\" << std::endl;\n}\n\nint main() {\n    int x = 1;\n    int y = 2;\n    int& r = x;                  // r ist ein zweiter Name fuer x\n\n    r = 10;\n    std::cout << \"x ist \" << x << std::endl;\n    std::cout << \"gleiche Adresse: \" << (&r == &x ? \"ja\" : \"nein\") << std::endl;\n\n    tausche(x, y);\n    std::cout << \"x \" << x << \" y \" << y << std::endl;\n\n    zeigt(\"Hallo\");\n    zeigt(std::string(\"Welt\"));  // const-Referenz nimmt auch ein Literal an\n    return 0;\n}"
+   },
+   "vergleich": "Zeiger: eigene Variable, Stern nötig, darf nullptr sein, umbiegbar. Referenz: zweiter Name, kein Stern, nie leer, fest gebunden.",
+   "merk": "Referenz gleich zweiter Name: kein Stern, nie leer, nicht umbiegbar.",
+   "checkliste": [
+    "Ich initialisiere jede Referenz sofort.",
+    "Ich weiß, dass eine Zuweisung an eine Referenz den Wert ändert.",
+    "Ich nutze const& für große Objekte, die nur gelesen werden."
+   ]
+  },
+  {
+   "titel": "Speicherfehler vermeiden und finden",
+   "cpp": {
+    "text": "Drei Fehler kosten dich am meisten Zeit. Ein Speicherleck entsteht, wenn du delete vergisst. Dann wächst der Speicherverbrauch immer weiter. Ein hängender Zeiger (dangling pointer) zeigt nach delete auf alten Speicher. Doppeltes delete beendet das Programm oft hart. Die Lösung heißt Eigentum: genau eine Stelle räumt auf. Ein Destruktor oder ein unique_ptr erledigt das zuverlässig. Zum Prüfen baust du mit Adress-Sanitizer. Er findet Lecks und falsche Zugriffe sofort.",
+    "code": "#include <iostream>\n\nclass Zahlen {\npublic:\n    explicit Zahlen(int anzahl) : anzahl_(anzahl), werte_(new int[anzahl]) {\n        for (int i = 0; i < anzahl_; ++i) {\n            werte_[i] = i * i;\n        }\n    }\n    ~Zahlen() {                  // raeumt auf, wenn das Objekt verschwindet\n        delete[] werte_;\n    }\n    Zahlen(const Zahlen&) = delete;             // kein Kopieren erlaubt\n    Zahlen& operator=(const Zahlen&) = delete;\n\n    int summe() const {\n        int s = 0;\n        for (int i = 0; i < anzahl_; ++i) {\n            s += werte_[i];\n        }\n        return s;\n    }\n\nprivate:\n    int anzahl_;\n    int* werte_;\n};\n\nint main() {\n    Zahlen zahlen(4);\n    std::cout << \"Summe: \" << zahlen.summe() << std::endl;\n    std::cout << \"Kein Leck: der Destruktor ruft delete auf\" << std::endl;\n    return 0;\n}"
+   },
+   "vergleich": "Python hat eine Müllabfuhr (Garbage Collection). C++ nicht, dafür räumt ein Destruktor pünktlich und ohne Pause auf.",
+   "merk": "Ein Eigentümer räumt auf, danach zeigt der Zeiger auf nullptr. Prüfen mit Adress-Sanitizer.",
+   "checkliste": [
+    "Ich kann Speicherleck, hängenden Zeiger und doppeltes delete erklären.",
+    "Ich lasse genau eine Stelle aufräumen, meist einen Destruktor.",
+    "Ich prüfe meinen Code mit Adress-Sanitizer oder valgrind."
+   ]
   },
   {
    "titel": "Pflichtaufgaben",

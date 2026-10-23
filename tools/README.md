@@ -56,10 +56,11 @@ Codebeispiel und Merksatz pro Abschnitt.
   alle mit Lösung aus den offiziellen Lösungssammlungen (Tag 1–5). Reparatur- und
   Vorhersage-Aufgaben tragen den fehlerhaften Ausgangscode als `vorgabe`.
   Kapitel 20: Projekt „Lernkarten-Trainer" (Stufe 1–3); Kapitel 21: Zusatzprojekte.
-- **C++-Kurs:** `tools/cpp_kurs/` – 19 Kapitel, 121 Abschnitte, dazu 71
-  Aufgaben (29 Pflicht-/Vertiefungsblöcke) mit vollständigen, kompilierten
-  Lösungen. Themen, die nur Python betreffen (f-Strings, Listenmethoden),
-  fehlen hier bewusst.
+- **C++-Kurs:** `tools/cpp_kurs/` – 19 Kapitel, 155 Abschnitte, dazu 71 Aufgaben
+  mit vollständigen, kompilierten Lösungen. Themen, die nur Python betreffen,
+  fehlen hier bewusst. Kapitel 3, 8, 9, 10, 12 und 16 enthalten Abschnitte nach
+  dem Wikibooks-Buch C++-Programmierung (CC BY-SA 4.0), gekennzeichnet in der
+  jeweiligen Kapitel-Einleitung.
 - **Gemeinsame Quelle:** `tools/sprachkurs/` bleibt der zweisprachige
   Master (je Abschnitt `python`- und `cpp`-Block) plus `glossar.json`. Die
   beiden Kursordner werden daraus abgeleitet; wer Inhalte ändert, ändert sie

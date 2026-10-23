@@ -1,7 +1,7 @@
 {
  "id": "dateien_module",
  "titel": "Kapitel 16: Dateien, Module und erste eigene Projekte",
- "einleitung": "Jetzt wird es richtig praktisch. Echte Programme lesen und schreiben Dateien. Sie nutzen Module – das sind fertige Bausteine aus Code. Und sie wachsen zu kleinen Projekten. Am Ende baust du dein erstes eigenes Skript. Ein Skript ist ein kleines Programm. Du schaffst das – in Python und in C++.",
+ "einleitung": "Jetzt wird es richtig praktisch. Echte Programme lesen und schreiben Dateien. Sie nutzen Module – das sind fertige Bausteine aus Code. Und sie wachsen zu kleinen Projekten. Am Ende baust du dein erstes eigenes Skript. Ein Skript ist ein kleines Programm. Du schaffst das – in Python und in C++. Teile dieses Kapitels beruhen auf dem Wikibooks-Buch C++-Programmierung (de.wikibooks.org), Lizenz CC BY-SA 4.0; für den Lernpfad bearbeitet und gekürzt.",
  "abschnitte": [
   {
    "titel": "Dateien lesen",
@@ -38,6 +38,86 @@
    },
    "vergleich": "Der Fahrplan ist in beiden Sprachen gleich: verstehen, planen, bauen, testen. Python: python3 notiz.py. C++: g++ -Wall -Wextra und dann ausführen.",
    "merk": "Erstes Projekt: eine Notiz-App mit Dateien. Sie deckt Lesen, Schreiben, Funktionen, Fehler und den Build ab."
+  },
+  {
+   "titel": "Der Präprozessor: der Vorarbeiter vor dem Compiler",
+   "cpp": {
+    "text": "Bevor der Compiler den Code sieht, läuft der Präprozessor. Er ist der Vorarbeiter. Er ändert nur Text, er versteht kein C++. Aus #include <iostream> macht er den ganzen Inhalt dieser Datei. Er klebt die Datei also an diese Stelle. Deshalb steht hinter #include kein Semikolon. Danach übersetzt der Compiler jede Datei einzeln. Das Ergebnis heißt Objektdatei. Der Linker klebt die Objektdateien zum Programm zusammen. Den Zwischenschritt kannst du dir ansehen. Der Schalter -E zeigt den Text nach dem Präprozessor. Mit __FILE__ und __LINE__ kennst du Datei und Zeile. Diese Namen füllt der Präprozessor selbst.",
+    "code": "#include <iostream>\n\nint main() {\n    std::cout << \"Datei: \" << __FILE__ << std::endl;\n    std::cout << \"Zeile: \" << __LINE__ << std::endl;\n    std::cout << \"C++:   \" << __cplusplus << std::endl;\n\n    // Den Zwischenschritt ansehen:\n    // g++ -std=c++17 -E main.cpp | less\n    // Dort siehst du den Text nach dem Praeprozessor.\n    return 0;\n}"
+   },
+   "vergleich": "Python kennt keinen Präprozessor. Ein import lädt ein Modul beim Start. C++ kopiert den Header schon vor dem Übersetzen in die Datei. Das passiert einmal beim Bauen, nicht beim Ausführen.",
+   "merk": "Der Präprozessor arbeitet vor dem Compiler und ersetzt nur Text.",
+   "checkliste": [
+    "Reihenfolge: Präprozessor, Compiler, Linker",
+    "include klebt den Dateiinhalt an die Stelle",
+    "Hinter include steht kein Semikolon",
+    "Compiler übersetzt jede Datei einzeln zur Objektdatei",
+    "Linker verbindet die Objektdateien zum Programm"
+   ]
+  },
+  {
+   "titel": "#define: Textbausteine statt Variablen",
+   "cpp": {
+    "text": "Mit #define legst du einen Textbaustein an. Der Präprozessor ersetzt jeden Fund durch den Text. Aus MAX_PUNKTE wird überall 100. Das ist keine Variable: Es gibt keinen Typ und keinen Speicher. Ein Makro mit Parameter sieht wie eine Funktion aus. Es ist aber reine Textersetzung. Setze immer Klammern um die Parameter. Sonst rechnet das Programm falsch. Ohne Klammern wird aus QUADRAT(2 + 3) die Rechnung 2 + 3 mal 2 + 3. Das ergibt 11 statt 25. Mit #undef löschst du den Baustein wieder. Heute nimmst du lieber const oder constexpr. Die prüft der Compiler richtig.",
+    "code": "#include <iostream>\n\n#define MAX_PUNKTE 100\n#define QUADRAT(x) ((x) * (x))   // Klammern sind Pflicht\n\nint main() {\n    int punkte = 42;\n\n    std::cout << \"Max: \" << MAX_PUNKTE << std::endl;\n    std::cout << \"9 zum Quadrat: \" << QUADRAT(9) << std::endl;\n    std::cout << \"2 + 3 zum Quadrat: \" << QUADRAT(2 + 3) << std::endl;\n\n    if (punkte < MAX_PUNKTE) {\n        std::cout << \"bestanden\" << std::endl;\n    } else {\n        std::cout << \"nicht bestanden\" << std::endl;\n    }\n\n    // #undef MAX_PUNKTE   // danach ist der Name weg\n    return 0;\n}"
+   },
+   "vergleich": "Python hat keine Textbausteine dieser Art. Eine Konstante ist dort ein normaler Name. In C++ ersetzt #define den Text blind, noch vor jeder Prüfung.",
+   "merk": "#define ersetzt Text und rechnet nicht. Klammern sind Pflicht.",
+   "checkliste": [
+    "#define NAME Wert ersetzt reinen Text",
+    "Kein Semikolon am Ende der Zeile",
+    "Parameter im Makro immer klammern",
+    "Konstanten besser als const oder constexpr",
+    "Kurze Rechnungen besser als inline-Funktion"
+   ]
+  },
+  {
+   "titel": "#ifdef und #ifndef: Code ein- und ausschalten",
+   "cpp": {
+    "text": "Manchmal soll Code nur in bestimmten Fällen übersetzt werden. Dafür gibt es #ifdef und #ifndef. #ifdef fragt: Ist dieser Name definiert? #ifndef fragt das Gegenteil. Passt die Bedingung nicht, wirft der Präprozessor den Block weg. Der Block landet gar nicht im Programm. So baust du Debug-Ausgaben ein. Im Normalfall sind sie aus. Beim Testen schaltest du sie mit -DDEBUG an. Den Namen setzt dann die Kommandozeile. #else gehört zum selben Block. #endif schließt den Block immer ab. Vergiss #endif nicht, sonst meckert der Compiler.",
+    "code": "#include <iostream>\n\n// Bauen mit Debug-Ausgaben:\n// g++ -std=c++17 -Wall -Wextra -DDEBUG main.cpp -o programm\n\nint main() {\n    int summe = 0;\n\n    for (int i = 1; i <= 3; ++i) {\n        summe += i;\n#ifdef DEBUG\n        std::cout << \"Schritt \" << i << \": Summe \" << summe << std::endl;\n#endif\n    }\n\n#ifndef DEBUG\n    std::cout << \"Summe: \" << summe << std::endl;\n#else\n    std::cout << \"fertig mit Debug\" << std::endl;\n#endif\n\n    return 0;\n}"
+   },
+   "vergleich": "Python entscheidet mit if zur Laufzeit. Der Zweig bleibt im Programm und läuft nur nicht. C++ entfernt den Block schon beim Übersetzen. Er fehlt danach im Programm.",
+   "merk": "#ifdef entscheidet beim Übersetzen. Der ausgeschaltete Block fehlt im Programm.",
+   "checkliste": [
+    "#ifdef NAME gilt, wenn der Name definiert ist",
+    "#ifndef NAME gilt, wenn er nicht definiert ist",
+    "#else und #endif gehören zum Block",
+    "-DNAME auf der Kommandozeile definiert den Namen",
+    "Ohne #endif bricht die Übersetzung ab"
+   ]
+  },
+  {
+   "titel": "Header-Wächter: gegen doppeltes Einbinden",
+   "cpp": {
+    "text": "Ein Header bindet oft andere Header ein. Dann landet derselbe Header zweimal in einer Datei. Der Präprozessor klebt ihn zweimal hinein. Bei Deklarationen ist das erlaubt. Bei Definitionen nicht. Der Compiler meldet dann redefinition. Ein Header-Wächter verhindert das. Er besteht aus drei Zeilen: #ifndef, #define und #endif. Beim ersten Einbinden ist der Name noch frei. Der Block wird gelesen und der Name gesetzt. Beim zweiten Mal ist der Name schon da. Alles bis #endif wird übersprungen. #pragma once macht dasselbe in einer Zeile. Es steht nicht im Standard, funktioniert aber überall.",
+    "code": "// datei: waechter.h\n#ifndef WAECHTER_H\n#define WAECHTER_H\n\nstruct Punkt {\n    int x;\n    int y;\n};\n\n#endif\n\n// datei: main.cpp\n#include <iostream>\n#include \"waechter.h\"\n#include \"waechter.h\"   // absichtlich doppelt\n\nint main() {\n    Punkt p{3, 4};\n    std::cout << \"Summe: \" << p.x + p.y << std::endl;\n    return 0;\n}\n// g++ -std=c++17 -Wall -Wextra main.cpp -o programm"
+   },
+   "vergleich": "Python importiert ein Modul nur einmal, das merkt sich der Interpreter selbst. C++ klebt Text ein und braucht deshalb den Wächter von Hand.",
+   "merk": "Dreimal dasselbe Muster: #ifndef, #define, #endif schützt den Header.",
+   "checkliste": [
+    "#ifndef NAME am Anfang des Headers",
+    "#define NAME direkt darunter",
+    "#endif als letzte Zeile",
+    "Name aus Dateinamen bilden, zum Beispiel WAECHTER_H",
+    "#pragma once ist die kurze Alternative"
+   ]
+  },
+  {
+   "titel": "Was gehört in den Header",
+   "cpp": {
+    "text": "Ein Header zeigt nur, wie etwas benutzt wird. Dort stehen die Deklarationen. Eine Deklaration nennt Name, Typ und Parameter einer Funktion. Die Definition enthält den Code in geschweiften Klammern. Sie gehört in die cpp-Datei. Sonst findet der Linker dieselbe Funktion mehrfach. Eine Ausnahme sind inline-Funktionen. Ihre Definition darf in den Header. Der Compiler ersetzt den Aufruf durch den Code. Auch Konstanten mit constexpr dürfen in den Header. Binde nur ein, was du wirklich brauchst. Das hält den Build schnell.",
+    "code": "// datei: rechteck.h\n#ifndef RECHTECK_H\n#define RECHTECK_H\n\nint flaeche(int breite, int hoehe);                     // Deklaration\ninline int umfang(int b, int h) { return 2 * (b + h); } // darf in den Header\nconstexpr int ECKEN = 4;\n\n#endif\n\n// datei: rechteck.cpp\n#include \"rechteck.h\"\n\nint flaeche(int breite, int hoehe) {   // Definition\n    return breite * hoehe;\n}\n\n// datei: main.cpp\n#include <iostream>\n#include \"rechteck.h\"\n\nint main() {\n    std::cout << \"Flaeche: \" << flaeche(3, 4) << std::endl;\n    std::cout << \"Umfang: \" << umfang(3, 4) << std::endl;\n    std::cout << \"Ecken: \" << ECKEN << std::endl;\n    return 0;\n}\n// g++ -std=c++17 -Wall -Wextra main.cpp rechteck.cpp -o programm"
+   },
+   "vergleich": "Python bringt Name und Code zusammen in einem Modul. C++ trennt beides: der Header zeigt den Namen, die cpp-Datei liefert den Code.",
+   "merk": "Deklaration in den Header, Definition in die cpp-Datei.",
+   "checkliste": [
+    "Header: Deklarationen, Typen, constexpr, inline-Funktionen",
+    "cpp-Datei: die Definition der Funktionen",
+    "Zweimal dieselbe Definition: Fehler beim Linken",
+    "Header bindet seine eigenen Abhängigkeiten ein",
+    "Nur einbinden, was der Header wirklich braucht"
+   ]
   },
   {
    "titel": "Pflichtaufgaben",

@@ -1,7 +1,7 @@
 {
  "id": "oop",
  "titel": "Kapitel 10: Klassen und Objekte (OOP)",
- "einleitung": "Objektorientierte Programmierung (OOP) arbeitet mit Objekten. Ein Objekt hat Daten und Verhalten. Ein Hund-Objekt hat einen Namen und kann bellen. Du lernst Klassen, Konstruktoren, Kapselung und Vererbung. Und du siehst: Python und C++ lösen dieselben Ideen unterschiedlich.",
+ "einleitung": "Objektorientierte Programmierung (OOP) arbeitet mit Objekten. Ein Objekt hat Daten und Verhalten. Ein Hund-Objekt hat einen Namen und kann bellen. Du lernst Klassen, Konstruktoren, Kapselung und Vererbung. Und du siehst: Python und C++ lösen dieselben Ideen unterschiedlich. Teile dieses Kapitels beruhen auf dem Wikibooks-Buch C++-Programmierung (de.wikibooks.org), Lizenz CC BY-SA 4.0; für den Lernpfad bearbeitet und gekürzt.",
  "abschnitte": [
   {
    "titel": "Klassen: Bauplan für Objekte",
@@ -29,6 +29,118 @@
    },
    "vergleich": "Vererbung funktioniert in beiden Sprachen gleich. C++ verlangt virtual und override. Python überschreibt still. Python nutzt super(). C++ ruft die Basisklasse in der Initialisierungsliste auf.",
    "merk": "C++: virtual in der Basis, override beim Überschreiben – sonst keine Polymorphie."
+  },
+  {
+   "titel": "Operatoren überladen: das Pluszeichen für eigene Klassen",
+   "cpp": {
+    "text": "Operatoren sind in C++ nur Funktionen mit einem besonderen Namen. operator+ heißt: Diese Funktion läuft beim Pluszeichen. Du darfst sie für eigene Klassen selbst schreiben. Das nennt man Operator überladen. Der Operator bekommt dabei eine neue Bedeutung. Überlade nur dann, wenn die Bedeutung klar ist. Muss ein Leser raten, schreibe lieber eine Methode mit gutem Namen. Der erste Parameter steht links vom Zeichen, der zweite rechts.",
+    "code": "struct Punkt {\n    int x;\n    int y;\n};\n\n// freie Funktion mit besonderem Namen\nPunkt operator+(const Punkt& a, const Punkt& b) {\n    return Punkt{a.x + b.x, a.y + b.y};\n}\n\nPunkt p{1, 2};\nPunkt q{3, 4};\nPunkt r = p + q;                 // ruft operator+(p, q)\nstd::cout << r.x << \",\" << r.y;  // 4,6"
+   },
+   "vergleich": "Python: Du schreibst __add__ in die Klasse. C++: Du schreibst operator+ als freie Funktion oder als Methode. In beiden Sprachen bleibt das Pluszeichen im Code gleich.",
+   "merk": "Operator überladen heißt: eigene Funktion für ein bekanntes Zeichen, nur wenn die Bedeutung klar bleibt.",
+   "checkliste": [
+    "Du kannst erklären, warum operator+ eine Funktion ist.",
+    "Du weißt, wann du besser eine normale Methode nimmst.",
+    "Du kannst operator+ für eine eigene Klasse schreiben."
+   ]
+  },
+  {
+   "titel": "operator==: zwei Objekte vergleichen",
+   "cpp": {
+    "text": "operator== vergleicht zwei Objekte und gibt bool zurück. bool heißt: wahr oder falsch. Zwei Punkte sind gleich, wenn beide Zahlen gleich sind. Die Methode ist const, denn sie ändert nichts. Der Parameter ist eine Referenz auf const. So wird das Objekt nicht kopiert. Achtung: operator!= wird in C++17 nicht automatisch gebaut. Brauchst du ihn, schreibst du ihn selbst.",
+    "code": "class Punkt {\npublic:\n    Punkt(int x, int y) : x(x), y(y) {}\n\n    bool operator==(const Punkt& p) const {\n        return x == p.x && y == p.y;\n    }\n\nprivate:\n    int x;\n    int y;\n};\n\nPunkt a(1, 2);\nPunkt b(1, 2);\nPunkt c(1, 3);\nstd::cout << (a == b) << \" \" << (a == c);  // 1 0"
+   },
+   "vergleich": "Python: __eq__ gibt True oder False zurück. C++: operator== gibt bool zurück und trägt const. Ohne const kannst du ein const Objekt nicht vergleichen.",
+   "merk": "operator== gibt bool zurück und ist const. operator!= baust du in C++17 selbst.",
+   "checkliste": [
+    "Du weißt, warum operator== const sein muss.",
+    "Du kannst zwei Objekte über eigene Attribute vergleichen.",
+    "Du weißt, dass != in C++17 nicht automatisch entsteht."
+   ]
+  },
+  {
+   "titel": "operator+=: Rückgabe per Referenz",
+   "cpp": {
+    "text": "operator+= verändert das eigene Objekt. Darum gibt er eine Referenz zurück. Die Referenz zeigt auf das Objekt selbst. In der Methode schreibst du dafür return *this. this ist ein Zeiger auf das eigene Objekt. Mit dem Stern davor meinst du das Objekt selbst. Mit einer Referenz kannst du Aufrufe verketten. Ohne Referenz entsteht eine Kopie. Dann ändert der nächste Aufruf nur die Kopie.",
+    "code": "class Konto {\npublic:\n    Konto& operator+=(int betrag) {\n        stand += betrag;\n        return *this;          // Referenz auf das eigene Objekt\n    }\n\n    int getStand() const {\n        return stand;\n    }\n\nprivate:\n    int stand = 0;\n};\n\nKonto k;\nk += 10;\nk += 5;\n(k += 1) += 2;               // Kette: beide Aufrufe treffen k\nstd::cout << k.getStand();   // 18"
+   },
+   "vergleich": "Python: __iadd__ gibt self zurück. C++: operator+= gibt Konto& zurück, also *this. Beide Sprachen erlauben so eine Kette von Aufrufen.",
+   "merk": "operator+= gibt eine Referenz zurück: return *this. Nur so wirkt eine Kette.",
+   "checkliste": [
+    "Du kannst erklären, was this und *this bedeuten.",
+    "Du weißt, warum eine Kopie hier falsch wäre.",
+    "Du kannst zwei Aufrufe hintereinander verketten."
+   ]
+  },
+  {
+   "titel": "friend: eine Funktion darf private Daten sehen",
+   "cpp": {
+    "text": "private Member sind von außen gesperrt. Eine friend Funktion darf trotzdem hineinsehen. friend heißt Freund. Du schreibst die Deklaration in die Klasse. Die Funktion selbst bleibt eine freie Funktion. Sie gehört nicht zur Klasse. Typisch ist operator<< für die Ausgabe. Er braucht zwei Parameter: den Stream und das Objekt. Der Stream steht links, darum geht hier keine Methode.",
+    "code": "class Punkt {\npublic:\n    Punkt(int x, int y) : x(x), y(y) {}\n\n    // Freund: darf auf x und y zugreifen\n    friend std::ostream& operator<<(std::ostream& os, const Punkt& p);\n\nprivate:\n    int x;\n    int y;\n};\n\nstd::ostream& operator<<(std::ostream& os, const Punkt& p) {\n    os << \"(\" << p.x << \", \" << p.y << \")\";\n    return os;\n}\n\nstd::cout << Punkt(1, 2);   // (1, 2)"
+   },
+   "vergleich": "Python: Es gibt kein private, also braucht es kein friend. C++: friend öffnet private Daten für genau diese Funktion.",
+   "merk": "friend gilt für eine freie Funktion. Typisches Beispiel ist operator<<.",
+   "checkliste": [
+    "Du kannst erklären, was friend erlaubt.",
+    "Du weißt, warum operator<< keine Methode sein kann.",
+    "Du kannst ein Objekt mit operator<< ausgeben."
+   ]
+  },
+  {
+   "titel": "friend: eine ganze Klasse als Freund",
+   "cpp": {
+    "text": "Auch eine ganze Klasse kann Freund sein. Dann lautet die Zeile: friend class Steuerberater; Alle Methoden dieser Klasse dürfen dann privat lesen. Freundschaft gilt nur in eine Richtung. A gibt B Rechte, B gibt A darum nichts. Freundschaft wird auch nicht vererbt. Nutze sie sparsam, denn sie bricht die Kapselung.",
+    "code": "class Konto {\n    int stand = 100;\n\n    friend class Steuerberater;   // ganze Klasse darf zugreifen\n};\n\nclass Steuerberater {\npublic:\n    int geheimstand(const Konto& k) {\n        return k.stand;           // erlaubt durch friend\n    }\n};\n\nKonto k;\nSteuerberater s;\nstd::cout << s.geheimstand(k);   // 100"
+   },
+   "vergleich": "Python: Man greift einfach auf das Attribut zu. C++: Freundschaft ist eine feste Erlaubnis im Code. Der Compiler prüft sie genau.",
+   "merk": "Freundschaft gilt nur in eine Richtung und wird nicht vererbt.",
+   "checkliste": [
+    "Du weißt, dass Freundschaft nicht beidseitig ist.",
+    "Du kannst eine Klasse als Freund eintragen.",
+    "Du kannst sagen, warum sparsamer Einsatz besser ist."
+   ]
+  },
+  {
+   "titel": "static: eine Variable für alle Objekte",
+   "cpp": {
+    "text": "Ein static Member gehört zur Klasse, nicht zum Objekt. Alle Objekte teilen sich denselben Wert. Den Wert gibt es auch ohne Objekt. In der Klasse steht nur die Deklaration. Die Definition schreibst du außerhalb der Klasse. Sie lautet: int Roboter::anzahl = 0; Ohne diese Zeile meldet der Linker einen Fehler. Typischer Einsatz ist ein Zähler für alle Objekte.",
+    "code": "class Roboter {\npublic:\n    Roboter() { ++anzahl; }\n\n    static int anzahl;   // gehört zur Klasse, nicht zum Objekt\n};\n\nint Roboter::anzahl = 0;   // Definition außerhalb der Klasse\n\nRoboter a;\nRoboter b;\nstd::cout << Roboter::anzahl;   // 2"
+   },
+   "vergleich": "Python: Ein Attribut auf Klassenebene teilen sich alle Objekte. C++: static heißt dasselbe, braucht aber eine Definition draußen.",
+   "merk": "static Variable: ein Wert für alle Objekte, plus Definition außerhalb der Klasse.",
+   "checkliste": [
+    "Du weißt, warum die Definition außerhalb steht.",
+    "Du kannst einen Zähler für alle Objekte bauen.",
+    "Du greifst mit Roboter::anzahl auf den Wert zu."
+   ]
+  },
+  {
+   "titel": "static: Methoden ohne Objekt",
+   "cpp": {
+    "text": "Eine static Methode brauchst du ohne Objekt. Der Aufruf lautet Roboter::wieViele(). Sie hat kein this. Darum sieht sie nur static Member. Auf normale Attribute kann sie nicht zugreifen. Ein Aufruf über ein Objekt ist erlaubt, wirkt aber verwirrend. Schreibe lieber den Klassennamen mit zwei Doppelpunkten.",
+    "code": "class Roboter {\npublic:\n    Roboter() { ++anzahl; }\n\n    static int wieViele() {      // ohne Objekt aufrufbar\n        return anzahl;\n    }\n\n    static int anzahl;\n};\n\nint Roboter::anzahl = 0;\n\nstd::cout << Roboter::wieViele() << \"\\n\";   // 0\nRoboter r;\nstd::cout << Roboter::wieViele() << \"\\n\";   // 1"
+   },
+   "vergleich": "Python: @staticmethod oder @classmethod. C++: static in der Klasse, Aufruf mit Klassenname und Doppelpunkt.",
+   "merk": "static Methode: kein Objekt nötig, kein this, nur static Member sichtbar.",
+   "checkliste": [
+    "Du kannst eine static Methode ohne Objekt aufrufen.",
+    "Du weißt, warum sie kein normales Attribut lesen kann.",
+    "Du erkennst den Aufruf mit Klassenname und zwei Doppelpunkten."
+   ]
+  },
+  {
+   "titel": "mutable: ändern in einer const Methode",
+   "cpp": {
+    "text": "mutable heißt veränderbar. Ein mutable Attribut darf auch eine const Methode ändern. Das klingt zuerst nach einem Widerspruch. Für Zähler und Caches ist es aber sinnvoll. Zum Beispiel zählt eine const Methode ihre eigenen Aufrufe. Von außen bleibt das Objekt dabei gleich. Ändere mit mutable nie Daten, die man von außen sieht.",
+    "code": "class Rechner {\npublic:\n    int quadrat(int x) const {\n        ++aufrufe;           // erlaubt, weil mutable\n        return x * x;\n    }\n\n    int getAufrufe() const {\n        return aufrufe;\n    }\n\nprivate:\n    mutable int aufrufe = 0;\n};\n\nconst Rechner r;\nr.quadrat(3);\nr.quadrat(4);\nstd::cout << r.getAufrufe();   // 2"
+   },
+   "vergleich": "Python: Es gibt kein const, also braucht es kein mutable. C++: const ist ein Versprechen. mutable ist die kleine Ausnahme.",
+   "merk": "mutable erlaubt Änderungen in const Methoden, etwa für einen Aufrufzähler.",
+   "checkliste": [
+    "Du kannst erklären, was const verspricht.",
+    "Du weißt, wann mutable sinnvoll ist.",
+    "Du nennst einen Fall, wo mutable falsch wäre."
+   ]
   },
   {
    "titel": "Pflichtaufgaben",

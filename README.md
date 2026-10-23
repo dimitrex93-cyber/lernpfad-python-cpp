@@ -89,7 +89,7 @@ Seit v1.0.0 hat jede Sprache einen **eigenen Reiter** – kein Hin und Her mehr
 zwischen zwei Sprachen in einem Abschnitt.
 
 - **🐍 Python-Kurs** (`tools/python_kurs/`): **21 Kapitel, 246 Abschnitte, 292 Aufgaben – alle mit Lösung**. Der Stoff stammt aus dem Python-Crashkurs (Tag 1–5): fünf Teilnehmerskripte, sechs Übungsblätter (278 Aufgaben) und vier Projektblätter (32 Schritte). Kapitel 20 ist das Projekt „Lernkarten-Trainer" (Stufe 1–3), Kapitel 21 enthält zwei Zusatzprojekte. 96 Aufgaben tragen die fehlerhafte Vorgabe zum Reparieren.
-- **⚙️ C++-Kurs** (`tools/cpp_kurs/`): 19 Kapitel, 121 Abschnitte, **49 Pflicht- und 22 Vertiefungsaufgaben** – jede mit vollständiger, unter g++ -std=c++17 -Wall -Wextra warnungsfrei kompilierter Lösung. Themen, die nur Python betreffen (f-Strings, Listenmethoden), fehlen hier bewusst statt mit einer Notlösung gefüllt zu werden.
+- **⚙️ C++-Kurs** (`tools/cpp_kurs/`): 19 Kapitel, **155 Abschnitte**, **49 Pflicht- und 22 Vertiefungsaufgaben** – jede Lösung unter g++ -std=c++17 -Wall -Wextra warnungsfrei kompiliert. Neu aus dem Wikibooks-Buch C++-Programmierung (CC BY-SA 4.0): Rekursion, Aufzählungen, Operatoren überladen, friend, static, mutable, Stack/Heap, new/delete, Zeiger, Referenzen, Präprozessor, Headerdateien und Felder.
 - Beide Kurse in einfacher Sprache ([STIL.md](STIL.md): „Einfach erklärt“), je Abschnitt Erklärung, Code und Merksatz; Checklisten und Aufgaben als eigene Kästen.
 - Mit **Glossar** der wichtigsten Begriffe (149 Einträge, `tools/sprachkurs/glossar.json`).
 - Lesestatus wird **je Kurs getrennt** erfasst (`python_gelesen` / `cpp_gelesen`) und fließt in den Gesamtfortschritt ein.
@@ -139,6 +139,20 @@ Der KI-Assistent läuft **lokal** (Ollama, Modell `qwen3.5:2b`) – keine extern
 ## Projekte zum Mitnehmen
 
 - **[Lernkarten-Trainer](projekte/lernkarten/)** – Terminal-Programm mit Dictionary, Funktionen und Menü, entstanden aus dem Python-Crashkurs (Tag 3 und 4). Eine Datei, keine Abhängigkeiten: `python3 projekte/lernkarten/trainer.py`
+
+## Lizenzen der Inhalte
+
+- **Code des Projekts** (Skripte, App, Werkzeuge): MIT, siehe [LICENSE](LICENSE).
+- **Python-Lerninhalte**: eigene Bearbeitung des Lernpfads auf Grundlage der Teilnehmerskripte und Übungsblätter des Python-Crashkurses (Tag 1–5). Die Skripte selbst liegen nicht im Repository.
+- **C++-Lerninhalte, Kapitel 3, 8, 9, 10, 12 und 16**: teilweise bearbeitet nach dem Wikibooks-Buch
+  [C++-Programmierung](https://de.wikibooks.org/wiki/C%2B%2B-Programmierung) (Autoren der Wikimedia-Projekte),
+  Lizenz **CC BY-SA 4.0**. Diese Abschnitte sind gekürzt, sprachlich vereinfacht und an die Struktur des
+  Lernpfads angepasst; sie stehen als bearbeitete Fassung ebenfalls unter CC BY-SA 4.0. Die betroffenen
+  Kapitel nennen die Quelle in ihrer Einleitung.
+- **Übrige C++-Kapitel** (1, 2, 4, 5, 6, 7, 11, 13–15, 17–19): eigene Bearbeitung des Lernpfads.
+
+Wer Teile daraus weiterverwendet, muss die CC BY-SA-Bedingungen einhalten (Namensnennung, Weitergabe unter
+gleicher Lizenz). Der MIT-lizenzierte Code bleibt davon unberührt.
 
 ## Struktur des Repositories
 

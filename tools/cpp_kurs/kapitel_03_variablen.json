@@ -1,7 +1,7 @@
 {
  "id": "variablen",
  "titel": "Kapitel 3: Variablen und Datentypen",
- "einleitung": "Variablen sind die Bausteine jedes Programms. Eine Variable ist ein Name für einen Wert. Diesen Wert legst du im Speicher ab. Hier lernst du die wichtigsten Datentypen kennen. Datentypen sagen, ob ein Wert eine Zahl oder Text ist. Python erkennt den Typ automatisch. Bei C++ musst du den Typ selbst festlegen.",
+ "einleitung": "Variablen sind die Bausteine jedes Programms. Eine Variable ist ein Name für einen Wert. Diesen Wert legst du im Speicher ab. Hier lernst du die wichtigsten Datentypen kennen. Datentypen sagen, ob ein Wert eine Zahl oder Text ist. Python erkennt den Typ automatisch. Bei C++ musst du den Typ selbst festlegen. Teile dieses Kapitels beruhen auf dem Wikibooks-Buch C++-Programmierung (de.wikibooks.org), Lizenz CC BY-SA 4.0; für den Lernpfad bearbeitet und gekürzt.",
  "abschnitte": [
   {
    "titel": "Was ist eine Variable?",
@@ -54,6 +54,58 @@
    },
    "vergleich": "Python regelt Veränderbarkeit über den Typ. C++ regelst du es selbst mit const. In beiden Sprachen gilt: Was nicht verändert werden darf, meldet der Prüfer, in Python der Interpreter, in C++ der Compiler.",
    "merk": "list, dict und set ändern sich selbst. str, int, float, bool und tuple geben einen neuen Wert zurück."
+  },
+  {
+   "titel": "Aufzählungen (enum): Namen für feste Werte",
+   "cpp": {
+    "text": "Eine Aufzählung (enum) ist ein eigener Typ mit festen Werten. Die Werte heißen Enumeratoren. Du schreibst: enum Farbe mit den Werten rot, gruen und blau. Danach ist Farbe ein Typ wie int. Jeder Enumerator ist eine ganze Zahl. Ohne Angabe beginnt C++ bei 0 und zählt hoch. Du kannst die Zahl auch selbst setzen, etwa gruen gleich 5. Danach zählt C++ weiter, blau wird also 6. Zwei Enumeratoren dürfen dieselbe Zahl haben. Dann sind sie gleichwertig.",
+    "code": "#include <iostream>\n\n// Eine Aufzählung: eigene Namen für feste Zahlenwerte.\nenum Farbe {\n    rot,          // 0, vom Compiler vergeben\n    gruen = 5,    // 5, ausdrücklich gesetzt\n    blau          // 6, zählt ab 5 weiter\n};\n\nint main() {\n    Farbe f = rot;\n    std::cout << \"rot   = \" << f << \"\\n\";\n    std::cout << \"gruen = \" << gruen << \"\\n\";\n    std::cout << \"blau  = \" << blau << \"\\n\";\n\n    f = blau;                             // neuer Wert aus derselben Liste\n    std::cout << \"f ist jetzt \" << f << \"\\n\";\n    return 0;\n}"
+   },
+   "vergleich": "Python kennt enum mit Enum und IntEnum. C++ hat enum direkt in der Sprache. In beiden Sprachen bekommen die Werte feste Namen statt nackter Zahlen.",
+   "merk": "enum gibt festen Werten Namen. Ohne Angabe zählt C++ ab 0 hoch.",
+   "checkliste": [
+    "Die Werte stehen in geschweiften Klammern und werden durch Kommas getrennt",
+    "Ohne Zahl beginnt der erste Wert bei 0",
+    "Nach einer eigenen Zahl zählt C++ von dort weiter",
+    "Ein Komma nach dem letzten Wert ist erlaubt und schadet nicht"
+   ]
+  },
+  {
+   "titel": "Der Wertebereich einer Aufzählung",
+   "cpp": {
+    "text": "Eine Aufzählung lässt sich in eine ganze Zahl umwandeln. Das geht ohne Cast. Der umgekehrte Weg braucht static_cast. Erlaubt ist nur eine Zahl aus dem Wertebereich. Sonst ist das Verhalten undefiniert. Den Wertebereich kannst du ausrechnen. Nimm die kleinste Zweierpotenz, die größer ist als der größte Index. Bei den Indizes 0, 1 und 2 ist das die 4. Der Bereich geht also von 0 bis 3. Bei negativen Werten gilt die Regel nach unten genauso.",
+    "code": "#include <iostream>\n\nenum Ampel {\n    aus = 0,\n    gelb = 1,\n    an = 2\n};\n\nint main() {\n    Ampel a = an;\n\n    int zahl = a;                       // erlaubt: Aufzählung wird zur Zahl\n    std::cout << \"an als Zahl: \" << zahl << \"\\n\";\n\n    int wert = 1;\n    Ampel b = static_cast<Ampel>(wert); // Zahl zur Aufzählung nur mit Cast\n    std::cout << \"b als Zahl: \" << b << \"\\n\";\n\n    // Der Wertebereich ist 0 bis 3. Die nächste Zweierpotenz über 2 ist 4.\n    // static_cast<Ampel>(99) wäre deshalb nicht mehr erlaubt.\n    return 0;\n}"
+   },
+   "merk": "Zahl zur Aufzählung nur mit static_cast und nur im Wertebereich.",
+   "checkliste": [
+    "Aufzählung zu int geht ohne Cast",
+    "int zu Aufzählung braucht static_cast",
+    "Nur Werte im Wertebereich sind erlaubt",
+    "Wertebereich: 0 bis zur nächsten Zweierpotenz minus 1"
+   ]
+  },
+  {
+   "titel": "enum class: die sichere Variante",
+   "cpp": {
+    "text": "enum class ist die moderne Form der Aufzählung. Hier bleiben die Namen in der Aufzählung eingesperrt. Du schreibst Farbe::rot statt nur rot. Zwei Aufzählungen dürfen deshalb gleiche Namen haben. Eine enum class wandelt sich nicht still in eine Zahl. Für die Ausgabe brauchst du static_cast und den Typ int. Das ist am Anfang mehr Tipparbeit. Dafür findet der Compiler mehr Fehler. In neuem Code nimmst du am besten enum class.",
+    "code": "#include <iostream>\n\nenum class Farbe {\n    rot,\n    gruen,\n    blau\n};\n\nint main() {\n    Farbe f = Farbe::gruen;      // der Name der Liste ist Pflicht\n\n    if (f == Farbe::gruen) {\n        std::cout << \"Die Farbe ist grün.\\n\";\n    }\n\n    std::cout << \"grün als Zahl: \" << static_cast<int>(f) << \"\\n\";\n\n    // int i = Farbe::rot;    // Fehler: keine stille Umwandlung\n    // Farbe g = 1;           // Fehler: geht nur mit static_cast\n    return 0;\n}"
+   },
+   "vergleich": "Das alte enum verhält sich fast wie eine Zahl. enum class ist strenger und braucht den Namen davor. Python macht es ähnlich mit Enum, dort schreibst du Farbe.rot.",
+   "merk": "enum class: Name mit Doppelpunkt davor, keine stille Umwandlung, weniger Fehler."
+  },
+  {
+   "titel": "Aufzählung statt vieler Konstanten",
+   "cpp": {
+    "text": "Ohne Aufzählung schreibst du oft viele einzelne const int Werte. Der Compiler sieht dann keinen Zusammenhang. Jeder int passt überall hinein. Mit einer Aufzählung hat der Wert einen eigenen Typ. Die Funktion zeige nimmt nur noch Werte vom Typ Farbe an. In einem switch kann der Compiler fehlende Fälle melden. Das hilft beim Suchen von Fehlern. Der Code liest sich außerdem besser. Farbe::rot sagt mehr als die Zahl 0.",
+    "code": "#include <iostream>\n\n// Ohne Aufzählung: lose Konstanten ohne Zusammenhang.\nconst int ROT = 0;\nconst int GRUEN = 1;\nconst int BLAU = 2;\n\n// Mit Aufzählung: ein eigener Typ mit festen Werten.\nenum class Farbe {\n    rot,\n    gruen,\n    blau\n};\n\nvoid zeige(Farbe f) {\n    switch (f) {\n        case Farbe::rot:\n            std::cout << \"rot\\n\";\n            break;\n        case Farbe::gruen:\n            std::cout << \"grün\\n\";\n            break;\n        case Farbe::blau:\n            std::cout << \"blau\\n\";\n            break;\n    }\n}\n\nint main() {\n    zeige(Farbe::blau);\n    zeige(static_cast<Farbe>(GRUEN));   // Brücke von den alten Konstanten\n    std::cout << ROT << \" \" << BLAU << \"\\n\";\n    return 0;\n}"
+   },
+   "merk": "Eine Aufzählung sagt mehr als eine nackte Zahl, und der Compiler prüft mit.",
+   "checkliste": [
+    "Feste, zusammengehörige Werte gehören in eine Aufzählung",
+    "Lose const int Werte sagen nichts über den Zusammenhang",
+    "Ein switch über eine Aufzählung meldet fehlende Fälle",
+    "Für Ausgabe und Rechnungen static_cast nach int nutzen"
+   ]
   },
   {
    "titel": "Pflichtaufgaben",
