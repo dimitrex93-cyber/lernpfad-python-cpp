@@ -225,6 +225,7 @@ body {
 }
 .hero h3 { font-size: 1.5rem; color: #fff; margin-bottom: 0.4rem; }
 .hero p { color: #cbd5e1; font-size: 0.93rem; max-width: 60ch; }
+.hero .hero-position { color: var(--akzent); font-size: 0.85rem; margin-top: 0.35rem; }
 .hero .chip {
   display: inline-flex;
   align-items: center;

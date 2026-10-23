@@ -8,7 +8,7 @@
 const DATEN_PFAD = "/daten/";
 // Versionsmarker: erscheint im Footer. LEER = Browser nutzt alte app.js
 // (Cache!) → Strg+F5 / Cache leeren.
-const APP_VERSION = "2.4.0";
+const APP_VERSION = "2.4.1";
 const STUFEN = ["leicht", "mittel", "schwer"];
 const STUFEN_BESCHREIBUNG = {
   leicht: "nur leichte Fragen",
@@ -841,6 +841,7 @@ function zeigeStart() {
       <div class="hero">
         <div class="chip">✨ ${gelesenGesamt === 0 && quizBestanden === 0 ? "Willkommen" : "Willkommen zurück"}</div>
         <h3>${gelesenGesamt === 0 ? "Bereit für die erste Lerneinheit?" : "Bereit für die nächste Lerneinheit?"}</h3>
+        <p class="hero-position">Deutschsprachiger Lernpfad für Fachinformatiker: IHK-Prüfungsvorbereitung plus Python und C++ – jede Sprache in ihrem eigenen Kurs.</p>
         <p>${gelesenGesamt} von ${gesamtKapitel} Kapiteln gelesen, ${quizBestanden} von ${quizGesamt} Quiz-Stufen bestanden${besteNote ? `, beste Note ${besteNote}` : ""}. Python und C++ laufen getrennt – du entscheidest, welche Sprache heute dran ist.</p>
         <div class="hero-aktionen">
           <button class="btn-primary" onclick="weiterlernen()">▶ Weiterlernen</button>

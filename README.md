@@ -136,6 +136,10 @@ Der KI-Assistent läuft **lokal** (Ollama, Modell `qwen3.5:2b`) – keine extern
   erzeugt und dem Konto zugeordnet – so ist dein Fortschritt auf jedem Gerät
   wiederherstellbar. Einen bestehenden Sync-Code kannst du beim Registrieren angeben (Umzug)
 
+## Projekte zum Mitnehmen
+
+- **[Lernkarten-Trainer](projekte/lernkarten/)** – Terminal-Programm mit Dictionary, Funktionen und Menü, entstanden aus dem Python-Crashkurs (Tag 3 und 4). Eine Datei, keine Abhängigkeiten: `python3 projekte/lernkarten/trainer.py`
+
 ## Struktur des Repositories
 
 ```
@@ -149,6 +153,7 @@ lernpfad-python-cpp/
 ├── SECURITY.md                ← Sicherheitsrichtlinie (private Meldung)
 ├── LICENSE                    ← MIT
 ├── docs/screenshots/          ← Screenshots der Web-App + Rundgang-GIF (README)
+├── projekte/lernkarten/       ← Lernkarten-Trainer (Portfolio-Projekt)
 ├── tools/
 │   ├── quiz.py                ← Terminal-Lern-App (Quiz + beide Lernkurse)
 │   ├── sync.py                ← Fortschritts-Sync (Sync-Code)
